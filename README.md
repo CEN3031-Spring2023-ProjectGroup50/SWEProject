@@ -6,6 +6,7 @@ by the SWErve team
 
 ## Project Description
 [insert project description here]
+Shannon 1/21: This is a test message to be deleted.
 
 ## Team Members
 ### Backend:
