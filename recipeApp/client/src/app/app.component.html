@@ -1,0 +1,22 @@
+<div>
+  <div>
+    <div>Title</div>
+    <input [(ngModel)]="title" type="text" placeholder="Enter your title">
+  </div>
+  <div>
+    <div>Post</div>
+    <input [(ngModel)]="post" type="text" placeholder="Enter your post">
+  </div>
+  <br>
+  <button (click)="addPost()">Add Post</button>
+</div>
+<br>
+<br>
+<br>
+
+
+<div *ngFor="let backendItem of backendItems">
+  <div> {{backendItem.title}}</div>
+  <div> {{backendItem.post}}</div>
+  <br>
+</div>
