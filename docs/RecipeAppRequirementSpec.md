@@ -30,7 +30,12 @@ Listed below are ideas for possible festures for the SWErve team's recipe applic
 * Print out recipe to a file (PDF or text) 
 
 ### Emily's ideas
-* [insert bullet list of ideas]
+* "My Pantry" section to store ingredients the user has (from Seth's idea)
+   * Input ingredients
+   * Select ingredients to cook with and suggest recipes with given ingredients
+   * Suggest ingredients to add to the pantry based on recipes with one or two missing ingredients
+* Sort recipes by dietary restrictions (vegan, vegetarian, paleo, etc)
+* Calendar feature to be populated with meal plans
 
 ### Shannon's ideas
 * [insert bullet list of ideas]
