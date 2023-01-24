@@ -23,7 +23,11 @@ Listed below are ideas for possible festures for the SWErve team's recipe applic
 * Meal recommendation based on past choices
 
 ### Seth's ideas
-* [insert bullet list of ideas]
+* search tools
+  * Ability to input a list of ingredients and find recipes using those ingredients
+  * Filter by amount of calories, meal type, other filters, etc.
+* Login/account system
+* Print out recipe to a file (PDF or text) 
 
 ### Emily's ideas
 * [insert bullet list of ideas]
