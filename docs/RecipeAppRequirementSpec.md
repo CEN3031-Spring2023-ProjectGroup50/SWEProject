@@ -38,4 +38,14 @@ Listed below are ideas for possible festures for the SWErve team's recipe applic
 * Calendar feature to be populated with meal plans
 
 ### Shannon's ideas
-* [insert bullet list of ideas]
+* "Favorites" section with top 10 pinned recipes
+* Ability to add parameters (same as sort options above) for random recipe selector
+* Add recipe to schedule from recipe search
+* A history section with time-sorted previouisly used recipes
+* User profile (fname, lname, email, bio)
+* Also add sort/filter parameter for meal type (breakfast, lunch, dinner, appetizer, side, snack, dessert)
+* Ability to tag recipes
+* Ability to add a new recipe
+
+> **Note**
+> My concern with the "My pantry" section is that it will be difficult and manual to maintain. I think we could do a simpler version of this where user enters what they have each time they want to do a search, instead of storing what they have and requiring them to keep it up to date
