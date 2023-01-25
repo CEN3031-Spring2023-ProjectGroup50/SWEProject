@@ -21,7 +21,7 @@ It has a comprehensive suite of features you're bound to love.
 
 Save time, and savor every meal with **NAME**.
 
-For more details of the "North Star" vision of this app and its user stories, see the [specification](/RecipeAppRequirementSpec.md#feature-summary-and-user-stories).
+For more details of the "North Star" vision of this app and its user stories, see the [specification](docs/RecipeAppRequirementSpec.md#feature-summary-and-user-stories).
 
 ## Team Members
 
