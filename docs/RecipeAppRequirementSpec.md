@@ -48,6 +48,12 @@ Listed below are ideas for possible festures for the SWErve team's recipe applic
 * Ability to add a new recipe
 * Adding a recipe to the schedule 
 * Clicking on recipe in the schedule brings them to the recipe details (ingredients, instructions)
+* *Other feature considerations:*
+  * In-Scope
+    * Aggregate grocery quantities based on meals planned (since some might require overlapping ingredients)
+  * Out-of-scope
+    * Grocery cost comparator
+    * Import recipes
 
 > **Note**
 > My concern with the "My pantry" section is that it will be difficult and manual to maintain. I think we could do a simpler version of this where user enters what they have each time they want to do a search, instead of storing what they have and requiring them to keep it up to date
