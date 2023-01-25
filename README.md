@@ -2,10 +2,26 @@
 by the SWErve team
 
 ## Project Name
-[insert project name here]
+Name ideas below:
+Recipe Planner
+Meal Dreamer
+Plan. Save. Savor.
+
+## Project State 
+This project is currently in the *design* phase.
 
 ## Project Description
-[insert project description here]
+**NAME** is a meal planning, recipe, and grocery app designed to help you take control of your food routine. Deciding what to eat can be frustrating. Finding the right recipe once you have an idea can be even worse. And forgetting an ingredient at the grocery store... you get the picture. **NAME** is a one-stop shop to help you meal plan for the week, save recipes for later, determine what you can make with groceries you already have, and list what groceries you need.
+
+It has a comprehensive suite of features you're bound to love.
+* Stop scrambling to decide what to cook each night - Plan your meals for the week in advance and discover ideas from a vast database of recipes!
+* Stop letting food go to waste - plan to make recipes that use the food already in your pantry.
+* No more losing those recipes you love - Save them for later and find them easily in the app!
+* Stop buying groceries that you don't need and forgetting what you do need - **NAME** will help you form a complete and comprehensive grocery list!
+
+Save time, and savor every meal with **NAME**.
+
+For more details of the "North Star" vision of this app and its user stories, see the [specification](/RecipeAppRequirementSpec.md#feature-summary-and-user-stories).
 
 ## Team Members
 ### Backend:
@@ -14,3 +30,11 @@ by the SWErve team
 ### Frontend:
 * Shannon Hicks (shanhix1-personal)
 * Emily Anderson (Em-Anderson)
+
+
+Other feature considerations:
+In-Scope
+* Aggregate grocery quantities based on meals planned (since some might require overlapping ingredients)
+Out-of-scope
+* Grocery cost comparator
+* Import recipes
