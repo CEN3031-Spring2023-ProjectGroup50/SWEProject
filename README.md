@@ -3,11 +3,11 @@ by the SWErve team
 
 ## Project Name
 Name ideas below:
-Recipe Planner
-Meal Dreamer
-Plan. Save. Savor.
+* Recipe Planner
+* Meal Dreamer
+* Plan. Save. Savor.
 
-## Project State 
+## Project Status 
 This project is currently in the *design* phase.
 
 ## Project Description
@@ -24,17 +24,8 @@ Save time, and savor every meal with **NAME**.
 For more details of the "North Star" vision of this app and its user stories, see the [specification](/RecipeAppRequirementSpec.md#feature-summary-and-user-stories).
 
 ## Team Members
-### Backend:
-* Seth Paul (sethyboy20)
-* Wes Ahearn (wesahearn)
-### Frontend:
-* Shannon Hicks (shanhix1-personal)
-* Emily Anderson (Em-Anderson)
 
-
-Other feature considerations:
-In-Scope
-* Aggregate grocery quantities based on meals planned (since some might require overlapping ingredients)
-Out-of-scope
-* Grocery cost comparator
-* Import recipes
+Backend       | Frontend
+------------- | -------------
+Seth Paul (sethyboy20)  | Shannon Hicks (shanhix1-personal)
+Wes Ahearn (wesahearn)  | Emily Anderson (Em-Anderson)
