@@ -9,7 +9,7 @@ This project is currently in the *design* phase.
 
 It has a comprehensive suite of features you're bound to love.
 * Stop scrambling to decide what to cook each night - Plan your meals for the week in advance with calendar scheduling features, and discover ideas from a vast database of recipes!
-* Stop letting food go to waste - search for recipes that use the ingredients already in your pantry, and filter by allergens, dietary restrictions, and more.
+* Stop letting food go to waste - search for recipes that use the ingredients already in your pantry. Plus, filter by allergens, dietary restrictions, and more.
 * No more losing those recipes you love - Save them for later and find them easily in the app!
 * Stop buying groceries that you don't need and forgetting what you do need - Mallow will help you form a complete and comprehensive grocery list from recipes you have scheduled!
 
