@@ -25,6 +25,7 @@ func main() {
 		server.GET("/newsfeed", handler.NewsfeedGet(feed))
 		server.POST("/newsfeed", handler.NewsfeedPost(feed))
 		server.POST("/register", controllers.Register)
+		server.POST("/login", controllers.Login)
 	}
 
 	r.Run("0.0.0.0:5000") //Listen and serve

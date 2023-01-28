@@ -40,5 +40,45 @@ func Register(c *gin.Context) {
 		return
 
 	}
+
 	c.JSON(http.StatusOK, gin.H{})
+}
+
+func Login(c *gin.Context) {
+
+	var body struct {
+		Email    string
+		Password string
+	}
+
+	if c.Bind(&body) != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Failed to read body",
+		})
+		return
+	}
+	var user models.User
+	initialize.Db.First(&user, "email = ?", body.Email)
+
+	if user.ID == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid email or password",
+		})
+		return
+	}
+
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid email or password",
+		})
+		return
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "login successful!",
+		})
+
+	}
+
 }
