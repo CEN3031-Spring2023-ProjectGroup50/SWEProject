@@ -1,6 +1,7 @@
 package main
 
 import (
+	"recipeApp/controllers"
 	"recipeApp/httpd/handler"
 	"recipeApp/httpd/platform/newsfeed"
 	"recipeApp/initialize"
@@ -23,7 +24,9 @@ func main() {
 		server.GET("/ping", handler.PingGet())
 		server.GET("/newsfeed", handler.NewsfeedGet(feed))
 		server.POST("/newsfeed", handler.NewsfeedPost(feed))
+		server.POST("/register", controllers.Register)
 	}
-	r.Run("0.0.0.0:5000") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+
+	r.Run("0.0.0.0:5000") //Listen and serve
 
 }
