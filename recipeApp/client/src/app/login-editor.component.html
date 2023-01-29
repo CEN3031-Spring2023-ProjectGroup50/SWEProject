@@ -1,18 +1,19 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-    <mat-form-field appearance="fill">
-    <label for="email">Email: </label>
-    <input id="email" type="email"
-formControlName="email">
-    </mat-form-field>   
-    <br>
-    <mat-form-field appearance="fill">
-    <label for="password">Password: </label>
-    <input id="password" type="text"
-formControlName="password">
-</mat-form-field>   
-
-<p>Complete the form to enable button.</p>
-<button type="submit" [disabled]="!loginForm.valid">Submit</button>
-</form> 
+<div class="example-container">
+    <div class="form-container">
+      <form [formGroup]="loginForm" (submit)="submit()">
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label> E-mail
+          </mat-label>
+          <input matInput formControlName="email" required>
+        </mat-form-field>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label> Password
+          </mat-label>
+          <input matInput formControlName="password" type="password" required>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Log In</button>
+      </form>
+    </div>
+  </div>
 

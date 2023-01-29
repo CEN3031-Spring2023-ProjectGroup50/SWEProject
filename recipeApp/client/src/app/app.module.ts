@@ -16,8 +16,7 @@ import {MatFormFieldModule} from '@angular/material/form-field'
         LoginEditorComponent
     ],
     providers: [],
-    bootstrap: [AppComponent,
-                LoginEditorComponent],
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         FormsModule,
