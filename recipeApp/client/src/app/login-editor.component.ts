@@ -10,10 +10,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginEditorComponent implements OnInit {
     loginForm!: FormGroup
-    httpClient! : HttpClient
 
     constructor(
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private httpClient: HttpClient
     ){}
 
     ngOnInit() {
@@ -22,11 +22,12 @@ export class LoginEditorComponent implements OnInit {
             password: new FormControl('')
         })
     }
-    addPost() {
-        this.httpClient.post('/server/login', {
+    async addLogin() {
+        await this.httpClient.post('/server/login', {
           email: this.loginForm.value['email'],
           password: this.loginForm.value['password']
-        })
+        }).toPromise()
+        console.log(this.loginForm.value);
     }
     submit() {
         if (!this.loginForm.valid) {
