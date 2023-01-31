@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core'
 import { FormGroup,FormControl,FormBuilder } from '@angular/forms'
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -9,6 +10,7 @@ import { FormGroup,FormControl,FormBuilder } from '@angular/forms'
 })
 export class LoginEditorComponent implements OnInit {
     loginForm!: FormGroup
+    httpClient! : HttpClient
 
     constructor(
         private formBuilder: FormBuilder
@@ -18,6 +20,12 @@ export class LoginEditorComponent implements OnInit {
         this.loginForm = new FormGroup({
             email: new FormControl(''),
             password: new FormControl('')
+        })
+    }
+    addPost() {
+        this.httpClient.post('/server/login', {
+          email: this.loginForm.value['email'],
+          password: this.loginForm.value['password']
         })
     }
     submit() {
