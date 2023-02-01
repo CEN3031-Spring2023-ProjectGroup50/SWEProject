@@ -47,8 +47,8 @@ func Register(c *gin.Context) {
 func Login(c *gin.Context) {
 
 	var body struct {
-		Email    string
-		Password string
+		Email    string `json:"email"`
+		Password string `json:"password"`
 	}
 
 	if c.Bind(&body) != nil {

@@ -1,22 +1,17 @@
+
+
 <div>
   <div>
-    <div>Title</div>
-    <input [(ngModel)]="title" type="text" placeholder="Enter your title">
+    <welcome></welcome>
   </div>
-  <div>
-    <div>Post</div>
-    <input [(ngModel)]="post" type="text" placeholder="Enter your post">
-  </div>
-  <br>
-  <button (click)="addPost()">Add Post</button>
+  <nav>
+    <div class="example-button-row">      
+      <button mat-raise-button [routerLink]="'/login'">Login</button>
+      <button mat-raise-button [routerLink]="'/register'">Register</button>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
 </div>
-<br>
-<br>
-<br>
 
 
-<div *ngFor="let backendItem of backendItems">
-  <div> {{backendItem.title}}</div>
-  <div> {{backendItem.post}}</div>
-  <br>
-</div>
+
