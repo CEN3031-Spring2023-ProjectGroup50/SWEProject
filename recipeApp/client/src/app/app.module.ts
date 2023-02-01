@@ -12,12 +12,19 @@ import {MatInputModule} from '@angular/material/input'
 import {MatToolbarModule} from '@angular/material/toolbar'
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field'
+import {MatCardModule} from '@angular/material/card'
+import { Routes, RouterModule } from '@angular/router';
+import { AppRoutingModule } from './shared/app-router';
+import { registerFormComponent } from './registerform.component';
+
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginEditorComponent,
-        WelcomeComponent
+        registerFormComponent,
+        WelcomeComponent,
+    
     ],
     providers: [],
     bootstrap: [AppComponent],
@@ -29,7 +36,10 @@ import {MatFormFieldModule} from '@angular/material/form-field'
         BrowserAnimationsModule,
         MatInputModule,
         MatToolbarModule,
-        MatIconModule
+        MatIconModule,
+        AppRoutingModule,
+        MatFormFieldModule,
+        MatCardModule
     ]
 })
 export class AppModule { }

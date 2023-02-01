@@ -4,7 +4,14 @@
   <div>
     <welcome></welcome>
   </div>
-  <div>
-    <app-login-editor></app-login-editor>
-  </div>
+  <nav>
+    <div class="example-button-row">      
+      <button mat-raise-button [routerLink]="'/login'">Login</button>
+      <button mat-raise-button [routerLink]="'/register'">Register</button>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
 </div>
+
+
+
