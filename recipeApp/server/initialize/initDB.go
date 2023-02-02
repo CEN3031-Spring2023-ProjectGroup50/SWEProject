@@ -3,7 +3,7 @@ package initialize
 import (
 	"fmt"
 
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -16,8 +16,9 @@ func InitDB() *gorm.DB {
 
 func ConnectDB() *gorm.DB {
 	var err error
-
-	Db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	//postgres://xysoqtcp:zgTjP22KwwT0H4aUuPO5jbNmAMziOxYl@fanny.db.elephantsql.com/xysoqtcp
+	dsn := "host=fanny.db.elephantsql.com user=xysoqtcp password=zgTjP22KwwT0H4aUuPO5jbNmAMziOxYl dbname=xysoqtcp port=5432"
+	Db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		fmt.Println("Error connecting to database")
