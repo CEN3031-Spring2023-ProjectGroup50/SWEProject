@@ -1,2 +1,2 @@
 dev:
-	go run recipeApp/server/httpd/main.go
+	go run server/httpd/main.go
