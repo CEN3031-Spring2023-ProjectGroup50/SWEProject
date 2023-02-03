@@ -1,16 +1,11 @@
 package models
 
-import (
-	"gorm.io/gorm"
-)
-
 type Recipe struct {
-	gorm.Model
-	ID           uint
-	Title        string
-	Ingredients  []string
-	Instructions []string
-	ImgLink      string
-
-	//FINISH
+	//gorm.Model
+	Rid                 uint `gorm:"primaryKey; column:rID"`
+	Title               string
+	Ingredients         string
+	Instructions        string
+	Image_Name          string
+	Cleaned_Ingredients string
 }
