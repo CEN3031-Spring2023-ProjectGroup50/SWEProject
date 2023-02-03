@@ -16,7 +16,8 @@ import {MatCardModule} from '@angular/material/card'
 import { Routes, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './shared/app-router';
 import { registerFormComponent } from './registerform.component';
-
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,9 @@ import { registerFormComponent } from './registerform.component';
         MatIconModule,
         AppRoutingModule,
         MatFormFieldModule,
-        MatCardModule
+        MatCardModule,
+        MatSidenavModule,
+        MatListModule
     ]
 })
 export class AppModule { }
