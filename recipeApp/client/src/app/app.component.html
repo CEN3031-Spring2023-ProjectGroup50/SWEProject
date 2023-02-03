@@ -5,9 +5,9 @@
     <welcome></welcome>
   </div>
   <nav>
-    <div class="example-button-row">      
-      <button mat-raise-button [routerLink]="'/login'">Login</button>
-      <button mat-raise-button [routerLink]="'/register'">Register</button>
+    <div class="example-button-row">
+      <a mat-raised-button color="primary" [routerLink]="'/login'">Login</a>
+      <a mat-raised-button color="primary" [routerLink]="'/register'">Register</a>
     </div>
   </nav>
   <router-outlet></router-outlet>
@@ -15,7 +15,6 @@
 
 
 <mat-divider></mat-divider>
-
 <mat-list>
   <mat-list-item>Recipe 1</mat-list-item>
   <mat-divider></mat-divider>
@@ -58,7 +57,7 @@
 <mat-card class="example-card">
   <mat-card-header>
     <div mat-card-avatar class="header-image-mallow"></div>
-    <mat-card-title>Takitos</mat-card-title>
+    <mat-card-title>Pancakes</mat-card-title>
     <mat-card-subtitle>Mallow's recipe</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image src="imgpancakes.jpeg" alt="Photo of pancakes">
