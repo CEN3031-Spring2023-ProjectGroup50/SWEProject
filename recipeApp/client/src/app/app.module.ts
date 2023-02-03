@@ -21,6 +21,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
         MatFormFieldModule,
         MatNativeDateModule, 
         MatRippleModule,
+        MatButtonToggleModule
     ]
 })
 export class AppModule { }

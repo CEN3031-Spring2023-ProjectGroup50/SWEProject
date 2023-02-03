@@ -53,3 +53,18 @@
   mat-form-field {
     margin-right: 12px;
   }
+
+
+  .example-card {
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    background-image: url('imgprofilepic.png');
+    background-size: cover;
+  }
+
+  .header-image-mallow {
+    background-image: url('imgmarshmallows.png');
+    background-size: cover;
+  }
