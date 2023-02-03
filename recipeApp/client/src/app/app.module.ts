@@ -18,6 +18,7 @@ import { AppRoutingModule } from './shared/app-router';
 import { registerFormComponent } from './registerform.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import {MatListModule} from '@angular/material/list';
         MatFormFieldModule,
         MatCardModule,
         MatSidenavModule,
-        MatListModule
+        MatListModule,
+        MatButtonModule,
     ]
 })
 export class AppModule { }
