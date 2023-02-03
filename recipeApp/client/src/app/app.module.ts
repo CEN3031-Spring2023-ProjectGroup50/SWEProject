@@ -19,6 +19,9 @@ import { registerFormComponent } from './registerform.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+
 
 @NgModule({
     declarations: [
@@ -26,7 +29,6 @@ import {MatButtonModule} from '@angular/material/button';
         LoginEditorComponent,
         registerFormComponent,
         WelcomeComponent,
-    
     ],
     providers: [],
     bootstrap: [AppComponent],
@@ -45,6 +47,10 @@ import {MatButtonModule} from '@angular/material/button';
         MatSidenavModule,
         MatListModule,
         MatButtonModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatNativeDateModule, 
+        MatRippleModule,
     ]
 })
 export class AppModule { }

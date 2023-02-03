@@ -49,3 +49,7 @@
     width: 120px;
   }
   
+
+  mat-form-field {
+    margin-right: 12px;
+  }

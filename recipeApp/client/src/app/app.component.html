@@ -13,13 +13,23 @@
   <router-outlet></router-outlet>
 </div>
 
-    <mat-divider></mat-divider>
 
+<mat-divider></mat-divider>
 
-    <mat-list>
-      <mat-list-item>Item 1</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Item 2</mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item>Item 3</mat-list-item>
-    </mat-list>
+<mat-list>
+  <mat-list-item>Recipe 1</mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item>Recipe 2</mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item>Recipe 3</mat-list-item>
+</mat-list>
+
+<mat-divider></mat-divider>
+
+<mat-form-field appearance="fill">
+  <mat-label>Schedule meal!</mat-label>
+  <input matInput [matDatepicker]="picker">
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
