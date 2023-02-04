@@ -16,6 +16,12 @@ import {MatCardModule} from '@angular/material/card'
 import { Routes, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './shared/app-router';
 import { registerFormComponent } from './registerform.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
 @NgModule({
@@ -24,7 +30,6 @@ import { registerFormComponent } from './registerform.component';
         LoginEditorComponent,
         registerFormComponent,
         WelcomeComponent,
-    
     ],
     providers: [],
     bootstrap: [AppComponent],
@@ -39,7 +44,15 @@ import { registerFormComponent } from './registerform.component';
         MatIconModule,
         AppRoutingModule,
         MatFormFieldModule,
-        MatCardModule
+        MatCardModule,
+        MatSidenavModule,
+        MatListModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatNativeDateModule, 
+        MatRippleModule,
+        MatButtonToggleModule
     ]
 })
 export class AppModule { }
