@@ -41,8 +41,24 @@ We collectively decided to set of goal of completing **User Stories 1-3** for Sp
 
 ### Tasks planned for Sprint 1
 Some tasks for Sprint 1 user stories were created as GitHUb issues at the beginning of the sprint, while others arose throughout the sprint or near the end. The complete list is: 
-1. xxx
-2. xxx
+1.
+  i. Create a function in the backend to register users.
+  ii. Clear inputs from the registration screen
+  iii. Generate a database for the project as a whole
+  iv. Create an Angular component and template for the registration form.
+  v. Create a route for user registration form.
+  vi. Create a link on the main page that leads to a registration form.
+  vii. Create a warning in the UI if registration email is not unique
+  viii. Route user to home page upon successful login
+  ix. Present a failure in the UI if email and password combo is incorrect on login.
+2.
+  i. Route to home page upon successful login in UI
+  ii. Clear inputs from login screen
+  iii. Failure in UI if email is unrecognized
+  iv. Failure in UI if email/password combo is incorrect
+  v. Set up home page for AFTER login
+  vi. Create form for login
+  vii. Create a function in the backend to validate user login
 3. xxx
 
 ## Issues successfully completed in Sprint 1
@@ -52,13 +68,22 @@ We completed tasks within and outside of the planned scope during Sprint 1 as th
 ### List of completed planned issues
 
 #### User stories
-1. xxx
+1. As a new user I want to register so I can access the features of the application
+  - see completed tasks for functionality that is currently present for this user story.
 2. xxx
 3. xxx
 
 #### Tasks
-1. xxx
-2. xxx
+1.
+  i. Create a function in the backend to register users.
+  ii. Clear inputs from the registration screen.
+  iii. Generate a database for the project as a whole.
+  iv. Create an Angular component and template for the registration form.
+  v. Create a route for the user registration form.
+  vi. Create a link on the main page that leads to a registration form.
+2.
+  vi. Create a form for login
+  vii. Create a function in the backend to validate user login
 3. xxx
 
 ### List of completed unplanned issues
@@ -83,7 +108,10 @@ We completed tasks within and outside of the planned scope during Sprint 1 as th
 3. xxx
 
 #### Tasks
-1. xxx
+1.
+  vii. Create a warning in the UI if registration email is not unique
+  viii. Route user to home page upon successful login
+  ix. Present a failure in the UI if email and password combo is incorrect on login.
 2. xxx
 3. xxx
 
