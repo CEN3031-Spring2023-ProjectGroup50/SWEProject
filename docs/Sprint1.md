@@ -41,9 +41,20 @@ We collectively decided to set of goal of completing **User Stories 1-3** for Sp
 
 ### Tasks planned for Sprint 1
 Some tasks for Sprint 1 user stories were created as GitHUb issues at the beginning of the sprint, while others arose throughout the sprint or near the end. The complete list is: 
-1. xxx
-2. xxx
-3. xxx
+1. [1] clear inputs from registration screen (closed)
+2. [1] Create a function in the backend to register users (closed)
+3. [1] Create a link on the main page that leads to a registration form (closed)
+4. [1] Create a route for the user registration form (closed)
+5. [1] Create an angular component and template for the registration form (closed)
+6. [1] Generate a database for the project as a whole(closed)  
+7. [1] Need to clear failed registration warning from screen if registration re-attempt is made (open)
+8. [2] clear inputs from login screen (closed)
+9. [2] Create a function in the backend to validate user login (closed) 
+10. [2] Need to clear failed login warning from screen if login re-attempt is made (open)
+11. [2] Set up home page for after login (open) 
+12. [3] Backend: write search functions to get a recipe from the database (open) 
+13. [5] Backend: create a POST function that allows recipe to be created in the database (open)
+
 
 ## Issues successfully completed in Sprint 1
 
@@ -57,9 +68,12 @@ We completed tasks within and outside of the planned scope during Sprint 1 as th
 3. xxx
 
 #### Tasks
-1. xxx
-2. xxx
-3. xxx
+1. [1] Create a function in the backend to register users (closed)
+3. [1] Create a link on the main page that leads to a registration form (closed)
+4. [1] Create a route for the user registration form (closed)
+5. [1] Create an angular component and template for the registration form (closed)
+6. [1] Generate a database for the project as a whole(closed)  
+7. [2] Create a function in the backend to validate user login (closed) 
 
 ### List of completed unplanned issues
 
@@ -69,8 +83,8 @@ We completed tasks within and outside of the planned scope during Sprint 1 as th
 3. xxx
 
 #### Tasks
-1. xxx
-2. xxx
+1. [1] clear inputs from registration screen (closed)
+2. [2] clear inputs from login screen (closed)
 3. xxx
 
 ## Issues not completed in Sprint 1
