@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core'
 import { FormGroup,FormControl,FormBuilder } from '@angular/forms'
-import { HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-import { HttpResponse } from '@angular/common/http';
-import { HttpEventType } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Router } from '@angular/router';
 
 
@@ -39,11 +37,10 @@ export class LoginEditorComponent implements OnInit {
             (err) => {
                 console.log(err.message)
                 this.errorMessage = "The email or password does not match a valid account"
-            }
-        )
-
-
+            })
+            this.loginForm.reset()
     }
+    
     submit() {
         if (!this.loginForm.valid) {
           return;
