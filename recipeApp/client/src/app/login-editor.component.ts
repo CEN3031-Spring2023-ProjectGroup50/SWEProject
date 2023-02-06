@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core'
 import { FormGroup,FormControl,FormBuilder } from '@angular/forms'
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,6 +13,7 @@ export class LoginEditorComponent implements OnInit {
     loginForm!: FormGroup
 
     constructor(
+        private router: Router,
         private formBuilder: FormBuilder,
         private httpClient: HttpClient
     ){}
@@ -26,8 +28,14 @@ export class LoginEditorComponent implements OnInit {
         await this.httpClient.post('/server/login', {
           email: this.loginForm.value['email'],
           password: this.loginForm.value['password']
-        }).toPromise()
-        console.log(this.loginForm.value);
+        }).subscribe(
+            (res) => {
+                console.log(res)
+                this.router.navigate(['/home'])
+            }
+        )
+
+
     }
     submit() {
         if (!this.loginForm.valid) {
