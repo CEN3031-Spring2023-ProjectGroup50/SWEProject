@@ -8,13 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*func RecipesGetAll(db *gorm.DB) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		result := initialize.Db.Find(&recipe)
-		c.JSON(http.StatusOK, result)
-	}
-}*/
-
 func RecipeGetID() gin.HandlerFunc {
 	// get recipe by ID
 	return func(c *gin.Context) {
@@ -22,6 +15,14 @@ func RecipeGetID() gin.HandlerFunc {
 
 		var recipe models.Recipe
 		initialize.Db.Table("recipe").Where("rid = ?", id).First(&recipe)
+
+		// return error if recipe not found
+		if recipe.Rid == 0 && recipe.Title == "" {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Recipe not found",
+			})
+			return
+		}
 
 		c.JSON(http.StatusOK, recipe)
 	}

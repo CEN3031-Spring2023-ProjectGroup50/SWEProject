@@ -28,7 +28,8 @@ func main() {
 		server.POST("/newsfeed", handler.NewsfeedPost(feed))
 		server.POST("/register", controllers.Register)
 		server.POST("/login", controllers.Login)
-		server.POST("/recipes", handler.RecipePost())
+		server.POST("/recipes/add", handler.CreateRecipe())
+		server.DELETE("/recipes/delete/:id", handler.DeleteRecipe())
 	}
 
 	r.Run("0.0.0.0:5000") //Listen and serve

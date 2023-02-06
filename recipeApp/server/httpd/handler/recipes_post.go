@@ -17,7 +17,7 @@ type recipePostRequest struct {
 	Cleaned_Ingredients string `json:cleaned_ingreidents"`
 }
 
-func RecipePost() gin.HandlerFunc {
+func CreateRecipe() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestBody := recipePostRequest{}
 
