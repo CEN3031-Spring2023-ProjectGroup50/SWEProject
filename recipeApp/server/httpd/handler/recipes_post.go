@@ -1,8 +1,7 @@
 package handler
 
-/*import (
+import (
 	"net/http"
-	"recipeApp/httpd/platform/recipes"
 	"recipeApp/initialize"
 	"recipeApp/models"
 
@@ -10,38 +9,43 @@ package handler
 )
 
 type recipePostRequest struct {
-	ID                  uint   `json:"id"`
+	Rid                 uint   `json:"rid"`
 	Title               string `json:"title"`
 	Ingredients         string `json:"ingredients"`
 	Instructions        string `json:"instructions"`
 	Image_Name          string `json:"image_name"`
-	Cleaned_Ingredients string `json:cleaned_ings"`
+	Cleaned_Ingredients string `json:cleaned_ingreidents"`
 }
 
-func RecipePost(db *recipes.Repo) gin.HandlerFunc {
+func RecipePost() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestBody := recipePostRequest{}
-		c.Bind(&requestBody)
 
-		item := models.Recipe{
-			ID:                  requestBody.ID,
+		if c.Bind(&requestBody) != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Failed to read body",
+			})
+			return
+		}
+
+		recipe := models.Recipe{
+			Rid:                 requestBody.Rid,
 			Title:               requestBody.Title,
 			Ingredients:         requestBody.Ingredients,
 			Instructions:        requestBody.Instructions,
 			Image_Name:          requestBody.Image_Name,
 			Cleaned_Ingredients: requestBody.Cleaned_Ingredients,
 		}
-		result := initialize.Db.Create(&item)
+		result := initialize.Db.Table("recipe").Create(&recipe)
 
 		if result.Error != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
-				"error": "Failed to create user",
+				"error": "Failed to create recipe",
 			})
 			return
 
 		}
 
 		c.JSON(http.StatusOK, gin.H{})
-		c.Status(http.StatusNoContent)
 	}
-}*/
+}

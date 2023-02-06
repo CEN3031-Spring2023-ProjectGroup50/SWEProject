@@ -2,7 +2,7 @@ package models
 
 type Recipe struct {
 	//gorm.Model
-	Rid                 uint `gorm:"primaryKey; column:rID"`
+	Rid                 uint `gorm:"primaryKey; column:rid"`
 	Title               string
 	Ingredients         string
 	Instructions        string
