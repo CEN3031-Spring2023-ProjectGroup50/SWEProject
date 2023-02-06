@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class registerFormComponent implements OnInit {
     registerForm!: FormGroup
+    errorMessage: string = ''
 
     constructor(
         private formBuilder: FormBuilder,
@@ -26,8 +27,17 @@ export class registerFormComponent implements OnInit {
         await this.httpClient.post('/server/register', {
           email: this.registerForm.value['email'],
           password: this.registerForm.value['password']
-        }).toPromise()
-        console.log(this.registerForm.value);
+        }).subscribe(
+            (res) => { 
+                console.log(res)    
+            },
+            (err) => {
+                console.log(err.message)
+                this.errorMessage = "This account is already registered"
+            })
+
+        this.registerForm.reset()
     }
+    
    
 } 
