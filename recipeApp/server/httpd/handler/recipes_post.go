@@ -14,7 +14,7 @@ type recipePostRequest struct {
 	Ingredients         string `json:"ingredients"`
 	Instructions        string `json:"instructions"`
 	Image_Name          string `json:"image_name"`
-	Cleaned_Ingredients string `json:cleaned_ingreidents"`
+	Cleaned_Ingredients string `json:"cleaned_ingredients"`
 }
 
 func CreateRecipe() gin.HandlerFunc {
