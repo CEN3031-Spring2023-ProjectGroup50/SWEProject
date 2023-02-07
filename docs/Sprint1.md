@@ -122,5 +122,5 @@ Sprint 1 was a learning curve, but we learned several things about how to execut
 
 ## Links to sprint 1 video recordings
 
-* Frontend Video
+* [Frontend Video](https://drive.google.com/file/d/1ptBspbqTlgFEtuiU3O_UH5AH2AOHlED8/view?usp=sharing)
 * [Backend Video](https://drive.google.com/file/d/1q4JdzDhl-DuVWG8Wfqf1frOeGp0PB7uv/view?usp=sharing)
