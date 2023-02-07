@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core'
 import { FormGroup,FormControl,FormBuilder } from '@angular/forms'
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,6 +14,7 @@ export class registerFormComponent implements OnInit {
     popupMessage: string = ''
 
     constructor(
+        private router: Router,
         private formBuilder: FormBuilder,
         private httpClient: HttpClient
     ){}
@@ -30,14 +32,16 @@ export class registerFormComponent implements OnInit {
         }).subscribe(
             (res) => { 
                 console.log(res)
+                this.registerForm.reset()
+                this.router.navigate(['/home']) 
             },
             (err) => {
                 console.log(err.message)
+                this.registerForm.reset()
                 this.popupMessage = "This account is already registered"
             })
 
-        this.registerForm.reset()
-        this.popupMessage = "Registration successful"
+        
     }
     
    
