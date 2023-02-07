@@ -16,5 +16,4 @@
       </form>
     </div>
   </div>
-  <ng-container ngif="errorMessage != ''; else regSuccess"><h1>{{errorMessage}}</h1></ng-container>
-  <ng-template #regSuccess><h1>{{successMessage}}</h1></ng-template>
+  <ng-container ngif="popupMessage != ''"><h1>{{popupMessage}}</h1></ng-container>

@@ -10,8 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class registerFormComponent implements OnInit {
     registerForm!: FormGroup
-    successMessage: string = ''
-    errorMessage: string = ''
+    popupMessage: string = ''
 
     constructor(
         private formBuilder: FormBuilder,
@@ -31,15 +30,14 @@ export class registerFormComponent implements OnInit {
         }).subscribe(
             (res) => { 
                 console.log(res)
-                this.successMessage = "Registration successful"
             },
             (err) => {
                 console.log(err.message)
-                this.errorMessage = "This account is already registered"
+                this.popupMessage = "This account is already registered"
             })
 
         this.registerForm.reset()
-        this.errorMessage = ""
+        this.popupMessage = "Registration successful"
     }
     
    
