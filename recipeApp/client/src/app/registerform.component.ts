@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class registerFormComponent implements OnInit {
     registerForm!: FormGroup
+    successMessage: string = ''
     errorMessage: string = ''
 
     constructor(
@@ -29,7 +30,8 @@ export class registerFormComponent implements OnInit {
           password: this.registerForm.value['password']
         }).subscribe(
             (res) => { 
-                console.log(res)    
+                console.log(res)
+                this.successMessage = "Registration successful"
             },
             (err) => {
                 console.log(err.message)
@@ -37,6 +39,7 @@ export class registerFormComponent implements OnInit {
             })
 
         this.registerForm.reset()
+        this.errorMessage = ""
     }
     
    
