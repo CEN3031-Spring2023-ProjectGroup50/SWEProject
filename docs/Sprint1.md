@@ -119,3 +119,8 @@ We completed tasks within and outside of the planned scope during Sprint 1 as th
 The primary reason we were not able to fully complete the above issues is that our team was still familiarizing ourselves with the platforms (GitHub, Go, Angular, etc.) and the team's process and rhythm. We sometimes veered away from the the planned user stories while exploring other capabilities. For example, in the frontend we found ourselves experimenting with overall layout and routings, but did not close on a couple user stories because of it. We feel that this has already become less of a problem as we've become more accustomed to the code base and how the team works together. 
 
 Sprint 1 was a learning curve, but we learned several things about how to execute and communicate most effectively. During our retrospective for Sprint 1, we agreed that going forward we need to enhance our focus on user stories and align on work to be done during our Thursday sprint planning meetings. We will identify and assign all specific tasks so everyone has a clear picture of who is doing what over the next two weeks, with the end goal of completing the user stories.
+
+## Links to sprint 1 video recordings
+
+* Frontend Video
+* [Backend Video](https://drive.google.com/file/d/1q4JdzDhl-DuVWG8Wfqf1frOeGp0PB7uv/view?usp=sharing)
