@@ -3,7 +3,7 @@
 ## User stories
 
 ### The process of selecting user stories
-In our Sprint 1 planning session, we narrowed down the list of user stories required for our application's minimum-viable-product (MVP) by ranking features from the [North-Star](RecipeAppRequirementSpec.md#feature-summary-and-user-stories) as :
+In our Sprint 1 planning session, we narrowed down the list of user stories required for our application's minimum-viable-product (MVP) by ranking features from the [North-Star](RecipeAppRequirementSpec.md#feature-summary-and-user-stories) as:
 * **P0** : Bare minimum functionality for the app to be useful
 * **P1** : Functionality that is not absolutely necessary but would be frequently used and beneficial to users
 * **P2** : Nice-to-have but the app would still function well without it
@@ -70,9 +70,7 @@ We completed tasks within and outside of the planned scope during Sprint 1 as th
 ### List of completed planned issues
 
 #### User stories
-1. xxx
-2. xxx
-3. xxx
+Not applicable. There are a few tasks left to fully complete the user stories we were working on in Sprint 1. For more information, see [below](#reasons-for-not-completing-these-issues).
 
 #### Tasks
 1. [1] Create a function in the backend to register users (closed)
@@ -87,14 +85,11 @@ We completed tasks within and outside of the planned scope during Sprint 1 as th
 ### List of completed unplanned issues
 
 #### User stories
-1. xxx
-2. xxx
-3. xxx
+Not applicable.
 
 #### Tasks
 1. [1] clear inputs from registration screen (closed)
 2. [2] clear inputs from login screen (closed)
-3. xxx
 
 ## Issues not completed in Sprint 1
 
