@@ -52,11 +52,11 @@ Some tasks for Sprint 1 user stories were created as GitHUb issues at the beginn
 8. [2] clear inputs from login screen (closed)
 9. [2] Create a function in the backend to validate user login (closed) 
 10. [2] Need to clear failed login warning from screen if login re-attempt is made (open)
-11. [2] Set up home page for after login (open) 
+11. [2] Set up home page for after login (closed) 
 12. [2] Create a login form (closed)
-13. [2] Route to home page upon successful login in UI (open)
-14. [2] Failure in UI for unrecognized email and invalid user/pass combos (open)
-15. [2] Warning in UI if registration email is not unique (open)
+13. [2] Route to home page upon successful login in UI (closed)
+14. [2] Failure in UI for unrecognized email and invalid user/pass combos (closed)
+15. [2] Warning in UI if registration email is not unique (closed)
 
 16. [3] Backend: write search functions to get a recipe from the database (open) 
 
@@ -77,10 +77,16 @@ Not applicable. There are a few tasks left to fully complete the user stories we
 3. [1] Create a link on the main page that leads to a registration form (closed)
 4. [1] Create a route for the user registration form (closed)
 5. [1] Create an angular component and template for the registration form (closed)
-6. [1] Generate a database for the project as a whole(closed)  
+6. [1] Generate a database for the project as a whole (closed)  
+7. [1] Warning in UI if registration email is not unique (closed)
+8. [1] Failure in UI if email/pass combo is incorrect (closed)
 
 7. [2] Create a function in the backend to validate user login (closed) 
 8. [2] Create a login form (closed)
+9. [2] Route to home page upon successful login (closed)
+10. [2] Failure in UI if email is not recognized (closed)
+11. [2] Failure in UI if login info is incorrect (closed)
+12. [2] Set up a home page for after login (closed)
 
 ### List of completed unplanned issues
 
@@ -101,14 +107,7 @@ Not applicable.
 3. As a user I can view an existing list of recipes so that I can decide what meals to make.
 
 #### Tasks
-1. [1] Warning in UI if registration email is not unique (open)
-2. [1] Route user to a home page upon successfil registration in UI (open)
-3. [1] Failure in UI if email/pass combo is incorrect (open)
-
-4. [2] Route to home page upon successful login (open)
-5. [2] Failure in UI if email is not recognized 
-6. [2] Failure in UI if login info is incorrect
-7. [2] Set up a home page for after login
+1. [1] Route user to a home page upon successfil registration in UI (open)
 
 ### Reasons for not completing these issues
 The primary reason we were not able to fully complete the above issues is that our team was still familiarizing ourselves with the platforms (GitHub, Go, Angular, etc.) and the team's process and rhythm. We sometimes veered away from the the planned user stories while exploring other capabilities. For example, in the frontend we found ourselves experimenting with overall layout and routings, but did not close on a couple user stories because of it. We feel that this has already become less of a problem as we've become more accustomed to the code base and how the team works together. 
