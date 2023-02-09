@@ -24,7 +24,10 @@ export class registerFormComponent implements OnInit {
             email: new FormControl(''),
             password: new FormControl('')
         })
+        this.registerForm.valueChanges.subscribe(()=>
+        this.popupMessage = '')
     }
+    
     async addLogin() {
         await this.httpClient.post('/server/register', {
           email: this.registerForm.value['email'],
@@ -32,13 +35,13 @@ export class registerFormComponent implements OnInit {
         }).subscribe(
             (res) => { 
                 console.log(res)
-                this.registerForm.reset()
                 this.router.navigate(['/home']) 
             },
             (err) => {
                 console.log(err.message)
                 this.registerForm.reset()
                 this.popupMessage = "This account is already registered"
+                
             })
 
         
