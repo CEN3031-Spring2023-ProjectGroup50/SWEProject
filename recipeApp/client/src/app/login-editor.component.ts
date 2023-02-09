@@ -24,6 +24,8 @@ export class LoginEditorComponent implements OnInit {
             email: new FormControl(''),
             password: new FormControl('')
         })
+        this.loginForm.valueChanges.subscribe(()=>
+        this.errorMessage = '')
     }
     async addLogin() {
         await this.httpClient.post('/server/login', {
