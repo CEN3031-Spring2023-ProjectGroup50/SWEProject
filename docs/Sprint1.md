@@ -48,21 +48,22 @@ Some tasks for Sprint 1 user stories were created as GitHub issues at the beginn
 5. [1] Create an angular component and template for the registration form (closed)
 6. [1] Generate a database for the project as a whole (closed)  
 7. [1] Need to clear failed registration warning from screen if registration re-attempt is made (open)
+8. [1] add a flag that doesn't allow a user to access the homepage (/home) without logging in first (open)
 
-8. [2] clear inputs from login screen (closed)
-9. [2] Create a function in the backend to validate user login (closed) 
-10. [2] Need to clear failed login warning from screen if login re-attempt is made (open)
-11. [2] Set up home page for after login (closed) 
-12. [2] Create a login form (closed)
-13. [2] Route to home page upon successful login in UI (closed)
-14. [2] Failure in UI for unrecognized email and invalid user/pass combos (closed)
-15. [2] Warning in UI if registration email is not unique (closed)
+9. [2] clear inputs from login screen (closed)
+10. [2] Create a function in the backend to validate user login (closed) 
+11. [2] Need to clear failed login warning from screen if login re-attempt is made (open)
+12. [2] Set up home page for after login (closed) 
+13. [2] Create a login form (closed)
+14. [2] Route to home page upon successful login in UI (closed)
+15. [2] Failure in UI for unrecognized email and invalid user/pass combos (closed)
+16. [2] Warning in UI if registration email is not unique (closed)
 
-16. [3] Backend: write search functions to get a recipe from the database (open) 
+17. [3] Backend: write search functions to get a recipe from the database (open) 
 
-17. [5] Backend: create a POST function that allows recipe to be created in the database (closed)
+18. [5] Backend: create a POST function that allows recipe to be created in the database (closed)
 
-18. [7] Create a backend function to delete the recipe from DB (closed)
+19. [7] Create a backend function to delete the recipe from DB (closed)
 
 ## Issues successfully completed in Sprint 1
 
@@ -75,23 +76,19 @@ Not applicable. There are a few tasks left to fully complete the user stories we
 
 #### Tasks
 1. [1] Create a function in the backend to register users (closed)
-3. [1] Create a link on the main page that leads to a registration form (closed)
-4. [1] Create a route for the user registration form (closed)
-5. [1] Create an angular component and template for the registration form (closed)
-6. [1] Generate a database for the project as a whole (closed)  
-7. [1] Warning in UI if registration email is not unique (closed)
-8. [1] Failure in UI if email/pass combo is incorrect (closed)
+2. [1] Create a link on the main page that leads to a registration form (closed)
+3. [1] Create a route for the user registration form (closed)
+4. [1] Create an angular component and template for the registration form (closed)
+5. [1] Generate a database for the project as a whole (closed)  
+6. [1] Warning in UI if registration email is not unique (closed)
+7. [1] Failure in UI if email/pass combo is incorrect (closed)
 
-7. [2] Create a function in the backend to validate user login (closed) 
-8. [2] Create a login form (closed)
-9. [2] Route to home page upon successful login (closed)
-10. [2] Failure in UI if email is not recognized (closed)
-11. [2] Failure in UI if login info is incorrect (closed)
-12. [2] Set up a home page for after login (closed)
-
-13. [5] Backend: create a POST function that allows recipe to be created in the database (closed)
-
-14. [7] Create a backend function to delete the recipe from DB (closed)
+8. [2] Create a function in the backend to validate user login (closed) 
+9. [2] Create a login form (closed)
+10. [2] Route to home page upon successful login (closed)
+11. [2] Failure in UI if email is not recognized (closed)
+12. [2] Failure in UI if login info is incorrect (closed)
+13. [2] Set up a home page for after login (closed)
 
 ### List of completed unplanned issues
 
@@ -102,6 +99,10 @@ Not applicable.
 1. [1] clear inputs from registration screen (closed)
 
 2. [2] clear inputs from login screen (closed)
+
+3. [5] Backend: create a POST function that allows recipe to be created in the database (closed)
+
+4. [7] Create a backend function to delete the recipe from DB (closed)
 
 ## Issues not completed in Sprint 1
 
@@ -116,9 +117,9 @@ Not applicable.
 1. [1] Route user to a home page upon successful registration in UI (open)
 2. [1] Need to clear failed registration warning from screen if registration re-attempt is made (open)
 
-3. [2] Need to clear failed login warning from screen if login re-attempt is made (open)
+4. [2] Need to clear failed login warning from screen if login re-attempt is made (open)
 
-4. [3] Backend: write search functions to get a recipe from the database (open) 
+5. [3] Backend: write search functions to get a recipe from the database (open) 
 
 ### Reasons for not completing these issues
 The primary reason we were not able to fully complete the above issues is that our team was still familiarizing ourselves with the platforms (GitHub, Go, Angular, etc.) and the team's process and rhythm. We sometimes veered away from the the planned user stories while exploring other capabilities. For example, in the frontend we found ourselves experimenting with overall layout and routings, but did not close on a couple user stories because of it. We feel that this has already become less of a problem as we've become more accustomed to the code base and how the team works together. 
