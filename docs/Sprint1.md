@@ -97,6 +97,7 @@ Not applicable.
 
 #### Tasks
 1. [1] clear inputs from registration screen (closed)
+
 2. [2] clear inputs from login screen (closed)
 
 ## Issues not completed in Sprint 1
@@ -109,7 +110,7 @@ Not applicable.
 3. As a user I can view an existing list of recipes so that I can decide what meals to make.
 
 #### Tasks
-1. [1] Route user to a home page upon successfil registration in UI (open)
+1. [1] Route user to a home page upon successful registration in UI (open)
 2. [1] Need to clear failed registration warning from screen if registration re-attempt is made (open)
 
 3. [2] Need to clear failed login warning from screen if login re-attempt is made (open)
