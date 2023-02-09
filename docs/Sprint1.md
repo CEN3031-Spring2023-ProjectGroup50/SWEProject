@@ -108,6 +108,9 @@ Not applicable.
 
 #### Tasks
 1. [1] Route user to a home page upon successfil registration in UI (open)
+2. [1] Need to clear failed registration warning from screen if registration re-attempt is made (open)
+
+3. [2] Need to clear failed login warning from screen if login re-attempt is made (open)
 
 ### Reasons for not completing these issues
 The primary reason we were not able to fully complete the above issues is that our team was still familiarizing ourselves with the platforms (GitHub, Go, Angular, etc.) and the team's process and rhythm. We sometimes veered away from the the planned user stories while exploring other capabilities. For example, in the frontend we found ourselves experimenting with overall layout and routings, but did not close on a couple user stories because of it. We feel that this has already become less of a problem as we've become more accustomed to the code base and how the team works together. 
