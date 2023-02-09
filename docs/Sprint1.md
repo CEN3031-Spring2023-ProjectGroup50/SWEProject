@@ -60,8 +60,9 @@ Some tasks for Sprint 1 user stories were created as GitHUb issues at the beginn
 
 16. [3] Backend: write search functions to get a recipe from the database (open) 
 
-17. [5] Backend: create a POST function that allows recipe to be created in the database (open)
+17. [5] Backend: create a POST function that allows recipe to be created in the database (closed)
 
+18. [7] Create a backend function to delete the recipe from DB (closed)
 
 ## Issues successfully completed in Sprint 1
 
@@ -88,7 +89,9 @@ Not applicable. There are a few tasks left to fully complete the user stories we
 11. [2] Failure in UI if login info is incorrect (closed)
 12. [2] Set up a home page for after login (closed)
 
-13. [5] Backend: create a POST function that allows recipe to be created in the database (open)
+13. [5] Backend: create a POST function that allows recipe to be created in the database (closed)
+
+14. [7] Create a backend function to delete the recipe from DB (closed)
 
 ### List of completed unplanned issues
 
