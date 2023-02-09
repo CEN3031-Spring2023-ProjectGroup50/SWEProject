@@ -40,13 +40,13 @@ We collectively decided to set of goal of completing **User Stories 1-3** for Sp
 3. As a user I can view an existing list of recipes so that I can decide what meals to make.
 
 ### Tasks planned for Sprint 1
-Some tasks for Sprint 1 user stories were created as GitHUb issues at the beginning of the sprint, while others arose throughout the sprint or near the end. The complete list is: 
+Some tasks for Sprint 1 user stories were created as GitHub issues at the beginning of the sprint, while others arose throughout the sprint or near the end. The complete list is: 
 1. [1] clear inputs from registration screen (closed)
 2. [1] Create a function in the backend to register users (closed)
 3. [1] Create a link on the main page that leads to a registration form (closed)
-4. [1] Create a route for the user registration form (closed)
+4. [1] Route user to a home page upon successful registration in UI (open)
 5. [1] Create an angular component and template for the registration form (closed)
-6. [1] Generate a database for the project as a whole(closed)  
+6. [1] Generate a database for the project as a whole (closed)  
 7. [1] Need to clear failed registration warning from screen if registration re-attempt is made (open)
 
 8. [2] clear inputs from login screen (closed)
