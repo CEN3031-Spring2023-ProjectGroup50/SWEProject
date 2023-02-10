@@ -28,6 +28,7 @@ func main() {
 		server.POST("/newsfeed", handler.NewsfeedPost(feed))
 		server.POST("/register", controllers.Register)
 		server.POST("/login", controllers.Login)
+		server.GET("/account", controllers.Account)
 		server.POST("/recipes/add", handler.CreateRecipe())
 		server.DELETE("/recipes/delete/:id", handler.DeleteRecipe())
 	}
