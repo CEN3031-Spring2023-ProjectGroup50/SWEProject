@@ -5,7 +5,9 @@ import (
 	"recipeApp/httpd/handler"
 	"recipeApp/httpd/platform/newsfeed"
 	"recipeApp/initialize"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,6 +20,16 @@ func main() {
 	feed := newsfeed.New()
 
 	r := gin.Default()
+
+	// initialize CORS middleware
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"http://localhost:4200"},
+		AllowMethods: []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders: []string{"Origin", "Content-Type", "Authorization",
+			"Cache-Control"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 
 	server := r.Group("/server")
 	{
