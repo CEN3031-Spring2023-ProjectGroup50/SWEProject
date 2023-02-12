@@ -23,8 +23,9 @@ func main() {
 	{
 		server.GET("/ping", handler.PingGet())
 		server.GET("/newsfeed", handler.NewsfeedGet(feed))
-		server.GET("/recipes", handler.RecipesGetAll())
-		server.GET("/recipes/:id", handler.RecipeGetID())
+		server.GET("/recipes", handler.RecipeGet())
+		//server.GET("/recipes/:id", handler.RecipeGetID())
+		//server.GET("/recipes/:ingredient", handler.RecipeGetIngredient())
 		server.POST("/newsfeed", handler.NewsfeedPost(feed))
 		server.POST("/register", controllers.Register)
 		server.POST("/login", controllers.Login)
