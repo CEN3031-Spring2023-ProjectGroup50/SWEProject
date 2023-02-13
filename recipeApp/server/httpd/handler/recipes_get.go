@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"recipeApp/initialize"
 	"recipeApp/models"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -45,20 +46,23 @@ func RecipeGet() gin.HandlerFunc {
 			}
 
 			c.JSON(http.StatusOK, recipe)
+
 		} else if len(paramPairs["ingredient"]) > 1 {
 			fmt.Printf("this is of type %T", paramPairs["ingredient"])
 			var wildcardIngredients []string
 			for index := range paramPairs["ingredient"] {
-				wildcardIngredients = append(wildcardIngredients, "%"+paramPairs["ingredient"][index]+"%")
+				wildcardIngredients = append(wildcardIngredients, "ingredients LIKE '%"+paramPairs["ingredient"][index]+"%'")
 			}
-			var concatRecipe, recipe []models.Recipe
-			for index := range wildcardIngredients {
-				initialize.Db.Table("recipe").Raw("SELECT * FROM recipe WHERE ingredients LIKE ?", wildcardIngredients[index]).Scan(&recipe)
-				concatRecipe = append(concatRecipe, recipe...)
+			var recipe []models.Recipe
+			initialize.Db.Table("recipe").Where(strings.Join(wildcardIngredients, " AND ")).Find(&recipe)
 
+			if len(recipe) == 0 {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"error": "No recipes found containing the searched terms.",
+				})
+				return
 			}
-			fmt.Print("length of result is: ", len(concatRecipe))
-			c.JSON(http.StatusOK, concatRecipe)
+			c.JSON(http.StatusOK, recipe)
 
 		} else {
 			var recipes []models.Recipe
