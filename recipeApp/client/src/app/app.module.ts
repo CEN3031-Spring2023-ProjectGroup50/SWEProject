@@ -34,6 +34,7 @@ import { RecipesComponent } from './recipes.component';
 import { AuthService } from './shared/auth/auth.service';
 import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
 import { CanActivateViaAuthGuard } from './shared/auth/can-activate-via-auth.guard';
+import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
 
 @NgModule({
     declarations: [
@@ -54,7 +55,8 @@ import { CanActivateViaAuthGuard } from './shared/auth/can-activate-via-auth.gua
             useClass: AuthInterceptorService,
             multi: true
         },
-        CanActivateViaAuthGuard
+        CanActivateViaAuthGuard,
+        NegateAuthGuard
     ],
     bootstrap: [AppComponent],
     imports: [

@@ -8,7 +8,7 @@
       <a mat-list-item href="/recipes">Recipes</a>
       <a mat-list-item href="/mealplan">Meal Plan</a>
       <a mat-list-item href="/grocerylist">Grocery List</a>
-      <a mat-list-item *ngIf="authService.isAuthenticated" (click)="authService.logout()">Logout</a>
+      <a mat-list-item href="/" (click)="authService.logout()">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

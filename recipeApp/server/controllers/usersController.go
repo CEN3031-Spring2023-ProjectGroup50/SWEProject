@@ -169,7 +169,7 @@ func Account(c *gin.Context) {
 
 	userID := data.CustomClaims["userid"]
 
-	// fetch some data based on the userID and then send that data back to the user in JSON format
+	// get data from userID and convert to JSON
 	jsonData, err := getAccountData(userID)
 	if err != nil {
 		log.Println(err)
