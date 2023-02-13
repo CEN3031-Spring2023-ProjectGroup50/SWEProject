@@ -29,7 +29,7 @@ func RecipeGet() gin.HandlerFunc {
 			}
 
 			c.JSON(http.StatusOK, recipe)
-		} else if len(paramPairs["ingredient"]) > 0 {
+		} else if len(paramPairs["ingredient"]) == 1 {
 			ingredientText := "%" + paramPairs["ingredient"][0] + "%"
 
 			var recipe []models.Recipe
@@ -39,12 +39,27 @@ func RecipeGet() gin.HandlerFunc {
 			// return error if recipe not found
 			if len(recipe) == 0 {
 				c.JSON(http.StatusBadRequest, gin.H{
-					"error": "No recipes found containing the term " + c.Param("ingredient"),
+					"error": "No recipes found containing the term " + paramPairs["ingredient"][0],
 				})
 				return
 			}
 
 			c.JSON(http.StatusOK, recipe)
+		} else if len(paramPairs["ingredient"]) > 1 {
+			fmt.Printf("this is of type %T", paramPairs["ingredient"])
+			var wildcardIngredients []string
+			for index := range paramPairs["ingredient"] {
+				wildcardIngredients = append(wildcardIngredients, "%"+paramPairs["ingredient"][index]+"%")
+			}
+			var concatRecipe, recipe []models.Recipe
+			for index := range wildcardIngredients {
+				initialize.Db.Table("recipe").Raw("SELECT * FROM recipe WHERE ingredients LIKE ?", wildcardIngredients[index]).Scan(&recipe)
+				concatRecipe = append(concatRecipe, recipe...)
+
+			}
+			fmt.Print("length of result is: ", len(concatRecipe))
+			c.JSON(http.StatusOK, concatRecipe)
+
 		} else {
 			var recipes []models.Recipe
 			initialize.Db.Table("recipe").Find(&recipes)
