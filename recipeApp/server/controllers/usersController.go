@@ -24,6 +24,45 @@ type JWTData struct {
 	CustomClaims map[string]string `json:"custom,omitempty"`
 }
 
+func CreateToken(c *gin.Context) {
+	// create JWT token
+	claims := JWTData{
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(time.Hour).Unix(),
+		},
+
+		CustomClaims: map[string]string{
+			"userid": "u1",
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString([]byte(SECRET))
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"error": "Login failed",
+		})
+		return
+	}
+
+	json, err := json.Marshal(struct {
+		Token string `json:"token"`
+	}{
+		tokenString,
+	})
+
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"error": "Login failed",
+		})
+		return
+	}
+
+	c.Writer.Write(json)
+}
+
 func Register(c *gin.Context) {
 	var body struct {
 		Email    string
@@ -56,7 +95,9 @@ func Register(c *gin.Context) {
 
 	}
 
-	c.JSON(http.StatusOK, gin.H{})
+	CreateToken(c)
+
+	//c.JSON(http.StatusOK, gin.H{})
 }
 
 func Login(c *gin.Context) {
@@ -90,46 +131,7 @@ func Login(c *gin.Context) {
 		})
 		return
 	} else {
-		// create JWT token
-		claims := JWTData{
-			StandardClaims: jwt.StandardClaims{
-				ExpiresAt: time.Now().Add(time.Hour).Unix(),
-			},
-
-			CustomClaims: map[string]string{
-				"userid": "u1",
-			},
-		}
-
-		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-		tokenString, err := token.SignedString([]byte(SECRET))
-		if err != nil {
-			log.Println(err)
-			c.JSON(http.StatusUnauthorized, gin.H{
-				"error": "Login failed",
-			})
-			return
-		}
-
-		json, err := json.Marshal(struct {
-			Token string `json:"token"`
-		}{
-			tokenString,
-		})
-
-		if err != nil {
-			log.Println(err)
-			c.JSON(http.StatusUnauthorized, gin.H{
-				"error": "Login failed",
-			})
-			return
-		}
-
-		/*c.JSON(http.StatusOK, gin.H{
-			"message": "login successful!",
-		})*/
-
-		c.Writer.Write(json)
+		CreateToken(c)
 	}
 
 }
