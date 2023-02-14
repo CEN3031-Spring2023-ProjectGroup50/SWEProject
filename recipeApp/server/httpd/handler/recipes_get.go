@@ -24,8 +24,8 @@ func RecipeGet() gin.HandlerFunc {
 			var wildcardTitle []string
 			for index := range paramPairs["keyword"] {
 				wildcardIngredients = append(wildcardIngredients, "ingredients ILIKE '%"+paramPairs["keyword"][index]+"%'")
-				wildcardInstructions = append(wildcardInstructions, "ingredients ILIKE '%"+paramPairs["keyword"][index]+"%'")
-				wildcardTitle = append(wildcardTitle, "ingredients ILIKE '%"+paramPairs["keyword"][index]+"%'")
+				wildcardInstructions = append(wildcardInstructions, "instructions ILIKE '%"+paramPairs["keyword"][index]+"%'")
+				wildcardTitle = append(wildcardTitle, "title ILIKE '%"+paramPairs["keyword"][index]+"%'")
 			}
 
 			initialize.Db.Table("recipe").Where(strings.Join(wildcardIngredients, " AND ")).
