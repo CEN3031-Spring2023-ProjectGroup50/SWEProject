@@ -28,6 +28,7 @@ func main() {
 		server.POST("/register", controllers.Register)
 		server.POST("/login", controllers.Login)
 		server.POST("/recipes/add", handler.CreateRecipe())
+		server.GET("/recipes/bypage", handler.RecipeGetByPage())
 		server.DELETE("/recipes/delete/:id", handler.DeleteRecipe())
 	}
 
