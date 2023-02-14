@@ -24,10 +24,10 @@
 
         <img mat-card-image src={{card.mainimage}} alt="alt text example">
 
-        <mat-card-content class="dashboard-card-content"> 
+        <mat-card-content class="dashboard-card-content">
           <div>{{card.description}}</div>
         </mat-card-content>
-        
+
         <mat-card-actions>
           <mat-form-field appearance="fill">
             <mat-label>Schedule meal</mat-label>
@@ -45,4 +45,13 @@
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
+
 </div>
+<mat-paginator
+  length="100"
+  pageSize = "10"
+  pagesizeOptions = "[10, 20, 30]"
+  showFirstLastButtons = "true"
+  aria-label = "Select Page">
+</mat-paginator>
+

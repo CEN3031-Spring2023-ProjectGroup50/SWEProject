@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 import { RecipeDashboardComponent } from './recipe-dashboard.component';
 
@@ -24,6 +25,7 @@ describe('RecipeDashboardComponent', () => {
         MatGridListModule,
         MatIconModule,
         MatMenuModule,
+        MatPaginatorModule,
       ]
     }).compileComponents();
   }));

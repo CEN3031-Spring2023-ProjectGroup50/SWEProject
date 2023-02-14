@@ -30,6 +30,7 @@ import { WelcomeDashboardComponent } from './welcome-dashboard/welcome-dashboard
 import { MenuNavigationComponent} from './menu-navigation/menu-navigation.component';
 import { HomeComponent } from './home.component';
 import { RecipesComponent } from './recipes.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -63,12 +64,13 @@ import { RecipesComponent } from './recipes.component';
         MatButtonModule,
         MatDatepickerModule,
         MatFormFieldModule,
-        MatNativeDateModule, 
+        MatNativeDateModule,
         MatRippleModule,
         MatButtonToggleModule,
         MatGridListModule,
         MatMenuModule,
         LayoutModule,
+        MatPaginatorModule,
     ]
 })
 export class AppModule { }
