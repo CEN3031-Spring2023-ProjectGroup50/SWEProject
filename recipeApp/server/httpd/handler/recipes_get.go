@@ -53,24 +53,8 @@ func RecipeGet() gin.HandlerFunc {
 			}
 
 			c.JSON(http.StatusOK, recipe)
-		} else if len(paramPairs["ingredient"]) == 1 {
-			ingredientText := "%" + paramPairs["ingredient"][0] + "%"
 
-			var recipe []models.Recipe
-			initialize.Db.Table("recipe").
-				Where("ingredients ILIKE ?", ingredientText).Find(&recipe)
-
-			// return error if recipe not found
-			if len(recipe) == 0 {
-				c.JSON(http.StatusBadRequest, gin.H{
-					"error": "No recipes found containing the term " + paramPairs["ingredient"][0],
-				})
-				return
-			}
-
-			c.JSON(http.StatusOK, recipe)
-
-		} else if len(paramPairs["ingredient"]) > 1 {
+		} else if len(paramPairs["ingredient"]) > 0 {
 			fmt.Printf("this is of type %T", paramPairs["ingredient"])
 			var wildcardIngredients []string
 			for index := range paramPairs["ingredient"] {
