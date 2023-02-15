@@ -13,9 +13,7 @@ import (
 //@Accept json
 //@Produce json
 //@Success 200
-//@Failure 400 {object} "error":"Failed to read body"
-//@Failure 400 {object} "error":"Failed to hash password"
-//@Failure 400 {object} "error":"Failed to create user"
+//@Failure 400
 //@Router /server/register [post]
 
 func Register(c *gin.Context) {
@@ -56,9 +54,8 @@ func Register(c *gin.Context) {
 //@Summary allows a user to login
 //@Accept json
 //@Produce json
-//@Success 200 {object} "message":"login successful!"
-//@Failure 400 {object} "error":"Failed to read body"
-//@Failure 400 {object} "error":"Invalid email or password"
+//@Success 200
+//@Failure 400
 //@Router /server/register [post]
 
 func Login(c *gin.Context) {

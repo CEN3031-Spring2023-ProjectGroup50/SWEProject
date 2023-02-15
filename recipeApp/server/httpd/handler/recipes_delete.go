@@ -8,6 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary delete a recipe
+// @Accept json
+// @Produce json
+// @Success 200
+// @Failure 400
+// @Router /server/recipes/{id} [delete]
 func DeleteRecipe() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Param("id")

@@ -1,8 +1,8 @@
 package main
 
 import (
-	_ "go-swag-demo-api/docs"
 	"recipeApp/controllers"
+	_ "recipeApp/docs"
 	"recipeApp/httpd/handler"
 	"recipeApp/initialize"
 
@@ -18,7 +18,7 @@ import (
 //@contact.name Wes Ahearn, Seth Paul
 //@host localhost:5000
 //@license.name unknown
-//@BasePath /server/httpd/
+//@BasePath /
 
 func init() {
 	initialize.InitDB()
@@ -37,7 +37,7 @@ func main() {
 		server.POST("/recipes/add", handler.CreateRecipe())
 		server.GET("/recipes/bypage", handler.RecipeGetByPage())
 		server.DELETE("/recipes/delete/:id", handler.DeleteRecipe())
-		server.GET("httpd/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+		server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 
 	r.Run("0.0.0.0:5000") //Listen and serve

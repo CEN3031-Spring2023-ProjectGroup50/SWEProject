@@ -10,6 +10,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary a suite of queries for returning recipes by search term
+// @Accept json
+// @Produce json
+// @Param keyword	query	[]string	false	"specify one or more keywords"
+// @Param ingredient	query	[]string false "specify one or more ingredients"
+// @Param id	query	int	false "specify a recipe by id"
+// @Success 200
+// @Failure 400
+// @Router /server/recipes [get]
 func RecipeGet() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		paramPairs := c.Request.URL.Query()
