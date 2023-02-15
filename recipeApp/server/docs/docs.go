@@ -20,6 +20,36 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/server/login": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "allows a user to login",
+                "parameters": [
+                    {
+                        "description": "user data",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.userBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/server/recipes": {
             "get": {
                 "consumes": [
@@ -157,6 +187,36 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/server/register": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "register a user to the site",
+                "parameters": [
+                    {
+                        "description": "user data",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.userBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -179,6 +239,17 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "handler.userBody": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
                     "type": "string"
                 }
             }

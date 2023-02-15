@@ -1,7 +1,6 @@
 package main
 
 import (
-	"recipeApp/controllers"
 	_ "recipeApp/docs"
 	"recipeApp/httpd/handler"
 	"recipeApp/initialize"
@@ -31,8 +30,8 @@ func main() {
 
 	server := r.Group("/server")
 	{
-		server.POST("/register", controllers.Register)
-		server.POST("/login", controllers.Login)
+		server.POST("/register", handler.Register)
+		server.POST("/login", handler.Login)
 		server.GET("/recipes", handler.RecipeGet())
 		server.POST("/recipes/add", handler.CreateRecipe())
 		server.GET("/recipes/bypage", handler.RecipeGetByPage())

@@ -15,6 +15,13 @@ definitions:
       title:
         type: string
     type: object
+  handler.userBody:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
 host: localhost:5000
 info:
   contact:
@@ -25,6 +32,25 @@ info:
   title: Mallow Recipe Server API
   version: "1.0"
 paths:
+  /server/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: user data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.userBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: allows a user to login
   /server/recipes:
     get:
       consumes:
@@ -114,4 +140,23 @@ paths:
         "400":
           description: Bad Request
       summary: delete a recipe
+  /server/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: user data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.userBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: register a user to the site
 swagger: "2.0"
