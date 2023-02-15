@@ -130,7 +130,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/server/recipes/{id}": {
+        "/server/recipes/delete/{id}": {
             "delete": {
                 "consumes": [
                     "application/json"
@@ -139,6 +139,15 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "summary": "delete a recipe",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of recipe to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"

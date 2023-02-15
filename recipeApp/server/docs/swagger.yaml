@@ -54,18 +54,6 @@ paths:
         "400":
           description: Bad Request
       summary: a suite of queries for returning recipes by search term
-  /server/recipes/{id}:
-    delete:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Bad Request
-      summary: delete a recipe
   /server/recipes/add:
     post:
       consumes:
@@ -108,4 +96,22 @@ paths:
         "400":
           description: Bad Request
       summary: get a json object (recipes) of default 10 recipes at a time
+  /server/recipes/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: id of recipe to delete
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: delete a recipe
 swagger: "2.0"
