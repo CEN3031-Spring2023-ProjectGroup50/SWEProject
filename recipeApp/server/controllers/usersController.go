@@ -9,6 +9,15 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+//@Summary register a user to the site
+//@Accept json
+//@Produce json
+//@Success 200
+//@Failure 400 {object} "error":"Failed to read body"
+//@Failure 400 {object} "error":"Failed to hash password"
+//@Failure 400 {object} "error":"Failed to create user"
+//@Router /server/register [post]
+
 func Register(c *gin.Context) {
 	var body struct {
 		Email    string
@@ -43,6 +52,14 @@ func Register(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{})
 }
+
+//@Summary allows a user to login
+//@Accept json
+//@Produce json
+//@Success 200 {object} "message":"login successful!"
+//@Failure 400 {object} "error":"Failed to read body"
+//@Failure 400 {object} "error":"Invalid email or password"
+//@Router /server/register [post]
 
 func Login(c *gin.Context) {
 

@@ -1,0 +1,12 @@
+basePath: /server/httpd/
+host: localhost:5000
+info:
+  contact:
+    name: Wes Ahearn, Seth Paul
+  description: This is the server for the Mallow Recipe Application
+  license:
+    name: unknown
+  title: Mallow Recipe Server API
+  version: "1.0"
+paths: {}
+swagger: "2.0"
