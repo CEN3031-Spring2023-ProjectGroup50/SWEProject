@@ -17,6 +17,13 @@ type recipePostRequest struct {
 	Cleaned_Ingredients string `json:"cleaned_ingredients"`
 }
 
+// @Summary post a recipe to the database
+// @param requestBody body recipePostRequest	true "recipe data"
+// @Accept json
+// @Produce json
+// @Success 200
+// @Failure 400
+// @Router /server/recipes/add [post]
 func CreateRecipe() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestBody := recipePostRequest{}

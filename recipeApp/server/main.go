@@ -1,13 +1,23 @@
 package main
 
 import (
-	"recipeApp/controllers"
+	_ "recipeApp/docs"
 	"recipeApp/httpd/handler"
-	"recipeApp/httpd/platform/newsfeed"
 	"recipeApp/initialize"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
+
+//@title Mallow Recipe Server API
+//@version 1.0
+//@description This is the server for the Mallow Recipe Application
+
+//@contact.name Wes Ahearn, Seth Paul
+//@host localhost:5000
+//@license.name unknown
+//@BasePath /
 
 func init() {
 	initialize.InitDB()
@@ -15,21 +25,18 @@ func init() {
 }
 
 func main() {
-	feed := newsfeed.New()
 
 	r := gin.Default()
 
 	server := r.Group("/server")
 	{
-		server.GET("/ping", handler.PingGet())
-		server.GET("/newsfeed", handler.NewsfeedGet(feed))
+		server.POST("/register", handler.Register)
+		server.POST("/login", handler.Login)
 		server.GET("/recipes", handler.RecipeGet())
-		server.POST("/newsfeed", handler.NewsfeedPost(feed))
-		server.POST("/register", controllers.Register)
-		server.POST("/login", controllers.Login)
 		server.POST("/recipes/add", handler.CreateRecipe())
 		server.GET("/recipes/bypage", handler.RecipeGetByPage())
 		server.DELETE("/recipes/delete/:id", handler.DeleteRecipe())
+		server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 
 	r.Run("0.0.0.0:5000") //Listen and serve
