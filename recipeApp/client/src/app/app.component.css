@@ -60,11 +60,11 @@
   }
   
   .example-header-image {
-    background-image: url('imgprofilepic.png');
+    background-image: url('/assets/images/imgprofilepic.png');
     background-size: cover;
   }
 
   .header-image-mallow {
-    background-image: url('imgmarshmallows.png');
+    background-image: url('/assets/images/imgmarshmallows.png');
     background-size: cover;
   }
