@@ -33,6 +33,7 @@ import { RecipesComponent } from './recipes.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CatchComponent } from './catch.component';
 import { CommonModule } from '@angular/common';
+import { TestComponent } from './test.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { CommonModule } from '@angular/common';
         HomeComponent,
         RecipesComponent,
         CatchComponent,
+        TestComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],
@@ -75,6 +77,7 @@ import { CommonModule } from '@angular/common';
         LayoutModule,
         MatPaginatorModule,
         CommonModule,
-    ]
+    ],
+    exports: [CatchComponent,]
 })
 export class AppModule { }
