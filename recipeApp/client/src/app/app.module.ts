@@ -31,6 +31,8 @@ import { MenuNavigationComponent} from './menu-navigation/menu-navigation.compon
 import { HomeComponent } from './home.component';
 import { RecipesComponent } from './recipes.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { CatchComponent } from './catch.component';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -44,6 +46,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MenuNavigationComponent,
         HomeComponent,
         RecipesComponent,
+        CatchComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],
@@ -71,6 +74,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatMenuModule,
         LayoutModule,
         MatPaginatorModule,
+        CommonModule,
     ]
 })
 export class AppModule { }
