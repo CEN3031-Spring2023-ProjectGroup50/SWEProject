@@ -1,8 +1,7 @@
-import {Component, ViewChild, OnInit} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import { NgForOf } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
-import { MatPaginator, PageEvent } from '@angular/material/paginator'
-
+import { RecipeDashboardComponent } from './recipe-dashboard/recipe-dashboard.component'
 
 interface IRecipeItem {
     rid: number,
@@ -15,8 +14,8 @@ interface IRecipeItem {
 }
 
 @Component({
-    selector: 'app-catch',
-    templateUrl: './catch.component.html',
+    selector: 'catch',
+    templateUrl: './test.component.html',
     styleUrls: ['./app.component.css']
 
 
@@ -25,14 +24,6 @@ interface IRecipeItem {
 
 export class CatchComponent {
   public backendItems: IRecipeItem[] | undefined = []
-  isLoading = false
-  totalRows = 0
-  pageSize = 10
-  currentPage = 0
-  pageSizeOptions: number[] = [5,10,25,100]
-
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
 
   constructor(
     private httpClient: HttpClient
@@ -40,22 +31,11 @@ export class CatchComponent {
 
   async ngOnInit() {
     await this.loadItems()
-    this.paginator.length = 13000
   }
 
 async loadItems() {
-    let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize})`
-    this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL).toPromise()
-
-    
+    this.backendItems =await this.httpClient.get<IRecipeItem[]>('/server/recipes/bypage?page=1&per_page=10').toPromise()
 
 }
-
-pageChanged(event: PageEvent) {
-    console.log({ event });
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.loadItems();
-  }
 
 }
