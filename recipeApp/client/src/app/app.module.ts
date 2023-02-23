@@ -22,16 +22,13 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { RecipeDashboardComponent } from './recipe-dashboard/recipe-dashboard.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { LayoutModule } from '@angular/cdk/layout';
-import { WelcomeDashboardComponent } from './welcome-dashboard/welcome-dashboard.component';
 import { MenuNavigationComponent} from './menu-navigation/menu-navigation.component';
 import { HomeComponent } from './home.component';
-import { RecipesComponent } from './recipes.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { CatchComponent } from './catch.component';
+import { RecipesComponent } from './recipes.component';
 import { CommonModule } from '@angular/common';
 import { TestComponent } from './test.component';
 
@@ -42,12 +39,9 @@ import { TestComponent } from './test.component';
         LoginEditorComponent,
         registerFormComponent,
         WelcomeComponent,
-        RecipeDashboardComponent,
-        WelcomeDashboardComponent,
         MenuNavigationComponent,
         HomeComponent,
         RecipesComponent,
-        CatchComponent,
         TestComponent,
     ],
     providers: [],
@@ -78,6 +72,6 @@ import { TestComponent } from './test.component';
         MatPaginatorModule,
         CommonModule,
     ],
-    exports: [CatchComponent,]
+    exports: [RecipesComponent,]
 })
 export class AppModule { }

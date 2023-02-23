@@ -10,4 +10,6 @@ import { HttpClient } from '@angular/common/http';
 
 export class HomeComponent {
 
+    // Home shows the menu sidenav & whatever data is selected in the container
+
 }
