@@ -3,6 +3,9 @@ import { NgForOf } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 
 interface IRecipeItem {
     rid: number,
@@ -24,6 +27,9 @@ interface IRecipeItem {
 })
 
 export class CatchComponent {
+
+  showFiller = false;
+
   public backendItems: IRecipeItem[] | undefined = []
   isLoading = false
   totalRows = 0
@@ -35,7 +41,7 @@ export class CatchComponent {
   paginator!: MatPaginator;
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
   ){}
 
   async ngOnInit() {
