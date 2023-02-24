@@ -9,14 +9,19 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="/recipes">Recipes</a>
+      <a mat-list-item href="/home">Recipes</a>
       <a mat-list-item href="/mealplan">Meal Plan</a>
       <a mat-list-item href="/grocerylist">Grocery List</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-
-    <app-recipes></app-recipes>
+    <div *ngIf="router.url ==='/home'">
+      <app-recipes></app-recipes>
+    </div>
+    <div *ngIf="router.url ==='/mealplan'">
+       <h1>Testing mealplan!</h1>
+       <img mat-card-image src="/assets/images/imgpancakes.jpeg" alt="alt text example">
+    </div>
 
   </mat-sidenav-content>
 </mat-sidenav-container>
