@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"recipeApp/httpd/handler"
@@ -172,6 +174,37 @@ func TestRecipeGetByPage(t *testing.T) {
 		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with test conditions "+tc.input)
 		assert.Equal(t, tc.size, len(recipes), "Did not retrieve the correct number of recipes, expected 10.")
 		assert.Equal(t, tc.page*tc.size-1, int(lastrID), "Last retrieved element was different, expected "+strconv.Itoa(lastrID))
+
+	}
+
+}
+
+func TestRecipePost(t *testing.T) {
+
+	r := SetUpRouter()
+
+	r.POST("/server/recipes/add", handler.CreateRecipe())
+	type test struct {
+		Rid                 uint
+		Title               string
+		Instructions        string
+		Ingredients         string
+		Image_Name          string
+		Cleaned_Ingredients string
+	}
+	var testRecipes []test
+
+	testRecipes = append(testRecipes, test{Rid: 13503, Title: "Test Recipe 1", Ingredients: "paprika,pepper,serrano",
+		Instructions: "stir gently", Image_Name: "test_image_1", Cleaned_Ingredients: "na"})
+
+	for tc := range testRecipes {
+		jsonValue, _ := json.Marshal(testRecipes[tc])
+		fmt.Println(string(jsonValue))
+		req, _ := http.NewRequest("POST", "/server/recipes/add", bytes.NewBuffer(jsonValue))
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code, "Unable to post recipe "+testRecipes[tc].Title)
 
 	}
 
