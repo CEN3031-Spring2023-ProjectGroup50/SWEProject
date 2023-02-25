@@ -91,3 +91,37 @@ func TestRecipeGetByKeyword(t *testing.T) {
 	assert.Equal(t, hasKeyword, true, "One or more recipes did not contain keyword 'pumpkin'.")
 
 }
+
+func TestRecipeGetByIngredient(t *testing.T) {
+
+	r := SetUpRouter()
+
+	r.GET("/server/recipes", handler.RecipeGet())
+
+	w := httptest.NewRecorder()
+
+	testWord := "cornichon"
+
+	req, _ := http.NewRequest("GET", "/server/recipes?ingredient=cornichon", nil)
+
+	r.ServeHTTP(w, req)
+	var recipes []models.Recipe
+	json.Unmarshal(w.Body.Bytes(), &recipes)
+
+	hasKeyword := true
+
+	for _, recipe := range recipes {
+		hasKeyword =
+			strings.Contains(strings.ToLower(recipe.Ingredients), testWord)
+
+		if !hasKeyword {
+			break
+		}
+
+	}
+
+	assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with ingredient 'cornichon'.")
+	assert.NotEmpty(t, recipes)
+	assert.Equal(t, hasKeyword, true, "One or more recipes did not contain ingredient 'cornichon'.")
+
+}
