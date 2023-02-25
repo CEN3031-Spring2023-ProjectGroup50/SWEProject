@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"recipeApp/httpd/handler"
@@ -166,7 +165,6 @@ func TestRecipeGetByPage(t *testing.T) {
 		req, _ := http.NewRequest("GET", tc.input, nil)
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
-		fmt.Print(w)
 
 		json.Unmarshal(w.Body.Bytes(), &recipes)
 		lastrID := int(recipes[len(recipes)-1].Rid)
