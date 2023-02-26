@@ -1,4 +1,4 @@
-<button type="button" color=primary mat-button (click)="drawer.toggle()">
+<button type="button" color=primary mat-button (click)="drawer.toggle()" data-cy="menuText">
   Show or hide menu
 </button>
 
@@ -9,9 +9,9 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="/recipes">Recipes</a>
-      <a mat-list-item href="/mealplan">Meal Plan</a>
-      <a mat-list-item href="/grocerylist">Grocery List</a>
+      <a mat-list-item href="/recipes" data-cy="recipes">Recipes</a>
+      <a mat-list-item href="/mealplan" data-cy="mealplan">Meal Plan</a>
+      <a mat-list-item href="/grocerylist" data-cy="grocerylist">Grocery List</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

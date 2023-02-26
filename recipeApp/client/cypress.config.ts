@@ -1,4 +1,6 @@
-export default {
+import { defineConfig } from "cypress";
+
+export default defineConfig({
   component: {
     devServer: {
       framework: "angular",
@@ -6,4 +8,7 @@ export default {
     },
     specPattern: "**/*.cy.ts",
   },
-};
+  e2e: {
+    baseUrl: 'http://localhost:5000',
+  }
+});
