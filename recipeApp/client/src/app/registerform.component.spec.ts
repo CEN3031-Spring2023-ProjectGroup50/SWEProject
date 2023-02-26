@@ -21,6 +21,6 @@ describe('registrationForm', () => {
         expect(true).toBeTruthy();
     })
 
-    // INSERT TESTS AND DESCRIPTIONS BELOW
+    // INSERT UNIT TESTS AND DESCRIPTIONS BELOW
 
 })

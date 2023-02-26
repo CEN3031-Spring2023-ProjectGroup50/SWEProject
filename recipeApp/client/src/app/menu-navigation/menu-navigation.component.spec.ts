@@ -54,4 +54,8 @@ describe('MenuNavigationComponent', () => {
   it('should compile', () => {
     expect(component).toBeTruthy();
   });
+  
+  // INSERT UNIT TESTS AND DESCRIPTIONS BELOW
+
+  
 });
