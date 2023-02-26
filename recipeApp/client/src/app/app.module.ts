@@ -21,6 +21,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
+import { TestBed } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor.component';
