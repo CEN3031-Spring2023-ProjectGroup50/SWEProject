@@ -31,6 +31,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { RecipesComponent } from './recipes.component';
 import { CommonModule } from '@angular/common';
 import { TestComponent } from './test.component';
+import { StepperComponent } from './stepper/stepper.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { TestComponent } from './test.component';
         HomeComponent,
         RecipesComponent,
         TestComponent,
+        StepperComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],
