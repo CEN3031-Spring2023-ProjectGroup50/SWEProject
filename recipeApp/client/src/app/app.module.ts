@@ -30,7 +30,7 @@ import { HomeComponent } from './home.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { RecipesComponent } from './recipes.component';
 import { CommonModule } from '@angular/common';
-import { TestComponent } from './test.component';
+//import { TestComponent } from './test.component';
 
 
 @NgModule({
@@ -42,7 +42,7 @@ import { TestComponent } from './test.component';
         MenuNavigationComponent,
         HomeComponent,
         RecipesComponent,
-        TestComponent,
+        //TestComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],
