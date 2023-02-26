@@ -23,9 +23,6 @@
       "ES2022",
       "dom"
     ],
-    "typeRoots": [ // THIS TO GET ALL THE TYPES
-      "node_modules/@types"
-    ],
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -34,12 +31,7 @@
     "strictTemplates": true
   },
 
-  "include": ["src/**/*"],
-
   "exclude": [
-    "cypress",
-    "node_modules",
     "**/*.spec.ts"
-  ], 
-
+  ]
 }
