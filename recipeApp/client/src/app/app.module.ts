@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import {FormsModule} from '@angular/forms'
-import {HttpClientModule} from '@angular/common/http'
+import {HttpClientModule, HttpClient} from '@angular/common/http'
 import { ReactiveFormsModule } from '@angular/forms'
 import { LoginEditorComponent } from './login-editor.component';
 import { WelcomeComponent } from './welcome.component';
@@ -32,6 +32,10 @@ import { RecipesComponent } from './recipes.component';
 import { CommonModule } from '@angular/common';
 import { TestComponent } from './test.component';
 import { StepperComponent } from './stepper/stepper.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+
 
 
 @NgModule({
@@ -46,12 +50,13 @@ import { StepperComponent } from './stepper/stepper.component';
         TestComponent,
         StepperComponent,
     ],
-    providers: [],
+    providers: [HttpClient],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
+        HttpClient,
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MatInputModule,
@@ -73,6 +78,9 @@ import { StepperComponent } from './stepper/stepper.component';
         LayoutModule,
         MatPaginatorModule,
         CommonModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+        TestBed,
     ],
     exports: [RecipesComponent,]
 })
