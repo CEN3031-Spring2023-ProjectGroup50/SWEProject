@@ -5,7 +5,7 @@
 
 ### User Stories
 
-## User stories planned for Sprint 2
+### User stories planned for Sprint 2
 As a group, we reviewed the incomplete user stories from Sprint 1 and the backlog of user stories and defined the goal for Sprint 2:
 (Tasks marked with an * were transferred from Sprint 1)
 
@@ -82,4 +82,96 @@ Backend unit tests are located in main_test.go
 | TestRecipeDelete          | Able to delete a non-existent recipe (Idempotent)         |
 
 ## API documentation
-[insert here; need to ask if we can link out to another page so that we can capture API documentation outside of sprint summaries.]
+
+### Using the Mallow Web API
+
+
+### REST Operation Groups
+
+| Operation Group | Description                             |
+| :---            | :---                                    |
+| Recipes         | Provides operations related to Recipes  |
+| Users           | Provides operations related to Users    |
+
+#### Users
+
+##### Operations
+
+|               |                       |
+| :---          | :---                  |
+| Create        | Register a User       |
+| Get           | Login a User          |
+
+##### User - Create
+
+> HTTP
+> 
+> POST http://localhost:5000/register
+
+##### Request Body
+
+|  Name         | Required    | Type      | Description           |
+| :---          | :---        | :---      | :---                  |
+| email         | True        | string    | Email address of user |
+| password      | True        | string    | Password of user      |
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | User      | OK                      |
+| 400 Bad Request | Error     | Failed to read body     |
+| 400 Bad Request | Error     | Failed to hash password |
+| 400 Bad Request | Error     | Failed to create user   |
+
+##### Sample Request
+
+> HTTP
+>
+> POST http://localhost:5000/register
+>
+> {
+>   
+>     "email" : test@me.com
+>   
+>     "password" : dy%f99__gNg!88
+>   
+> }
+
+##### User - Get
+
+> HTTP
+> 
+> POST http://localhost:5000/login
+
+##### Request Body
+
+|  Name         | Required    | Type      | Description           |
+| :---          | :---        | :---      | :---                  |
+| email         | True        | string    | Email address of user |
+| password      | True        | string    | Password of user      |
+
+##### Responses
+
+| Name            | Type      | Description               |
+| :---            | :---      | :---                      |
+| 200 OK          | User      | login successful!         |
+| 400 Bad Request | Error     | Failed to read body       |
+| 400 Bad Request | Error     | Invalid email or password |
+| 400 Bad Request | Error     | Failed to create user     |
+
+##### Sample Request
+
+> HTTP
+>
+> POST http://localhost:5000/login
+>
+>
+> {
+>   
+>     "email" : test@me.com
+>   
+>     "password" : dy%f99__gNg!88
+>   
+> }
+
