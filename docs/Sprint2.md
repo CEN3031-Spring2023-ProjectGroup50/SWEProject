@@ -106,7 +106,7 @@ Backend unit tests are located in main_test.go
 
 > HTTP
 > 
-> POST http://localhost:5000/register
+> POST http://localhost:5000/server/register
 
 ##### Request Body
 
@@ -128,11 +128,11 @@ Backend unit tests are located in main_test.go
 
 > HTTP
 >
-> POST http://localhost:5000/register
+> POST http://localhost:5000/server/register
 >
 > {
 >   
->     "email" : test@me.com
+>     "email" : test@me.com,
 >   
 >     "password" : dy%f99__gNg!88
 >   
@@ -142,7 +142,7 @@ Backend unit tests are located in main_test.go
 
 > HTTP
 > 
-> POST http://localhost:5000/login
+> POST http://localhost:5000/server/login
 
 ##### Request Body
 
@@ -164,14 +164,221 @@ Backend unit tests are located in main_test.go
 
 > HTTP
 >
-> POST http://localhost:5000/login
+> POST http://localhost:5000/server/login
 >
 >
 > {
 >   
->     "email" : test@me.com
+>     "email" : test@me.com,
 >   
 >     "password" : dy%f99__gNg!88
 >   
 > }
+
+#### Recipes
+
+##### Operations
+
+|               |                                               |
+| :---          | :---                                          |
+| Create        | Create a Recipe                               |
+| Get           | Retrieve information about Recipe(s)          |
+| Delete        | Delete a Recipe                               |
+
+##### Recipe - Create
+
+> HTTP
+> 
+> POST http://localhost:5000/server/recipes/add
+
+##### Request Body
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| rid                 | True        | uint      | Unique id of recipe   |
+| title               | True        | string    | Title of recipe       |
+| instructions        | True        | string    | Recipe instructions   |
+| ingredients         | True        | string    | Recipe ingredients    |
+| image_name          | True        | string    | Name of recipe image  |
+| cleaned_indredients | True        | string    | Ingredients sanitized |
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+| 400 Bad Request | Error     | Failed to create recipe |
+
+##### Sample Request
+
+> HTTP
+>
+> POST http://localhost:5000/server/recipes/add
+>
+> {
+>   
+>    "rid":13503",
+>    
+>    "title":"Test Recipe 1",
+>    
+>    "instructions":"stir gently",
+>    
+>    "ingredients":"paprika,pepper,serrano",
+>    
+>    "image_name":"test_image_1",
+>    
+>    "cleaned_ingredients":"na"
+>   
+> }
+
+##### Recipe - Delete
+
+> HTTP
+> 
+> DELETE http://localhost:5000/server/recipes/delete/{rid}
+
+##### Request Body
+
+Empty
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+| 400 Bad Request | Error     | Could not delete recipe |
+
+##### Sample Request
+
+> HTTP
+>
+> DELETE http://localhost:5000/server/recipes/delete/13503
+
+##### Recipe - Get
+
+> HTTP
+> 
+> GET http://localhost:5000/server/recipes
+
+##### URI Parameters
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| id                  | False       | string    | Unique id of recipe   |
+| keyword             | False       | string    | Search keyword        |
+| ingredient          | False       | string    | Search ingredient     |
+
+##### Request Body
+
+Empty
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+| 400 Bad Request | Error     | Recipe(s) not found     |
+
+##### Sample Request
+
+> HTTP
+>
+> GET http://localhost:5000/server/recipes?id=1
+>
+
+##### Sample Response
+
+>{
+>
+> "Rid": 1,
+> 
+>  "Title": "Crispy Salt and Pepper Potatoes",
+>  
+>  "Ingredients": "['2 large egg whites', '1 pound new potatoes (about 1 inch in diameter)', '2 teaspoons kosher salt', '¾ teaspoon finely ground black pepper', '1 teaspoon finely chopped rosemary', '1 teaspoon finely chopped thyme', '1 teaspoon finely chopped parsley']",
+>  
+>  "Instructions": "Preheat oven to 400°F and line a rimmed baking sheet with parchment. In a large bowl, whisk the egg whites until foamy (there shouldn’t be any liquid whites in the bowl). Add the potatoes and toss until they’re well coated with the egg whites, then transfer to a strainer or colander and let the excess whites drain. Season the potatoes with the salt, pepper, and herbs. Scatter the potatoes on the baking sheet (make sure they’re not touching) and roast until the potatoes are very crispy and tender when poked with a knife, 15 to 20 minutes (depending on the size of the potatoes).\nTransfer to a bowl and serve.",
+>  
+>  "Image_Name": "crispy-salt-and-pepper-potatoes-dan-kluger",
+>  
+>  "Cleaned_Ingredients": "['2 large egg whites', '1 pound new potatoes (about 1 inch in diameter)', '2 teaspoons kosher salt', '¾ teaspoon finely ground black pepper', '1 teaspoon finely chopped rosemary', '1 teaspoon finely chopped thyme', '1 teaspoon finely chopped parsley']"
+>  
+>}
+
+
+
+##### Sample Request
+
+> HTTP
+>
+> GET http://localhost:5000/server/recipes?ingredient=claw
+>
+
+##### Sample Response
+
+>[
+>
+>  {
+>  
+>    "Rid": 717,
+>    
+>    "Title": "Crawfish Salad",
+>    
+>    "Ingredients": "['1/2 cup crab claw meat, bits removed', '2 cups boiled crawfish tails', '1/2 pound boiled, peeled shrimp', '2 large                    celery stalks, sliced (about 1 cup)', '1/4 cup green bell pepper', '3/4 teaspoon salt', '1/8 teaspoon ground black                       pepper', '1/2 cup mayonnaise', '3 tablespoons lemon juice', 'Pinch of cayenne pepper']",
+>    
+>    "Instructions": "Mix everything together in a bowl and then refrigerate until you are ready to serve. It’s really that easy. (I like                     to mix the mayo and lemon juice together before stirring it into the rest of the ingredients.)\nDo Ahead: Will keep >                     in an airtight container for up to three days before getting funky.",
+>    
+>    "Image_Name": "crawfish-salad",
+>    
+>    "Cleaned_Ingredients": "['1/2 cup crab claw meat, bits removed', '2 cups boiled crawfish tails', '1/2 pound boiled, peeled shrimp', >                              '2 large celery stalks, sliced (about 1 cup)', '1/4 cup green bell pepper', '3/4 teaspoon salt', '1/8 >     >                                teaspoon ground black pepper', '1/2 cup mayonnaise', '3 tablespoons lemon juice', 'Pinch of cayenne >   >                               pepper']"
+>    
+>  }, 
+>  
+>  {...}
+
+ 
+>]  
+
+##### Sample Request
+
+> HTTP
+>
+> GET http://localhost:5000/server/recipes?keyword=boysenberry
+>
+
+##### Sample Response
+
+>[
+>
+>  {
+>  
+>    "Rid": 10122,
+>    
+>    "Title": "Lemon Souffles with Boysenberries",
+>    
+>    "Ingredients": "['6 teaspoons seedless boysenberry jam', '24 frozen boysenberries or blackberries', '2 tablespoons finely grated lemon peel', '3/4 cup sugar, divided', '1 tablespoon cornstarch', '3/4 cup whole milk', '3 large eggs, separated', '2 tablespoons (1/4 stick) butter', '5 tablespoons fresh lemon juice', 'Powdered sugar']",
+>    
+>    "Instructions": "Preheat oven to 400°F. Butter six 3/4-cup ramekins; coat with sugar. Spoon 1 teaspoon jam and 4 frozen berries into bottom of each ramekin. Place on baking sheet. Mash lemon peel and 1/2 cup sugar in heavy medium saucepan; whisk in cornstarch, then milk and yolks. Add 2 tablespoons butter. Bring to boil over medium heat, whisking constantly. Boil until thick pudding forms, whisking constantly, about 1 minute. Transfer to large bowl; mix in lemon juice. Season to taste with salt.\nUsing electric mixer, beat egg whites in medium bowl to soft peaks. Gradually beat in 1/4 cup sugar; beat until stiff but not dry. Fold whites into warm lemon pudding. Spoon mixture atop berries; fill to top. Bake until puffed, set, and golden around edges, about 14 minutes. Sift powdered sugar over.",
+>   "Image_Name": "lemon-souffles-with-boysenberries-241606",
+>    
+>    "Cleaned_Ingredients": "['6 teaspoons seedless boysenberry jam', '24 frozen boysenberries or blackberries', '2 tablespoons finely grated lemon peel', '3/4 cup sugar, divided', '1 tablespoon cornstarch', '3/4 cup whole milk', '3 large eggs, separated', '2 tablespoons (1/4 stick) butter', '5 tablespoons fresh lemon juice', 'Powdered sugar']"
+>    
+>  },
+>  
+>  {
+>    "Rid": 12837,
+>    
+>    "Title": "Roast Lamb with Marionberry-Pecan Crust",
+>    
+>    "Ingredients": "['2 well-trimmed racks of lamb (each about 1 1/4 pounds)', '6 tablespoons marionberry or boysenberry jam', '1/4 cup Dijon mustard', '3/4 cup finely chopped pecans', '6 tablespoons minced fresh Italian parsley', '3/4 cup fresh breadcrumbs made from crustless French bread', '4 tablespoons (1/2 stick) butter,melted']",
+>    
+>    "Instructions": "Preheat oven to 425°F. Sprinkle lamb with salt and pepper. Combine jam and Dijon mustard in small bowl; whisk to blend. Mix pecans, Italian parsley, and fresh breadcrumbs in another small bowl to blend. Spread half of mustard glaze over rounded side of each lamb rack. Pat half of breadcrumb mixture over mustard glaze on each. Drizzle each with 2 tablespoons melted butter. Transfer lamb to large rimmed baking sheet. Roast until breadcrumb topping is golden and thermometer inserted into lamb registers 130°F for medium-rare, about 30 minutes. Cut racks between bones into individual chps and serve.",
+>    
+>    "Image_Name": "roast-lamb-with-marionberry-pecan-crust-231289",
+>    
+>    "Cleaned_Ingredients": "['2 well-trimmed racks of lamb (each about 1 1/4 pounds)', '6 tablespoons marionberry or boysenberry jam', '1/4 cup Dijon mustard', '3/4 cup finely chopped pecans', '6 tablespoons minced fresh Italian parsley', '3/4 cup fresh breadcrumbs made from crustless French bread', '4 tablespoons (1/2 stick) butter', 'melted']"
+>    
+>  }
+>  
+>]
+
 
