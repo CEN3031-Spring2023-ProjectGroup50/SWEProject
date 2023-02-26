@@ -21,9 +21,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor.component';
@@ -48,13 +45,12 @@ import { StepperComponent } from './stepper/stepper.component';
         TestComponent,
         StepperComponent,
     ],
-    providers: [HttpClient],
+    providers: [],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        HttpClient,
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MatInputModule,
@@ -76,9 +72,6 @@ import { StepperComponent } from './stepper/stepper.component';
         LayoutModule,
         MatPaginatorModule,
         CommonModule,
-        RouterTestingModule,
-        HttpClientTestingModule,
-        TestBed,
     ],
     exports: [RecipesComponent,]
 })
