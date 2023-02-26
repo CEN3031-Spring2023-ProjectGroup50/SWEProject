@@ -6,8 +6,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { ReactiveFormsModule, FormsModule, FormGroup,FormControl,FormBuilder } from '@angular/forms'
+import {HttpClientModule, HttpClient} from '@angular/common/http'
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatGridListModule } from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card'
 
 import { MenuNavigationComponent } from './menu-navigation.component';
+import { RecipesComponent } from '../recipes.component';
 
 describe('MenuNavigationComponent', () => {
   let component: MenuNavigationComponent;
@@ -15,7 +21,10 @@ describe('MenuNavigationComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [MenuNavigationComponent],
+      declarations: [
+        MenuNavigationComponent,
+        RecipesComponent,
+      ],
       imports: [
         NoopAnimationsModule,
         LayoutModule,
@@ -24,6 +33,14 @@ describe('MenuNavigationComponent', () => {
         MatListModule,
         MatSidenavModule,
         MatToolbarModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatPaginatorModule,
+        MatGridListModule,
+        MatCardModule
+      ],
+      providers: [
+          HttpClient,
       ]
     }).compileComponents();
   }));
