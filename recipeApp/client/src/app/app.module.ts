@@ -31,8 +31,9 @@ import { registerFormComponent } from './registerform.component';
 import { MenuNavigationComponent} from './menu-navigation/menu-navigation.component';
 import { HomeComponent } from './home.component';
 import { RecipesComponent } from './recipes.component';
-import { TestComponent } from './test.component';
-import { StepperComponent } from './stepper/stepper.component';
+import { CommonModule } from '@angular/common';
+//import { TestComponent } from './test.component';
+
 
 @NgModule({
     declarations: [
@@ -43,8 +44,7 @@ import { StepperComponent } from './stepper/stepper.component';
         MenuNavigationComponent,
         HomeComponent,
         RecipesComponent,
-        TestComponent,
-        StepperComponent,
+        //TestComponent,
     ],
     providers: [],
     bootstrap: [AppComponent],
