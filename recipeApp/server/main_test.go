@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"recipeApp/httpd/handler"
@@ -185,22 +184,29 @@ func TestRecipePost(t *testing.T) {
 
 	r.POST("/server/recipes/add", handler.CreateRecipe())
 	type test struct {
-		Rid                 uint
-		Title               string
-		Instructions        string
-		Ingredients         string
-		Image_Name          string
-		Cleaned_Ingredients string
+		Rid                 uint   `json:"rid"`
+		Title               string `json:"title"`
+		Instructions        string `json:"instructions"`
+		Ingredients         string `json:"ingredients"`
+		Image_name          string `json:"image_name"`
+		Cleaned_ingredients string `json:"cleaned_ingredients"`
 	}
+
 	var testRecipes []test
 
-	testRecipes = append(testRecipes, test{Rid: 13503, Title: "Test Recipe 1", Ingredients: "paprika,pepper,serrano",
-		Instructions: "stir gently", Image_Name: "test_image_1", Cleaned_Ingredients: "na"})
+	testRecipes = append(testRecipes,
+		test{Rid: 25000, Title: "Test Recipe 1", Ingredients: "paprika,pepper,serrano",
+			Instructions: "stir gently", Image_name: "test_image_1", Cleaned_ingredients: "na"},
+		test{Rid: 25001, Title: "Test Recipe 2", Ingredients: "pasta",
+			Instructions: "heat in microwave", Image_name: "test_image_2", Cleaned_ingredients: "na"},
+		test{Rid: 25002, Title: "Test Recipe 3", Ingredients: "deviled eggs, legumes",
+			Instructions: "party time", Image_name: "test_image_3", Cleaned_ingredients: "na"},
+	)
 
 	for tc := range testRecipes {
 		jsonValue, _ := json.Marshal(testRecipes[tc])
-		fmt.Println(string(jsonValue))
 		req, _ := http.NewRequest("POST", "/server/recipes/add", bytes.NewBuffer(jsonValue))
+		req.Header.Set("Content-Type", "application/json")
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
 
@@ -208,4 +214,34 @@ func TestRecipePost(t *testing.T) {
 
 	}
 
+	jsonValue, _ := json.Marshal(testRecipes[1])
+	req, _ := http.NewRequest("POST", "/server/recipes/add", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Posted a non-unique recipe "+testRecipes[1].Title)
+
+}
+
+func TestRecipeDelete(t *testing.T) {
+	r := SetUpRouter()
+	r.DELETE("/server/recipes/delete/:id", handler.DeleteRecipe())
+	rids := []string{"25000", "25001", "25002"}
+
+	for _, val := range rids {
+		req, _ := http.NewRequest("DELETE", "/server/recipes/delete/"+val, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code, "Could not delete recipe "+val)
+
+	}
+
+	bogus := "55000"
+	req, _ := http.NewRequest("DELETE", "/server/recipes/delete/"+bogus, nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code, "Could not delete recipe "+bogus)
 }
