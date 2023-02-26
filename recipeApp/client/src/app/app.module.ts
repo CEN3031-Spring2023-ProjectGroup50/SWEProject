@@ -31,7 +31,6 @@ import { registerFormComponent } from './registerform.component';
 import { MenuNavigationComponent} from './menu-navigation/menu-navigation.component';
 import { HomeComponent } from './home.component';
 import { RecipesComponent } from './recipes.component';
-import { CommonModule } from '@angular/common';
 //import { TestComponent } from './test.component';
 
 
