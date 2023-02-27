@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"recipeApp/httpd/handler"
+	"recipeApp/initialize"
 	"recipeApp/models"
 	"strconv"
 	"strings"
@@ -32,10 +33,12 @@ func TestRecipesRoute(t *testing.T) {
 
 	var recipes []models.Recipe
 	json.Unmarshal(w.Body.Bytes(), &recipes)
+	var numRecipes int64
+	initialize.Db.Table("recipe").Count(&numRecipes)
 
 	assert.Equal(t, http.StatusOK, w.Code, "Did not retrieve all recipes.")
 	assert.NotEmpty(t, recipes, "Empty result for all recipes.")
-	assert.Greater(t, len(recipes), 13000, "Not enough recipes returned.")
+	assert.Equal(t, len(recipes), int(numRecipes), "Not enough recipes returned.")
 
 }
 
