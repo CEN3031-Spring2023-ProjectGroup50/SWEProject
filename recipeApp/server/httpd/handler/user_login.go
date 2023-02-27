@@ -49,10 +49,7 @@ func Login(c *gin.Context) {
 		})
 		return
 	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "login successful!",
-		})
-
+		CreateToken(c)
 	}
 
 }

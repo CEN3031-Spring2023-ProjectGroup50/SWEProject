@@ -46,5 +46,7 @@ func Register(c *gin.Context) {
 
 	}
 
-	c.JSON(http.StatusOK, gin.H{})
+	CreateToken(c)
+
+	//c.JSON(http.StatusOK, gin.H{})
 }
