@@ -64,7 +64,7 @@ Backend unit tests are located in main_test.go
 | :---                      |  :---                                                     |
 | TestRecipesRoute          | Return status OK (Retrieve all Recipes)                   |
 | TestRecipesRoute          | Recipe list is not empty                                  |
-| TestRecipesRoute          | Number of recipes returned > 13000                        |
+| TestRecipesRoute          | Number of recipes returned = records in database          |
 | TestRecipeGetByID         | Return status OK (Single recipe returned)                 |
 | TestRecipeGetByID         | Recipe Id matches the requested recipe                    |
 | TestRecipeGetByKeyword    | Return status OK (Retrieved recipes with keyword)         |
