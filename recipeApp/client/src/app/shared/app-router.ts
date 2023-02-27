@@ -5,6 +5,8 @@ import { LoginEditorComponent } from '../login-editor.component';
 import { registerFormComponent } from '../registerform.component';
 import { CanActivateViaAuthGuard } from '../shared/auth/can-activate-via-auth.guard';
 import { NegateAuthGuard } from './auth/negate-auth.guard';
+//import { TestComponent } from '../test.component';
+import { RecipesComponent } from '../recipes.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginEditorComponent,
@@ -22,6 +24,8 @@ export const routes: Routes = [
       CanActivateViaAuthGuard 
     ]
   },
+  //{ path: 'test', component: TestComponent},
+  { path: 'recipes', component: RecipesComponent},
   { path: '**', redirectTo: '/home' }
 ];
 

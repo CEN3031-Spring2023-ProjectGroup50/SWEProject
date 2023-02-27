@@ -24,4 +24,6 @@ export class HomeComponent implements OnInit {
         );
     }
 
+    // Home shows the menu sidenav & whatever data is selected in the container
+
 }

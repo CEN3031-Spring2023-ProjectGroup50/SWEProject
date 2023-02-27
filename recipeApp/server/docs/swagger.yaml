@@ -1,0 +1,162 @@
+basePath: /
+definitions:
+  handler.recipePostRequest:
+    properties:
+      cleaned_ingredients:
+        type: string
+      image_name:
+        type: string
+      ingredients:
+        type: string
+      instructions:
+        type: string
+      rid:
+        type: integer
+      title:
+        type: string
+    type: object
+  handler.userBody:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+host: localhost:5000
+info:
+  contact:
+    name: Wes Ahearn, Seth Paul
+  description: This is the server for the Mallow Recipe Application
+  license:
+    name: unknown
+  title: Mallow Recipe Server API
+  version: "1.0"
+paths:
+  /server/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: user data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.userBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: allows a user to login
+  /server/recipes:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: specify one or more keywords
+        in: query
+        items:
+          type: string
+        name: keyword
+        type: array
+      - description: specify one or more ingredients
+        in: query
+        items:
+          type: string
+        name: ingredient
+        type: array
+      - description: specify a recipe by id
+        in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: a suite of queries for returning recipes by search term
+  /server/recipes/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: recipe data
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/handler.recipePostRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: post a recipe to the database
+  /server/recipes/bypage:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 1
+        description: specify page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: results per page
+        in: query
+        name: per_page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: get a json object (recipes) of default 10 recipes at a time
+  /server/recipes/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: id of recipe to delete
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: delete a recipe
+  /server/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: user data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.userBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: register a user to the site
+swagger: "2.0"
