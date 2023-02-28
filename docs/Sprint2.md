@@ -1,9 +1,9 @@
 # Sprint 2
-2/8/2023 - 2/22/2023
+2/8/2023 - 3/1/2023 (3 weeks)
 
 ## Work completed in sprint 2
 
-### User Stories
+See the [Sprint 2 Taskboard](https://github.com/orgs/CEN3031-Spring2023-ProjectGroup50/projects/3/views/1) for a kanban style view of work planned and accomplished.
 
 ### User stories planned for Sprint 2
 As a group, we reviewed the incomplete user stories from Sprint 1 and the backlog of user stories and defined the goal for Sprint 2:
@@ -21,7 +21,7 @@ As a group, we reviewed the incomplete user stories from Sprint 1 and the backlo
 5. [4] As a user, I can click on a recipe card (or a recipe in the list) to view a side pane pop-up blade with details about the recipe including ingredients and directions.
 6. [18] As a user I recieve errors that help guide me so I know what to do next. 
 
-### Tasks
+### Tasks planned for Sprint 2
 
 #### Closed:
 
@@ -34,7 +34,7 @@ As a group, we reviewed the incomplete user stories from Sprint 1 and the backlo
 
 #### In Progress:
 
-1. [3] Populate cards on the dashboard iwth real data from the recipe table in DB (Task complete, needs testing)
+1. [3] Populate cards on the dashboard with real data from the recipe table in DB (Task complete, needs testing)
 2. [3] Dynamically populate all recipe cards on the screen with recipe data (Task complete, needs testing)
 3. [3] Add pagination component to recipe dashboard (Task complete, needs testing)
 
@@ -50,10 +50,43 @@ As a group, we reviewed the incomplete user stories from Sprint 1 and the backlo
 ## Frontend
 
 ### Unit tests
-[insert here]
+Frontend Angular unit tests are located in files ending in `.spec.ts`. Each component has its own unit test file.
+
+| Component test file               | Test Description
+| :---                              |  :---
+| menu-navigation.component.spec.ts | Should compile
+| auth.service.spec.ts              | Should be created
+| stepper.component.spec.ts         | Should be created
+| app.component.spec.ts             | Clicking login should route user to login page
+| app.component.spec.ts             | Should render Login and Register buttons with corresponding text
+| app.component.spec.ts             | Should compile
+| home.component.spec.ts            | Placeholder test "should be fine" to ensure proper configuration
+| login-editoor.component.spec.ts   | Placeholder test "should be fine" to ensure proper configuration
+| recipes.component.spec.ts         | Placeholder test "should be fine" to ensure proper configuration
+| recipes.component.spec.ts         | Should be created
+| registerform.component.spec.ts    | Placeholder test "should be fine" to ensure proper configuration
+| registerform.component.spec.ts    | Should render title in a mat-card
+| registerform.component.spec.ts    | Should be created
+| welcome.component.spec.ts         | Should display menu, favorite, and share icons
+| welcome.component.spec.ts         | Should display "Welcome to Mallow" in the initial span
+| welcome.component.spec.ts         | Should compile
+
+When tests are successful, the built-in Angular testing platform (run `ng test`) will generate a screen which looks like this:
+
+![Karma Jasmine unit test results](https://cdn.discordapp.com/attachments/1062897591240638632/1080016209443037184/image.png)
 
 ### Cypress tests
-[insert here]
+Frontend Cypress tests are located in files ending in `.cy.ts`. Each component will have its own Cypress test file.
+
+| Component test file             | Test Name                                                 | Test Description
+| :---                            |  :---                                                     | :--
+| menu-navigation.component.cy.ts | Return status OK (Single recipe returned)                 |
+| stepper.component.cy.ts         | Return status OK (Single recipe returned)                 |
+| registerform.component.spec.ts  | Return status OK (Single recipe returned)                 |
+
+When a test is successful, the Cypress testing platform (run `npx cypress open`) will generate a screen which looks like this:
+
+![Cypress test results](https://cdn.discordapp.com/attachments/1062897591240638631/1080036176133636156/image.png)
 
 ## Backend
 
