@@ -40,12 +40,22 @@ describe('WelcomeComponent', () => {
     expect(component.title).toBe('Welcome to Mallow');
     const title = fixture.debugElement.query(By.css('#welcome')).nativeElement;
     expect(title.innerHTML).toBe('Welcome to Mallow');
-  });
+  })
 
   //should display menu icon, favorite icon, and share icons in the same banner
+  it('should display menu, favorite, and share icons', () => {
+    //menu icon
+    const menuIcon = fixture.debugElement.query(By.css('#menu')).nativeElement;
+    expect(menuIcon.innerHTML).toBe('menu');
 
-  //should display the main descriptions "Discover Recipes", "Set up your meal plan for the week",
-  //and "Generate your grocery list"
+    //favorite icon
+    const favoriteIcon = fixture.debugElement.query(By.css('#favorite')).nativeElement;
+    expect(favoriteIcon.innerHTML).toBe('favorite');
+
+    //share icon
+    const shareIcon = fixture.debugElement.query(By.css('#share')).nativeElement;
+    expect(shareIcon.innerHTML).toBe('share');
+  })
 
 
 })
