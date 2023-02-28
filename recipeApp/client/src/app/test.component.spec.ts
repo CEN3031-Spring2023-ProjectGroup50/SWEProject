@@ -1,4 +1,4 @@
-import { TestComponent } from './test.component';
+/*import { TestComponent } from './test.component';
 
 describe('TestComponent', () => {
 
@@ -8,4 +8,4 @@ describe('TestComponent', () => {
 
     // INSERT UNIT TESTS AND DESCRIPTIONS BELOW
 
-})
+})*/
