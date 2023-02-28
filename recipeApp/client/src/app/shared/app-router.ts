@@ -25,7 +25,11 @@ export const routes: Routes = [
     ]
   },
   //{ path: 'test', component: TestComponent},
-  { path: 'recipes', component: RecipesComponent},
+  { path: 'recipes', component: RecipesComponent,
+    canActivate: [ 
+      CanActivateViaAuthGuard 
+    ]
+  },
   { path: '**', redirectTo: '/home' }
 ];
 

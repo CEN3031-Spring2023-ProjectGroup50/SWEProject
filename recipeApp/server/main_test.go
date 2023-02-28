@@ -248,3 +248,71 @@ func TestRecipeDelete(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, w.Code, "Could not delete recipe "+bogus)
 }
+
+func TestLogin(t *testing.T) {
+
+	r := SetUpRouter()
+
+	r.POST("/server/login", handler.Login)
+	type test struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	var testUsers []test
+
+	testUsers = append(testUsers,
+		test{Email: "seth@gmail.com", Password: "food"},
+		test{Email: "ThisIsNotValidAccount", Password: "ThisIsNotValidAccount"},
+	)
+
+	jsonValue, _ := json.Marshal(testUsers[0])
+	req, _ := http.NewRequest("POST", "/server/login", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code, "Login failed")
+
+	jsonValue, _ = json.Marshal(testUsers[1])
+	req, _ = http.NewRequest("POST", "/server/login", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Content-Type", "application/json")
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Login failed")
+}
+
+func TestRegister(t *testing.T) {
+
+	r := SetUpRouter()
+
+	r.POST("/server/register", handler.Register)
+	type test struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	var testUsers []test
+
+	testUsers = append(testUsers,
+		test{Email: "seth@gmail.com", Password: "food"},
+		test{Email: "newaccount@yahoo.com", Password: "password"},
+	)
+
+	jsonValue, _ := json.Marshal(testUsers[0])
+	req, _ := http.NewRequest("POST", "/server/register", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Register failed or user already exists")
+
+	jsonValue, _ = json.Marshal(testUsers[1])
+	req, _ = http.NewRequest("POST", "/server/register", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Content-Type", "application/json")
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code, "Register failed or user already exists")
+}

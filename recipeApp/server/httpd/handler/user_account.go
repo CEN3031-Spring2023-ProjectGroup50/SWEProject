@@ -21,7 +21,7 @@ type JWTData struct {
 	CustomClaims map[string]string `json:"custom,omitempty"`
 }
 
-func CreateToken(c *gin.Context) {
+func CreateToken(c *gin.Context) error {
 	// create JWT token
 	claims := JWTData{
 		StandardClaims: jwt.StandardClaims{
@@ -40,7 +40,7 @@ func CreateToken(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"error": "Login failed",
 		})
-		return
+		return err
 	}
 
 	json, err := json.Marshal(struct {
@@ -54,10 +54,12 @@ func CreateToken(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"error": "Login failed",
 		})
-		return
+		return err
 	}
 
 	c.Writer.Write(json)
+
+	return nil
 }
 
 func Account(c *gin.Context) {

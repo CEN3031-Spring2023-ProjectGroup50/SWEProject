@@ -49,7 +49,13 @@ func Login(c *gin.Context) {
 		})
 		return
 	} else {
-		CreateToken(c)
+		authErr := CreateToken(c)
+		if authErr != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Token creation failed",
+			})
+			return
+		}
 	}
 
 }

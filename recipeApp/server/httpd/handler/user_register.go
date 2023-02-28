@@ -46,7 +46,14 @@ func Register(c *gin.Context) {
 
 	}
 
-	CreateToken(c)
+	authErr := CreateToken(c)
+
+	if authErr != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Token creation failed",
+		})
+		return
+	}
 
 	//c.JSON(http.StatusOK, gin.H{})
 }
