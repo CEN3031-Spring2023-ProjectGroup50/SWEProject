@@ -71,6 +71,7 @@ describe('registrationForm', () => {
   }));
 
 
+
   // The email field, password field, and register button should render
 
   // Display error message when email is blank
