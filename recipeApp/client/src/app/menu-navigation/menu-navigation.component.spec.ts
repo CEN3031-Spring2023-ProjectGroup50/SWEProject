@@ -7,13 +7,16 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule, FormsModule, FormGroup,FormControl,FormBuilder } from '@angular/forms'
-import {HttpClientModule, HttpClient} from '@angular/common/http'
+import {HttpClientModule, HttpClient,HTTP_INTERCEPTORS} from '@angular/common/http'
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card'
 
 import { MenuNavigationComponent } from './menu-navigation.component';
 import { RecipesComponent } from '../recipes.component';
+
+import { AuthInterceptorService } from '../shared/auth/auth-interceptor.service';
+import { AuthService } from '../shared/auth/auth.service';
 
 describe('MenuNavigationComponent', () => {
   let component: MenuNavigationComponent;
@@ -41,6 +44,12 @@ describe('MenuNavigationComponent', () => {
       ],
       providers: [
           HttpClient,
+          AuthService,
+          {
+              provide: HTTP_INTERCEPTORS,
+              useClass: AuthInterceptorService,
+              multi: true
+          },
       ]
     }).compileComponents();
   }));
@@ -55,7 +64,5 @@ describe('MenuNavigationComponent', () => {
     expect(component).toBeTruthy();
   });
   
-  // INSERT UNIT TESTS AND DESCRIPTIONS BELOW
-
   
 });
