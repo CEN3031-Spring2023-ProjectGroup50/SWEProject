@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms'
-import {HttpClientModule, HttpClient} from '@angular/common/http'
+import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http'
 import { ReactiveFormsModule } from '@angular/forms'
 import {MatInputModule} from '@angular/material/input'
 import {MatToolbarModule} from '@angular/material/toolbar'
@@ -33,6 +33,10 @@ import { HomeComponent } from './home.component';
 import { RecipesComponent } from './recipes.component';
 //import { TestComponent } from './test.component';
 
+import { AuthService } from './shared/auth/auth.service';
+import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
+import { CanActivateViaAuthGuard } from './shared/auth/can-activate-via-auth.guard';
+import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
 
 @NgModule({
     declarations: [
@@ -45,7 +49,16 @@ import { RecipesComponent } from './recipes.component';
         RecipesComponent,
         //TestComponent,
     ],
-    providers: [],
+    providers: [
+        AuthService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptorService,
+            multi: true
+        },
+        CanActivateViaAuthGuard,
+        NegateAuthGuard
+    ],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
