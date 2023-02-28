@@ -300,6 +300,8 @@ func TestRegister(t *testing.T) {
 		test{Email: "newaccount@yahoo.com", Password: "password"},
 	)
 
+	initialize.Db.Table("users").Where("email = ?", "newaccount@yahoo.com").Delete(testUsers[1])
+
 	jsonValue, _ := json.Marshal(testUsers[0])
 	req, _ := http.NewRequest("POST", "/server/register", bytes.NewBuffer(jsonValue))
 	req.Header.Set("Content-Type", "application/json")
