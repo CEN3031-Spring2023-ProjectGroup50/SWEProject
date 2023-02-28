@@ -80,6 +80,10 @@ Backend unit tests are located in main_test.go
 | TestRecipePost            | Not able to post non-unique recipe                        |
 | TestRecipeDelete          | Able to delete recipes added in TestRecipePost            |
 | TestRecipeDelete          | Able to delete a non-existent recipe (Idempotent)         |
+| TestLogin                 | Test valid user login returns status OK                   |
+| TestLogin                 | Test invalid user login returns status 400                |
+| TestRegister              | Test existing user cannot be registered                   |
+| TestRegister              | Test new user register returns status OK                  |
 
 ## API documentation
 
@@ -94,6 +98,9 @@ Backend unit tests are located in main_test.go
 | Users           | Provides operations related to Users    |
 
 #### Users
+
+##### Security
+HMAC generated auth token
 
 ##### Operations
 
