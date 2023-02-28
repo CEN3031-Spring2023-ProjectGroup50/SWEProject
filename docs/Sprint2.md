@@ -455,6 +455,10 @@ Empty
 Our internal API document can be found at:
 
 http://localhost:5000/server/docs/index.html#  when running the server locally.
-    
 
+![The API test platform](https://cdn.discordapp.com/attachments/1062897591240638631/1080041659531800646/image.png)
+
+Example trying out a sample API call:
+![GET Recipes sample API call](https://cdn.discordapp.com/attachments/1062897591240638631/1080042411545350195/image.png)
+![GET Recipes sample API call](https://cdn.discordapp.com/attachments/1062897591240638631/1080043016133300244/image.png)
 
