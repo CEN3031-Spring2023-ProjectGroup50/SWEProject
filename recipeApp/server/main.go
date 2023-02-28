@@ -4,7 +4,9 @@ import (
 	_ "recipeApp/docs"
 	"recipeApp/httpd/handler"
 	"recipeApp/initialize"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -28,10 +30,21 @@ func main() {
 
 	r := gin.Default()
 
+	// initialize CORS middleware
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"http://localhost:4200"},
+		AllowMethods: []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders: []string{"Origin", "Content-Type", "Authorization",
+			"Cache-Control"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 	server := r.Group("/server")
 	{
 		server.POST("/register", handler.Register)
 		server.POST("/login", handler.Login)
+		server.GET("/account", handler.Account)
 		server.GET("/recipes", handler.RecipeGet())
 		server.POST("/recipes/add", handler.CreateRecipe())
 		server.GET("/recipes/bypage", handler.RecipeGetByPage())

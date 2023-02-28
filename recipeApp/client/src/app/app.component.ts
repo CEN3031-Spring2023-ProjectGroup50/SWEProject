@@ -1,4 +1,5 @@
 import { Component} from '@angular/core';
+import { AuthService } from './shared/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,7 @@ export class AppComponent {
 
   description = 'TBD';
 
+  constructor(private authService: AuthService) {
+
+  }
   }
