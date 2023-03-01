@@ -13,8 +13,8 @@ import (
 // @Summary a suite of queries for returning recipes by search term
 // @Accept json
 // @Produce json
-// @Param keyword	query	[]string	false	"specify one or more keywords"
-// @Param ingredient	query	[]string false "specify one or more ingredients"
+// @Param keyword	query	[]string	false	"specify one or more keywords"	collectionFormat(multi)
+// @Param ingredient	query	[]string false "specify one or more ingredients"	collectionFormat(multi)
 // @Param id	query	int	false "specify a recipe by id"
 // @Success 200
 // @Failure 400

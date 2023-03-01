@@ -56,13 +56,15 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: specify one or more keywords
+      - collectionFormat: multi
+        description: specify one or more keywords
         in: query
         items:
           type: string
         name: keyword
         type: array
-      - description: specify one or more ingredients
+      - collectionFormat: multi
+        description: specify one or more ingredients
         in: query
         items:
           type: string

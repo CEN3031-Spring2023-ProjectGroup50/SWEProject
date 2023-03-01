@@ -65,6 +65,7 @@ const docTemplate = `{
                         "items": {
                             "type": "string"
                         },
+                        "collectionFormat": "multi",
                         "description": "specify one or more keywords",
                         "name": "keyword",
                         "in": "query"
@@ -74,6 +75,7 @@ const docTemplate = `{
                         "items": {
                             "type": "string"
                         },
+                        "collectionFormat": "multi",
                         "description": "specify one or more ingredients",
                         "name": "ingredient",
                         "in": "query"
