@@ -22,6 +22,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor.component';
@@ -31,6 +32,7 @@ import { registerFormComponent } from './registerform.component';
 import { MenuNavigationComponent} from './menu-navigation/menu-navigation.component';
 import { HomeComponent } from './home.component';
 import { RecipesComponent } from './recipes.component';
+import { StepperComponent } from './stepper/stepper.component';
 //import { TestComponent } from './test.component';
 
 import { AuthService } from './shared/auth/auth.service';
@@ -47,6 +49,7 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         MenuNavigationComponent,
         HomeComponent,
         RecipesComponent,
+        StepperComponent,
         //TestComponent,
     ],
     providers: [
@@ -85,6 +88,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         LayoutModule,
         MatPaginatorModule,
         CommonModule,
+        RouterTestingModule,
+        RouterModule,
     ],
     exports: [RecipesComponent,]
 })

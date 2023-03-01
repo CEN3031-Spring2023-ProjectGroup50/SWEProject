@@ -7,6 +7,10 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { MenuNavigationComponent } from "./menu-navigation.component";
 
+import {HttpClientModule, HttpClient,HTTP_INTERCEPTORS} from '@angular/common/http'
+import { AuthInterceptorService } from '../shared/auth/auth-interceptor.service';
+import { AuthService } from '../shared/auth/auth.service';
+
 describe('Menu Navigation Component', () => {
 
   it('mounts', () => {
@@ -20,6 +24,16 @@ describe('Menu Navigation Component', () => {
         MatListModule,
         MatSidenavModule,
         MatToolbarModule,
+        HttpClientModule
+      ],
+      providers:[
+        HttpClient,
+        AuthService,
+          {
+              provide: HTTP_INTERCEPTORS,
+              useClass: AuthInterceptorService,
+              multi: true
+          },
       ]
     })
   })
@@ -35,6 +49,16 @@ describe('Menu Navigation Component', () => {
         MatListModule,
         MatSidenavModule,
         MatToolbarModule,
+        HttpClientModule,
+      ],
+      providers:[
+        HttpClient,
+        AuthService,
+          {
+              provide: HTTP_INTERCEPTORS,
+              useClass: AuthInterceptorService,
+              multi: true
+          },
       ]
     })
     cy.get('[data-cy="menuText"]')
