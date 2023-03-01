@@ -462,3 +462,8 @@ Example trying out a sample API call:
 ![GET Recipes sample API call](https://cdn.discordapp.com/attachments/1062897591240638631/1080042411545350195/image.png)
 ![GET Recipes sample API call](https://cdn.discordapp.com/attachments/1062897591240638631/1080043016133300244/image.png)
 
+
+## Links to sprint 2 video recordings
+
+* [Backend Video (Part 1)](https://drive.google.com/file/d/1F9gZrrbhkcpaXFJm1FpqXWtiIGAwF9Gj/view?usp=share_link)
+* [Frontend Video (Part 2)](https://drive.google.com/file/d/1MrCwwp7GUGyxfLz1cL6jTnO5nHU0d446/view?usp=share_link)
