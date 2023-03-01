@@ -37,11 +37,11 @@ describe('registrationForm', () => {
   let component: registerFormComponent;
   let fixture: ComponentFixture<registerFormComponent>;
 
-  const routes: Routes = [
-    {path: '', redirectTo: 'themen', pathMatch: 'full'},
-    {path: 'meeting', component: HomeComponent},
-    {path: '**', redirectTo: 'themen', pathMatch: 'full'}
-  ];
+  // const routes: Routes = [
+  //   {path: '', redirectTo: 'themen', pathMatch: 'full'},
+  //   {path: 'meeting', component: HomeComponent},
+  //   {path: '**', redirectTo: 'themen', pathMatch: 'full'}
+  // ];
 
   beforeEach(waitForAsync(() => {
 
@@ -74,7 +74,7 @@ describe('registrationForm', () => {
         LayoutModule,
         MatPaginatorModule,
         CommonModule,
-        RouterTestingModule
+        //RouterTestingModule
       ],
       providers: [
         HttpClient,
