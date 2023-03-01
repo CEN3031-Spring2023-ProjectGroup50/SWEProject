@@ -241,7 +241,7 @@ HMAC generated auth token
 | instructions        | True        | string    | Recipe instructions   |
 | ingredients         | True        | string    | Recipe ingredients    |
 | image_name          | True        | string    | Name of recipe image  |
-| cleaned_indredients | True        | string    | Ingredients sanitized |
+| cleaned_ingredients | True        | string    | Ingredients sanitized |
 
 ##### Responses
 
