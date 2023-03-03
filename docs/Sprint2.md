@@ -241,7 +241,7 @@ HMAC generated auth token
 | instructions        | True        | string    | Recipe instructions   |
 | ingredients         | True        | string    | Recipe ingredients    |
 | image_name          | True        | string    | Name of recipe image  |
-| cleaned_indredients | True        | string    | Ingredients sanitized |
+| cleaned_ingredients | True        | string    | Ingredients sanitized |
 
 ##### Responses
 
@@ -462,3 +462,17 @@ Example trying out a sample API call:
 ![GET Recipes sample API call](https://cdn.discordapp.com/attachments/1062897591240638631/1080042411545350195/image.png)
 ![GET Recipes sample API call](https://cdn.discordapp.com/attachments/1062897591240638631/1080043016133300244/image.png)
 
+
+## Links to sprint 2 video recordings
+
+* [Backend Video (Part 1)](https://drive.google.com/file/d/1F9gZrrbhkcpaXFJm1FpqXWtiIGAwF9Gj/view?usp=share_link)
+  * 0:00 - Sprint overview
+  * 1:55 - Swagger tooling for API interaction
+  * 4:22 - Backend updates
+  * 14:46 - Backend tests
+* [Frontend Video (Part 2)](https://drive.google.com/file/d/1MrCwwp7GUGyxfLz1cL6jTnO5nHU0d446/view?usp=share_link)
+  * 0:00 - Application demo and frontend updates 
+  * 6:27 - Frontend tests (cypress)
+  * 8:33 - Frontend tests (unit tests)
+  * 11:25 - What's next
+  * 12:35 - Closing comments
