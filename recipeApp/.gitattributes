@@ -1,1 +1,3 @@
 server/initialize/initDB.go filter=git-crypt diff=git-crypt
+client/src/app/shared/auth/auth.service.ts filter=git-crypt diff=git-crypt
+server/httpd/handler/user_account.go filter=git-crypt diff=git-crypt
