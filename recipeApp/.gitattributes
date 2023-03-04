@@ -1,0 +1,1 @@
+server/initialize/initDB.go filter=git-crypt diff=git-crypt
