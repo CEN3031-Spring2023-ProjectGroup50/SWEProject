@@ -2,8 +2,6 @@ basePath: /
 definitions:
   handler.recipePostRequest:
     properties:
-      cleaned_ingredients:
-        type: string
       image_name:
         type: string
       ingredients:
@@ -14,6 +12,8 @@ definitions:
         type: integer
       title:
         type: string
+      uid:
+        type: integer
     type: object
   handler.userBody:
     properties:

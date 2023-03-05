@@ -18,9 +18,16 @@ import (
 func DeleteRecipe() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Param("id")
-
+		mallowid := uint(1)
 		var recipe models.Recipe
-		result := initialize.Db.Table("recipe").Where("rid = ?", id).Delete(&recipe)
+		initialize.Db.Table("recipe").Where("rid = ?", id).Find(&recipe)
+		if recipe.Uid == mallowid {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Could not delete recipe",
+			})
+			return
+		}
+		result := initialize.Db.Table("recipe").Where("rid = ? and uid !=?", id, mallowid).Delete(&recipe)
 
 		if result.Error != nil {
 			c.JSON(http.StatusBadRequest, gin.H{

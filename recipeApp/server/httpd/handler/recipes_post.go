@@ -45,7 +45,7 @@ func CreateRecipe() gin.HandlerFunc {
 		}
 		var numRecipes int64
 		initialize.Db.Table("recipe").Count(&numRecipes)
-		recipe.Uid = uint(numRecipes + 1)
+		recipe.Rid = uint(numRecipes + 1)
 		result := initialize.Db.Table("recipe").Create(&recipe)
 
 		if result.Error != nil {

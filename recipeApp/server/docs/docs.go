@@ -225,9 +225,6 @@ const docTemplate = `{
         "handler.recipePostRequest": {
             "type": "object",
             "properties": {
-                "cleaned_ingredients": {
-                    "type": "string"
-                },
                 "image_name": {
                     "type": "string"
                 },
@@ -242,6 +239,9 @@ const docTemplate = `{
                 },
                 "title": {
                     "type": "string"
+                },
+                "uid": {
+                    "type": "integer"
                 }
             }
         },
