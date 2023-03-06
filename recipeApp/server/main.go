@@ -55,5 +55,3 @@ func main() {
 	r.Run("0.0.0.0:5000") //Listen and serve
 
 }
-
-//committing conflict!
