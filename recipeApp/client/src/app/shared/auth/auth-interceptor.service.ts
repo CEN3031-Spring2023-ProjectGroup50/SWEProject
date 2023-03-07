@@ -1,6 +1,8 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpInterceptor } from '@angular/common/http';
 import { AuthService } from './auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { tap } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
@@ -14,6 +16,14 @@ export class AuthInterceptorService implements HttpInterceptor {
             headers: req.headers.set('Authorization', 'Bearer ' + authService.token)
         });
 
-        return next.handle(authRequest);
+        return next.handle(authRequest).pipe( tap(() => {},
+        (err: any) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status !== 401) {
+           return;
+          }
+          authService.logout();
+        }
+      }));
     }
 }
