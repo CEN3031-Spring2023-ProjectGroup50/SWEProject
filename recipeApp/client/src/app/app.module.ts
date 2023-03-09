@@ -37,6 +37,8 @@ import { RecipesComponent } from './recipes.component';
 import { StepperComponent } from './stepper/stepper.component';
 import { MealPlanComponent } from './meal-plan/meal-plan.component';
 import { MealPlanPageComponent } from './meal-plan-page/meal-plan-page.component';
+import { GroceryListComponent } from './grocery-list/grocery-list.component';
+import { GroceryListPageComponent } from './grocery-list-page/grocery-list-page.component';
 //import { TestComponent } from './test.component';
 
 import { AuthService } from './shared/auth/auth.service';
@@ -56,6 +58,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         StepperComponent,
         MealPlanComponent,
         MealPlanPageComponent,
+        GroceryListComponent,
+        GroceryListPageComponent,
         //TestComponent,
     ],
     providers: [

@@ -10,7 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-meal-plan',
   templateUrl: './meal-plan.component.html',
-  styleUrls: ['../app.component.css'],
+  styleUrls: ['./meal-plan.component.css'],
 
 })
 export class MealPlanComponent {
