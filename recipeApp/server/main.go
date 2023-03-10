@@ -35,7 +35,7 @@ func main() {
 		AllowOrigins: []string{"http://localhost:4200"},
 		AllowMethods: []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders: []string{"Origin", "Content-Type", "Authorization",
-			"Cache-Control"},
+			"Cache-Control", "Refresh"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
@@ -45,6 +45,7 @@ func main() {
 		server.POST("/register", handler.Register)
 		server.POST("/login", handler.Login)
 		server.GET("/account", handler.Account)
+		server.POST("/account/refresh", handler.RefreshToken)
 		server.GET("/recipes", handler.RecipeGet())
 		server.POST("/recipes/add", handler.CreateRecipe())
 		server.GET("/recipes/bypage", handler.RecipeGetByPage())

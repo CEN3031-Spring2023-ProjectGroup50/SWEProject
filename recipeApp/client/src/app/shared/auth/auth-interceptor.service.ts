@@ -14,6 +14,7 @@ export class AuthInterceptorService implements HttpInterceptor {
         const authRequest = req.clone({
             // tslint:disable-next-line:max-line-length
             headers: req.headers.set('Authorization', 'Bearer ' + authService.token)
+            .set('Refresh', 'Bearer ' + authService.refreshToken)
         });
 
         return next.handle(authRequest).pipe( tap(() => {},
@@ -22,7 +23,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           if (err.status !== 401) {
            return;
           }
-          authService.logout();
+          authService.refresh();
         }
       }));
     }

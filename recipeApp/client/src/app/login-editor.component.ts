@@ -35,9 +35,8 @@ export class LoginEditorComponent implements OnInit {
           password: this.loginForm.value['password']
         }).subscribe(
             (res) => { 
-                console.log(res)
                 const val = this.loginForm.value;
-                this.authService.login(val.email, val.password);   
+                this.authService.login(res);   
             },
             (err) => {
                 console.log(err.message)
