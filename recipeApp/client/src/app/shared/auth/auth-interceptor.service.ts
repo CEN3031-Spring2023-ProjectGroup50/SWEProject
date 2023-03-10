@@ -23,7 +23,8 @@ export class AuthInterceptorService implements HttpInterceptor {
           if (err.status !== 401) {
            return;
           }
-          authService.refresh();
+          //authService.refresh();
+          authService.logout();
         }
       }));
     }
