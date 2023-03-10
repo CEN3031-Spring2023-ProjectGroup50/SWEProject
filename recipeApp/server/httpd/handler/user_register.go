@@ -46,7 +46,9 @@ func Register(c *gin.Context) {
 
 	}
 
-	authErr := CreateToken(c)
+	initialize.Db.First(&user, "email = ?", body.Email)
+
+	authErr := CreateToken(user.ID, c)
 
 	if authErr != nil {
 		c.JSON(http.StatusBadRequest, gin.H{

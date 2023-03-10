@@ -37,7 +37,7 @@ export class registerFormComponent implements OnInit {
             (res) => { 
                 console.log(res)
                 const val = this.registerForm.value;
-                this.authService.login(val.email, val.password);
+                this.authService.login(res);
             },
             (err) => {
                 console.log(err.message)
