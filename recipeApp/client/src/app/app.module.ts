@@ -23,6 +23,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table'
 
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor.component';
@@ -33,6 +35,10 @@ import { MenuNavigationComponent} from './menu-navigation/menu-navigation.compon
 import { HomeComponent } from './home.component';
 import { RecipesComponent } from './recipes.component';
 import { StepperComponent } from './stepper/stepper.component';
+import { MealPlanComponent } from './meal-plan/meal-plan.component';
+import { MealPlanPageComponent } from './meal-plan-page/meal-plan-page.component';
+import { GroceryListComponent } from './grocery-list/grocery-list.component';
+import { GroceryListPageComponent } from './grocery-list-page/grocery-list-page.component';
 //import { TestComponent } from './test.component';
 
 import { AuthService } from './shared/auth/auth.service';
@@ -50,6 +56,10 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         HomeComponent,
         RecipesComponent,
         StepperComponent,
+        MealPlanComponent,
+        MealPlanPageComponent,
+        GroceryListComponent,
+        GroceryListPageComponent,
         //TestComponent,
     ],
     providers: [
@@ -90,6 +100,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         CommonModule,
         //RouterTestingModule,
         RouterModule,
+        MatTableModule,
+        MatSortModule,
     ],
     exports: [RecipesComponent,]
 })

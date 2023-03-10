@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../shared/auth/auth.service';
+import { Router, Routes, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-menu-navigation',
@@ -19,6 +20,7 @@ export class MenuNavigationComponent {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    public authService: AuthService
+    public authService: AuthService,
+    public router: Router
     ) {}
 }

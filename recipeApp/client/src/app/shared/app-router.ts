@@ -7,6 +7,8 @@ import { CanActivateViaAuthGuard } from '../shared/auth/can-activate-via-auth.gu
 import { NegateAuthGuard } from './auth/negate-auth.guard';
 //import { TestComponent } from '../test.component';
 import { RecipesComponent } from '../recipes.component';
+import { MealPlanPageComponent } from '../meal-plan-page/meal-plan-page.component';
+import { GroceryListPageComponent } from '../grocery-list-page/grocery-list-page.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginEditorComponent,
@@ -25,11 +27,28 @@ export const routes: Routes = [
     ]
   },
   //{ path: 'test', component: TestComponent},
+
+  /*
   { path: 'recipes', component: RecipesComponent,
     canActivate: [ 
       CanActivateViaAuthGuard 
     ]
   },
+  */
+
+  { path: 'mealplan', component: MealPlanPageComponent,
+    canActivate: [ 
+      CanActivateViaAuthGuard 
+    ]
+  },
+
+  { path: 'grocerylist', component: GroceryListPageComponent,
+  canActivate: [ 
+    CanActivateViaAuthGuard 
+  ]
+},
+
+
   { path: '**', redirectTo: '/home' }
 ];
 
