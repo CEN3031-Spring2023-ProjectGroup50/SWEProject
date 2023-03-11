@@ -50,7 +50,7 @@ export class RecipesComponent {
   }
 
 async loadItems() {
-    let URL = `/server/rwimage/bypage?page=${this.currentPage+1}&per_page=${this.pageSize})`
+    let URL = `/server/rwimage/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
     this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL).toPromise()
 
     
