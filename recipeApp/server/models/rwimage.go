@@ -8,5 +8,5 @@ type Rwimage struct {
 	Instructions string
 	Image_Name   string
 	Uid          uint
-	Image        []byte `gorm:"type:jsonb"`
+	Image        []byte `gorm:"type:bytea"`
 }
