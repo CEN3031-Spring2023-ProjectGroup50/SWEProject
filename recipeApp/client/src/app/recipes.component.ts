@@ -8,12 +8,13 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
 interface IRecipeItem {
-    rid: number,
+    Rid: number,
     Title: string,
-    ingredients: string,
-    instructions: string,
-    image_name: string,
-    cleaned_ingredients: string
+    Ingredients: string,
+    Instructions: string,
+    Image_name: string,
+    Uid: number,
+    Image: Uint8Array[],
 
 }
 
@@ -45,10 +46,11 @@ export class RecipesComponent {
   async ngOnInit() {
     await this.loadItems()
     this.paginator.length = 13000
+    console.log(this.backendItems)
   }
 
 async loadItems() {
-    let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize})`
+    let URL = `/server/rwimage/bypage?page=${this.currentPage+1}&per_page=${this.pageSize})`
     this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL).toPromise()
 
     
