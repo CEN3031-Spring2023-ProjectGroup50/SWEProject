@@ -1,7 +1,8 @@
 import {Component, ViewChild, OnInit} from '@angular/core'
 import { NgForOf } from '@angular/common'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpParams } from '@angular/common/http'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
+import {AuthService} from './shared/auth/auth.service'
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -37,6 +38,8 @@ export class RecipesComponent {
 
   public backendItems: IRecipeItem[] | undefined = []
   public recipecount: rCount | undefined
+  defaultAccount = "0"
+  accountData="0"
   isLoading = false
   totalRows = 0
   pageSize = 10
@@ -51,9 +54,17 @@ export class RecipesComponent {
 
   constructor(
     private httpClient: HttpClient,
+    private authService: AuthService
   ){}
 
   async ngOnInit() {
+    this.authService.getAccount().subscribe(
+      (res: any) => {
+          this.accountData = res.toString();
+          console.log("local ", this.accountData)
+          //console.log(this.accountData)
+      }
+    );
     await this.loadItems()
     //this.httpClient.get(`/server/recipecount`).subscribe((data=>toInteger(this.totalRows)))
     
@@ -61,14 +72,19 @@ export class RecipesComponent {
   }
 
 async loadItems() {
+
+    
     let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
     console.log("all recipes will show")
+    let params = new HttpParams().set('uid',this.defaultAccount)
+    
   
     if (this.filter == "user"){
-      let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
-      console.log("user recipes will show")
+      params = new HttpParams().set('uid',this.accountData) 
+
     }
-    this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL).toPromise()
+    
+    this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL,{params: params}).toPromise()
     this.httpClient.get<rCount>(`/server/recipecount`).subscribe((data)=>{this.totalRows = data.total})
 
     
@@ -88,14 +104,15 @@ pageBottomChanged(event: PageEvent) {
     this.loadItems();
   }
 
-onAll(event: { value: string; }) {
+async onAll(event: { value: string; }) {
   this.filter = "all"
-  this.loadItems();
+  await this.loadItems();
 }
 
-onUser(event: { value: string; }) {
+async onUser(event: { value: string; }) {
   this.filter = "user"
-  this.loadItems();
+  this.currentPage = 0
+  await this.loadItems();
 }
 
 

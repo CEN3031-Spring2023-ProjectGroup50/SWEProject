@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"recipeApp/initialize"
 	"recipeApp/models"
@@ -19,7 +20,22 @@ import (
 // @Router /server/recipes/bypage [get]
 func RecipeGetByPage() gin.HandlerFunc {
 	return func(c *gin.Context) {
+
+		type req struct {
+			Uid string `json:"uid"`
+		}
+		body := req{}
+
+		if c.Bind(&body) != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Failed to read body",
+			})
+			return
+		}
+		fmt.Printf(body.Uid)
 		var recipes []models.Recipe
+
+		uid, _ := strconv.Atoi(c.Query("uid"))
 
 		page, _ := strconv.Atoi(c.Query("page"))
 		if page <= 0 {
@@ -35,7 +51,12 @@ func RecipeGetByPage() gin.HandlerFunc {
 
 		offset := (page - 1) * pageSize
 
-		initialize.Db.Table("recipe_1").Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
+		if uid != 0 {
+			//passedID, _ := strconv.Atoi(body.Uid)
+			initialize.Db.Table("recipe_1").Where("uid =?", uid).Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
+		} else {
+			initialize.Db.Table("recipe_1").Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
+		}
 
 		if len(recipes) == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{
