@@ -31,13 +31,15 @@ export class RecipesComponent {
 
   public backendItems: IRecipeItem[] | undefined = []
   isLoading = false
-  totalRows = 0
+  totalRows = 13000
   pageSize = 10
   currentPage = 0
   pageSizeOptions: number[] = [5,10,25,100]
 
-  @ViewChild(MatPaginator)
+  @ViewChild(MatPaginator, {static:false})
   paginator!: MatPaginator;
+  @ViewChild(MatPaginator, {static:false})
+  paginatorBottom!:MatPaginator
 
   constructor(
     private httpClient: HttpClient,
@@ -46,7 +48,7 @@ export class RecipesComponent {
   async ngOnInit() {
     await this.loadItems()
     this.paginator.length = 13000
-    console.log(this.backendItems)
+    this.paginatorBottom.length = 13000
   }
 
 async loadItems() {
@@ -58,7 +60,13 @@ async loadItems() {
 }
 
 pageChanged(event: PageEvent) {
-    console.log({ event });
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.loadItems();
+    this.paginator.page.emit(event)
+  }
+
+  pageBottomChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.loadItems();
