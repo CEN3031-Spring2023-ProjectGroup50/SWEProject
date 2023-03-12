@@ -42,6 +42,7 @@ export class RecipesComponent {
   pageSize = 10
   currentPage = 0
   pageSizeOptions: number[] = [5,10,25,100]
+  filter = 'all'
 
   @ViewChild(MatPaginator, {static:false})
   paginator!: MatPaginator;
@@ -61,6 +62,12 @@ export class RecipesComponent {
 
 async loadItems() {
     let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
+    console.log("all recipes will show")
+  
+    if (this.filter == "user"){
+      let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
+      console.log("user recipes will show")
+    }
     this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL).toPromise()
     this.httpClient.get<rCount>(`/server/recipecount`).subscribe((data)=>{this.totalRows = data.total})
 
@@ -75,10 +82,23 @@ pageChanged(event: PageEvent) {
     this.paginator.page.emit(event)
   }
 
-  pageBottomChanged(event: PageEvent) {
+pageBottomChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.loadItems();
   }
+
+onAll(event: { value: string; }) {
+  this.filter = "all"
+  this.loadItems();
+}
+
+onUser(event: { value: string; }) {
+  this.filter = "user"
+  this.loadItems();
+}
+
+
+
 
 }
