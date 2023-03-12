@@ -7,6 +7,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
+
+
 interface IRecipeItem {
     Rid: number,
     Title: string,
@@ -16,6 +18,10 @@ interface IRecipeItem {
     Uid: number,
     Image: Uint8Array[],
 
+}
+
+interface rCount {
+  total: number
 }
 
 @Component({
@@ -30,8 +36,9 @@ export class RecipesComponent {
   showFiller = false;
 
   public backendItems: IRecipeItem[] | undefined = []
+  public recipecount: rCount | undefined
   isLoading = false
-  totalRows = 13000
+  totalRows = 0
   pageSize = 10
   currentPage = 0
   pageSizeOptions: number[] = [5,10,25,100]
@@ -47,13 +54,15 @@ export class RecipesComponent {
 
   async ngOnInit() {
     await this.loadItems()
-    this.paginator.length = 13000
-    this.paginatorBottom.length = 13000
+    //this.httpClient.get(`/server/recipecount`).subscribe((data=>toInteger(this.totalRows)))
+    
+    
   }
 
 async loadItems() {
     let URL = `/server/rwimage/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
     this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL).toPromise()
+    this.httpClient.get<rCount>(`/server/recipecount`).subscribe((data)=>{this.totalRows = data.total})
 
     
 

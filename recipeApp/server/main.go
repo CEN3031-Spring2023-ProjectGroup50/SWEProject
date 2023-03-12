@@ -53,6 +53,7 @@ func main() {
 		server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 		server.GET("/recipeimage", handler.RwimageGet())
 		server.GET("/rwimage/bypage", handler.RwimageGetByPage())
+		server.GET("/recipecount", handler.RecipeGetCount())
 	}
 
 	r.Run("0.0.0.0:5000") //Listen and serve
