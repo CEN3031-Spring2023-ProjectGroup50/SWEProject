@@ -51,8 +51,6 @@ func main() {
 		server.GET("/recipes/bypage", handler.RecipeGetByPage())
 		server.DELETE("/recipes/delete/:id", handler.DeleteRecipe())
 		server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-		server.GET("/recipeimage", handler.RwimageGet())
-		server.GET("/rwimage/bypage", handler.RwimageGetByPage())
 		server.GET("/recipecount", handler.RecipeGetCount())
 	}
 

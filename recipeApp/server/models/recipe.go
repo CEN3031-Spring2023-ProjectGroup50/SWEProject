@@ -8,4 +8,5 @@ type Recipe struct {
 	Instructions string
 	Image_Name   string
 	Uid          uint
+	Image        []byte `gorm:"type:bytea"`
 }

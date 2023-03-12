@@ -60,7 +60,7 @@ export class RecipesComponent {
   }
 
 async loadItems() {
-    let URL = `/server/rwimage/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
+    let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
     this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL).toPromise()
     this.httpClient.get<rCount>(`/server/recipecount`).subscribe((data)=>{this.totalRows = data.total})
 

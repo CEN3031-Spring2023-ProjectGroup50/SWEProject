@@ -37,7 +37,7 @@ func RecipeGet() gin.HandlerFunc {
 				wildcardTitle = append(wildcardTitle, "title ILIKE '%"+paramPairs["keyword"][index]+"%'")
 			}
 
-			initialize.Db.Table("recipe").Where(strings.Join(wildcardIngredients, " AND ")).
+			initialize.Db.Table("recipe_1").Where(strings.Join(wildcardIngredients, " AND ")).
 				Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND ")).Find(&recipe)
 
 			if len(recipe) == 0 {
@@ -51,7 +51,7 @@ func RecipeGet() gin.HandlerFunc {
 			c.JSON(http.StatusOK, recipe)
 		} else if len(paramPairs["id"]) > 0 {
 			var recipe models.Recipe
-			initialize.Db.Table("recipe").Where("rid = ?", paramPairs["id"]).First(&recipe)
+			initialize.Db.Table("recipe_1").Where("rid = ?", paramPairs["id"]).First(&recipe)
 
 			// return error if recipe not found
 			if recipe.Rid == 0 && recipe.Title == "" {
@@ -70,7 +70,7 @@ func RecipeGet() gin.HandlerFunc {
 				wildcardIngredients = append(wildcardIngredients, "ingredients ILIKE '%"+paramPairs["ingredient"][index]+"%'")
 			}
 			var recipe []models.Recipe
-			initialize.Db.Table("recipe").Where(strings.Join(wildcardIngredients, " AND ")).Find(&recipe)
+			initialize.Db.Table("recipe_1").Where(strings.Join(wildcardIngredients, " AND ")).Find(&recipe)
 
 			if len(recipe) == 0 {
 				c.JSON(http.StatusBadRequest, gin.H{
@@ -82,7 +82,7 @@ func RecipeGet() gin.HandlerFunc {
 
 		} else {
 			var recipes []models.Recipe
-			initialize.Db.Table("recipe").Find(&recipes)
+			initialize.Db.Table("recipe_1").Find(&recipes)
 
 			c.JSON(http.StatusOK, recipes)
 		}
