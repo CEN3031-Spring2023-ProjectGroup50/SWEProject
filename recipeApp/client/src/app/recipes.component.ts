@@ -7,14 +7,21 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
-interface IRecipeItem {
-    rid: number,
-    Title: string,
-    ingredients: string,
-    instructions: string,
-    image_name: string,
-    cleaned_ingredients: string
 
+
+interface IRecipeItem {
+    Rid: number,
+    Title: string,
+    Ingredients: string,
+    Instructions: string,
+    Image_name: string,
+    Uid: number,
+    Image: Uint8Array[],
+
+}
+
+interface rCount {
+  total: number
 }
 
 @Component({
@@ -29,14 +36,17 @@ export class RecipesComponent {
   showFiller = false;
 
   public backendItems: IRecipeItem[] | undefined = []
+  public recipecount: rCount | undefined
   isLoading = false
   totalRows = 0
   pageSize = 10
   currentPage = 0
   pageSizeOptions: number[] = [5,10,25,100]
 
-  @ViewChild(MatPaginator)
+  @ViewChild(MatPaginator, {static:false})
   paginator!: MatPaginator;
+  @ViewChild(MatPaginator, {static:false})
+  paginatorBottom!:MatPaginator
 
   constructor(
     private httpClient: HttpClient,
@@ -44,19 +54,28 @@ export class RecipesComponent {
 
   async ngOnInit() {
     await this.loadItems()
-    this.paginator.length = 13000
+    //this.httpClient.get(`/server/recipecount`).subscribe((data=>toInteger(this.totalRows)))
+    
+    
   }
 
 async loadItems() {
-    let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize})`
+    let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
     this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL).toPromise()
+    this.httpClient.get<rCount>(`/server/recipecount`).subscribe((data)=>{this.totalRows = data.total})
 
     
 
 }
 
 pageChanged(event: PageEvent) {
-    console.log({ event });
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.loadItems();
+    this.paginator.page.emit(event)
+  }
+
+  pageBottomChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.loadItems();

@@ -35,7 +35,7 @@ func RecipeGetByPage() gin.HandlerFunc {
 
 		offset := (page - 1) * pageSize
 
-		initialize.Db.Table("recipe").Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
+		initialize.Db.Table("recipe_1").Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
 
 		if len(recipes) == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{

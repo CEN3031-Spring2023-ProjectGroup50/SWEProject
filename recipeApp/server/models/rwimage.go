@@ -1,6 +1,6 @@
 package models
 
-type Recipe struct {
+type Rwimage struct {
 	//gorm.Model
 	Rid          uint `gorm:"primaryKey; column:rid"`
 	Title        string
