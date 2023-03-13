@@ -61,13 +61,10 @@ export class RecipesComponent {
     this.authService.getAccount().subscribe(
       (res: any) => {
           this.accountData = res.toString();
-          console.log("local ", this.accountData)
-          //console.log(this.accountData)
+
       }
     );
-    await this.loadItems()
-    //this.httpClient.get(`/server/recipecount`).subscribe((data=>toInteger(this.totalRows)))
-    
+    await this.loadItems()    
     
   }
 
@@ -75,17 +72,14 @@ async loadItems() {
 
     
     let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
-    console.log("all recipes will show")
     let params = new HttpParams().set('uid',this.defaultAccount)
     
-  
     if (this.filter == "user"){
       params = new HttpParams().set('uid',this.accountData) 
-
     }
     
     this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL,{params: params}).toPromise()
-    this.httpClient.get<rCount>(`/server/recipecount`).subscribe((data)=>{this.totalRows = data.total})
+    this.httpClient.get<rCount>(`/server/recipecount`,{params:params}).subscribe((data)=>{this.totalRows = data.total})
 
     
 

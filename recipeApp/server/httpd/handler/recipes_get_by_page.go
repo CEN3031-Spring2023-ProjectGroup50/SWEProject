@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 	"recipeApp/initialize"
 	"recipeApp/models"
@@ -21,18 +20,6 @@ import (
 func RecipeGetByPage() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		type req struct {
-			Uid string `json:"uid"`
-		}
-		body := req{}
-
-		if c.Bind(&body) != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": "Failed to read body",
-			})
-			return
-		}
-		fmt.Printf(body.Uid)
 		var recipes []models.Recipe
 
 		uid, _ := strconv.Atoi(c.Query("uid"))
