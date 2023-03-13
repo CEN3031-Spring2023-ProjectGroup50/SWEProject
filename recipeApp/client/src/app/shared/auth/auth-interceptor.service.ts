@@ -41,13 +41,21 @@ export class AuthInterceptorService implements HttpInterceptor {
           return this.authService.refresh().pipe(
             switchMap(() => {
               this.isRefreshing = false;
-  
+              console.log("switching map");
+
+              //change headers to new tokens
+              const headers = new HttpHeaders({
+                'Authorization': 'Bearer ' + this.authService.token,
+                'Refresh': 'Bearer ' + this.authService.refreshToken
+              });
+              request = request.clone({headers});
               return next.handle(request);
             }),
             catchError((error) => {
               this.isRefreshing = false;
   
               if (error instanceof HttpErrorResponse && error.status === 401) {
+                console.log("error caught");
                 this.authService.logout();
               }
   
