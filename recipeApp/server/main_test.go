@@ -359,7 +359,7 @@ func TestAccountAuth(t *testing.T) {
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test: unsuccessful")
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (key): unsuccessful")
 
 	// Failing auth (time expired)
 	testClaim = JWTData{
@@ -386,7 +386,7 @@ func TestAccountAuth(t *testing.T) {
 	w = httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test: unsuccessful")
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (expiry): unsuccessful")
 
 	// Successful auth
 	testClaim = JWTData{
@@ -467,7 +467,7 @@ func TestRefresh(t *testing.T) {
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test: unsuccessful")
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (key): unsuccessful")
 
 	// Failing auth (expired time)
 	testClaim = JWTData{
@@ -509,7 +509,7 @@ func TestRefresh(t *testing.T) {
 	w = httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test: unsuccessful")
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (expiry): unsuccessful")
 
 	// Success auth
 	testClaim = JWTData{
