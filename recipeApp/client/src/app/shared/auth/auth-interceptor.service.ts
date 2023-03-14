@@ -24,8 +24,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               req.url.includes('server/account') &&
               error.status === 401
             ) {
-              console.log("error caught");
-              return this.handle401Error(req, next);
+              return this.handleAuthError(req, next);
             }
     
             return throwError(() => error);
@@ -33,7 +32,7 @@ export class AuthInterceptorService implements HttpInterceptor {
         );
     }
 
-    private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+    private handleAuthError(request: HttpRequest<any>, next: HttpHandler) {
       if (!this.isRefreshing) {
         this.isRefreshing = true;
   
@@ -41,7 +40,6 @@ export class AuthInterceptorService implements HttpInterceptor {
           return this.authService.refresh().pipe(
             switchMap(() => {
               this.isRefreshing = false;
-              console.log("switching map");
 
               //change headers to new tokens
               const headers = new HttpHeaders({
@@ -55,7 +53,6 @@ export class AuthInterceptorService implements HttpInterceptor {
               this.isRefreshing = false;
   
               if (error instanceof HttpErrorResponse && error.status === 401) {
-                console.log("error caught");
                 this.authService.logout();
               }
   
