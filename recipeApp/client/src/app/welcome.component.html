@@ -1,14 +1,16 @@
 <p>
   <mat-toolbar color="">
+    
     <div class="example-button-container">
       <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
         <mat-icon id="menu">menu</mat-icon>
       </button>
+
   </div>
   <span id="welcome">{{title}}</span>
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon id="favorite">favorite</mat-icon>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with home icon">
+    <mat-icon id="favorite">home</mat-icon>
   </button>
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
    <mat-icon id="share">share</mat-icon>
@@ -17,11 +19,25 @@
 </p>
 
 
-<mat-divider></mat-divider>
-<mat-list id="list">
-  <mat-list-item id="discover">Discover Recipes</mat-list-item>
+<div *ngIf="!isUserLoggedIn">
+  
   <mat-divider></mat-divider>
-  <mat-list-item id="mealplan">Set up your meal plan for the week</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Generate your grocery list</mat-list-item>
-</mat-list>
+  <mat-list id="list">
+    <mat-list-item id="discover">Discover Recipes</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item id="mealplan">Set up your meal plan for the week</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item id="grocery">Generate your grocery list</mat-list-item>
+  </mat-list>
+
+  <nav>
+    <div class="toolbar-button-row">
+      <a mat-raised-button color="primary" [routerLink]="'/login'" id="loginButton" class="example-icon">Login</a>
+      <a mat-raised-button color="primary" [routerLink]="'/register'" id="registerButton">Register</a>
+    </div>
+  </nav>  
+
+</div>
+
+<router-outlet></router-outlet>
+

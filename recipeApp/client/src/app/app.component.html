@@ -1,12 +1,1 @@
-<div>
-  <div>
-    <welcome></welcome>
-  </div>
-  <nav>
-    <div class="example-button-row">
-      <a mat-raised-button color="primary" [routerLink]="'/login'" id="loginButton">Login</a>
-      <a mat-raised-button color="primary" [routerLink]="'/register'" id="registerButton">Register</a>
-    </div>
-  </nav>
-  <router-outlet></router-outlet>
-</div>
+<welcome [isUserLoggedIn]="false"></welcome>
