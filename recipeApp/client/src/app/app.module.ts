@@ -24,7 +24,8 @@ import { CommonModule } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table'
+import { MatTableModule } from '@angular/material/table';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor.component';
@@ -39,6 +40,7 @@ import { MealPlanComponent } from './meal-plan/meal-plan.component';
 import { MealPlanPageComponent } from './meal-plan-page/meal-plan-page.component';
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { GroceryListPageComponent } from './grocery-list-page/grocery-list-page.component';
+import {CreateRecipe, CreateRecipeDialog } from './create-recipe';
 //import { TestComponent } from './test.component';
 
 import { AuthService } from './shared/auth/auth.service';
@@ -60,6 +62,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         MealPlanPageComponent,
         GroceryListComponent,
         GroceryListPageComponent,
+        CreateRecipe,
+        CreateRecipeDialog
         //TestComponent,
     ],
     providers: [
@@ -102,6 +106,7 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         RouterModule,
         MatTableModule,
         MatSortModule,
+        MatDialogModule
     ],
     exports: [RecipesComponent,]
 })

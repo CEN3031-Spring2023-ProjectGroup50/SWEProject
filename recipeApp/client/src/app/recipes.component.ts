@@ -8,7 +8,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
-
+import { CreateRecipe } from './create-recipe'
 
 interface IRecipeItem {
     Rid: number,
@@ -64,24 +64,24 @@ export class RecipesComponent {
 
       }
     );
-    await this.loadItems()    
-    
+    await this.loadItems()
+
   }
 
 async loadItems() {
 
-    
+
     let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
     let params = new HttpParams().set('uid',this.defaultAccount)
-    
+
     if (this.filter == "user"){
-      params = new HttpParams().set('uid',this.accountData) 
+      params = new HttpParams().set('uid',this.accountData)
     }
-    
+
     this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL,{params: params}).toPromise()
     this.httpClient.get<rCount>(`/server/recipecount`,{params:params}).subscribe((data)=>{this.totalRows = data.total})
 
-    
+
 
 }
 
