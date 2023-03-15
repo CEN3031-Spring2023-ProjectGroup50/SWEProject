@@ -44,9 +44,9 @@ func CreateRecipe() gin.HandlerFunc {
 			Uid:          requestBody.Uid,
 		}
 		var numRecipes int64
-		initialize.Db.Table("recipe").Count(&numRecipes)
+		initialize.Db.Table("recipe_1").Count(&numRecipes)
 		recipe.Rid = uint(numRecipes + 1)
-		result := initialize.Db.Table("recipe").Create(&recipe)
+		result := initialize.Db.Table("recipe_1").Create(&recipe)
 
 		if result.Error != nil {
 			c.JSON(http.StatusBadRequest, gin.H{

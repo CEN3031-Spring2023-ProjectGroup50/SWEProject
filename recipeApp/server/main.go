@@ -49,6 +49,7 @@ func main() {
 		server.GET("/recipes", handler.RecipeGet())
 		server.POST("/recipes/add", handler.CreateRecipe())
 		server.GET("/recipes/bypage", handler.RecipeGetByPage())
+		server.PUT("recipes/edit/:id", handler.EditRecipe())
 		server.DELETE("/recipes/delete/:id", handler.DeleteRecipe())
 		server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 		server.GET("/recipecount", handler.RecipeGetCount())
