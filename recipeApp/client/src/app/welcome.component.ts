@@ -11,7 +11,5 @@ export class WelcomeComponent {
 
     @Input() public isUserLoggedIn: boolean|undefined;
 
-    title = 'Mallow - Save time, and savor every meal with Mallow.';
-
 }
 

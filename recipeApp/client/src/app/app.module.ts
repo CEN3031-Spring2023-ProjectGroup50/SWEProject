@@ -28,6 +28,7 @@ import { MatTableModule } from '@angular/material/table'
 
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor.component';
+import { AppHeaderComponent } from './app-header/app-header.component';
 import { WelcomeComponent } from './welcome.component';
 import { AppRoutingModule } from './shared/app-router';
 import { registerFormComponent } from './registerform.component';
@@ -52,6 +53,7 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         LoginEditorComponent,
         registerFormComponent,
         WelcomeComponent,
+        AppHeaderComponent,
         MenuNavigationComponent,
         HomeComponent,
         RecipesComponent,

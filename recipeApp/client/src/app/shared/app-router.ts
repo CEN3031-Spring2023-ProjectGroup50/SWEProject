@@ -11,6 +11,7 @@ import { MealPlanPageComponent } from '../meal-plan-page/meal-plan-page.componen
 import { GroceryListPageComponent } from '../grocery-list-page/grocery-list-page.component';
 
 export const routes: Routes = [
+
   { path: 'login', component: LoginEditorComponent,
     canActivate: [ 
       NegateAuthGuard

@@ -1,5 +1,6 @@
 import { Component,Input} from '@angular/core';
 import { AuthService } from './shared/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,11 @@ import { AuthService } from './shared/auth/auth.service';
 })
 export class AppComponent {
 
-  constructor(private authService: AuthService) {
+  ngOnInit() {
+          this.router.navigateByUrl('/login');
+        };
+  
+  constructor(private router: Router, private authService: AuthService) {
 
   }
 }
