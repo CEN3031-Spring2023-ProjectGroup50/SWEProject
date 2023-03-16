@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"recipeApp/httpd/handler"
@@ -11,6 +12,9 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
+
+	jwt "github.com/golang-jwt/jwt/v5"
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
@@ -317,4 +321,241 @@ func TestRegister(t *testing.T) {
 	r.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code, "Register failed or user already exists")
+}
+
+func TestAccountAuth(t *testing.T) {
+	r := SetUpRouter()
+
+	r.GET("/server/account", handler.Account)
+	type JWTData struct {
+		// Standard claims are the standard jwt claims from the IETF standard
+		// https://tools.ietf.org/html/rfc7519
+		jwt.RegisteredClaims
+		CustomClaims map[string]string `json:"custom,omitempty"`
+	}
+
+	// Failing auth (invalid secret key)
+	testClaim := JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+	}
+
+	testToken := jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err := testToken.SignedString([]byte("0"))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err := json.Marshal(struct {
+		Token string `json:"token"`
+	}{
+		testTokenString,
+	})
+
+	req, _ := http.NewRequest("GET", "/server/account", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (key): unsuccessful")
+
+	// Failing auth (time expired)
+	testClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Date(1980, 1, 1, 12, 0, 0, 0, time.UTC)),
+		},
+	}
+
+	testToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err = testToken.SignedString([]byte(handler.SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err = json.Marshal(struct {
+		Token string `json:"token"`
+	}{
+		testTokenString,
+	})
+
+	req, _ = http.NewRequest("GET", "/server/account", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (expiry): unsuccessful")
+
+	// Successful auth
+	testClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+	}
+
+	testToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err = testToken.SignedString([]byte(handler.SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err = json.Marshal(struct {
+		Token string `json:"token"`
+	}{
+		testTokenString,
+	})
+
+	req, _ = http.NewRequest("GET", "/server/account", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code, "Authentication success test: unsuccessful")
+}
+
+func TestRefresh(t *testing.T) {
+	r := SetUpRouter()
+
+	r.POST("/server/account/refresh", handler.RefreshToken)
+	type JWTData struct {
+		// Standard claims are the standard jwt claims from the IETF standard
+		// https://tools.ietf.org/html/rfc7519
+		jwt.RegisteredClaims
+		CustomClaims map[string]string `json:"custom,omitempty"`
+	}
+
+	// Failing auth (invalid secret key)
+	testClaim := JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+	}
+
+	testRefClaim := JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute * 2)),
+		},
+	}
+
+	testToken := jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err := testToken.SignedString([]byte(handler.SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	testRefToken := jwt.NewWithClaims(jwt.SigningMethodHS256, testRefClaim)
+	testRefString, err := testRefToken.SignedString([]byte("0"))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err := json.Marshal(struct {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refreshToken"`
+	}{
+		testTokenString, testRefString,
+	})
+
+	req, _ := http.NewRequest("POST", "/server/account/refresh", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	req.Header.Set("Refresh", "Bearer "+testRefString)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (key): unsuccessful")
+
+	// Failing auth (expired time)
+	testClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+	}
+
+	testRefClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Date(1980, 1, 1, 12, 0, 0, 0, time.UTC)),
+		},
+	}
+
+	testToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err = testToken.SignedString([]byte(handler.SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	testRefToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testRefClaim)
+	testRefString, err = testRefToken.SignedString([]byte(handler.REFRESH_SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err = json.Marshal(struct {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refreshToken"`
+	}{
+		testTokenString, testRefString,
+	})
+
+	req, _ = http.NewRequest("POST", "/server/account/refresh", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	req.Header.Set("Refresh", "Bearer "+testRefString)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (expiry): unsuccessful")
+
+	// Success auth
+	testClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+		CustomClaims: map[string]string{
+			"userid": "1",
+		},
+	}
+
+	testRefClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute * 2)),
+		},
+		CustomClaims: map[string]string{
+			"userid": "1",
+		},
+	}
+
+	testToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err = testToken.SignedString([]byte(handler.SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	testRefToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testRefClaim)
+	testRefString, err = testRefToken.SignedString([]byte(handler.REFRESH_SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err = json.Marshal(struct {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refreshToken"`
+	}{
+		testTokenString, testRefString,
+	})
+
+	req, _ = http.NewRequest("POST", "/server/account/refresh", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	req.Header.Set("Refresh", "Bearer "+testRefString)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code, "Authentication success test: unsuccessful")
 }
