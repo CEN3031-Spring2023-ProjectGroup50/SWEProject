@@ -1,3 +1,6 @@
+<div class="tooltip">Hover over me
+  <span class="tooltiptext">Tooltip text</span>
+</div>
 
 <div class="grid-container">
   
@@ -19,7 +22,9 @@
   
             <div mat-card-avatar class= "header-image-mallow"></div>
   
-            <mat-card-title class= "recipe-card-title" style="font-size:16px">
+            <mat-card-title class= "recipe-card-title" style="font-size:16px" 
+              mat-raised-button
+              matTooltip= {{backendItem.Title}}>
               {{backendItem.Title}}
             </mat-card-title>
 
@@ -37,7 +42,7 @@
   
           </mat-card-header>
   
-          <img mat-card-image src="{{'data:image/jpeg;base64,' +backendItem.Image}}" alt="alt text example">
+          <img mat-card-image class= "recipe-image" src="{{'data:image/jpeg;base64,' +backendItem.Image}}" alt="alt text example">
   
           <mat-card-actions>
             <mat-form-field appearance="fill">

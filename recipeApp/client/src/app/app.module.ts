@@ -25,6 +25,7 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table'
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor/login-editor.component';
@@ -104,6 +105,7 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         RouterModule,
         MatTableModule,
         MatSortModule,
+        MatTooltipModule,
     ],
     exports: [RecipesComponent,]
 })
