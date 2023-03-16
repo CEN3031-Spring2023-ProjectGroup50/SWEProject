@@ -21,9 +21,10 @@ type recipeEditRequest struct {
 // @Accept json
 // @Produce json
 // @Param id	path	int	true	"id of recipe to edit"
+// @Param requestBody body recipeEditRequest	true "modified recipe data"
 // @Success 200
 // @Failure 400
-// @Router /server/recipes/edit/{id} [edit]
+// @Router /server/recipes/edit/{id} [put]
 func EditRecipe() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestBody := recipeEditRequest{}
@@ -40,7 +41,7 @@ func EditRecipe() gin.HandlerFunc {
 
 		var recipe models.Recipe
 		initialize.Db.Table("recipe_1").Where("rid = ?", id).Find(&recipe)
-		if recipe.Uid == mallowid || recipe.Rid == 0 {
+		if recipe.Uid == mallowid {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": "Could not edit recipe",
 			})
