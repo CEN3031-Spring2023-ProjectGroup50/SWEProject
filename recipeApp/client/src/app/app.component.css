@@ -58,15 +58,10 @@
     width: 120px;
   }
   
-
   mat-form-field {
     margin-right: 12px;
   }
 
-  .grid-container {
-    margin: 20px;
-  }
-  
   .sidenav-container {
     width: 500px;
     height: 300px;
