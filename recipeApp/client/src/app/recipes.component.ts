@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit} from '@angular/core'
+import {Component, ViewChild, OnInit, Inject} from '@angular/core'
 import { NgForOf } from '@angular/common'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
@@ -7,8 +7,8 @@ import {AuthService} from './shared/auth/auth.service'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-
-import { CreateRecipe } from './create-recipe'
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AddRecipeDialogComponent } from './add-recipe-dialog/add-recipe-dialog.component'
 
 interface IRecipeItem {
     Rid: number,
@@ -54,7 +54,8 @@ export class RecipesComponent {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ){}
 
   async ngOnInit() {
@@ -109,7 +110,14 @@ async onUser(event: { value: string; }) {
   await this.loadItems();
 }
 
+openDialog() {
 
+  const dialogConfig = new MatDialogConfig();
+
+  dialogConfig.autoFocus = true;
+
+  this.dialog.open(AddRecipeDialogComponent, dialogConfig);
+}
 
 
 }

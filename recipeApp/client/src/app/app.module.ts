@@ -40,13 +40,14 @@ import { MealPlanComponent } from './meal-plan/meal-plan.component';
 import { MealPlanPageComponent } from './meal-plan-page/meal-plan-page.component';
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { GroceryListPageComponent } from './grocery-list-page/grocery-list-page.component';
-import {CreateRecipe, CreateRecipeDialog } from './create-recipe';
+import { AddRecipeDialogComponent } from './add-recipe-dialog/add-recipe-dialog.component';
 //import { TestComponent } from './test.component';
 
 import { AuthService } from './shared/auth/auth.service';
 import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
 import { CanActivateViaAuthGuard } from './shared/auth/can-activate-via-auth.guard';
 import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
+
 
 @NgModule({
     declarations: [
@@ -62,8 +63,7 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         MealPlanPageComponent,
         GroceryListComponent,
         GroceryListPageComponent,
-        CreateRecipe,
-        CreateRecipeDialog
+        AddRecipeDialogComponent,
         //TestComponent,
     ],
     providers: [
@@ -108,6 +108,6 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         MatSortModule,
         MatDialogModule
     ],
-    exports: [RecipesComponent,]
+    exports: [RecipesComponent,],
 })
 export class AppModule { }

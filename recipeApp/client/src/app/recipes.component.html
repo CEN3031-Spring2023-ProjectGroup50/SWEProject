@@ -8,6 +8,7 @@
 
     </mat-button-toggle-group>
 
+    <button mat-raised-button color="primary" (click)="openDialog()">Add Recipe</button>
 
     <mat-paginator #paginatorBottom [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions" (page)="pageBottomChanged($event)" aria-label="Select page"
