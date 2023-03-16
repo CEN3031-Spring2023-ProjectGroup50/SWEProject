@@ -28,7 +28,7 @@ interface rCount {
 @Component({
     selector: 'app-recipes',
     templateUrl: './recipes.component.html',
-    styleUrls: ['../app.component.css']
+    styleUrls: ['./recipes.component.css']
 
 })
 

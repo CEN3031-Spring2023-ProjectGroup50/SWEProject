@@ -63,40 +63,6 @@
     margin-right: 12px;
   }
 
-
-  .example-card {
-    max-width: 400px;
-  }
-  
-  .example-header-image {
-    background-image: url('/assets/images/imgprofilepic.png');
-    background-size: cover;
-  }
-
-  .header-image-mallow {
-    background-image: url('/assets/images/imgmarshmallows.png');
-    background-size: cover;
-  }
-
-  .dashboard-recipe {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    max-width: 400px;
-    margin-bottom: 8px;
-  }
-  
-  .more-button {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-  }
-  
-  .dashboard-recipe-content {
-    text-align: center;
-  }
   .grid-container {
     margin: 20px;
   }
@@ -120,4 +86,3 @@
     top: 0;
     z-index: 1;
   }
-  
