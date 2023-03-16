@@ -15,9 +15,9 @@ func RecipeGetCount() gin.HandlerFunc {
 		uid, _ := strconv.Atoi(c.Query("uid"))
 		var total int64
 		if uid == 0 {
-			initialize.Db.Table("recipe_1").Model(models.Rwimage{}).Count(&total)
+			initialize.Db.Table("recipe").Model(models.Recipe{}).Count(&total)
 		} else {
-			initialize.Db.Table("recipe_1").Where("uid =?", uid).Model(models.Rwimage{}).Count(&total)
+			initialize.Db.Table("recipe").Where("uid =?", uid).Model(models.Recipe{}).Count(&total)
 		}
 
 		c.JSON(http.StatusOK, map[string]int64{"total": total})
