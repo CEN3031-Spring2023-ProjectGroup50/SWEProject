@@ -25,15 +25,17 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table'
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppComponent } from './app.component';
-import { LoginEditorComponent } from './login-editor.component';
-import { WelcomeComponent } from './welcome.component';
+import { LoginEditorComponent } from './login-editor/login-editor.component';
+import { AppHeaderComponent } from './app-header/app-header.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 import { AppRoutingModule } from './shared/app-router';
-import { registerFormComponent } from './registerform.component';
+import { registerFormComponent } from './registerform/registerform.component';
 import { MenuNavigationComponent} from './menu-navigation/menu-navigation.component';
-import { HomeComponent } from './home.component';
-import { RecipesComponent } from './recipes.component';
+import { HomeComponent } from './home/home.component';
+import { RecipesComponent } from './recipes/recipes.component';
 import { StepperComponent } from './stepper/stepper.component';
 import { MealPlanComponent } from './meal-plan/meal-plan.component';
 import { MealPlanPageComponent } from './meal-plan-page/meal-plan-page.component';
@@ -52,6 +54,7 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         LoginEditorComponent,
         registerFormComponent,
         WelcomeComponent,
+        AppHeaderComponent,
         MenuNavigationComponent,
         HomeComponent,
         RecipesComponent,
@@ -102,6 +105,7 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         RouterModule,
         MatTableModule,
         MatSortModule,
+        MatTooltipModule,
     ],
     exports: [RecipesComponent,]
 })

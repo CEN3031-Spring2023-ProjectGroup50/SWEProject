@@ -2,12 +2,12 @@ import {Component, OnInit} from '@angular/core'
 import { FormGroup,FormControl,FormBuilder } from '@angular/forms'
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AuthService } from './shared/auth/auth.service';
+import { AuthService } from '../shared/auth/auth.service';
 
 @Component({
     selector:'app-register',
     templateUrl: './registerform.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['../app.component.css']
 })
 export class registerFormComponent implements OnInit {
     registerForm!: FormGroup

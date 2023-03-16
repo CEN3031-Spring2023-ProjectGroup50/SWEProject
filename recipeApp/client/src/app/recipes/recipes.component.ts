@@ -2,11 +2,12 @@ import {Component, ViewChild, OnInit} from '@angular/core'
 import { NgForOf } from '@angular/common'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
-import {AuthService} from './shared/auth/auth.service'
+import {AuthService} from '../shared/auth/auth.service'
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import {TooltipPosition} from '@angular/material/tooltip';
 
 
 
@@ -28,7 +29,7 @@ interface rCount {
 @Component({
     selector: 'app-recipes',
     templateUrl: './recipes.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./recipes.component.css']
 
 })
 
@@ -80,8 +81,6 @@ async loadItems() {
     
     this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL,{params: params}).toPromise()
     this.httpClient.get<rCount>(`/server/recipecount`,{params:params}).subscribe((data)=>{this.totalRows = data.total})
-
-    
 
 }
 

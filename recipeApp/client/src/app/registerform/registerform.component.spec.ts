@@ -5,9 +5,9 @@ import { Routes, Router, RouterModule } from '@angular/router';
 import { registerFormComponent } from './registerform.component';
 import {Component, OnInit} from '@angular/core'
 import { FormGroup,FormControl,FormBuilder } from '@angular/forms'
-import { HomeComponent } from './home.component';
+import { HomeComponent } from '../home/home.component';
 
-import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
+import { AuthInterceptorService } from '../shared/auth/auth-interceptor.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms'
@@ -30,7 +30,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from './shared/auth/auth.service';
+import { AuthService } from '../shared/auth/auth.service';
 
 describe('registrationForm', () => {
 

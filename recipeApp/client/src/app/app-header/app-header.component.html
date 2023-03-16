@@ -1,0 +1,30 @@
+<p>
+  <mat-toolbar color="">
+
+    <div class="example-button-container">
+      <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+        <mat-icon id="menu">menu</mat-icon>
+      </button>
+    </div>
+
+    <span *ngIf="!isUserLoggedIn" id="welcome">{{titleLoggedOut}}</span>
+    <span *ngIf="isUserLoggedIn" id="welcome">{{titleLoggedIn}}</span>
+
+    <span class="example-spacer"></span>
+
+    <div *ngIf="!isUserLoggedIn">
+      <nav>
+        <div class="toolbar-button-row">
+          <a mat-raised-button color="primary" [routerLink]="'/login'" id="loginButton">Login</a>
+          <a mat-raised-button color="primary" [routerLink]="'/register'" id="registerButton">Register</a>
+        </div>
+      </nav>
+    </div>
+
+    <a mat-raised-button color="primary" *ngIf="isUserLoggedIn" id="logouButton" href="/" (click)="authService.logout()">Logout</a>
+
+  </mat-toolbar>
+</p>
+
+<welcome *ngIf="!isUserLoggedIn"></welcome>
+
