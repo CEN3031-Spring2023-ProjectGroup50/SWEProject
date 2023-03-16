@@ -119,5 +119,4 @@ openDialog() {
   this.dialog.open(AddRecipeDialogComponent, dialogConfig);
 }
 
-
 }
