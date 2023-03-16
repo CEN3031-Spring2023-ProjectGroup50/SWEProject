@@ -38,7 +38,7 @@ func TestRecipesRoute(t *testing.T) {
 	var recipes []models.Recipe
 	json.Unmarshal(w.Body.Bytes(), &recipes)
 	var numRecipes int64
-	initialize.Db.Table("recipe_1").Count(&numRecipes)
+	initialize.Db.Table("recipe").Count(&numRecipes)
 
 	assert.Equal(t, http.StatusOK, w.Code, "Did not retrieve all recipes.")
 	assert.NotEmpty(t, recipes, "Empty result for all recipes.")
@@ -201,7 +201,7 @@ func TestRecipePost(t *testing.T) {
 
 	var testRecipes []test
 	var last models.Recipe
-	initialize.Db.Table("recipe_1").Last(&last)
+	initialize.Db.Table("recipe").Last(&last)
 	lastNum := last.Rid
 
 	testRecipes = append(testRecipes,
@@ -240,7 +240,7 @@ func TestRecipeEdit(t *testing.T) {
 
 	var testRecipes []test
 	var last models.Recipe
-	initialize.Db.Table("recipe_1").Last(&last)
+	initialize.Db.Table("recipe").Last(&last)
 	lastNum := last.Rid
 
 	testRecipes = append(testRecipes,
@@ -280,7 +280,7 @@ func TestRecipeDelete(t *testing.T) {
 	r.DELETE("/server/recipes/delete/:id", handler.DeleteRecipe())
 
 	var last models.Recipe
-	initialize.Db.Table("recipe_1").Last(&last)
+	initialize.Db.Table("recipe").Last(&last)
 	lastNum := last.Rid
 
 	rids := []string{strconv.FormatInt(int64(lastNum-2), 10),
