@@ -190,6 +190,43 @@ const docTemplate = `{
                 }
             }
         },
+        "/server/recipes/edit/{id}": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "edit a recipe",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of recipe to edit",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "modified recipe data",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.recipeEditRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/server/register": {
             "post": {
                 "consumes": [
@@ -222,6 +259,29 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "handler.recipeEditRequest": {
+            "type": "object",
+            "properties": {
+                "image_name": {
+                    "type": "string"
+                },
+                "ingredients": {
+                    "type": "string"
+                },
+                "instructions": {
+                    "type": "string"
+                },
+                "rid": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "uid": {
+                    "type": "integer"
+                }
+            }
+        },
         "handler.recipePostRequest": {
             "type": "object",
             "properties": {

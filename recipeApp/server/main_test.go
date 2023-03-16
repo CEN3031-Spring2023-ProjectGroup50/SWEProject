@@ -38,7 +38,7 @@ func TestRecipesRoute(t *testing.T) {
 	var recipes []models.Recipe
 	json.Unmarshal(w.Body.Bytes(), &recipes)
 	var numRecipes int64
-	initialize.Db.Table("recipe").Count(&numRecipes)
+	initialize.Db.Table("recipe_1").Count(&numRecipes)
 
 	assert.Equal(t, http.StatusOK, w.Code, "Did not retrieve all recipes.")
 	assert.NotEmpty(t, recipes, "Empty result for all recipes.")
@@ -200,15 +200,16 @@ func TestRecipePost(t *testing.T) {
 	}
 
 	var testRecipes []test
-	var numRecipes int64
-	initialize.Db.Table("recipe").Count(&numRecipes)
+	var last models.Recipe
+	initialize.Db.Table("recipe_1").Last(&last)
+	lastNum := last.Rid
 
 	testRecipes = append(testRecipes,
-		test{Rid: uint(numRecipes + 1), Title: "Test Recipe 1", Ingredients: "paprika,pepper,serrano",
+		test{Rid: uint(lastNum + 1), Title: "Test Recipe 1", Ingredients: "paprika,pepper,serrano",
 			Instructions: "stir gently", Image_name: "test_image_1", Uid: 2},
-		test{Rid: uint(numRecipes + 2), Title: "Test Recipe 2", Ingredients: "pasta",
+		test{Rid: uint(lastNum + 2), Title: "Test Recipe 2", Ingredients: "pasta",
 			Instructions: "heat in microwave", Image_name: "test_image_2", Uid: 2},
-		test{Rid: uint(numRecipes + 3), Title: "Test Recipe 3", Ingredients: "deviled eggs, legumes",
+		test{Rid: uint(lastNum + 3), Title: "Test Recipe 3", Ingredients: "deviled eggs, legumes",
 			Instructions: "party time", Image_name: "test_image_3", Uid: 2},
 	)
 
@@ -225,16 +226,66 @@ func TestRecipePost(t *testing.T) {
 
 }
 
+func TestRecipeEdit(t *testing.T) {
+	r := SetUpRouter()
+	r.PUT("/server/recipes/edit/:id", handler.EditRecipe())
+	type test struct {
+		Rid          uint   `json:"rid"`
+		Title        string `json:"title"`
+		Instructions string `json:"instructions"`
+		Ingredients  string `json:"ingredients"`
+		Image_name   string `json:"image_name"`
+		Uid          uint   `json:"uid"`
+	}
+
+	var testRecipes []test
+	var last models.Recipe
+	initialize.Db.Table("recipe_1").Last(&last)
+	lastNum := last.Rid
+
+	testRecipes = append(testRecipes,
+		test{Rid: uint(lastNum + 1), Title: "Edit Recipe 1", Ingredients: "paprika,pepper,serrano",
+			Instructions: "stir gently", Image_name: "test_image_1", Uid: 2},
+		test{Rid: uint(lastNum + 2), Title: "Edit Recipe 2", Ingredients: "pasta",
+			Instructions: "heat in microwave", Image_name: "test_image_2", Uid: 2},
+		test{Rid: uint(lastNum + 3), Title: "Edit Recipe 3", Ingredients: "deviled eggs, legumes",
+			Instructions: "party time", Image_name: "test_image_3", Uid: 2},
+	)
+
+	rids := []string{strconv.FormatInt(int64(lastNum-2), 10),
+		strconv.FormatInt(int64(lastNum-1), 10),
+		strconv.FormatInt(int64(lastNum), 10)}
+
+	tc := 0
+	for _, val := range rids {
+		jsonValue, _ := json.Marshal(testRecipes[tc])
+		req, _ := http.NewRequest("PUT", "/server/recipes/edit/"+val, bytes.NewBuffer(jsonValue))
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code, "Could not edit recipe "+val)
+		tc++
+	}
+
+	bogus := "55000"
+	req, _ := http.NewRequest("PUT", "/server/recipes/edit/"+bogus, nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Could not edit recipe "+bogus)
+}
+
 func TestRecipeDelete(t *testing.T) {
 	r := SetUpRouter()
 	r.DELETE("/server/recipes/delete/:id", handler.DeleteRecipe())
 
-	var numRecipes int64
-	initialize.Db.Table("recipe").Count(&numRecipes)
+	var last models.Recipe
+	initialize.Db.Table("recipe_1").Last(&last)
+	lastNum := last.Rid
 
-	rids := []string{strconv.FormatInt(numRecipes-2, 10),
-		strconv.FormatInt(numRecipes-1, 10),
-		strconv.FormatInt(numRecipes, 10)}
+	rids := []string{strconv.FormatInt(int64(lastNum-2), 10),
+		strconv.FormatInt(int64(lastNum-1), 10),
+		strconv.FormatInt(int64(lastNum), 10)}
 
 	for _, val := range rids {
 		req, _ := http.NewRequest("DELETE", "/server/recipes/delete/"+val, nil)
@@ -250,7 +301,7 @@ func TestRecipeDelete(t *testing.T) {
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusOK, w.Code, "Could not delete recipe "+bogus)
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Could not delete recipe "+bogus)
 }
 
 func TestLogin(t *testing.T) {

@@ -21,7 +21,7 @@ func DeleteRecipe() gin.HandlerFunc {
 		mallowid := uint(1)
 		var recipe models.Recipe
 		initialize.Db.Table("recipe_1").Where("rid = ?", id).Find(&recipe)
-		if recipe.Uid == mallowid {
+		if recipe.Uid == mallowid || recipe.Uid == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": "Could not delete recipe",
 			})

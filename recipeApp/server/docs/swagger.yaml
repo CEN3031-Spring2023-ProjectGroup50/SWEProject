@@ -1,5 +1,20 @@
 basePath: /
 definitions:
+  handler.recipeEditRequest:
+    properties:
+      image_name:
+        type: string
+      ingredients:
+        type: string
+      instructions:
+        type: string
+      rid:
+        type: integer
+      title:
+        type: string
+      uid:
+        type: integer
+    type: object
   handler.recipePostRequest:
     properties:
       image_name:
@@ -142,6 +157,30 @@ paths:
         "400":
           description: Bad Request
       summary: delete a recipe
+  /server/recipes/edit/{id}:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: id of recipe to edit
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: modified recipe data
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/handler.recipeEditRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: edit a recipe
   /server/register:
     post:
       consumes:
