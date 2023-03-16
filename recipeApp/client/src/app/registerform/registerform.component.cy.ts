@@ -4,8 +4,8 @@ import { ReactiveFormsModule, FormsModule, FormGroup,FormControl,FormBuilder } f
 import { Router, RouterModule } from '@angular/router';
 import { createOutputSpy } from 'cypress/angular'
 
-import { AuthService } from './shared/auth/auth.service';
-import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
+import { AuthService } from '../shared/auth/auth.service';
+import { AuthInterceptorService } from '../shared/auth/auth-interceptor.service';
 
 describe('registerFormComponent', () => {
   it('mounts', () => {

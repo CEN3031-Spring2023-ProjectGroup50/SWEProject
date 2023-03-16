@@ -1,7 +1,7 @@
 import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
 import { WelcomeComponent } from './welcome.component';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
-import { AppModule } from './app.module';
+import { AppModule } from '../app.module';
 import {By} from '@angular/platform-browser';
 
 

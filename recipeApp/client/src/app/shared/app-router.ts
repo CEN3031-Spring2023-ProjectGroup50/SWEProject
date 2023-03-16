@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from '../home.component';
-import { LoginEditorComponent } from '../login-editor.component';
-import { registerFormComponent } from '../registerform.component';
+import { HomeComponent } from '../home/home.component';
+import { LoginEditorComponent } from '../login-editor/login-editor.component';
+import { registerFormComponent } from '../registerform/registerform.component';
 import { CanActivateViaAuthGuard } from '../shared/auth/can-activate-via-auth.guard';
 import { NegateAuthGuard } from './auth/negate-auth.guard';
 //import { TestComponent } from '../test.component';
-import { RecipesComponent } from '../recipes.component';
+import { RecipesComponent } from '../recipes/recipes.component';
 import { MealPlanPageComponent } from '../meal-plan-page/meal-plan-page.component';
 import { GroceryListPageComponent } from '../grocery-list-page/grocery-list-page.component';
 
