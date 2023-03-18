@@ -47,6 +47,7 @@ export class RecipesComponent {
   currentPage = 0
   pageSizeOptions: number[] = [5,10,25,100]
   filter = 'all'
+  loading = false;
 
   @ViewChild(MatPaginator, {static:false})
   paginator!: MatPaginator;
@@ -71,6 +72,7 @@ export class RecipesComponent {
 
 async loadItems() {
 
+    this.loading = true;
     
     let URL = `/server/recipes/bypage?page=${this.currentPage+1}&per_page=${this.pageSize}`
     let params = new HttpParams().set('uid',this.defaultAccount)
@@ -80,7 +82,12 @@ async loadItems() {
     }
     
     this.backendItems =await this.httpClient.get<IRecipeItem[]>(URL,{params: params}).toPromise()
-    this.httpClient.get<rCount>(`/server/recipecount`,{params:params}).subscribe((data)=>{this.totalRows = data.total})
+
+    this.httpClient.get<rCount>(`/server/recipecount`,{params:params})
+    .subscribe((data)=>{
+      this.totalRows = data.total;
+      this.loading = false;
+    })
 
 }
 
