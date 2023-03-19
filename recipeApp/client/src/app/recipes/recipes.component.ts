@@ -7,6 +7,8 @@ import {AuthService} from '../shared/auth/auth.service'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AddRecipeDialogComponent } from '../add-recipe-dialog/add-recipe-dialog.component'
 import {TooltipPosition} from '@angular/material/tooltip';
 
 
@@ -55,7 +57,8 @@ export class RecipesComponent {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ){}
 
   async ngOnInit() {
@@ -106,6 +109,15 @@ async onUser(event: { value: string; }) {
   this.filter = "user"
   this.currentPage = 0
   await this.loadItems();
+}
+
+openDialog() {
+
+  const dialogConfig = new MatDialogConfig();
+
+  dialogConfig.autoFocus = true;
+
+  this.dialog.open(AddRecipeDialogComponent, dialogConfig);
 }
 
 

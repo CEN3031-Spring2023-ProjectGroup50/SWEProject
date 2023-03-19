@@ -1,67 +1,66 @@
 .recipe-card-title {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2; /* number of lines to show */
-    line-height: 5;        /* fallback */
-    max-height: 10;        /* fallback */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-height: 5;        /* fallback */
+  max-height: 10;        /* fallback */
 }
 
 .recipe-card-subtitle {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .dashboard-recipe {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    max-width: 400px;
-    margin-bottom: 8px;
-    transition: all ease-in-out .4s;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  max-width: 400px;
+  margin-bottom: 8px;
+  transition: all ease-in-out .4s;
 }
 
 .recipe-image {
-    transition: all ease-in-out .4s;
-    object-fit: contain;
-    height: 100%;
-    width: 100%;
-    background-size: 100%;
+  transition: all ease-in-out .4s;
+  object-fit: contain;
+  height: 100%;
+  width: 100%;
+  background-size: 100%;
 }
 
 .dashboard-recipe:hover .recipe-image{
-    transform: scale(1.25) rotate(2deg);
-  }
+  transform: scale(1.25) rotate(2deg);
+}
 
 .dashboard-recipe-content {
-    text-align: center;
+  text-align: center;
 }
 
 .example-header-image {
-    background-image: url('/assets/images/imgprofilepic.png');
-    background-size: cover;
+  background-image: url('/assets/images/imgprofilepic.png');
+  background-size: cover;
 }
 
 .header-image-mallow {
-    background-image: url('/assets/images/imgmarshmallows.png');
-    background-size: cover;
+  background-image: url('/assets/images/imgmarshmallows.png');
+  background-size: cover;
 }
 
 .example-card {
-    max-width: 400px;
-  }
+  max-width: 400px;
+}
 
- .more-button {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-  }
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
 
-  .grid-container {
-    margin: 20px;
-  }
-  
+.grid-container {
+  margin: 20px;
+}

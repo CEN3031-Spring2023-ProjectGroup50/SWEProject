@@ -109,7 +109,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         RouterModule,
         MatTableModule,
         MatSortModule,
-        MatDialogModule
+        MatDialogModule,
+        MatTooltipModule
     ],
     exports: [RecipesComponent,],
 })
