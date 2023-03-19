@@ -69,7 +69,6 @@ export class RecipesComponent {
     );
     await this.loadItems()  
     
-    console.log(this.backendItems)
     
   }
 
