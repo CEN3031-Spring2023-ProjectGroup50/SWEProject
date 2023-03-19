@@ -8,7 +8,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { AddRecipeDialogComponent } from '../add-recipe-dialog/add-recipe-dialog.component'
+import { AddRecipeDialogComponent } from '../add-recipe-dialog/add-recipe-dialog.component';
+import { FormGroup,FormControl,FormBuilder } from '@angular/forms';
 import {TooltipPosition} from '@angular/material/tooltip';
 
 
@@ -54,6 +55,7 @@ export class RecipesComponent {
   paginator!: MatPaginator;
   @ViewChild(MatPaginator, {static:false})
   paginatorBottom!:MatPaginator
+
 
   constructor(
     private httpClient: HttpClient,

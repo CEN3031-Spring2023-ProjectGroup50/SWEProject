@@ -1,32 +1,34 @@
 
-<mat-dialog-content>
-  <div class="center">
-    <h1>Add a Recipe</h1>
-  </div>
-<div class="center">
-  <mat-form-field appearance="outline" [style.width.px]=650>
-    <mat-label> Title</mat-label>
-    <input matInput>
-  </mat-form-field>
-</div>
-<div class="center">
-  <mat-form-field appearance="outline" [style.width.px]=650>
-    <mat-label>Ingredients</mat-label>
-    <textarea matInput></textarea>
-  </mat-form-field>
-</div>
-<div class="center">
-  <mat-form-field appearance="outline" [style.width.px]=650>
-    <mat-label>Instructions</mat-label>
-    <textarea matInput></textarea>
-  </mat-form-field>
-</div>
-</mat-dialog-content>
+  <h1 mat-dialog-title class="center">Add a Recipe</h1>
+  <form>
+    <mat-form-field appearance = "outline" [style.width.px]="650">
+      <mat-label>Title</mat-label>
+      <input matInput [formControl] ="titleFormControl">
+      <mat-error *ngIf="titleFormControl.hasError('required')">
+        Title is Required
+      </mat-error>
+    </mat-form-field><br />
+    <mat-form-field appearance ="outline" [style.width.px]="650">
+      <mat-label>Ingredients</mat-label>
+      <textarea matInput [formControl]="ingredientsFormControl"></textarea>
+      <mat-error *ngIf="ingredientsFormControl.hasError('required')">
+        Please List at Least One (1) Ingredient!
+      </mat-error>
+    </mat-form-field><br />
+    <mat-form-field appearance ="outline" [style.width.px]="650">
+      <mat-label>Instructions</mat-label>
+      <textarea matInput [formControl]="instructionsFormControl"></textarea>
+      <mat-error *ngIf="instructionsFormControl.hasError('required')">
+        Please List at Least One (1) Instruction!
+      </mat-error>
+    </mat-form-field><br />
+
 
   <mat-dialog-actions>
   <div class ="bottom">
-   <button mat-raised-button [mat-dialog-close] type="submit" color="primary">Save</button>
-   <button mat-flat-button [mat-dialog-close]>Cancel</button>
+   <button mat-raised-button type="submit" color="primary">Save</button>
+   <button mat-flat-button (click)="onNoClick()">Cancel</button>
   </div>
   </mat-dialog-actions>
 
+</form>
