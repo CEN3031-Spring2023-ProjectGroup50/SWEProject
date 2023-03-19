@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"recipeApp/httpd/handler"
@@ -11,6 +12,9 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
+
+	jwt "github.com/golang-jwt/jwt/v5"
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
@@ -196,15 +200,16 @@ func TestRecipePost(t *testing.T) {
 	}
 
 	var testRecipes []test
-	var numRecipes int64
-	initialize.Db.Table("recipe").Count(&numRecipes)
+	var last models.Recipe
+	initialize.Db.Table("recipe").Last(&last)
+	lastNum := last.Rid
 
 	testRecipes = append(testRecipes,
-		test{Rid: uint(numRecipes + 1), Title: "Test Recipe 1", Ingredients: "paprika,pepper,serrano",
+		test{Rid: uint(lastNum + 1), Title: "Test Recipe 1", Ingredients: "paprika,pepper,serrano",
 			Instructions: "stir gently", Image_name: "test_image_1", Uid: 2},
-		test{Rid: uint(numRecipes + 2), Title: "Test Recipe 2", Ingredients: "pasta",
+		test{Rid: uint(lastNum + 2), Title: "Test Recipe 2", Ingredients: "pasta",
 			Instructions: "heat in microwave", Image_name: "test_image_2", Uid: 2},
-		test{Rid: uint(numRecipes + 3), Title: "Test Recipe 3", Ingredients: "deviled eggs, legumes",
+		test{Rid: uint(lastNum + 3), Title: "Test Recipe 3", Ingredients: "deviled eggs, legumes",
 			Instructions: "party time", Image_name: "test_image_3", Uid: 2},
 	)
 
@@ -221,16 +226,66 @@ func TestRecipePost(t *testing.T) {
 
 }
 
+func TestRecipeEdit(t *testing.T) {
+	r := SetUpRouter()
+	r.PUT("/server/recipes/edit/:id", handler.EditRecipe())
+	type test struct {
+		Rid          uint   `json:"rid"`
+		Title        string `json:"title"`
+		Instructions string `json:"instructions"`
+		Ingredients  string `json:"ingredients"`
+		Image_name   string `json:"image_name"`
+		Uid          uint   `json:"uid"`
+	}
+
+	var testRecipes []test
+	var last models.Recipe
+	initialize.Db.Table("recipe").Last(&last)
+	lastNum := last.Rid
+
+	testRecipes = append(testRecipes,
+		test{Rid: uint(lastNum + 1), Title: "Edit Recipe 1", Ingredients: "paprika,pepper,serrano",
+			Instructions: "stir gently", Image_name: "test_image_1", Uid: 2},
+		test{Rid: uint(lastNum + 2), Title: "Edit Recipe 2", Ingredients: "pasta",
+			Instructions: "heat in microwave", Image_name: "test_image_2", Uid: 2},
+		test{Rid: uint(lastNum + 3), Title: "Edit Recipe 3", Ingredients: "deviled eggs, legumes",
+			Instructions: "party time", Image_name: "test_image_3", Uid: 2},
+	)
+
+	rids := []string{strconv.FormatInt(int64(lastNum-2), 10),
+		strconv.FormatInt(int64(lastNum-1), 10),
+		strconv.FormatInt(int64(lastNum), 10)}
+
+	tc := 0
+	for _, val := range rids {
+		jsonValue, _ := json.Marshal(testRecipes[tc])
+		req, _ := http.NewRequest("PUT", "/server/recipes/edit/"+val, bytes.NewBuffer(jsonValue))
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code, "Could not edit recipe "+val)
+		tc++
+	}
+
+	bogus := "55000"
+	req, _ := http.NewRequest("PUT", "/server/recipes/edit/"+bogus, nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Could not edit recipe "+bogus)
+}
+
 func TestRecipeDelete(t *testing.T) {
 	r := SetUpRouter()
 	r.DELETE("/server/recipes/delete/:id", handler.DeleteRecipe())
 
-	var numRecipes int64
-	initialize.Db.Table("recipe").Count(&numRecipes)
+	var last models.Recipe
+	initialize.Db.Table("recipe").Last(&last)
+	lastNum := last.Rid
 
-	rids := []string{strconv.FormatInt(numRecipes-2, 10),
-		strconv.FormatInt(numRecipes-1, 10),
-		strconv.FormatInt(numRecipes, 10)}
+	rids := []string{strconv.FormatInt(int64(lastNum-2), 10),
+		strconv.FormatInt(int64(lastNum-1), 10),
+		strconv.FormatInt(int64(lastNum), 10)}
 
 	for _, val := range rids {
 		req, _ := http.NewRequest("DELETE", "/server/recipes/delete/"+val, nil)
@@ -246,7 +301,7 @@ func TestRecipeDelete(t *testing.T) {
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusOK, w.Code, "Could not delete recipe "+bogus)
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Could not delete recipe "+bogus)
 }
 
 func TestLogin(t *testing.T) {
@@ -317,4 +372,241 @@ func TestRegister(t *testing.T) {
 	r.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code, "Register failed or user already exists")
+}
+
+func TestAccountAuth(t *testing.T) {
+	r := SetUpRouter()
+
+	r.GET("/server/account", handler.Account)
+	type JWTData struct {
+		// Standard claims are the standard jwt claims from the IETF standard
+		// https://tools.ietf.org/html/rfc7519
+		jwt.RegisteredClaims
+		CustomClaims map[string]string `json:"custom,omitempty"`
+	}
+
+	// Failing auth (invalid secret key)
+	testClaim := JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+	}
+
+	testToken := jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err := testToken.SignedString([]byte("0"))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err := json.Marshal(struct {
+		Token string `json:"token"`
+	}{
+		testTokenString,
+	})
+
+	req, _ := http.NewRequest("GET", "/server/account", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (key): unsuccessful")
+
+	// Failing auth (time expired)
+	testClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Date(1980, 1, 1, 12, 0, 0, 0, time.UTC)),
+		},
+	}
+
+	testToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err = testToken.SignedString([]byte(handler.SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err = json.Marshal(struct {
+		Token string `json:"token"`
+	}{
+		testTokenString,
+	})
+
+	req, _ = http.NewRequest("GET", "/server/account", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (expiry): unsuccessful")
+
+	// Successful auth
+	testClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+	}
+
+	testToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err = testToken.SignedString([]byte(handler.SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err = json.Marshal(struct {
+		Token string `json:"token"`
+	}{
+		testTokenString,
+	})
+
+	req, _ = http.NewRequest("GET", "/server/account", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code, "Authentication success test: unsuccessful")
+}
+
+func TestRefresh(t *testing.T) {
+	r := SetUpRouter()
+
+	r.POST("/server/account/refresh", handler.RefreshToken)
+	type JWTData struct {
+		// Standard claims are the standard jwt claims from the IETF standard
+		// https://tools.ietf.org/html/rfc7519
+		jwt.RegisteredClaims
+		CustomClaims map[string]string `json:"custom,omitempty"`
+	}
+
+	// Failing auth (invalid secret key)
+	testClaim := JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+	}
+
+	testRefClaim := JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute * 2)),
+		},
+	}
+
+	testToken := jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err := testToken.SignedString([]byte(handler.SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	testRefToken := jwt.NewWithClaims(jwt.SigningMethodHS256, testRefClaim)
+	testRefString, err := testRefToken.SignedString([]byte("0"))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err := json.Marshal(struct {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refreshToken"`
+	}{
+		testTokenString, testRefString,
+	})
+
+	req, _ := http.NewRequest("POST", "/server/account/refresh", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	req.Header.Set("Refresh", "Bearer "+testRefString)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (key): unsuccessful")
+
+	// Failing auth (expired time)
+	testClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+	}
+
+	testRefClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Date(1980, 1, 1, 12, 0, 0, 0, time.UTC)),
+		},
+	}
+
+	testToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err = testToken.SignedString([]byte(handler.SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	testRefToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testRefClaim)
+	testRefString, err = testRefToken.SignedString([]byte(handler.REFRESH_SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err = json.Marshal(struct {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refreshToken"`
+	}{
+		testTokenString, testRefString,
+	})
+
+	req, _ = http.NewRequest("POST", "/server/account/refresh", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	req.Header.Set("Refresh", "Bearer "+testRefString)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (expiry): unsuccessful")
+
+	// Success auth
+	testClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+		CustomClaims: map[string]string{
+			"userid": "1",
+		},
+	}
+
+	testRefClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute * 2)),
+		},
+		CustomClaims: map[string]string{
+			"userid": "1",
+		},
+	}
+
+	testToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err = testToken.SignedString([]byte(handler.SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	testRefToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testRefClaim)
+	testRefString, err = testRefToken.SignedString([]byte(handler.REFRESH_SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err = json.Marshal(struct {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refreshToken"`
+	}{
+		testTokenString, testRefString,
+	})
+
+	req, _ = http.NewRequest("POST", "/server/account/refresh", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	req.Header.Set("Refresh", "Bearer "+testRefString)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code, "Authentication success test: unsuccessful")
 }

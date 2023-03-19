@@ -1,5 +1,5 @@
 import { RecipesComponent } from './recipes.component';
-import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
+import { AuthInterceptorService } from '../shared/auth/auth-interceptor.service';
 import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,7 +24,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from './shared/auth/auth.service';
+import { AuthService } from '../shared/auth/auth.service';
 
 describe('RecipesComponent', () => {
 

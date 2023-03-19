@@ -40,9 +40,9 @@ func RecipeGetByPage() gin.HandlerFunc {
 
 		if uid != 0 {
 			//passedID, _ := strconv.Atoi(body.Uid)
-			initialize.Db.Table("recipe_1").Where("uid =?", uid).Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
+			initialize.Db.Table("recipe").Where("uid =?", uid).Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
 		} else {
-			initialize.Db.Table("recipe_1").Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
+			initialize.Db.Table("recipe").Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
 		}
 
 		if len(recipes) == 0 {

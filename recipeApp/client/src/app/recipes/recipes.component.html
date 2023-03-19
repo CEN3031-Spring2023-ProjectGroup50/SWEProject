@@ -1,3 +1,6 @@
+<div class="tooltip">Hover over me
+  <span class="tooltiptext">Tooltip text</span>
+</div>
 
 <div class="grid-container">
 
@@ -15,7 +18,7 @@
     showFirstLastButtons = "true">
   </mat-paginator>
 
-    <mat-grid-list cols="4" rowHeight="500px">
+    <mat-grid-list cols="5" rowHeight="400px">
       <mat-grid-tile *ngFor="let backendItem of backendItems"  >
         <mat-card class="dashboard-recipe">
           <mat-card-header>
@@ -23,6 +26,10 @@
             <div mat-card-avatar class= "header-image-mallow"></div>
 
             <mat-card-title>
+
+            <mat-card-title class= "recipe-card-title" style="font-size:16px"
+              mat-raised-button
+              matTooltip= {{backendItem.Title}}>
               {{backendItem.Title}}
             </mat-card-title>
 
@@ -45,6 +52,13 @@
           <mat-card-content class="dashboard-recipe-content">
             <!--<div>{{card.description}}</div> -->
           </mat-card-content>
+
+
+            <mat-card-subtitle class= "recipe-card-subtitle">Source's name</mat-card-subtitle>
+
+          </mat-card-header>
+
+          <img mat-card-image class= "recipe-image" src="{{'data:image/jpeg;base64,' +backendItem.Image}}" alt="alt text example">
 
           <mat-card-actions>
             <mat-form-field appearance="fill">
