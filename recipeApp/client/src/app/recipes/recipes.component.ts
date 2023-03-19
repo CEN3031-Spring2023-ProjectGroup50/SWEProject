@@ -18,6 +18,7 @@ interface IRecipeItem {
     Instructions: string,
     Image_name: string,
     Uid: number,
+    Email: string,
     Image: Uint8Array[],
 
 }
@@ -66,7 +67,9 @@ export class RecipesComponent {
 
       }
     );
-    await this.loadItems()    
+    await this.loadItems()  
+    
+    console.log(this.backendItems)
     
   }
 

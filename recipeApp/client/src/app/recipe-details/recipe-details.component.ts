@@ -8,7 +8,9 @@ interface IRecipeItem {
   Instructions: string,
   Image_name: string,
   Uid: number,
+  Email: string,
   Image: Uint8Array[],
+
 }
 
 @Component({
@@ -31,6 +33,7 @@ export class RecipeDetailsModule {
         Instructions: formatInstructions(this.recipe.Instructions),
         Image_name: this.recipe.Image_name,
         Uid: this.recipe.Uid,
+        Email: this.recipe.Email,
         Image: this.recipe.Image,
       }
     });
