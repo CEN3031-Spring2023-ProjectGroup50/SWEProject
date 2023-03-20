@@ -1,0 +1,13 @@
+.recipe-details-image {
+    object-fit:inherit;
+    height: 100%;
+    width: 100%;
+    background-size: 100%;
+}
+
+.recipe-image {
+    object-fit:inherit;
+    height: 100%;
+    width: 100%;
+    background-size: 100%;
+}

@@ -1,73 +1,74 @@
-<div class="tooltip">Hover over me
-  <span class="tooltiptext">Tooltip text</span>
-</div>
+<!-- <img *ngIf="loading" src="./assets/imgmarshmallows.jpg" /> -->
 
 <div class="grid-container">
-  
-    <h1 class="mat-h1">Recipes</h1>
-    <mat-button-toggle-group name="filter" aria-label="Filter">
-      <mat-button-toggle (change)="onAll($event.value)"  value="all">All Recipes</mat-button-toggle>
-      <mat-button-toggle (change)="onUser($event.value)" value="user">User Created</mat-button-toggle>
 
-    </mat-button-toggle-group>
-    <mat-paginator #paginatorBottom [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+  <h1 class="mat-h1">Recipes
+    <div class="lds-ring" *ngIf="loading">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </h1>
+
+  <mat-button-toggle-group name="filter" aria-label="Filter">
+    <mat-button-toggle (change)="onAll($event.value)" value="all">All Recipes</mat-button-toggle>
+    <mat-button-toggle (change)="onUser($event.value)" value="user">User Created</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <mat-paginator #paginatorBottom [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions" (page)="pageBottomChanged($event)" aria-label="Select page"
-    showFirstLastButtons = "true">
+    showFirstLastButtons="true">
   </mat-paginator>
 
-    <mat-grid-list cols="5" rowHeight="400px">
-      <mat-grid-tile *ngFor="let backendItem of backendItems"  >
-        <mat-card class="dashboard-recipe">
-          <mat-card-header>
-  
-            <div mat-card-avatar class= "header-image-mallow"></div>
-  
-            <mat-card-title class= "recipe-card-title" style="font-size:16px" 
-              mat-raised-button
-              matTooltip= {{backendItem.Title}}>
-              {{backendItem.Title}}
-            </mat-card-title>
+  <mat-grid-list cols="5" rowHeight="400px">
+    <mat-grid-tile *ngFor="let backendItem of backendItems">
+      <mat-card class="dashboard-recipe">
+        <mat-card-header>
 
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
+          <div mat-card-avatar class="header-image-mallow"></div>
 
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>View recipe</button>
-              <button mat-menu-item>Edit recipe</button>
-              <button mat-menu-item>Delete recipe</button>
-            </mat-menu>
-  
-            <mat-card-subtitle class= "recipe-card-subtitle">Source's name</mat-card-subtitle>
-  
-          </mat-card-header>
-  
-          <img mat-card-image class= "recipe-image" src="{{'data:image/jpeg;base64,' +backendItem.Image}}" alt="alt text example">
-  
-          <mat-card-actions>
-            <mat-form-field appearance="fill">
-              <mat-label>Schedule meal</mat-label>
-              <input matInput [matDatepicker]="picker">
-              <mat-hint>MM/DD/YYYY</mat-hint>
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          </mat-card-actions>
-  
-          <mat-card-actions>
-            <button mat-button>SAVE</button>
-          </mat-card-actions>
-  
-        </mat-card>
-      </mat-grid-tile>
-    </mat-grid-list>
-  
-  </div>
-  <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page"
-    showFirstLastButtons = "true">
-    </mat-paginator>
-    
-    
-  
-  
+          <mat-card-title class="recipe-card-title" style="font-size:16px" mat-raised-button
+            matTooltip={{backendItem.Title}}>
+            {{backendItem.Title}}
+          </mat-card-title>
+
+          <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu" xPosition="before">
+            <recipe-details [recipe] = backendItem></recipe-details>
+            <button mat-menu-item>Edit recipe</button>
+            <button mat-menu-item>Delete recipe</button>
+          </mat-menu>
+
+          <mat-card-subtitle class="recipe-card-subtitle">{{backendItem.Email}}</mat-card-subtitle>
+
+        </mat-card-header>
+
+        <img mat-card-image class="recipe-image" src="{{'data:image/jpeg;base64,' +backendItem.Image}}"
+          alt="alt text example">
+
+        <mat-card-actions>
+          <mat-form-field appearance="fill">
+            <mat-label>Schedule meal</mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </mat-card-actions>
+
+        <mat-card-actions>
+          <button mat-button>SAVE</button>
+        </mat-card-actions>
+
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+</div>
+<mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page" showFirstLastButtons="true">
+</mat-paginator>

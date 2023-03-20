@@ -26,6 +26,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table'
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor/login-editor.component';
@@ -41,7 +42,7 @@ import { MealPlanComponent } from './meal-plan/meal-plan.component';
 import { MealPlanPageComponent } from './meal-plan-page/meal-plan-page.component';
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { GroceryListPageComponent } from './grocery-list-page/grocery-list-page.component';
-//import { TestComponent } from './test.component';
+import { RecipeDetailsModule, RecipeDetailsContentModule} from './recipe-details/recipe-details.component';
 
 import { AuthService } from './shared/auth/auth.service';
 import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
@@ -63,7 +64,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         MealPlanPageComponent,
         GroceryListComponent,
         GroceryListPageComponent,
-        //TestComponent,
+        RecipeDetailsModule,
+        RecipeDetailsContentModule,
     ],
     providers: [
         AuthService,
@@ -73,7 +75,11 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
             multi: true
         },
         CanActivateViaAuthGuard,
-        NegateAuthGuard
+        NegateAuthGuard,
+        {
+            provide: MAT_DIALOG_DEFAULT_OPTIONS, 
+            useValue: {hasBackdrop: false}
+        }
     ],
     bootstrap: [AppComponent],
     imports: [
@@ -106,6 +112,7 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         MatTableModule,
         MatSortModule,
         MatTooltipModule,
+        MatDialogModule
     ],
     exports: [RecipesComponent,]
 })

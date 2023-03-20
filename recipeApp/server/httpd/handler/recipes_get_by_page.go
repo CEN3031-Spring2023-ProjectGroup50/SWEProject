@@ -3,7 +3,6 @@ package handler
 import (
 	"net/http"
 	"recipeApp/initialize"
-	"recipeApp/models"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -18,9 +17,21 @@ import (
 // @Failure 400
 // @Router /server/recipes/bypage [get]
 func RecipeGetByPage() gin.HandlerFunc {
+
+	type userRecipe struct {
+		Rid          uint `gorm:"primaryKey; column:rid"`
+		Title        string
+		Ingredients  string
+		Instructions string
+		Image_Name   string
+		Uid          uint
+		Email        string
+		Image        []byte `gorm:"type:bytea"`
+	}
+
 	return func(c *gin.Context) {
 
-		var recipes []models.Recipe
+		var recipes []userRecipe
 
 		uid, _ := strconv.Atoi(c.Query("uid"))
 
@@ -39,10 +50,10 @@ func RecipeGetByPage() gin.HandlerFunc {
 		offset := (page - 1) * pageSize
 
 		if uid != 0 {
-			//passedID, _ := strconv.Atoi(body.Uid)
-			initialize.Db.Table("recipe").Where("uid =?", uid).Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
+
+			initialize.Db.Table("users").Select("users.email", "recipe.*").Joins("join recipe on recipe.uid = users.id").Where("uid =?", uid).Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
 		} else {
-			initialize.Db.Table("recipe").Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
+			initialize.Db.Table("users").Select("users.email", "recipe.*").Joins("join recipe on recipe.uid = users.id").Order("rid").Offset(offset).Limit(pageSize).Find(&recipes)
 		}
 
 		if len(recipes) == 0 {
