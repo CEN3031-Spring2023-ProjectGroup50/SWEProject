@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { FormGroup,FormControl,FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup,FormControl,FormBuilder } from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -9,20 +10,30 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddRecipeDialogComponent {
 
-  constructor(public dialogRef: MatDialogRef<AddRecipeDialogComponent>) {}
+  recipeForm!: FormGroup;
+
+  constructor(
+    public dialogRef: MatDialogRef<AddRecipeDialogComponent>,
+    private httpClient: HttpClient
+    ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  titleFormControl = new FormControl('', [
-    Validators.required,
-    ]);
-    ingredientsFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    instructionsFormControl = new FormControl('', [
-      Validators.required,
-    ]);
+  ngOnInit() {
+    this.recipeForm = new FormGroup({
+      title: new FormControl(''),
+      ingredients: new FormControl(''),
+      instructions: new FormControl(''),
+    })
+    this.recipeForm.valueChanges.subscribe();
+  }
+
+  async addRecipe() {
+    await this.httpClient.post('/server/recipes/add', {
+
+    })
+  }
 
 }

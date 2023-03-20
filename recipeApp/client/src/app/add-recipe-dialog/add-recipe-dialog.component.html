@@ -1,26 +1,17 @@
 
   <h1 mat-dialog-title class="center">Add a Recipe</h1>
-  <form>
+  <form [formGroup]="recipeForm" (submit)="addRecipe()">
     <mat-form-field appearance = "outline" [style.width.px]="650">
       <mat-label>Title</mat-label>
-      <input matInput [formControl] ="titleFormControl">
-      <mat-error *ngIf="titleFormControl.hasError('required')">
-        Title is Required
-      </mat-error>
+      <input matInput formControlName="Title" required>
     </mat-form-field><br />
     <mat-form-field appearance ="outline" [style.width.px]="650">
       <mat-label>Ingredients</mat-label>
-      <textarea matInput [formControl]="ingredientsFormControl"></textarea>
-      <mat-error *ngIf="ingredientsFormControl.hasError('required')">
-        Please List at Least One (1) Ingredient!
-      </mat-error>
+      <textarea matInput formControlName="Ingredients" required></textarea>
     </mat-form-field><br />
     <mat-form-field appearance ="outline" [style.width.px]="650">
       <mat-label>Instructions</mat-label>
-      <textarea matInput [formControl]="instructionsFormControl"></textarea>
-      <mat-error *ngIf="instructionsFormControl.hasError('required')">
-        Please List at Least One (1) Instruction!
-      </mat-error>
+      <textarea matInput formControlName="Instructions" required></textarea>
     </mat-form-field><br />
 
 
