@@ -155,7 +155,12 @@ async onUser(event: { value: string; }) {
 setFilters(keywordSearchTerm: string, ingredientSearchTerm: string){
   this.keywordSearchTerm = keywordSearchTerm;
   this.ingredientSearchTerm = ingredientSearchTerm;
-  this.isSearching = true;
+
+  if (keywordSearchTerm != "" || ingredientSearchTerm != "")
+    this.isSearching = true;
+  else
+    this.isSearching = false;
+
   this.loadItems();
 }
 
