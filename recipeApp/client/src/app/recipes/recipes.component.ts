@@ -161,6 +161,8 @@ setFilters(keywordSearchTerm: string, ingredientSearchTerm: string){
   else
     this.isSearching = false;
 
+  this.paginator.pageIndex = 0;
+  this.currentPage = this.paginator.pageIndex;
   this.loadItems();
 }
 
