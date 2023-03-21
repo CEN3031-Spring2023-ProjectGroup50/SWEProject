@@ -39,6 +39,7 @@ interface rCount {
 export class RecipesComponent {
 
   showFiller = false;
+  isSearching = false;
 
   public backendItems: IRecipeItem[] | undefined = []
   public recipecount: rCount | undefined
@@ -82,7 +83,7 @@ async loadItems() {
 
     // If there are no search terms, the page will be generated via the API defined in recipes_get_by_count.go
 
-    if (this.keywordSearchTerm == "" && this.ingredientSearchTerm == "") {
+    if (!this.isSearching) {
 
       let URL = `/server/recipes/bypage?page=${this.currentPage + 1}&per_page=${this.pageSize}`
       let params = new HttpParams().set('uid', this.defaultAccount)
@@ -154,12 +155,15 @@ async onUser(event: { value: string; }) {
 setFilters(keywordSearchTerm: string, ingredientSearchTerm: string){
   this.keywordSearchTerm = keywordSearchTerm;
   this.ingredientSearchTerm = ingredientSearchTerm;
+  this.isSearching = true;
   this.loadItems();
 }
 
 clearFilters(){
   this.keywordSearchTerm = "";
   this.ingredientSearchTerm = "";
+  this.isSearching = false;
+  this.loadItems();
 }
 
 

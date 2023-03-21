@@ -19,16 +19,16 @@
       </td>
       <td>
         <mat-form-field class="full-width">
-          <mat-label>Search by ingredent</mat-label>
+          <mat-label>Search by ingredient</mat-label>
           <input matInput [(ngModel)]="ingredientSearchTerm" placeholder="Ex. Cornichon">
         </mat-form-field>
       </td>
       <td>
-        <button mat-icon-button>
-          <mat-icon matPrefix color="primary" matPrefix (click)="setFilters(keywordSearchTerm, ingredientSearchTerm)">search</mat-icon>
+        <button mat-icon-button color="primary" (click)="setFilters(keywordSearchTerm, ingredientSearchTerm)">
+          <mat-icon>search</mat-icon>
         </button>
-        <button mat-icon-button>
-          <mat-icon matPrefix color="primary" matPrefix (click)="clearFilters()">clear</mat-icon>
+        <button mat-icon-button color="primary" (click)="clearFilters()">
+          <mat-icon>clear</mat-icon>
         </button>
       </td>
       <td>
