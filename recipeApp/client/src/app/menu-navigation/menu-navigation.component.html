@@ -1,7 +1,3 @@
-<button type="button" color=primary mat-button (click)="drawer.toggle()" data-cy="menuText">
-  Show or hide menu
-</button>
-
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav"
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
