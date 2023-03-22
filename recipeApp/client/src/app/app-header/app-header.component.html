@@ -2,7 +2,7 @@
   <mat-toolbar color="">
 
     <div class="example-button-container">
-      <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+      <button mat-mini-fab color="primary" (click)="sharedService.menuNavToggle()" *ngIf="authService.isAuthenticated" aria-label="Example icon button with a menu icon">
         <mat-icon id="menu">menu</mat-icon>
       </button>
     </div>
