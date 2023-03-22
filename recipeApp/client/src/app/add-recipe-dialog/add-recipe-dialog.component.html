@@ -5,10 +5,14 @@
       <mat-label>Title</mat-label>
       <input matInput formControlName="Title" required>
     </mat-form-field><br />
+
+    <!--Ingredients must follow format ['Ing. 1', 'Ing. 2', ... , 'etc']
+        when adding to database (For display purposes)-->
     <mat-form-field appearance ="outline" [style.width.px]="650">
       <mat-label>Ingredients</mat-label>
       <textarea matInput formControlName="Ingredients" required></textarea>
     </mat-form-field><br />
+
     <mat-form-field appearance ="outline" [style.width.px]="650">
       <mat-label>Instructions</mat-label>
       <textarea matInput formControlName="Instructions" required></textarea>
