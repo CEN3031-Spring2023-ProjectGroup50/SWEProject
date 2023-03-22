@@ -6,23 +6,31 @@
 
     <img mat-card-image src="{{'data:image/jpeg;base64,' +recipe.Image}}">
 
+    <button mat-icon-button aria-label="Upload icon">
+        <mat-icon>upload</mat-icon>
+    </button>
+
+    Upload new image
+
     <br><br>
 
-    <h2>Ingredients</h2>
-    <p style="white-space: pre-line">
-        {{recipe.Ingredients}}
-    </p>
+    <mat-form-field class="full-width">
+        <mat-label>Ingredients</mat-label>
+        <textarea matInput rows="5" placeholder="Ex. Chicken" value="{{recipe.Ingredients}}"></textarea>
+        <mat-hint>Separate ingredients with a new line.</mat-hint>
+    </mat-form-field>
 
-    <br>
+    <br><br>
 
-    <h2>Instructions</h2>
-    <p style="white-space: pre-line">
-        {{recipe.Instructions}}
-    </p>
+    <mat-form-field class="full-width">
+        <mat-label>Instructions</mat-label>
+        <textarea matInput rows="10" placeholder="Ex. Chicken" value="{{recipe.Instructions}}"></textarea>
+    </mat-form-field>
 
 </mat-dialog-content>
 
 
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Close</button>
+    <button mat-flat-button color="primary" mat-dialog-close>Update recipe</button>
+    <button mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

@@ -43,6 +43,7 @@ import { MealPlanPageComponent } from './meal-plan-page/meal-plan-page.component
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { GroceryListPageComponent } from './grocery-list-page/grocery-list-page.component';
 import { RecipeDetailsModule, RecipeDetailsContentModule} from './recipe-details/recipe-details.component';
+import { EditRecipeModule, EditRecipeContentModule} from './edit-recipe/edit-recipe.component';
 
 import { AuthService } from './shared/auth/auth.service';
 import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
@@ -66,6 +67,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         GroceryListPageComponent,
         RecipeDetailsModule,
         RecipeDetailsContentModule,
+        EditRecipeModule, 
+        EditRecipeContentModule
     ],
     providers: [
         AuthService,

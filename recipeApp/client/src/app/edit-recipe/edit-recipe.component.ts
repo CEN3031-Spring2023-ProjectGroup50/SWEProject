@@ -14,8 +14,8 @@ interface IRecipeItem {
 }
 
 @Component({
-  selector: 'recipe-details',
-  templateUrl: 'recipe-details.component.html',
+  selector: 'edit-recipe',
+  templateUrl: 'edit-recipe.component.html',
 })
 
 export class EditRecipeModule {
