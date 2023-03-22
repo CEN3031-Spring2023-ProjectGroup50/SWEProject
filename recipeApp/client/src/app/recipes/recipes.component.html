@@ -1,5 +1,3 @@
-<!-- <img *ngIf="loading" src="./assets/imgmarshmallows.jpg" /> -->
-
 <div class="grid-container">
 
   <h1 class="mat-h1">Recipes
@@ -10,11 +8,37 @@
       <div></div>
     </div>
   </h1>
-
-  <mat-button-toggle-group name="filter" aria-label="Filter">
-    <mat-button-toggle (change)="onAll($event.value)" value="all">All Recipes</mat-button-toggle>
-    <mat-button-toggle (change)="onUser($event.value)" value="user">User Created</mat-button-toggle>
-  </mat-button-toggle-group>
+        
+  <table class="full-width" cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field class="full-width">
+          <mat-label>Search by keyword</mat-label>
+          <input matInput [(ngModel)]="keywordSearchTerm" placeholder="Ex. Crock pot">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="full-width">
+          <mat-label>Search by ingredient</mat-label>
+          <input matInput [(ngModel)]="ingredientSearchTerm" placeholder="Ex. Cornichon">
+        </mat-form-field>
+      </td>
+      <td>
+        <button mat-icon-button color="primary" (click)="setFilters(keywordSearchTerm, ingredientSearchTerm)">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="clearFilters()">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </td>
+      <td>
+        <mat-button-toggle-group name="filter" aria-label="Filter">
+          <mat-button-toggle (change)="onAll($event.value)" value="all">All Recipes</mat-button-toggle>
+          <mat-button-toggle (change)="onUser($event.value)" value="user">User Created</mat-button-toggle>
+        </mat-button-toggle-group>
+      </td>
+    </tr>
+  </table>
 
   <mat-paginator #paginatorBottom [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions" (page)="pageBottomChanged($event)" aria-label="Select page"
@@ -38,7 +62,7 @@
           </button>
 
           <mat-menu #menu="matMenu" xPosition="before">
-            <recipe-details [recipe] = backendItem></recipe-details>
+            <recipe-details [recipe]=backendItem></recipe-details>
             <button mat-menu-item>Edit recipe</button>
             <button mat-menu-item>Delete recipe</button>
           </mat-menu>
