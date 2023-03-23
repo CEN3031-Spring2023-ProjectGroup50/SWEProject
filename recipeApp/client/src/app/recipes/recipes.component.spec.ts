@@ -31,11 +31,11 @@ describe('RecipesComponent', () => {
 
     let component: RecipesComponent;
     let fixture: ComponentFixture<RecipesComponent>;
-  
+
     beforeEach(waitForAsync(() => {
-    
+
       TestBed.configureTestingModule({
-        declarations: [ 
+        declarations: [
             RecipesComponent
         ],
         imports:[
@@ -75,11 +75,7 @@ describe('RecipesComponent', () => {
       }).compileComponents();
    }));
 
-    it('should be fine (this is to confirm the test is set up properly)', () => {
-        expect(true).toBeTruthy();
-    })
-
-    it('should create the recipes component', waitForAsync(() => {
+    it('should compile', waitForAsync(() => {
         const fixture = TestBed.createComponent(RecipesComponent);
         const recipesComponent = fixture.debugElement.componentInstance;
         expect(recipesComponent).toBeTruthy();
