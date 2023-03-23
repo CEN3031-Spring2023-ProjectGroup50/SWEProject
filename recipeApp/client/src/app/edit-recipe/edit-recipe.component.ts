@@ -52,6 +52,8 @@ export class EditRecipeModule {
 
   async editRecipe() {
 
+    this.syncChanges();
+
     this.loading = true;
 
     let URL = `/server/recipes/edit`
@@ -74,6 +76,10 @@ export class EditRecipeModule {
           console.error('There was an error!', error);
         },
       });    
+    }
+
+    syncChanges(){
+
     }
 
 
