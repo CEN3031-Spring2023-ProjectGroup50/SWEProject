@@ -76,7 +76,7 @@ export class RecipesComponent {
 
       }
     );
-    await this.loadItems()
+    await this.loadItems();
 
 
   }
