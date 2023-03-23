@@ -1,5 +1,7 @@
 import {Component, Input, Inject} from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { HttpClient, HttpParams } from '@angular/common/http'
+import {AuthService} from '../shared/auth/auth.service'
 
 interface IRecipeItem {
   Rid: number,
@@ -21,8 +23,13 @@ interface IRecipeItem {
 export class EditRecipeModule {
 
   @Input() recipe: IRecipeItem;
+  loading = false;
+  postId = null;
+  errorMessage = null;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,
+      private httpClient: HttpClient,
+      private authService: AuthService) {}
 
   openDialog() {
     const dialogRef = this.dialog.open(EditRecipeContentModule, {
@@ -42,7 +49,36 @@ export class EditRecipeModule {
       console.log(`Dialog result: ${result}`);
     });
   }
+
+  async editRecipe() {
+
+    this.loading = true;
+
+    let URL = `/server/recipes/edit`
+
+    this.httpClient.put<any>(URL, {
+      Rid: this.recipe.Rid,
+      Title: this.recipe.Title,
+      Ingredients: this.recipe.Ingredients,
+      Instructions: this.recipe.Instructions,
+      Image_Name: this.recipe.Image_name,
+      Uid: this.recipe.Uid,
+    })
+      .subscribe({
+        next: data => {
+          this.postId = data.id;
+          this.loading = false;
+        },
+        error: error => {
+          this.errorMessage = error.message;
+          console.error('There was an error!', error);
+        },
+      });    
+    }
+
+
 }
+
 
 @Component({
   selector: 'edit-recipe-content',
