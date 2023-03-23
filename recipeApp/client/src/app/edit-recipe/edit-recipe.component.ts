@@ -84,7 +84,7 @@ export class EditRecipeContentModule {
 
     let URL = `/server/recipes/edit`
 
-    this.httpClient.put(URL, {
+    await this.httpClient.put(URL, {
       Rid: this.recipe.Rid,
       Title: this.editRecipeForm.value['title'],
       Ingredients: this.editRecipeForm.value['ingredients'],
