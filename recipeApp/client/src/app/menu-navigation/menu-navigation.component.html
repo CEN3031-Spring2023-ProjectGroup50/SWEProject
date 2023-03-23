@@ -1,7 +1,3 @@
-<button type="button" color=primary mat-button (click)="drawer.toggle()" data-cy="menuText">
-  Show or hide menu
-</button>
-
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav"
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
@@ -12,7 +8,6 @@
       <a mat-list-item href="/home" data-cy="recipes">Recipes</a>
       <a mat-list-item href="/mealplan" data-cy="mealplan">Meal Plan</a>
       <a mat-list-item href="/grocerylist" data-cy="grocerylist">Grocery List</a>
-      <a mat-list-item href="/" (click)="authService.logout()">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
