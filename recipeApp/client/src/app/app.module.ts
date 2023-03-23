@@ -25,7 +25,6 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 
@@ -111,7 +110,6 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         LayoutModule,
         MatPaginatorModule,
         CommonModule,
-        //RouterTestingModule,
         RouterModule,
         MatTableModule,
         MatSortModule,

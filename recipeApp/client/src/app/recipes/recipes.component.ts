@@ -9,9 +9,8 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddRecipeDialogComponent } from '../add-recipe-dialog/add-recipe-dialog.component';
-import { FormGroup,FormControl,FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import {TooltipPosition} from '@angular/material/tooltip';
-import {FormControl, Validators} from '@angular/forms';
 import { isNull } from 'cypress/types/lodash'
 
 
@@ -160,10 +159,22 @@ async onUser(event: { value: string; }) {
 openDialog() {
 
   const dialogConfig = new MatDialogConfig();
-
   dialogConfig.autoFocus = true;
-
   this.dialog.open(AddRecipeDialogComponent, dialogConfig);
+}
+
+setFilters(keywordSearchTerm: string, ingredientSearchTerm: string){
+  this.keywordSearchTerm = keywordSearchTerm;
+  this.ingredientSearchTerm = ingredientSearchTerm;
+
+  if (keywordSearchTerm != "" || ingredientSearchTerm != "")
+    this.isSearching = true;
+  else
+    this.isSearching = false;
+
+  this.paginator.pageIndex = 0;
+  this.currentPage = this.paginator.pageIndex;
+  this.loadItems();
 }
 
 

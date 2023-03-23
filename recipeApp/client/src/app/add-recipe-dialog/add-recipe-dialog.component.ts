@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup,FormControl,FormBuilder } from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
+import { RecipesComponent } from '../recipes/recipes.component';
 
 @Component({
   selector: 'app-add-recipe-dialog',
@@ -11,6 +12,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class AddRecipeDialogComponent {
 
   recipeForm!: FormGroup;
+  @ViewChild(RecipesComponent) recipes: any;
 
   constructor(
     public dialogRef: MatDialogRef<AddRecipeDialogComponent>,
@@ -32,8 +34,13 @@ export class AddRecipeDialogComponent {
 
   async addRecipe() {
     await this.httpClient.post('/server/recipes/add', {
-
-    })
+      image_name: "test_image_1",
+      ingredients: this.recipeForm.value['ingredients'],
+      instructions: this.recipeForm.value['instructions'],
+      title: this.recipeForm.value['title'],
+    }).subscribe((post)=>{
+      console.log("Recipe Added");
+    });
   }
 
 }
