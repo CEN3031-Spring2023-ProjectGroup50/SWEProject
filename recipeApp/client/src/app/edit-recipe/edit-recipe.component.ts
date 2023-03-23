@@ -61,6 +61,7 @@ export class EditRecipeContentModule {
   loading = false;
   postId = 0;
   errorMessage = "";
+  someString = this.recipe.Title;
   editRecipeForm!: FormGroup
 
   constructor(@Inject(MAT_DIALOG_DATA) public recipe: any,
@@ -68,27 +69,33 @@ export class EditRecipeContentModule {
       private authService: AuthService,
       private formBuilder: FormBuilder,) {}
 
-  ngOnInit() {
+  // editRecipeForm = new FormGroup({
+  //   title: new FormControl(''),
+  //   ingredients: new FormControl(''),
+  //   instructions: new FormControl('')
+  // });
+  
+    ngOnInit() {
     this.editRecipeForm = new FormGroup({
-        email: new FormControl(''),
-        password: new FormControl('')
+        title: new FormControl(''),
+        ingredients: new FormControl(''),
+        instructions: new FormControl('')
     })
     this.editRecipeForm.valueChanges.subscribe(()=>
     this.errorMessage = '')
     }
 
-    
   async editRecipe() {
 
     this.loading = true;
 
-    let URL = `/server/recipes/edit`
+    let URL = `/server/recipes/edit/13512`
 
     await this.httpClient.put(URL, {
       Rid: this.recipe.Rid,
       Title: this.editRecipeForm.value['title'],
-      Ingredients: this.editRecipeForm.value['ingredients'],
-      Instructions: this.editRecipeForm.value['instructions'],
+      Ingredients: formatIngredientsForAPI(this.editRecipeForm.value['ingredients']),
+      Instructions: formatInstructionsForAPI(this.editRecipeForm.value['instructions']),
       Image_Name: this.recipe.Image_name,
       Uid: this.recipe.Uid,
     })
@@ -112,4 +119,15 @@ function formatIngredients(Ingredients: string,) {
 
 function formatInstructions(Instructions: string,) {
   return Instructions.replaceAll("\n", "\n\n");
+}
+
+function formatIngredientsForAPI(Ingredients: string,) {
+  let result = "['";
+  result = result.concat(Ingredients.replaceAll("\n", "\', \'"));
+  result = result.concat("']");
+  return result;
+}
+
+function formatInstructionsForAPI(Instructions: string,) {
+  return Instructions.replaceAll("\n\n", "\n");
 }
