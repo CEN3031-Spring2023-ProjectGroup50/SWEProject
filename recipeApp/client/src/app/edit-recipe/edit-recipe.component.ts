@@ -61,10 +61,9 @@ export class EditRecipeContentModule {
   loading = false;
   postId = 0;
   errorMessage = "";
-  someString = this.recipe.Title;
   editRecipeForm!: FormGroup
 
-  constructor(@Inject(MAT_DIALOG_DATA) public recipe: any,
+  constructor(@Inject(MAT_DIALOG_DATA) public recipe: IRecipeItem,
       private httpClient: HttpClient,
       private authService: AuthService,
       private formBuilder: FormBuilder,) {}
@@ -77,9 +76,9 @@ export class EditRecipeContentModule {
   
     ngOnInit() {
     this.editRecipeForm = new FormGroup({
-        title: new FormControl(''),
-        ingredients: new FormControl(''),
-        instructions: new FormControl('')
+        title: new FormControl(this.recipe.Title),
+        ingredients: new FormControl(this.recipe.Ingredients),
+        instructions: new FormControl(this.recipe.Instructions)
     })
     this.editRecipeForm.valueChanges.subscribe(()=>
     this.errorMessage = '')
@@ -89,7 +88,9 @@ export class EditRecipeContentModule {
 
     this.loading = true;
 
-    let URL = `/server/recipes/edit/13512`
+    // 13512 is a hardcoded Rid for testing API. 
+    // Trying to figure out how to pass in the recipe data using ${this.recipe.Rid} without it being undefined.
+    let URL = `/server/recipes/edit/${this.recipe.Rid.toString()}`
 
     await this.httpClient.put(URL, {
       Rid: this.recipe.Rid,
