@@ -3,7 +3,7 @@ import { NgForOf } from '@angular/common'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import {AuthService} from '../shared/auth/auth.service'
-
+import { SharedFunctionsService } from '../shared/shared-functions.service'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -67,8 +67,13 @@ export class RecipesComponent {
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
+    private sharedService: SharedFunctionsService,
     private dialog: MatDialog
-  ){}
+  ){
+    this.sharedService.getReloadResponse().subscribe(()=>{
+      this.loadItems();
+      });
+  }
 
   async ngOnInit() {
     this.authService.getAccount().subscribe(
