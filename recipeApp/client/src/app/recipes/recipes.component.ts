@@ -47,6 +47,7 @@ export class RecipesComponent {
   public recipecount: rCount | undefined
   defaultAccount = "0"
   accountData="0"
+  uid = 0
   isLoading = false
   totalRows: number | undefined = 0
   pageSize = 10
@@ -79,7 +80,7 @@ export class RecipesComponent {
     this.authService.getAccount().subscribe(
       (res: any) => {
           this.accountData = res.toString();
-
+          this.uid = parseInt(this.accountData);
       }
     );
     await this.loadItems();
