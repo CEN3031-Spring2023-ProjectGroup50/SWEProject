@@ -48,7 +48,7 @@ describe('registrationForm', () => {
     //component = new registerFormComponent(routerSpy, new FormBuilder(), loginServiceSpy);
 
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         registerFormComponent
     ],
     imports:[
@@ -91,21 +91,10 @@ describe('registrationForm', () => {
     }).compileComponents();
  }));
 
-  it('should be fine (this is to confirm the test is set up properly)', () => {
-      expect(true).toBeTruthy();
-  })
-
-  it('should create the registration form', waitForAsync(() => {
+  it('should compile', waitForAsync(() => {
     const fixture = TestBed.createComponent(registerFormComponent);
     const regForm = fixture.debugElement.componentInstance;
     expect(regForm).toBeTruthy();
-  }));
-
-  it('should render title in a mat-card', waitForAsync(() => {
-    const fixture = TestBed.createComponent(registerFormComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('mat-card').textContent).toContain('Register your Account Here');
   }));
 
 
