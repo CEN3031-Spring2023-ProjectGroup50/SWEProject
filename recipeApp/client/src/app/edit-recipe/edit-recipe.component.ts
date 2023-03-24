@@ -23,15 +23,16 @@ interface IRecipeItem {
 })
 
 export class EditRecipeModule {
-
+  
   @Input() recipe: IRecipeItem;
 
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
+
     const dialogRef = this.dialog.open(EditRecipeContentModule, {
       data: {
-        rID: this.recipe.Rid,
+        Rid: this.recipe.Rid,
         Title: this.recipe.Title,
         Ingredients: formatIngredients(this.recipe.Ingredients),
         Instructions: formatInstructions(this.recipe.Instructions),
@@ -40,6 +41,7 @@ export class EditRecipeModule {
         Email: this.recipe.Email,
         Image: this.recipe.Image,
       }
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -74,23 +76,29 @@ export class EditRecipeContentModule {
   //   instructions: new FormControl('')
   // });
   
-    ngOnInit() {
+  ngOnInit() {
+
     this.editRecipeForm = new FormGroup({
-        title: new FormControl(this.recipe.Title),
-        ingredients: new FormControl(this.recipe.Ingredients),
-        instructions: new FormControl(this.recipe.Instructions)
+      title: new FormControl(this.recipe.Title),
+      ingredients: new FormControl(this.recipe.Ingredients),
+      instructions: new FormControl(this.recipe.Instructions)
     })
-    this.editRecipeForm.valueChanges.subscribe(()=>
-    this.errorMessage = '')
-    }
+    this.editRecipeForm.valueChanges.subscribe(() =>
+      this.errorMessage = '')
+  }
 
   async editRecipe() {
 
+    console.log(this.recipe);
+
     this.loading = true;
+
+    let RidString = this.recipe.Rid.toString();
+    console.log(RidString)
 
     // 13512 is a hardcoded Rid for testing API. 
     // Trying to figure out how to pass in the recipe data using ${this.recipe.Rid} without it being undefined.
-    let URL = `/server/recipes/edit/${this.recipe.Rid.toString()}`
+    let URL = `/server/recipes/edit/${RidString}`
 
     await this.httpClient.put(URL, {
       Rid: this.recipe.Rid,
