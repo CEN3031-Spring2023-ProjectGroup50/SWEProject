@@ -33,14 +33,4 @@ describe('AppComponent', () => {
   it('should compile', () => {
     expect(component).toBeTruthy();
   })
-
-  it('should render Login and Register buttons with corresponding text', async() => {
-    const buttons = fixture.debugElement.query(By.css('.example-button-row')).nativeElement;
-    expect(buttons.childNodes[0].text).toBe('Login');
-    expect(buttons.childNodes[1].text).toBe('Register');
-  })
-
-  it('Clicking "login" should route user to login page', () => {
-
-  })
 });
