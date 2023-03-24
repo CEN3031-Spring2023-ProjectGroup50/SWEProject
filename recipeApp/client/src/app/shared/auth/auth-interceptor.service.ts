@@ -59,8 +59,6 @@ export class AuthInterceptorService implements HttpInterceptor {
         'Authorization': 'Bearer ' + this.authService.token,
         'Refresh': 'Bearer ' + this.authService.refreshToken
       });
-      console.log(this.authService.token);
-      console.log(this.authService.refreshToken);
 
       if (headers) {
         return request.clone({ headers });
