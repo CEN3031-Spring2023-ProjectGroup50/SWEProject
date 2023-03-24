@@ -36,6 +36,9 @@ export class AddRecipeDialogComponent {
     this.authService.getAccount().subscribe(
       (res: any) => {
           this.accountData = res.toString();
+      },
+      (error: any) => {
+        this.dialogRef.close();
       })
   }
 
