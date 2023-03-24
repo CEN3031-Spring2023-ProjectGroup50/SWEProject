@@ -24,7 +24,7 @@ import { CommonModule } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table'
+import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 
@@ -43,11 +43,13 @@ import { MealPlanPageComponent } from './meal-plan-page/meal-plan-page.component
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { GroceryListPageComponent } from './grocery-list-page/grocery-list-page.component';
 import { RecipeDetailsModule, RecipeDetailsContentModule} from './recipe-details/recipe-details.component';
+import { AddRecipeDialogComponent } from './add-recipe-dialog/add-recipe-dialog.component';
 
 import { AuthService } from './shared/auth/auth.service';
 import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
 import { CanActivateViaAuthGuard } from './shared/auth/can-activate-via-auth.guard';
 import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
+
 
 @NgModule({
     declarations: [
@@ -64,6 +66,7 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         MealPlanPageComponent,
         GroceryListComponent,
         GroceryListPageComponent,
+        AddRecipeDialogComponent,
         RecipeDetailsModule,
         RecipeDetailsContentModule,
     ],
@@ -77,7 +80,7 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         CanActivateViaAuthGuard,
         NegateAuthGuard,
         {
-            provide: MAT_DIALOG_DEFAULT_OPTIONS, 
+            provide: MAT_DIALOG_DEFAULT_OPTIONS,
             useValue: {hasBackdrop: false}
         }
     ],
@@ -107,13 +110,12 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         LayoutModule,
         MatPaginatorModule,
         CommonModule,
-        //RouterTestingModule,
         RouterModule,
         MatTableModule,
         MatSortModule,
-        MatTooltipModule,
-        MatDialogModule
+        MatDialogModule,
+        MatTooltipModule
     ],
-    exports: [RecipesComponent,]
+    exports: [RecipesComponent,],
 })
 export class AppModule { }

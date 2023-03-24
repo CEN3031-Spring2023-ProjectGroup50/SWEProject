@@ -7,8 +7,10 @@ import {AuthService} from '../shared/auth/auth.service'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AddRecipeDialogComponent } from '../add-recipe-dialog/add-recipe-dialog.component';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import {TooltipPosition} from '@angular/material/tooltip';
-import {FormControl, Validators} from '@angular/forms';
 import { isNull } from 'cypress/types/lodash'
 
 
@@ -60,9 +62,11 @@ export class RecipesComponent {
   @ViewChild(MatPaginator, {static:false})
   paginatorBottom!:MatPaginator
 
+
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ){}
 
   async ngOnInit() {
@@ -72,9 +76,9 @@ export class RecipesComponent {
 
       }
     );
-    await this.loadItems()  
-    
-    
+    await this.loadItems();
+
+
   }
 
 async loadItems() {
@@ -100,7 +104,7 @@ async loadItems() {
           this.loading = false;
         })
     }
-    
+
     // If there are any search terms, the page must be generated via the API defined in recipes_get_count.go
     else
     {
@@ -152,6 +156,13 @@ async onUser(event: { value: string; }) {
   await this.loadItems();
 }
 
+openDialog() {
+
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.autoFocus = true;
+  this.dialog.open(AddRecipeDialogComponent, dialogConfig);
+}
+
 setFilters(keywordSearchTerm: string, ingredientSearchTerm: string){
   this.keywordSearchTerm = keywordSearchTerm;
   this.ingredientSearchTerm = ingredientSearchTerm;
@@ -165,6 +176,7 @@ setFilters(keywordSearchTerm: string, ingredientSearchTerm: string){
   this.currentPage = this.paginator.pageIndex;
   this.loadItems();
 }
+
 
 clearFilters(){
   this.keywordSearchTerm = "";
