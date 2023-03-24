@@ -46,6 +46,7 @@ export class EditRecipeModule {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      window.location.reload(); // This is a temporary solution until we can get it to refresh on the current page
     });
   }
 
@@ -69,12 +70,6 @@ export class EditRecipeContentModule {
       private httpClient: HttpClient,
       private authService: AuthService,
       private formBuilder: FormBuilder,) {}
-
-  // editRecipeForm = new FormGroup({
-  //   title: new FormControl(''),
-  //   ingredients: new FormControl(''),
-  //   instructions: new FormControl('')
-  // });
   
   ngOnInit() {
 
@@ -94,7 +89,6 @@ export class EditRecipeContentModule {
     this.loading = true;
 
     let RidString = this.recipe.Rid.toString();
-    console.log(RidString)
 
     // 13512 is a hardcoded Rid for testing API. 
     // Trying to figure out how to pass in the recipe data using ${this.recipe.Rid} without it being undefined.
