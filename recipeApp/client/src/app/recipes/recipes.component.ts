@@ -57,6 +57,7 @@ export class RecipesComponent {
   keywordSearchTerm = "";
   ingredientSearchTerm = "";
 
+
   @ViewChild(MatPaginator, {static:false})
   paginator!: MatPaginator;
   @ViewChild(MatPaginator, {static:false})
@@ -130,6 +131,7 @@ async loadItems() {
 
 
 }
+
 
 
 pageChanged(event: PageEvent) {

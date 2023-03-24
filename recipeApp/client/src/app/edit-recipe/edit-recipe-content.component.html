@@ -1,0 +1,45 @@
+<form [formGroup]="editRecipeForm">
+
+<mat-form-field class="full-width">
+    <mat-label>Title</mat-label>
+    <textarea  formControlName="title" matInput value="{{recipe.Title}}"></textarea>
+</mat-form-field>
+
+<mat-dialog-content class="mat-typography">
+
+    <h3>Created by {{recipe.Email}}</h3>
+
+    <img mat-card-image src="{{'data:image/jpeg;base64,' +recipe.Image}}">
+
+    <button mat-icon-button aria-label="Upload icon">
+        <mat-icon>upload</mat-icon>
+    </button>
+
+    Upload new image
+
+    <br><br>
+
+    <h2>Ingredients</h2>
+    <mat-form-field class="full-width">
+        <mat-label>Ingredients</mat-label>
+        <textarea  formControlName="ingredients" matInput rows="5" placeholder="Ex. Chicken" value="{{recipe.Ingredients}}"></textarea>
+        <mat-hint>Separate ingredients with a new line.</mat-hint>
+    </mat-form-field>
+
+    <br><br>
+
+    <h2>Instructions</h2>
+    <mat-form-field class="full-width">
+        <mat-label>Instructions</mat-label>
+        <textarea  formControlName="instructions" matInput rows="10" placeholder="Ex. Chicken" value="{{recipe.Instructions}}"></textarea>
+    </mat-form-field>
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+    <button mat-flat-button color="primary" mat-dialog-close (click)="editRecipe()">Update recipe</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
+
+</form>
