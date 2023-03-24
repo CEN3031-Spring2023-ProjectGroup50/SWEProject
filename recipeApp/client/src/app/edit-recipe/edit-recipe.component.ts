@@ -47,7 +47,6 @@ export class EditRecipeModule {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      this.sharedService.reload();
     });
   }
 
@@ -70,6 +69,7 @@ export class EditRecipeContentModule {
   constructor(@Inject(MAT_DIALOG_DATA) public recipe: IRecipeItem,
       private httpClient: HttpClient,
       private authService: AuthService,
+      private sharedService: SharedFunctionsService,
       private formBuilder: FormBuilder,) {}
   
   ngOnInit() {
@@ -106,6 +106,7 @@ export class EditRecipeContentModule {
       .subscribe({
         next: data => {
           this.loading = false;
+          this.sharedService.reload();
         },
         error: error => {
           this.errorMessage = error.message;
