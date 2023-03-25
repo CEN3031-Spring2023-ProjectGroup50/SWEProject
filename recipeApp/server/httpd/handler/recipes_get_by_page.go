@@ -77,7 +77,6 @@ func RecipeGetByPage() gin.HandlerFunc {
 
 			} else {
 
-				//subq := initialize.Db.Model(&models.Recipe{}).Where("uid =?", uid)
 
 				subq := initialize.Db.Table("recipe").Where("uid =?", uid)
 
