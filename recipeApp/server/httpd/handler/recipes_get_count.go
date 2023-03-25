@@ -40,6 +40,21 @@ func RecipeGetCount() gin.HandlerFunc {
 					Order("rid").Count(&total)
 
 			}
+		} else if len(paramPairs["ingredient"]) > 0 {
+			var wildcardIngredients []string
+			for index := range paramPairs["ingredient"] {
+				wildcardIngredients = append(wildcardIngredients, "ingredients ILIKE '%"+paramPairs["ingredient"][index]+"%'")
+			}
+			if uid == 0 {
+
+				initialize.Db.Table("recipe").Where(strings.Join(wildcardIngredients, " AND ")).
+					Order("rid").Count(&total)
+			} else {
+				subq := initialize.Db.Table("recipe").Where("uid =?", uid)
+				initialize.Db.Table("(?) as u", subq).Where(strings.Join(wildcardIngredients, " AND ")).
+					Order("rid").Count(&total)
+			}
+
 		} else {
 			if uid == 0 {
 				initialize.Db.Table("recipe").Model(models.Recipe{}).Count(&total)
