@@ -80,7 +80,8 @@ func RecipeGetByPage() gin.HandlerFunc {
 				subq1 := initialize.Db.Table("recipe").Where(strings.Join(wildcardIngredients, " AND ")).
 					Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND "))
 
-				initialize.Db.Table("(?) as u", subq1).Where(strings.Join(wildcardSoloIngredients, " AND ")).
+				initialize.Db.Table("users").Select("users.email", "u.*").Joins("join users on u.uid = users.id").Table("(?) as u", subq1).
+					Where(strings.Join(wildcardSoloIngredients, " AND ")).
 					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
 
 			} else {
@@ -88,8 +89,10 @@ func RecipeGetByPage() gin.HandlerFunc {
 
 				subq1 := initialize.Db.Table("(?) as u", subq).Where(strings.Join(wildcardIngredients, " AND ")).
 					Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND "))
+				//initialize.Db.Table("users").Select("users.email", "u.*").Joins("join users on u.uid = users.id").Table("(?) as u", subq).
 
-				initialize.Db.Table("(?) as u", subq1).Where(strings.Join(wildcardSoloIngredients, " AND ")).
+				initialize.Db.Table("users").Select("users.email", "u.*").Joins("join users on u.uid = users.id").Table("(?) as u", subq1).
+					Where(strings.Join(wildcardSoloIngredients, " AND ")).
 					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
 			}
 			c.JSON(http.StatusOK, recipe)
@@ -106,9 +109,13 @@ func RecipeGetByPage() gin.HandlerFunc {
 
 				subq := initialize.Db.Table("recipe").Where("uid =?", uid)
 
-				initialize.Db.Table("(?) as u", subq).Where(strings.Join(wildcardIngredients, " AND ")).
+				initialize.Db.Table("users").Select("users.email", "u.*").Joins("join users on u.uid = users.id").Table("(?) as u", subq).Where(strings.Join(wildcardIngredients, " AND ")).
 					Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND ")).
 					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
+
+				/*initialize.Db.Table("(?) as u", subq).Where(strings.Join(wildcardIngredients, " AND ")).
+				Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND ")).
+				Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)*/
 
 			}
 			c.JSON(http.StatusOK, recipe)
@@ -117,11 +124,14 @@ func RecipeGetByPage() gin.HandlerFunc {
 
 			if uid == 0 {
 
-				initialize.Db.Table("recipe").Where(strings.Join(wildcardSoloIngredients, " AND ")).
+				initialize.Db.Table("users").Select("users.email", "recipe.*").
+					Joins("join recipe on recipe.uid = users.id").Where(strings.Join(wildcardSoloIngredients, " AND ")).
 					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
 			} else {
+
 				subq := initialize.Db.Table("recipe").Where("uid =?", uid)
-				initialize.Db.Table("(?) as u", subq).Where(strings.Join(wildcardSoloIngredients, " AND ")).
+				initialize.Db.Table("users").Select("users.email", "u.*").Joins("join users on u.uid = users.id").Table("(?) as u", subq).
+					Where(strings.Join(wildcardSoloIngredients, " AND ")).
 					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
 			}
 
