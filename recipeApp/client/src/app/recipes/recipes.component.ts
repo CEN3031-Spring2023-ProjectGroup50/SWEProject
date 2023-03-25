@@ -88,26 +88,58 @@ async loadItems() {
 
     // If there are no search terms, the page will be generated via the API defined in recipes_get_by_count.go
 
-    if (!this.isSearching) {
+    
 
       let URL = `/server/recipes/bypage?page=${this.currentPage + 1}&per_page=${this.pageSize}`
-      let params = new HttpParams().set('uid', this.defaultAccount)
+      //let params = new HttpParams().set('uid', this.defaultAccount)
+      let params = new HttpParams()
+
+      if (this.ingredientSearchTerm=="" && this.keywordSearchTerm ==""){
+        
+      }
+      else if (this.ingredientSearchTerm==""){
+        params = params.append('keyword',this.keywordSearchTerm)
+      }
+      else if (this.keywordSearchTerm == ""){
+        params = params.append('ingredient',this.ingredientSearchTerm)
+      }
+      else {
+        params = params.append('ingredient',this.ingredientSearchTerm)
+        params = params.append('keyword',this.ingredientSearchTerm)
+      }
 
       if (this.filter == "user") {
-        params = new HttpParams().set('uid', this.accountData)
+        params = params.append('uid', this.accountData)
+        
+      }
+      else {
+        params = params.append('uid', this.defaultAccount)
       }
 
       this.backendItems = await this.httpClient.get<IRecipeItem[]>(URL, { params: params }).toPromise()
+
+      /*if (this.ingredientSearchTerm == "") {
+        let params = new HttpParams().set('keyword', this.ingredientSearchTerm)
+        this.backendItems = await this.httpClient.get<IRecipeItem[]>(URL, { params: params }).toPromise()
+
+      }
+      else if (this.keywordSearchTerm == "") {
+        URL = `/server/recipes?ingredient=${this.ingredientSearchTerm}`
+      }
+      else {
+        URL = `/server/recipes?keyword=${this.keywordSearchTerm}&ingredient=${this.ingredientSearchTerm}`
+      }*/
 
       this.httpClient.get<rCount>(`/server/recipecount`, { params: params })
         .subscribe((data) => {
           this.totalRows = data.total;
           this.loading = false;
         })
-    }
+     
+
 
     // If there are any search terms, the page must be generated via the API defined in recipes_get_count.go
-    else
+    /*else
     {
 
       let URL = ``;
@@ -127,7 +159,7 @@ async loadItems() {
       this.totalRows = this.backendItems?.length
       this.loading = false;
 
-    }
+    }*/
 
 
 }
