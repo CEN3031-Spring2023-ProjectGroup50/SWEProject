@@ -72,6 +72,8 @@ func RecipeGetByPage() gin.HandlerFunc {
 		}
 
 		if len(paramPairs["keyword"]) > 0 && len(paramPairs["ingredient"]) > 0 {
+			fmt.Print(wildcardIngredients)
+			fmt.Print(wildcardSoloIngredients)
 
 			if uid == 0 {
 
@@ -81,6 +83,14 @@ func RecipeGetByPage() gin.HandlerFunc {
 				initialize.Db.Table("(?) as u", subq1).Where(strings.Join(wildcardSoloIngredients, " AND ")).
 					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
 
+			} else {
+				subq := initialize.Db.Table("recipe").Where("uid =?", uid)
+
+				subq1 := initialize.Db.Table("(?) as u", subq).Where(strings.Join(wildcardIngredients, " AND ")).
+					Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND "))
+
+				initialize.Db.Table("(?) as u", subq1).Where(strings.Join(wildcardSoloIngredients, " AND ")).
+					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
 			}
 			c.JSON(http.StatusOK, recipe)
 

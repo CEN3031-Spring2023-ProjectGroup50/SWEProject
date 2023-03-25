@@ -94,7 +94,9 @@ async loadItems() {
       //let params = new HttpParams().set('uid', this.defaultAccount)
       let params = new HttpParams()
 
-      if (this.ingredientSearchTerm=="" && this.keywordSearchTerm ==""){
+      if (this.ingredientSearchTerm!="" && this.keywordSearchTerm !=""){
+        params = params.append('keyword',this.keywordSearchTerm)
+        params = params.append('ingredient',this.ingredientSearchTerm)
         
       }
       else if (this.ingredientSearchTerm==""){
@@ -117,6 +119,8 @@ async loadItems() {
       }
 
       this.backendItems = await this.httpClient.get<IRecipeItem[]>(URL, { params: params }).toPromise()
+      //if (this.backendItems?.length  ===0)
+
 
       /*if (this.ingredientSearchTerm == "") {
         let params = new HttpParams().set('keyword', this.ingredientSearchTerm)
