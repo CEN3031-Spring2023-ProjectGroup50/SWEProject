@@ -73,6 +73,15 @@ func RecipeGetByPage() gin.HandlerFunc {
 
 		if len(paramPairs["keyword"]) > 0 && len(paramPairs["ingredient"]) > 0 {
 
+			if uid == 0 {
+
+				subq1 := initialize.Db.Table("recipe").Where(strings.Join(wildcardIngredients, " AND ")).
+					Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND "))
+
+				initialize.Db.Table("(?) as u", subq1).Where(strings.Join(wildcardSoloIngredients, " AND ")).
+					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
+
+			}
 			c.JSON(http.StatusOK, recipe)
 
 		} else if len(paramPairs["keyword"]) > 0 {

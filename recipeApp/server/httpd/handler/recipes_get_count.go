@@ -30,7 +30,20 @@ func RecipeGetCount() gin.HandlerFunc {
 			wildcardSoloIngredients = append(wildcardSoloIngredients, "ingredients ILIKE '%"+paramPairs["ingredient"][index]+"%'")
 		}
 
-		if len(paramPairs["keyword"]) > 0 {
+		if len(paramPairs["keyword"]) > 0 && len(paramPairs["ingredient"]) > 0 {
+			if uid == 0 {
+
+				subq1 := initialize.Db.Table("recipe").Where(strings.Join(wildcardIngredients, " AND ")).
+					Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND "))
+
+				initialize.Db.Table("(?) as u", subq1).Where(strings.Join(wildcardSoloIngredients, " AND ")).
+					Order("rid").Count(&total)
+				/*initialize.Db.Table("users").Select("users.email", "recipe.*").Joins("join recipe on recipe.uid = users.id").Where(strings.Join(wildcardIngredients, " AND ")).
+				Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND ")).
+				Order("rid").Model(models.Recipe{}).Count(&total)*/
+
+			}
+		} else if len(paramPairs["keyword"]) > 0 {
 
 			if uid == 0 {
 
