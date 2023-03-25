@@ -57,16 +57,25 @@ func RecipeGetByPage() gin.HandlerFunc {
 			fmt.Printf("key = %v, value(s) = %v\n", key, values)
 		}
 
-		if len(paramPairs["keyword"]) > 0 {
-			var wildcardIngredients []string
-			var wildcardInstructions []string
-			var wildcardTitle []string
-			for index := range paramPairs["keyword"] {
-				fmt.Print(paramPairs["keyword"])
-				wildcardIngredients = append(wildcardIngredients, "ingredients ILIKE '%"+paramPairs["keyword"][index]+"%'")
-				wildcardInstructions = append(wildcardInstructions, "instructions ILIKE '%"+paramPairs["keyword"][index]+"%'")
-				wildcardTitle = append(wildcardTitle, "title ILIKE '%"+paramPairs["keyword"][index]+"%'")
-			}
+		var wildcardIngredients []string
+		var wildcardInstructions []string
+		var wildcardTitle []string
+		for index := range paramPairs["keyword"] {
+			fmt.Print(paramPairs["keyword"])
+			wildcardIngredients = append(wildcardIngredients, "ingredients ILIKE '%"+paramPairs["keyword"][index]+"%'")
+			wildcardInstructions = append(wildcardInstructions, "instructions ILIKE '%"+paramPairs["keyword"][index]+"%'")
+			wildcardTitle = append(wildcardTitle, "title ILIKE '%"+paramPairs["keyword"][index]+"%'")
+		}
+		var wildcardSoloIngredients []string
+		for index := range paramPairs["ingredient"] {
+			wildcardSoloIngredients = append(wildcardSoloIngredients, "ingredients ILIKE '%"+paramPairs["ingredient"][index]+"%'")
+		}
+
+		if len(paramPairs["keyword"]) > 0 && len(paramPairs["ingredient"]) > 0 {
+
+			c.JSON(http.StatusOK, recipe)
+
+		} else if len(paramPairs["keyword"]) > 0 {
 
 			if uid == 0 {
 
@@ -86,19 +95,14 @@ func RecipeGetByPage() gin.HandlerFunc {
 			c.JSON(http.StatusOK, recipe)
 
 		} else if len(paramPairs["ingredient"]) > 0 {
-			fmt.Printf("this is of type %T", paramPairs["ingredient"])
-			var wildcardIngredients []string
-			for index := range paramPairs["ingredient"] {
-				wildcardIngredients = append(wildcardIngredients, "ingredients ILIKE '%"+paramPairs["ingredient"][index]+"%'")
-			}
 
 			if uid == 0 {
 
-				initialize.Db.Table("recipe").Where(strings.Join(wildcardIngredients, " AND ")).
+				initialize.Db.Table("recipe").Where(strings.Join(wildcardSoloIngredients, " AND ")).
 					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
 			} else {
 				subq := initialize.Db.Table("recipe").Where("uid =?", uid)
-				initialize.Db.Table("(?) as u", subq).Where(strings.Join(wildcardIngredients, " AND ")).
+				initialize.Db.Table("(?) as u", subq).Where(strings.Join(wildcardSoloIngredients, " AND ")).
 					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
 			}
 
