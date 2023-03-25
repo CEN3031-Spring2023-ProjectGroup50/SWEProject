@@ -54,14 +54,14 @@ func RecipeGetCount() gin.HandlerFunc {
 
 			if uid == 0 {
 
-				initialize.Db.Table("users").Select("users.email", "recipe.*").Joins("join recipe on recipe.uid = users.id").Where(strings.Join(wildcardIngredients, " AND ")).
+				initialize.Db.Table("recipe").Where(strings.Join(wildcardIngredients, " AND ")).
 					Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND ")).
 					Order("rid").Model(models.Recipe{}).Count(&total)
 
 			} else {
 				subq := initialize.Db.Table("recipe").Where("uid =?", uid)
 
-				initialize.Db.Table("users").Select("users.email", "recipe.*").Joins("join users on u.uid = users.id").Table("(?) as u", subq).Where(strings.Join(wildcardIngredients, " AND ")).
+				initialize.Db.Table("(?) as u", subq).Where(strings.Join(wildcardIngredients, " AND ")).
 					Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND ")).
 					Order("rid").Count(&total)
 
