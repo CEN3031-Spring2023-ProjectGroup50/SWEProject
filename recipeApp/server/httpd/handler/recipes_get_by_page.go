@@ -73,20 +73,17 @@ func RecipeGetByPage() gin.HandlerFunc {
 				initialize.Db.Table("users").Select("users.email", "recipe.*").Joins("join recipe on recipe.uid = users.id").Where(strings.Join(wildcardIngredients, " AND ")).
 					Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND ")).
 					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
-				c.JSON(http.StatusOK, recipe)
 
 			} else {
 
 				subq := initialize.Db.Table("recipe").Where("uid =?", uid)
 
-				var subset []userRecipe
 				initialize.Db.Table("(?) as u", subq).Where(strings.Join(wildcardIngredients, " AND ")).
 					Or(strings.Join(wildcardInstructions, " AND ")).Or(strings.Join(wildcardTitle, " AND ")).
-					Order("rid").Offset(offset).Limit(pageSize).Find(&subset)
-
-				c.JSON(http.StatusOK, subset)
+					Order("rid").Offset(offset).Limit(pageSize).Find(&recipe)
 
 			}
+			c.JSON(http.StatusOK, recipe)
 
 		} else if len(paramPairs["ingredient"]) > 0 {
 			fmt.Printf("this is of type %T", paramPairs["ingredient"])
