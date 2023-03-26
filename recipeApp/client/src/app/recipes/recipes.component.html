@@ -34,7 +34,7 @@
       <td>
         <mat-button-toggle-group name="filter" aria-label="Filter">
           <mat-button-toggle (change)="onAll($event.value)" value="all">All Recipes</mat-button-toggle>
-          <mat-button-toggle (change)="onUser($event.value)" value="user">User Created</mat-button-toggle>
+          <mat-button-toggle (change)="onUser($event.value)" value="user">My Recipes</mat-button-toggle>
         </mat-button-toggle-group>
         <button mat-raised-button (click)="openDialog()" color="primary">Add Recipe</button>
       </td>
