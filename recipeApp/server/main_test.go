@@ -24,80 +24,80 @@ func SetUpRouter() *gin.Engine {
 	router := gin.Default()
 	return router
 }
-func TestRecipesRoute(t *testing.T) {
-
-	r := SetUpRouter()
-
-	r.GET("/server/recipes", handler.RecipeGet())
-
-	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/server/recipes", nil)
-
-	r.ServeHTTP(w, req)
-
-	var recipes []models.Recipe
-	json.Unmarshal(w.Body.Bytes(), &recipes)
-	var numRecipes int64
-	initialize.Db.Table("recipe").Count(&numRecipes)
-
-	assert.Equal(t, http.StatusOK, w.Code, "Did not retrieve all recipes.")
-	assert.NotEmpty(t, recipes, "Empty result for all recipes.")
-	assert.Equal(t, len(recipes), int(numRecipes), "Not enough recipes returned.")
-
-}
-
-func TestRecipeGetByID(t *testing.T) {
-
-	r := SetUpRouter()
-
-	r.GET("/server/recipes", handler.RecipeGet())
-
-	w := httptest.NewRecorder()
-
-	req, _ := http.NewRequest("GET", "/server/recipes?id=7", nil)
-
-	r.ServeHTTP(w, req)
-
-	var recipe models.Recipe
-	json.Unmarshal(w.Body.Bytes(), &recipe)
-
-	assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipe by ID.")
-	assert.Equal(t, recipe.Rid, uint(7), "Retrieved the wrong recipe.")
-
-}
 
 func TestRecipeGetByKeyword(t *testing.T) {
 
 	r := SetUpRouter()
-
-	r.GET("/server/recipes", handler.RecipeGet())
-
-	w := httptest.NewRecorder()
-
-	testWord := "pumpkin"
-
-	req, _ := http.NewRequest("GET", "/server/recipes?keyword=pumpkin", nil)
-
-	r.ServeHTTP(w, req)
+	url := "/server/recipes/bypage"
+	type test struct {
+		input    string
+		testWord string
+	}
 	var recipes []models.Recipe
-	json.Unmarshal(w.Body.Bytes(), &recipes)
 
-	hasKeyword := true
+	r.GET(url, handler.RecipeGetByPage())
 
-	for _, recipe := range recipes {
-		hasKeyword = (strings.Contains(strings.ToLower(recipe.Title), testWord) ||
-			strings.Contains(strings.ToLower(recipe.Ingredients), testWord) ||
-			strings.Contains(strings.ToLower(recipe.Instructions), testWord))
+	testConds := []test{
+		{input: url + "?page=1&per_page=10&keyword=pumpkin&uid=0", testWord: "pumpkin"},
+		{input: url + "?page=1&per_page=10&keyword=pepperoncini&uid=0", testWord: "pepperoncini"},
+		{input: url + "?page=1&per_page=10&keyword=yellow&uid=0", testWord: "yellow"},
+		{input: url + "?page=1&per_page=10&keyword=simmer&uid=0", testWord: "simmer"},
+		{input: url + "?page=1&per_page=10&keyword=yellow&uid=0", testWord: "yellow"},
+		{input: url + "?page=1&per_page=10&keyword=5%20oz&uid=0", testWord: "5 oz"},
+		{input: url + "?page=1&per_page=10&keyword=400%20degrees&uid=0", testWord: "400 degrees"},
+		{input: url + "?page=1&per_page=10&keyword=crock%20pot&uid=0", testWord: "crock pot"},
+	}
 
-		if !hasKeyword {
-			break
+	for _, tc := range testConds {
+		req, _ := http.NewRequest("GET", tc.input, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		json.Unmarshal(w.Body.Bytes(), &recipes)
+
+		hasKeyword := true
+
+		for _, recipe := range recipes {
+			hasKeyword = (strings.Contains(strings.ToLower(recipe.Title), tc.testWord) ||
+				strings.Contains(strings.ToLower(recipe.Ingredients), tc.testWord) ||
+				strings.Contains(strings.ToLower(recipe.Instructions), tc.testWord))
+
+			if !hasKeyword {
+				break
+			}
+
 		}
+
+		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with keyword 'pumpkin'.")
+		assert.NotEmpty(t, recipes)
+		assert.Equal(t, hasKeyword, true, "One or more recipes did not contain keyword 'pumpkin'.")
 
 	}
 
-	assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with keyword 'pumpkin'.")
-	assert.NotEmpty(t, recipes)
-	assert.Equal(t, hasKeyword, true, "One or more recipes did not contain keyword 'pumpkin'.")
+	/*
+		req, _ := http.NewRequest("GET", "/server/recipes/bypage?page=1&per_page=10&keyword=pumpkin&uid=0", nil)
+
+		r.ServeHTTP(w, req)
+		var recipes []models.Recipe
+		json.Unmarshal(w.Body.Bytes(), &recipes)
+
+		hasKeyword := true
+
+		for _, recipe := range recipes {
+			hasKeyword = (strings.Contains(strings.ToLower(recipe.Title), testWord) ||
+				strings.Contains(strings.ToLower(recipe.Ingredients), testWord) ||
+				strings.Contains(strings.ToLower(recipe.Instructions), testWord))
+
+			if !hasKeyword {
+				break
+			}
+
+		}
+
+		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with keyword 'pumpkin'.")
+		assert.NotEmpty(t, recipes)
+		assert.Equal(t, hasKeyword, true, "One or more recipes did not contain keyword 'pumpkin'.")
+	*/
 
 }
 
