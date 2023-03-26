@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -42,7 +43,6 @@ func TestRecipeGetByKeyword(t *testing.T) {
 		{input: url + "?page=1&per_page=10&keyword=pepperoncini&uid=0", testWord: "pepperoncini"},
 		{input: url + "?page=1&per_page=10&keyword=yellow&uid=0", testWord: "yellow"},
 		{input: url + "?page=1&per_page=10&keyword=simmer&uid=0", testWord: "simmer"},
-		{input: url + "?page=1&per_page=10&keyword=yellow&uid=0", testWord: "yellow"},
 		{input: url + "?page=1&per_page=10&keyword=5%20oz&uid=0", testWord: "5 oz"},
 		{input: url + "?page=1&per_page=10&keyword=400%20degrees&uid=0", testWord: "400 degrees"},
 		{input: url + "?page=1&per_page=10&keyword=crock%20pot&uid=0", testWord: "crock pot"},
@@ -74,30 +74,51 @@ func TestRecipeGetByKeyword(t *testing.T) {
 
 	}
 
-	/*
-		req, _ := http.NewRequest("GET", "/server/recipes/bypage?page=1&per_page=10&keyword=pumpkin&uid=0", nil)
+}
 
+func TestRecipeGetByKeywordCount(t *testing.T) {
+
+	r := SetUpRouter()
+	url := "/server/recipes/recipecount"
+	type test struct {
+		input    string
+		testWord string
+		size     int64
+	}
+	type count struct {
+		Total int64
+	}
+
+	var storeit count
+
+	r.GET(url, handler.RecipeGetCount())
+
+	testConds := []test{
+		{input: url + "?keyword=pumpkin&uid=0", testWord: "pumpkin", size: 259},
+		{input: url + "?keyword=pepperoncini&uid=0", testWord: "pepperoncini", size: 7},
+		{input: url + "?keyword=yellow&uid=0", testWord: "yellow", size: 773},
+		{input: url + "?keyword=simmer&uid=0", testWord: "simmer", size: 3620},
+		{input: url + "?keyword=5%20oz&uid=0", testWord: "5 oz", size: 101},
+		{input: url + "?keyword=400%20degrees&uid=0", testWord: "400 degrees", size: 14},
+		{input: url + "?keyword=crock%20pot&uid=0", testWord: "crock pot", size: 4},
+		{input: url + "?keyword=notreal&uid=0", testWord: "notreal", size: 0},
+	}
+
+	for _, tc := range testConds {
+		req, _ := http.NewRequest("GET", tc.input, nil)
+		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
-		var recipes []models.Recipe
-		json.Unmarshal(w.Body.Bytes(), &recipes)
 
-		hasKeyword := true
-
-		for _, recipe := range recipes {
-			hasKeyword = (strings.Contains(strings.ToLower(recipe.Title), testWord) ||
-				strings.Contains(strings.ToLower(recipe.Ingredients), testWord) ||
-				strings.Contains(strings.ToLower(recipe.Instructions), testWord))
-
-			if !hasKeyword {
-				break
-			}
-
+		err := json.Unmarshal(w.Body.Bytes(), &storeit)
+		if err != nil {
+			fmt.Println("error:", err)
 		}
 
-		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with keyword 'pumpkin'.")
-		assert.NotEmpty(t, recipes)
-		assert.Equal(t, hasKeyword, true, "One or more recipes did not contain keyword 'pumpkin'.")
-	*/
+		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve count with test conditions "+tc.input)
+		assert.Equal(t, tc.size, storeit.Total,
+			"Did not retrieve the correct number of recipes, expected "+strconv.Itoa(int(int8(tc.size)))+".")
+
+	}
 
 }
 
