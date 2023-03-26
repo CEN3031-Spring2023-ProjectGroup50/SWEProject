@@ -37,12 +37,12 @@ import { registerFormComponent } from './registerform/registerform.component';
 import { MenuNavigationComponent} from './menu-navigation/menu-navigation.component';
 import { HomeComponent } from './home/home.component';
 import { RecipesComponent } from './recipes/recipes.component';
-import { StepperComponent } from './stepper/stepper.component';
 import { MealPlanComponent } from './meal-plan/meal-plan.component';
 import { MealPlanPageComponent } from './meal-plan-page/meal-plan-page.component';
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { GroceryListPageComponent } from './grocery-list-page/grocery-list-page.component';
 import { RecipeDetailsModule, RecipeDetailsContentModule} from './recipe-details/recipe-details.component';
+import { EditRecipeModule, EditRecipeContentModule} from './edit-recipe/edit-recipe.component';
 import { AddRecipeDialogComponent } from './add-recipe-dialog/add-recipe-dialog.component';
 
 import { AuthService } from './shared/auth/auth.service';
@@ -61,7 +61,6 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         MenuNavigationComponent,
         HomeComponent,
         RecipesComponent,
-        StepperComponent,
         MealPlanComponent,
         MealPlanPageComponent,
         GroceryListComponent,
@@ -69,6 +68,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         AddRecipeDialogComponent,
         RecipeDetailsModule,
         RecipeDetailsContentModule,
+        EditRecipeModule, 
+        EditRecipeContentModule
     ],
     providers: [
         AuthService,

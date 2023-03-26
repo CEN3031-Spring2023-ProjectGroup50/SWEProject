@@ -34,19 +34,19 @@
       <td>
         <mat-button-toggle-group name="filter" aria-label="Filter">
           <mat-button-toggle (change)="onAll($event.value)" value="all">All Recipes</mat-button-toggle>
-          <mat-button-toggle (change)="onUser($event.value)" value="user">User Created</mat-button-toggle>
+          <mat-button-toggle (change)="onUser($event.value)" value="user">My Recipes</mat-button-toggle>
         </mat-button-toggle-group>
         <button mat-raised-button (click)="openDialog()" color="primary">Add Recipe</button>
       </td>
     </tr>
   </table>
 
-  <mat-paginator #paginatorBottom [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+  <mat-paginator *ngIf="backendItems?.length" #paginatorBottom [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
     [pageSizeOptions]="pageSizeOptions" (page)="pageBottomChanged($event)" aria-label="Select page"
     showFirstLastButtons="true">
   </mat-paginator>
 
-  <mat-grid-list cols="5" rowHeight="400px">
+  <mat-grid-list *ngIf="backendItems?.length" cols="5" rowHeight="400px">
     <mat-grid-tile *ngFor="let backendItem of backendItems">
       <mat-card class="dashboard-recipe">
         <mat-card-header>
@@ -64,8 +64,8 @@
 
           <mat-menu #menu="matMenu" xPosition="before">
             <recipe-details [recipe]=backendItem></recipe-details>
-            <button mat-menu-item>Edit recipe</button>
-            <button mat-menu-item>Delete recipe</button>
+            <edit-recipe *ngIf="backendItem.Uid == this.uid" [recipe]=backendItem></edit-recipe>
+            <button *ngIf="backendItem.Uid == this.uid" mat-menu-item>Delete recipe</button>
           </mat-menu>
 
           <mat-card-subtitle class="recipe-card-subtitle">{{backendItem.Email}}</mat-card-subtitle>
@@ -94,6 +94,9 @@
   </mat-grid-list>
 
 </div>
-<mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+<mat-paginator *ngIf="backendItems?.length" #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
   [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page" showFirstLastButtons="true">
 </mat-paginator>
+
+<ng-container *ngIf="!backendItems?.length"><h1>Search returned no results</h1></ng-container>
+

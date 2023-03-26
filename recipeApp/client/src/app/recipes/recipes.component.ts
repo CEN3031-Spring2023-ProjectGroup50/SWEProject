@@ -3,7 +3,7 @@ import { NgForOf } from '@angular/common'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { MatPaginator, PageEvent } from '@angular/material/paginator'
 import {AuthService} from '../shared/auth/auth.service'
-
+import { SharedFunctionsService } from '../shared/shared-functions.service'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -47,6 +47,7 @@ export class RecipesComponent {
   public recipecount: rCount | undefined
   defaultAccount = "0"
   accountData="0"
+  uid = 0
   isLoading = false
   totalRows: number | undefined = 0
   pageSize = 10
@@ -57,6 +58,7 @@ export class RecipesComponent {
   keywordSearchTerm = "";
   ingredientSearchTerm = "";
 
+
   @ViewChild(MatPaginator, {static:false})
   paginator!: MatPaginator;
   @ViewChild(MatPaginator, {static:false})
@@ -66,14 +68,19 @@ export class RecipesComponent {
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
+    private sharedService: SharedFunctionsService,
     private dialog: MatDialog
-  ){}
+  ){
+    this.sharedService.getReloadResponse().subscribe(()=>{
+      this.loadItems();
+      });
+  }
 
   async ngOnInit() {
     this.authService.getAccount().subscribe(
       (res: any) => {
           this.accountData = res.toString();
-
+          this.uid = parseInt(this.accountData);
       }
     );
     await this.loadItems();
@@ -87,13 +94,32 @@ async loadItems() {
 
     // If there are no search terms, the page will be generated via the API defined in recipes_get_by_count.go
 
-    if (!this.isSearching) {
+    
 
       let URL = `/server/recipes/bypage?page=${this.currentPage + 1}&per_page=${this.pageSize}`
-      let params = new HttpParams().set('uid', this.defaultAccount)
+      //let params = new HttpParams().set('uid', this.defaultAccount)
+      let params = new HttpParams()
+
+      if (this.ingredientSearchTerm!="" && this.keywordSearchTerm !=""){
+
+        params = params.append('keyword',this.keywordSearchTerm)
+        params = params.append('ingredient',this.ingredientSearchTerm)
+        
+      }
+      else if (this.ingredientSearchTerm!=""){
+        params = params.append('ingredient',this.ingredientSearchTerm)
+      }
+      else if (this.keywordSearchTerm != ""){
+        params = params.append('keyword',this.keywordSearchTerm)
+      }
+      
 
       if (this.filter == "user") {
-        params = new HttpParams().set('uid', this.accountData)
+        params = params.append('uid', this.accountData)
+        
+      }
+      else {
+        params = params.append('uid', this.defaultAccount)
       }
 
       this.backendItems = await this.httpClient.get<IRecipeItem[]>(URL, { params: params }).toPromise()
@@ -103,33 +129,10 @@ async loadItems() {
           this.totalRows = data.total;
           this.loading = false;
         })
-    }
-
-    // If there are any search terms, the page must be generated via the API defined in recipes_get_count.go
-    else
-    {
-
-      let URL = ``;
-
-      if (this.ingredientSearchTerm == "") {
-        URL = `/server/recipes?keyword=${this.keywordSearchTerm}`
-      }
-      else if (this.keywordSearchTerm == "") {
-        URL = `/server/recipes?ingredient=${this.ingredientSearchTerm}`
-      }
-      else {
-        URL = `/server/recipes?keyword=${this.keywordSearchTerm}&ingredient=${this.ingredientSearchTerm}`
-      }
-
-      this.backendItems = []; // empty array
-      this.backendItems = await this.httpClient.get<IRecipeItem[]>(URL).toPromise()
-      this.totalRows = this.backendItems?.length
-      this.loading = false;
-
-    }
 
 
 }
+
 
 
 pageChanged(event: PageEvent) {
