@@ -27,6 +27,11 @@ func SetUpRouter() *gin.Engine {
 }
 
 func TestRecipeGetByKeyword(t *testing.T) {
+	/*Testing the get_by_page endpoint on recipe retrieval by keyword./
+	  This test will check that each recipe returned includes results that have the keyword
+	  in either the title, ingredients, or instructions field.
+	  It also checks for an HTTP OK response.
+	  For a keyword that is nonsensical, it returns an empty result*/
 
 	r := SetUpRouter()
 	url := "/server/recipes/bypage"
@@ -46,6 +51,7 @@ func TestRecipeGetByKeyword(t *testing.T) {
 		{input: url + "?page=1&per_page=10&keyword=5%20oz&uid=0", testWord: "5 oz"},
 		{input: url + "?page=1&per_page=10&keyword=400%20degrees&uid=0", testWord: "400 degrees"},
 		{input: url + "?page=1&per_page=10&keyword=crock%20pot&uid=0", testWord: "crock pot"},
+		{input: url + "?page=1&per_page=10&keyword=wedonthaveit&uid=0", testWord: "wedonthaveit"},
 	}
 
 	for _, tc := range testConds {
@@ -69,7 +75,11 @@ func TestRecipeGetByKeyword(t *testing.T) {
 		}
 
 		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with keyword 'pumpkin'.")
-		assert.NotEmpty(t, recipes)
+		if tc.testWord == "wedonthaveit" {
+			assert.Empty(t, recipes)
+		} else {
+			assert.NotEmpty(t, recipes)
+		}
 		assert.Equal(t, hasKeyword, true, "One or more recipes did not contain keyword 'pumpkin'.")
 
 	}
@@ -77,6 +87,9 @@ func TestRecipeGetByKeyword(t *testing.T) {
 }
 
 func TestRecipeGetByKeywordCount(t *testing.T) {
+	/*Testing the get_by_page endpoint on recipe retrieval by keyword./
+	  This test will check that the correct number of recipes are returned for each keyword.
+	  It also checks for an HTTP OK response.*/
 
 	r := SetUpRouter()
 	url := "/server/recipes/recipecount"
@@ -123,36 +136,111 @@ func TestRecipeGetByKeywordCount(t *testing.T) {
 }
 
 func TestRecipeGetByIngredient(t *testing.T) {
+	/*Testing the get_by_page endpoint on recipe retrieval by ingredient/
+	  This test will check that each recipe returned includes an ingredient with the search term.
+	  It also checks for an HTTP OK response.*/
 
 	r := SetUpRouter()
-
-	r.GET("/server/recipes", handler.RecipeGet())
-
-	w := httptest.NewRecorder()
-
-	testWord := "cornichon"
-
-	req, _ := http.NewRequest("GET", "/server/recipes?ingredient=cornichon", nil)
-
-	r.ServeHTTP(w, req)
+	url := "/server/recipes/bypage"
+	type test struct {
+		input    string
+		testWord string
+	}
 	var recipes []models.Recipe
-	json.Unmarshal(w.Body.Bytes(), &recipes)
 
-	hasKeyword := true
+	r.GET(url, handler.RecipeGetByPage())
 
-	for _, recipe := range recipes {
-		hasKeyword =
-			strings.Contains(strings.ToLower(recipe.Ingredients), testWord)
+	testConds := []test{
+		{input: url + "?page=1&per_page=10&ingredient=pumpkin&uid=0", testWord: "pumpkin"},
+		{input: url + "?page=1&per_page=10&ingredient=pepperoncini&uid=0", testWord: "pepperoncini"},
+		{input: url + "?page=1&per_page=10&ingredient=yellow&uid=0", testWord: "yellow"},
+		{input: url + "?page=1&per_page=10&ingredient=simmer&uid=0", testWord: "simmer"},
+		{input: url + "?page=1&per_page=10&ingredient=wedonthaveit&uid=0", testWord: "wedonthaveit"},
+		{input: url + "?page=1&per_page=10000&ingredient=pumpkin&uid=0", testWord: "pumpkin"},
+		{input: url + "?page=1&per_page=10000&ingredient=pepperoncini&uid=0", testWord: "pepperoncini"},
+		{input: url + "?page=1&per_page=10000&ingredient=yellow&uid=0", testWord: "yellow"},
+		{input: url + "?page=1&per_page=10000&ingredient=simmer&uid=0", testWord: "simmer"},
+	}
 
-		if !hasKeyword {
-			break
+	for _, tc := range testConds {
+		req, _ := http.NewRequest("GET", tc.input, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+		fmt.Print(len(recipes))
+
+		json.Unmarshal(w.Body.Bytes(), &recipes)
+
+		hasIngredient := true
+
+		for _, recipe := range recipes {
+			hasIngredient =
+				strings.Contains(strings.ToLower(recipe.Ingredients), tc.testWord)
+
+			if !hasIngredient {
+				break
+			}
+
 		}
+
+		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with ingredient "+tc.testWord+".")
+		if tc.testWord == "wedonthaveit" {
+			assert.Empty(t, recipes)
+		} else {
+			assert.NotEmpty(t, recipes)
+		}
+
+		assert.Equal(t, hasIngredient, true, "One or more recipes did not contain ingredient"+tc.testWord+".")
 
 	}
 
-	assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with ingredient 'cornichon'.")
-	assert.NotEmpty(t, recipes)
-	assert.Equal(t, hasKeyword, true, "One or more recipes did not contain ingredient 'cornichon'.")
+}
+
+func TestRecipeGetByIngredientCount(t *testing.T) {
+	/*Testing the get_by_page endpoint on recipe retrieval by keyword./
+	  This test will check that the correct number of recipes are returned for each keyword.
+	  It will also check that each recipe returned includes results that have the keyword
+	  in either the with the search term.
+	  It also checks for an HTTP OK response.*/
+
+	r := SetUpRouter()
+	url := "/server/recipes/recipecount"
+	type test struct {
+		input    string
+		testWord string
+		size     int64
+	}
+	type count struct {
+		Total int64
+	}
+
+	var storeit count
+
+	r.GET(url, handler.RecipeGetCount())
+
+	testConds := []test{
+		{input: url + "?ingredient=pumpkin&uid=0", testWord: "pumpkin", size: 245},
+		{input: url + "?ingredient=pepperoncini&uid=0", testWord: "pepperoncini", size: 6},
+		{input: url + "?ingredient=yellow&uid=0", testWord: "yellow", size: 649},
+		{input: url + "?ingredient=simmer&uid=0", testWord: "simmer", size: 2},
+		{input: url + "?ingredient=5%20oz&uid=0", testWord: "5 oz", size: 92},
+		{input: url + "?ingredient=notreal&uid=0", testWord: "notreal", size: 0},
+	}
+
+	for _, tc := range testConds {
+		req, _ := http.NewRequest("GET", tc.input, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		err := json.Unmarshal(w.Body.Bytes(), &storeit)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+
+		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve count with test conditions "+tc.input)
+		assert.Equal(t, tc.size, storeit.Total,
+			"Did not retrieve the correct number of recipes, expected "+strconv.Itoa(int(int8(tc.size)))+".")
+
+	}
 
 }
 
