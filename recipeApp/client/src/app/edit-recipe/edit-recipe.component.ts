@@ -2,6 +2,7 @@ import {Component, Input, Inject} from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { HttpClient, HttpParams } from '@angular/common/http'
 import {AuthService} from '../shared/auth/auth.service'
+import { SharedFunctionsService } from '../shared/shared-functions.service';
 import { FormGroup,FormControl,FormBuilder } from '@angular/forms'
 
 
@@ -26,7 +27,7 @@ export class EditRecipeModule {
   
   @Input() recipe: IRecipeItem;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public sharedService: SharedFunctionsService) {}
 
   openDialog() {
 
@@ -46,7 +47,6 @@ export class EditRecipeModule {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      window.location.reload(); // This is a temporary solution until we can get it to refresh on the current page
     });
   }
 
@@ -69,6 +69,7 @@ export class EditRecipeContentModule {
   constructor(@Inject(MAT_DIALOG_DATA) public recipe: IRecipeItem,
       private httpClient: HttpClient,
       private authService: AuthService,
+      private sharedService: SharedFunctionsService,
       private formBuilder: FormBuilder,) {}
   
   ngOnInit() {
@@ -105,6 +106,7 @@ export class EditRecipeContentModule {
       .subscribe({
         next: data => {
           this.loading = false;
+          this.sharedService.reload();
         },
         error: error => {
           this.errorMessage = error.message;
