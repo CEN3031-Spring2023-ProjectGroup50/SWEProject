@@ -95,15 +95,16 @@ async loadItems() {
       let params = new HttpParams()
 
       if (this.ingredientSearchTerm!="" && this.keywordSearchTerm !=""){
+
         params = params.append('keyword',this.keywordSearchTerm)
         params = params.append('ingredient',this.ingredientSearchTerm)
         
       }
-      else if (this.ingredientSearchTerm==""){
-        params = params.append('keyword',this.keywordSearchTerm)
-      }
-      else if (this.keywordSearchTerm == ""){
+      else if (this.ingredientSearchTerm!=""){
         params = params.append('ingredient',this.ingredientSearchTerm)
+      }
+      else if (this.keywordSearchTerm != ""){
+        params = params.append('keyword',this.keywordSearchTerm)
       }
       
 
