@@ -105,10 +105,7 @@ async loadItems() {
       else if (this.keywordSearchTerm == ""){
         params = params.append('ingredient',this.ingredientSearchTerm)
       }
-      else {
-        params = params.append('ingredient',this.ingredientSearchTerm)
-        params = params.append('keyword',this.ingredientSearchTerm)
-      }
+      
 
       if (this.filter == "user") {
         params = params.append('uid', this.accountData)
