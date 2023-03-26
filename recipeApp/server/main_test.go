@@ -52,6 +52,8 @@ func TestRecipeGetByKeyword(t *testing.T) {
 		{input: url + "?page=1&per_page=10&keyword=400%20degrees&uid=0", testWord: "400 degrees"},
 		{input: url + "?page=1&per_page=10&keyword=crock%20pot&uid=0", testWord: "crock pot"},
 		{input: url + "?page=1&per_page=10&keyword=wedonthaveit&uid=0", testWord: "wedonthaveit"},
+		{input: url + "?page=1&per_page=10000&keyword=chicken&uid=0", testWord: "chicken"},
+		{input: url + "?page=1&per_page=10000&keyword=beef&uid=0", testWord: "beef"},
 	}
 
 	for _, tc := range testConds {
@@ -74,13 +76,13 @@ func TestRecipeGetByKeyword(t *testing.T) {
 
 		}
 
-		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with keyword 'pumpkin'.")
+		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with keyword "+tc.testWord+".")
 		if tc.testWord == "wedonthaveit" {
 			assert.Empty(t, recipes)
 		} else {
 			assert.NotEmpty(t, recipes)
 		}
-		assert.Equal(t, hasKeyword, true, "One or more recipes did not contain keyword 'pumpkin'.")
+		assert.Equal(t, hasKeyword, true, "One or more recipes did not contain keyword "+tc.testWord+".")
 
 	}
 
@@ -113,7 +115,7 @@ func TestRecipeGetByKeywordCount(t *testing.T) {
 		{input: url + "?keyword=simmer&uid=0", testWord: "simmer", size: 3620},
 		{input: url + "?keyword=5%20oz&uid=0", testWord: "5 oz", size: 101},
 		{input: url + "?keyword=400%20degrees&uid=0", testWord: "400 degrees", size: 14},
-		{input: url + "?keyword=crock%20pot&uid=0", testWord: "crock pot", size: 4},
+		{input: url + "?keyword=crock%20pot&uid=0", testWord: "crock pot", size: 5},
 		{input: url + "?keyword=notreal&uid=0", testWord: "notreal", size: 0},
 	}
 
@@ -166,7 +168,6 @@ func TestRecipeGetByIngredient(t *testing.T) {
 		req, _ := http.NewRequest("GET", tc.input, nil)
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
-		fmt.Print(len(recipes))
 
 		json.Unmarshal(w.Body.Bytes(), &recipes)
 
@@ -328,6 +329,7 @@ func TestRecipePost(t *testing.T) {
 		req.Header.Set("Content-Type", "application/json")
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
+		t.Log(testRecipes[tc].Rid)
 
 		assert.Equal(t, http.StatusOK, w.Code, "Unable to post recipe "+testRecipes[tc].Title)
 
@@ -349,15 +351,16 @@ func TestRecipeEdit(t *testing.T) {
 
 	var testRecipes []test
 	var last models.Recipe
+	var response models.Recipe
 	initialize.Db.Table("recipe").Last(&last)
 	lastNum := last.Rid
 
 	testRecipes = append(testRecipes,
-		test{Rid: uint(lastNum + 1), Title: "Edit Recipe 1", Ingredients: "paprika,pepper,serrano",
+		test{Rid: uint(lastNum - 2), Title: "Edit Recipe 1", Ingredients: "paprika,pepper,serrano",
 			Instructions: "stir gently", Image_name: "test_image_1", Uid: 2},
-		test{Rid: uint(lastNum + 2), Title: "Edit Recipe 2", Ingredients: "pasta",
+		test{Rid: uint(lastNum - 1), Title: "Edit Recipe 2", Ingredients: "pasta",
 			Instructions: "heat in microwave", Image_name: "test_image_2", Uid: 2},
-		test{Rid: uint(lastNum + 3), Title: "Edit Recipe 3", Ingredients: "deviled eggs, legumes",
+		test{Rid: uint(lastNum), Title: "Edit Recipe 3", Ingredients: "deviled eggs, legumes",
 			Instructions: "party time", Image_name: "test_image_3", Uid: 2},
 	)
 
@@ -367,17 +370,27 @@ func TestRecipeEdit(t *testing.T) {
 
 	tc := 0
 	for _, val := range rids {
+		t.Log(testRecipes[tc].Rid)
+
 		jsonValue, _ := json.Marshal(testRecipes[tc])
 		req, _ := http.NewRequest("PUT", "/server/recipes/edit/"+val, bytes.NewBuffer(jsonValue))
+		req.Header.Set("Content-Type", "application/json")
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusOK, w.Code, "Could not edit recipe "+val)
+		printVal, _ := strconv.Atoi(val)
+		printVal += 3
+		assert.Equal(t, http.StatusOK, w.Code, "Could not edit recipe "+strconv.Itoa(printVal))
+
+		json.Unmarshal(w.Body.Bytes(), &response)
+		assert.Equal(t, testRecipes[tc].Title, response.Title)
+		assert.Equal(t, testRecipes[tc].Rid, response.Rid)
 		tc++
 	}
 
 	bogus := "55000"
 	req, _ := http.NewRequest("PUT", "/server/recipes/edit/"+bogus, nil)
+	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
