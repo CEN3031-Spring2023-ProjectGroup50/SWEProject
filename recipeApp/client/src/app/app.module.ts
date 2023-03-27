@@ -68,8 +68,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         AddRecipeDialogComponent,
         RecipeDetailsModule,
         RecipeDetailsContentModule,
-        EditRecipeModule, 
-        EditRecipeContentModule
+        EditRecipeModule,
+        EditRecipeContentModule,
     ],
     providers: [
         AuthService,
