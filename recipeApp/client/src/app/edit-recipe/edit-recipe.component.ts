@@ -24,7 +24,7 @@ interface IRecipeItem {
 })
 
 export class EditRecipeModule {
-  
+
   @Input() recipe: IRecipeItem;
 
   constructor(public dialog: MatDialog, public sharedService: SharedFunctionsService) {}
@@ -71,7 +71,7 @@ export class EditRecipeContentModule {
       private authService: AuthService,
       private sharedService: SharedFunctionsService,
       private formBuilder: FormBuilder,) {}
-  
+
   ngOnInit() {
 
     this.editRecipeForm = new FormGroup({
@@ -91,7 +91,7 @@ export class EditRecipeContentModule {
 
     let RidString = this.recipe.Rid.toString();
 
-    // 13512 is a hardcoded Rid for testing API. 
+    // 13512 is a hardcoded Rid for testing API.
     // Trying to figure out how to pass in the recipe data using ${this.recipe.Rid} without it being undefined.
     let URL = `/server/recipes/edit/${RidString}`
 
@@ -112,7 +112,7 @@ export class EditRecipeContentModule {
           this.errorMessage = error.message;
           console.error('There was an error!', error);
         },
-      });    
+      });
     }
 }
 

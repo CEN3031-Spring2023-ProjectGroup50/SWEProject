@@ -68,8 +68,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         AddRecipeDialogComponent,
         RecipeDetailsModule,
         RecipeDetailsContentModule,
-        EditRecipeModule, 
-        EditRecipeContentModule
+        EditRecipeModule,
+        EditRecipeContentModule,
     ],
     providers: [
         AuthService,
@@ -83,7 +83,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         {
             provide: MAT_DIALOG_DEFAULT_OPTIONS,
             useValue: {hasBackdrop: false}
-        }
+        },
+
     ],
     bootstrap: [AppComponent],
     imports: [

@@ -22,9 +22,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../shared/auth/auth.service';
+
 
 describe('RecipesComponent', () => {
 
@@ -60,6 +62,7 @@ describe('RecipesComponent', () => {
             MatMenuModule,
             LayoutModule,
             MatPaginatorModule,
+            MatDialogModule,
             CommonModule,
             RouterTestingModule
         ],
