@@ -45,8 +45,8 @@ export class AddRecipeDialogComponent {
   async addRecipe() {
     await this.httpClient.post('/server/recipes/add', {
       image_name: "test_image_1",
-      ingredients: this.recipeForm.value['ingredients'],
-      instructions: this.recipeForm.value['instructions'],
+      ingredients: formatIngredientsForAPI(this.recipeForm.value['ingredients']),
+      instructions: formatInstructionsForAPI(this.recipeForm.value['instructions']),
       title: this.recipeForm.value['title'],
       uid: parseInt(this.accountData)
     }).subscribe((post)=>{
@@ -54,4 +54,15 @@ export class AddRecipeDialogComponent {
     });
   }
 
+}
+
+function formatIngredientsForAPI(Ingredients: string,) {
+  let result = "['";
+  result = result.concat(Ingredients.replaceAll("\n", "\', \'"));
+  result = result.concat("']");
+  return result;
+}
+
+function formatInstructionsForAPI(Instructions: string,) {
+  return Instructions.replaceAll("\n\n", "\n");
 }

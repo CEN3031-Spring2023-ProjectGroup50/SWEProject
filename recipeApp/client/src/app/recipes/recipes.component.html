@@ -34,7 +34,7 @@
       <td>
         <mat-button-toggle-group name="filter" aria-label="Filter">
           <mat-button-toggle (change)="onAll($event.value)" value="all">All Recipes</mat-button-toggle>
-          <mat-button-toggle (change)="onUser($event.value)" value="user">User Created</mat-button-toggle>
+          <mat-button-toggle (change)="onUser($event.value)" value="user">My Recipes</mat-button-toggle>
         </mat-button-toggle-group>
         <button mat-raised-button (click)="openDialog()" color="primary">Add Recipe</button>
       </td>
@@ -64,8 +64,8 @@
 
           <mat-menu #menu="matMenu" xPosition="before">
             <recipe-details [recipe]=backendItem></recipe-details>
-            <edit-recipe *ngIf="backendItem.Uid != 1" [recipe]=backendItem></edit-recipe>
-            <button *ngIf="backendItem.Uid != 1" mat-menu-item>Delete recipe</button>
+            <edit-recipe *ngIf="backendItem.Uid == this.uid" [recipe]=backendItem></edit-recipe>
+            <button *ngIf="backendItem.Uid == this.uid" mat-menu-item>Delete recipe</button>
           </mat-menu>
 
           <mat-card-subtitle class="recipe-card-subtitle">{{backendItem.Email}}</mat-card-subtitle>
