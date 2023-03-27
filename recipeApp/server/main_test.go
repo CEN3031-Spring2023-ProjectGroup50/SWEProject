@@ -418,11 +418,17 @@ func TestAccountAuth(t *testing.T) {
 		jwt.RegisteredClaims
 		CustomClaims map[string]string `json:"custom,omitempty"`
 	}
+	type userID struct {
+		UserID string `json:""`
+	}
 
 	// Failing auth (invalid secret key)
 	testClaim := JWTData{
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+		CustomClaims: map[string]string{
+			"userid": strconv.FormatUint(uint64(1), 10),
 		},
 	}
 
@@ -444,39 +450,19 @@ func TestAccountAuth(t *testing.T) {
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
+	var u1 userID
+	json.Unmarshal(w.Body.Bytes(), &u1)
+
 	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (key): unsuccessful")
+	assert.Empty(t, u1.UserID, "user ID returned")
 
 	// Failing auth (time expired)
 	testClaim = JWTData{
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Date(1980, 1, 1, 12, 0, 0, 0, time.UTC)),
 		},
-	}
-
-	testToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
-	testTokenString, err = testToken.SignedString([]byte(handler.SECRET))
-	if err != nil {
-		log.Println(err)
-		return
-	}
-
-	jsonValue, err = json.Marshal(struct {
-		Token string `json:"token"`
-	}{
-		testTokenString,
-	})
-
-	req, _ = http.NewRequest("GET", "/server/account", bytes.NewBuffer(jsonValue))
-	req.Header.Set("Authorization", "Bearer "+testTokenString)
-	w = httptest.NewRecorder()
-	r.ServeHTTP(w, req)
-
-	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (expiry): unsuccessful")
-
-	// Successful auth
-	testClaim = JWTData{
-		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		CustomClaims: map[string]string{
+			"userid": strconv.FormatUint(uint64(1), 10),
 		},
 	}
 
@@ -498,7 +484,45 @@ func TestAccountAuth(t *testing.T) {
 	w = httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
+	var u2 userID
+	json.Unmarshal(w.Body.Bytes(), &u2)
+
+	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (expiry): unsuccessful")
+	assert.Empty(t, u2.UserID, "user ID returned")
+
+	// Successful auth
+	testClaim = JWTData{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Minute)),
+		},
+		CustomClaims: map[string]string{
+			"userid": strconv.FormatUint(uint64(1), 10),
+		},
+	}
+
+	testToken = jwt.NewWithClaims(jwt.SigningMethodHS256, testClaim)
+	testTokenString, err = testToken.SignedString([]byte(handler.SECRET))
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	jsonValue, err = json.Marshal(struct {
+		Token string `json:"token"`
+	}{
+		testTokenString,
+	})
+
+	req, _ = http.NewRequest("GET", "/server/account", bytes.NewBuffer(jsonValue))
+	req.Header.Set("Authorization", "Bearer "+testTokenString)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	var u3 userID
+	json.Unmarshal(w.Body.Bytes(), &u3)
+
 	assert.Equal(t, http.StatusOK, w.Code, "Authentication success test: unsuccessful")
+	assert.Equal(t, "\"1\"", w.Body.String(), "user ID not returned")
 }
 
 func TestRefresh(t *testing.T) {
@@ -510,6 +534,11 @@ func TestRefresh(t *testing.T) {
 		// https://tools.ietf.org/html/rfc7519
 		jwt.RegisteredClaims
 		CustomClaims map[string]string `json:"custom,omitempty"`
+	}
+
+	type token struct {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refreshToken"`
 	}
 
 	// Failing auth (invalid secret key)
@@ -552,7 +581,12 @@ func TestRefresh(t *testing.T) {
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
+	var t1 token
+	json.Unmarshal(w.Body.Bytes(), &t1)
+
 	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (key): unsuccessful")
+	assert.Empty(t, t1.Token, "token returned")
+	assert.Empty(t, t1.RefreshToken, "refresh token returned")
 
 	// Failing auth (expired time)
 	testClaim = JWTData{
@@ -594,7 +628,12 @@ func TestRefresh(t *testing.T) {
 	w = httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
+	var t2 token
+	json.Unmarshal(w.Body.Bytes(), &t2)
+
 	assert.Equal(t, http.StatusUnauthorized, w.Code, "Authentication fail test (expiry): unsuccessful")
+	assert.Empty(t, t2.Token, "token returned")
+	assert.Empty(t, t2.RefreshToken, "refresh token returned")
 
 	// Success auth
 	testClaim = JWTData{
@@ -642,5 +681,12 @@ func TestRefresh(t *testing.T) {
 	w = httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
+	var t3 token
+	json.Unmarshal(w.Body.Bytes(), &t3)
+
 	assert.Equal(t, http.StatusOK, w.Code, "Authentication success test: unsuccessful")
+	assert.NotEmpty(t, t3.Token, "no token returned")
+	assert.NotEmpty(t, t3.RefreshToken, "no refresh token returned")
+	assert.NotEqual(t, testTokenString, t3.Token, "token not refreshed")
+	assert.NotEqual(t, testRefString, t3.RefreshToken, "refresh token not refreshed")
 }
