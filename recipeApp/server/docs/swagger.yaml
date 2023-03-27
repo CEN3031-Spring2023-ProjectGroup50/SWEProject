@@ -2,6 +2,10 @@ basePath: /
 definitions:
   handler.recipeEditRequest:
     properties:
+      image:
+        items:
+          type: integer
+        type: array
       image_name:
         type: string
       ingredients:
@@ -66,37 +70,6 @@ paths:
         "400":
           description: Bad Request
       summary: allows a user to login
-  /server/recipes:
-    get:
-      consumes:
-      - application/json
-      parameters:
-      - collectionFormat: multi
-        description: specify one or more keywords
-        in: query
-        items:
-          type: string
-        name: keyword
-        type: array
-      - collectionFormat: multi
-        description: specify one or more ingredients
-        in: query
-        items:
-          type: string
-        name: ingredient
-        type: array
-      - description: specify a recipe by id
-        in: query
-        name: id
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-        "400":
-          description: Bad Request
-      summary: a suite of queries for returning recipes by search term
   /server/recipes/add:
     post:
       consumes:
@@ -130,6 +103,25 @@ paths:
         description: results per page
         in: query
         name: per_page
+        type: integer
+      - collectionFormat: multi
+        description: specify one or more keywords
+        in: query
+        items:
+          type: string
+        name: keyword
+        type: array
+      - collectionFormat: multi
+        description: specify one or more ingredients
+        in: query
+        items:
+          type: string
+        name: ingredient
+        type: array
+      - default: 0
+        description: specify a user id
+        in: query
+        name: uid
         type: integer
       produces:
       - application/json
