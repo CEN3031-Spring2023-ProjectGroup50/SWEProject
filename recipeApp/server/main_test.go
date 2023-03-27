@@ -314,28 +314,45 @@ func TestLogin(t *testing.T) {
 		Password string `json:"password"`
 	}
 
+	type token struct {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refreshToken"`
+	}
+
 	var testUsers []test
 
 	testUsers = append(testUsers,
-		test{Email: "seth@gmail.com", Password: "food"},
-		test{Email: "ThisIsNotValidAccount", Password: "ThisIsNotValidAccount"},
+		test{Email: "seth@gmail.com", Password: "food"},                         // Valid account
+		test{Email: "ThisIsNotValidAccount", Password: "ThisIsNotValidAccount"}, // Invalid account
 	)
 
+	// Valid account test
 	jsonValue, _ := json.Marshal(testUsers[0])
 	req, _ := http.NewRequest("POST", "/server/login", bytes.NewBuffer(jsonValue))
 	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusOK, w.Code, "Login failed")
+	var t1 token
+	json.Unmarshal(w.Body.Bytes(), &t1)
 
+	assert.Equal(t, http.StatusOK, w.Code, "Login test failed (valid account)")
+	assert.NotEmpty(t, t1.Token, "No access token returned")
+	assert.NotEmpty(t, t1.RefreshToken, "No refresh token returned")
+
+	// Invalid account test
 	jsonValue, _ = json.Marshal(testUsers[1])
 	req, _ = http.NewRequest("POST", "/server/login", bytes.NewBuffer(jsonValue))
 	req.Header.Set("Content-Type", "application/json")
 	w = httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusBadRequest, w.Code, "Login failed")
+	var t2 token
+	json.Unmarshal(w.Body.Bytes(), &t2)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Login test failed (invalid account))")
+	assert.Empty(t, t2.Token, "Access token returned")
+	assert.Empty(t, t2.RefreshToken, "Refresh token returned")
 }
 
 func TestRegister(t *testing.T) {
@@ -348,30 +365,47 @@ func TestRegister(t *testing.T) {
 		Password string `json:"password"`
 	}
 
+	type token struct {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refreshToken"`
+	}
+
 	var testUsers []test
 
 	testUsers = append(testUsers,
-		test{Email: "seth@gmail.com", Password: "food"},
-		test{Email: "newaccount@yahoo.com", Password: "password"},
+		test{Email: "seth@gmail.com", Password: "food"},           // Existing account
+		test{Email: "newaccount@yahoo.com", Password: "password"}, // Non-existent account
 	)
 
 	initialize.Db.Table("users").Where("email = ?", "newaccount@yahoo.com").Delete(testUsers[1])
 
+	// Trying to register an existing account
 	jsonValue, _ := json.Marshal(testUsers[0])
 	req, _ := http.NewRequest("POST", "/server/register", bytes.NewBuffer(jsonValue))
 	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusBadRequest, w.Code, "Register failed or user already exists")
+	var t1 token
+	json.Unmarshal(w.Body.Bytes(), &t1)
 
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Test failed (existing account)")
+	assert.Empty(t, t1.Token, "Access token returned")
+	assert.Empty(t, t1.RefreshToken, "Refresh token returned")
+
+	// Registering a non-existent account
 	jsonValue, _ = json.Marshal(testUsers[1])
 	req, _ = http.NewRequest("POST", "/server/register", bytes.NewBuffer(jsonValue))
 	req.Header.Set("Content-Type", "application/json")
 	w = httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusOK, w.Code, "Register failed or user already exists")
+	var t2 token
+	json.Unmarshal(w.Body.Bytes(), &t2)
+
+	assert.Equal(t, http.StatusOK, w.Code, "Test failed (new account)")
+	assert.NotEmpty(t, t2.Token, "No access token returned")
+	assert.NotEmpty(t, t2.RefreshToken, "No refresh token returned")
 }
 
 func TestAccountAuth(t *testing.T) {
