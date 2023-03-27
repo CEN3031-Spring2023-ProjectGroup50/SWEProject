@@ -50,53 +50,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/server/recipes": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "a suite of queries for returning recipes by search term",
-                "parameters": [
-                    {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "collectionFormat": "multi",
-                        "description": "specify one or more keywords",
-                        "name": "keyword",
-                        "in": "query"
-                    },
-                    {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "collectionFormat": "multi",
-                        "description": "specify one or more ingredients",
-                        "name": "ingredient",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "specify a recipe by id",
-                        "name": "id",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "400": {
-                        "description": "Bad Request"
-                    }
-                }
-            }
-        },
         "/server/recipes/add": {
             "post": {
                 "consumes": [
@@ -149,6 +102,33 @@ const docTemplate = `{
                         "default": 10,
                         "description": "results per page",
                         "name": "per_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "specify one or more keywords",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "specify one or more ingredients",
+                        "name": "ingredient",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "specify a user id",
+                        "name": "uid",
                         "in": "query"
                     }
                 ],
@@ -262,6 +242,12 @@ const docTemplate = `{
         "handler.recipeEditRequest": {
             "type": "object",
             "properties": {
+                "image": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
                 "image_name": {
                     "type": "string"
                 },

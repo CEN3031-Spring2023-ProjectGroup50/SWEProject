@@ -56,6 +56,10 @@ func CreateRecipe() gin.HandlerFunc {
 
 		}
 
-		c.JSON(http.StatusOK, gin.H{})
+		var response recipePostRequest
+
+		initialize.Db.Table("recipe").Where("rid = ?", recipe.Rid).Find(&response)
+
+		c.JSON(http.StatusOK, response)
 	}
 }
