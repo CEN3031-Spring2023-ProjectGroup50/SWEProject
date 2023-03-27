@@ -46,7 +46,6 @@ func main() {
 		server.POST("/login", handler.Login)
 		server.GET("/account", handler.Account)
 		server.POST("/account/refresh", handler.RefreshToken)
-		server.GET("/recipes", handler.RecipeGet())
 		server.POST("/recipes/add", handler.CreateRecipe())
 		server.GET("/recipes/bypage", handler.RecipeGetByPage())
 		server.PUT("recipes/edit/:id", handler.EditRecipe())
