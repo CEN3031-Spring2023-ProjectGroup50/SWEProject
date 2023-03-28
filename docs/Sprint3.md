@@ -46,15 +46,23 @@ Frontend Angular unit tests are located in files ending in `.spec.ts`. Each comp
 | app-header.component.spec.ts          | should display titleLoggedOut when logged out.
 | app-header.component.spec.ts          | should have titleLoggedIn value of "Save time, and savor every meal with Mallow."
 | app-header.component.spec.ts          | should display titleLoggedIn when logged in.
-| auth.service.spec.ts                  | Should be created
+| auth.service.spec.ts                  | should be created
+| edit-recipe.component.spec.ts         | should create EditRecipeModule
+| edit-recipe.component.spec.ts         | should create EditRecipeContentModule
+| edit-recipe.component.spec.ts         | ERM opens the dialog upon button click
+| edit-recipe.component.spec.ts         | ERM contains a button "Edit Recipe" to open dialog
 | grocery-list.component.spec.ts        | should compile
 | grocery-list.component.spec.ts        | should create the grocery list component
-| grocery-list.component.spec.ts        | should contain users
-| grocery-list.component.spec.ts        | should compile
+| grocery-list-page.component.spec.ts   | should compile
 | grocery-list-page.component.spec.ts   | should create the grocery list component
 | home.component.spec.ts                | should compile
 | login-editor.component.spec.ts        | should compile
 | login-editor.component.spec.ts        | should create the login-editor component
+| meal-plan.component.spec.ts           | should compile
+| meal-plan.component.spec.ts           | should create meal plan component
+| meal-plan.component.spec.ts           | should contain users
+| meal-plan-page.component.spec.ts      | should compile
+| meal-plan-page.component.spec.ts      | should create meal plan page component
 | menu-navigation.component.spec.ts     | Should compile
 | menu-navigation.component.spec.ts     | drawer should default to open
 | menu-navigation.component.spec.ts     | drawer should close when toggled
@@ -62,6 +70,8 @@ Frontend Angular unit tests are located in files ending in `.spec.ts`. Each comp
 | menu-navigation.component.spec.ts     | should have content in navbar
 | menu-navigation.component.spec.ts     | should have a list in the navbar
 | recipes.component.spec.ts             | should compile
+| recipes.component.spec.ts             | should contain "Add Recipe" button
+| recipes.component.spec.ts             | RecipeComponent opens the addRecipeDialog upon button click
 | recipe-details.component.spec.ts      | should compile
 | registerform.component.spec.ts        | should compile
 | registerform.component.spec.ts        | should create the registerform component
