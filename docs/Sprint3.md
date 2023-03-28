@@ -11,26 +11,50 @@ As a group, we reviewed the incomplete user stories from Sprint 2 as well as the
 
 #### Closed:
 
-1. [X] XXX *
-1. [X] XXX
+1. [4] As a user, I can click on a recipe card (or a recipe in the list) to view a side pane pop-up blade with details about the recipe including ingredients and directions. #19
+2. [5] As a user, I can add a new recipe to the database that includes an ingredients list and directions, so that I can access it later.#9
+3. [6] As a user, I can edit previously created recipes so that I can make updates or fix mistakes.#44
+4. 
 
 #### Open:
 
-1. [X] XXX
+1. [7] As a user, I can delete previously created recipes so that I can keep my list up to date. #45
+2. [18] As a user, I receive errors that help guide me so I know what to do next#65
+3. [19] As a user, I want to upload a picture to accompany my recipe.#91
+4. [9] As a user, I would like to search the recipe list based on type of cuisine so I can more easily find what I am looking for.#10
+5. [11] As a user, I can search the recipe list based on type of cuisine so I can more easily find what I am looking for.#47 (duplicate)
+6. [10] As a user, I would like to search the recipe list based on meal type so I can more easily find what I am looking for. #27
 
 ### Tasks planned for Sprint 3
 
 #### Closed:
 
-1. [X] XXX
+1. [5] Establish user-recipe backend relationship database design#81
+2. [17] Add refresh tokens to update expired access tokens#88
+5. [3] Add pagination component to recipe dashboard#59
+6. Pagination not working for search results#108
+7. [5] API design for edit recipe experience#83
+8. [4] FE view recipe details experience#68
+9. Edit/delete recipe options are visible on recipes created by other users#109
+10. [17] Test authentication#57
+11. [3] Add pagination component to recipe dashboard#59
+12. Add a spinner to the browse recipe experience to ease user experience.#93
+13. Max characters per title in card and change column size#97
+14. Fix welcome screen so only toolbar, menu, and page contents are shown after login#86
+15. [7] Add a toggle button to filter recipes to list those created by the user.#95
+16. Fix the spin into oblivion when clicking on "User Recipes" with no recipes returned#113
+17. Frontend create recipe experience#82
+18. [4] FE view recipe details experience#68
+19. Shore up prior testing efforts on completed code.#84
 
 #### In Progress:
 
-1. [X] XXX
+1. [3] Investigate BE & FE image strategy (stretch goal)#62
 
 #### To Do:
 
-1. [X] XXX
+1. [18] Investigate error handling in FE so we have a better idea of what errors to surface in the backend (stretch goal)#64
+2. Find existing library for image upload for create recipe experience#102
 
 ## Frontend Unit tests
 Frontend Angular unit tests are located in files ending in `.spec.ts`. Each component has its own unit test file.
@@ -81,7 +105,7 @@ Frontend Angular unit tests are located in files ending in `.spec.ts`. Each comp
 | welcome.component.spec.ts             | should have as list of size 3 (currently hardcoded)
 | welcome-dashboard.component.spec.ts   | Should compile
 
-When tests are successful, the built-in Angular testing platform (run `ng test`) will generate a screen which looks like this:
+When tests run, the built-in Angular testing platform (run `ng test`, or "npm test" from recipeApp/client) will generate a screen which looks like this:
 
 ![Karma Jasmine unit test results snapshot 1](https://cdn.discordapp.com/attachments/1062897591240638631/1090315347053252618/image.png)
 ![Karma Jasmine unit test results snapshot 2](https://cdn.discordapp.com/attachments/1062897591240638631/1090315703321632808/image.png)
