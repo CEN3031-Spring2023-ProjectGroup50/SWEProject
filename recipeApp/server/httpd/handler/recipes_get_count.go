@@ -10,6 +10,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get the correct count of recipes for any pagination scenario
+// @Accept json
+// @Produce json
+// @Param page	query	int	false	"specify page number"	default(1)
+// @Param per_page	query	int	false	"results per page"	default(10)
+// @Param keyword	query	[]string	false	"specify one or more keywords"	collectionFormat(multi)
+// @Param ingredient	query	[]string false "specify one or more ingredients"	collectionFormat(multi)
+// @Param uid	query	int	false "specify a user id"	default(0)
+// @Success 200
+// @Failure 400
+// @Router /server/recipecount [get]
 func RecipeGetCount() gin.HandlerFunc {
 
 	return func(c *gin.Context) {

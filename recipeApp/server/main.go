@@ -18,7 +18,7 @@ import (
 
 //@contact.name Wes Ahearn, Seth Paul
 //@host localhost:5000
-//@license.name unknown
+//@license.name Apache 2.0
 //@BasePath /
 
 func init() {
