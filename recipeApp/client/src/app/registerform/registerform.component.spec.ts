@@ -74,6 +74,7 @@ describe('registrationForm', () => {
         LayoutModule,
         MatPaginatorModule,
         CommonModule,
+        HttpClientTestingModule
         //RouterTestingModule
       ],
       providers: [
