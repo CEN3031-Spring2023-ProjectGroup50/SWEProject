@@ -15,6 +15,7 @@ type recipeEditRequest struct {
 	Instructions string `json:"instructions"`
 	Image_Name   string `json:"image_name"`
 	Uid          uint   `json:"uid"`
+	Image        []byte `json:"image"`
 }
 
 // @Summary edit a recipe
@@ -48,7 +49,8 @@ func EditRecipe() gin.HandlerFunc {
 			return
 		}
 
-		result := initialize.Db.Table("recipe").Where("rid = ? and uid !=?", id, mallowid).Updates(
+		result := initialize.Db.Table("recipe").Select("title", "ingredients", "instructions", "image_name").
+			Where("rid = ? and uid !=?", id, mallowid).Updates(
 			map[string]interface{}{
 				"title":        requestBody.Title,
 				"ingredients":  requestBody.Ingredients,
@@ -64,6 +66,10 @@ func EditRecipe() gin.HandlerFunc {
 
 		}
 
-		c.JSON(http.StatusOK, gin.H{})
+		var response recipeEditRequest
+
+		initialize.Db.Table("recipe").Where("rid = ?", recipe.Rid).Find(&response)
+
+		c.JSON(http.StatusOK, response)
 	}
 }

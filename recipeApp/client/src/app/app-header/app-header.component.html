@@ -7,8 +7,8 @@
       </button>
     </div>
 
-    <span *ngIf="!authService.isAuthenticated" id="welcome">{{titleLoggedOut}}</span>
-    <span *ngIf="authService.isAuthenticated" id="welcome">{{titleLoggedIn}}</span>
+    <span *ngIf="!authService.isAuthenticated" id="titleLoggedOut">{{titleLoggedOut}}</span>
+    <span *ngIf="authService.isAuthenticated" id="titleLoggedIn">{{titleLoggedIn}}</span>
 
     <span class="example-spacer"></span>
 

@@ -4,10 +4,10 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {HarnessLoader} from '@angular/cdk/testing';
 import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
+import { AppComponent } from './app.component';
+import { AppHeaderComponent } from './app-header/app-header.component';
 
 let loader: HarnessLoader;
-
-import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -15,7 +15,7 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AppComponent ],
+      declarations: [ AppComponent, AppHeaderComponent ],
       imports: [
         HttpClientModule,
         AppModule
@@ -32,5 +32,12 @@ describe('AppComponent', () => {
 
   it('should compile', () => {
     expect(component).toBeTruthy();
-  })
+  });
+
+  it('should create the app', waitForAsync(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
+  }));
+
 });

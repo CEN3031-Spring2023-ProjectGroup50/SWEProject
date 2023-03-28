@@ -12,9 +12,9 @@ describe('RecipeDetailsModule', () => {
     TestBed.configureTestingModule({
       declarations: [RecipeDetailsModule],
       imports: [
-        MatDialog,
         AppModule
-      ]
+      ],
+      providers: [MatDialog]
     }).compileComponents();
   }));
 

@@ -5,7 +5,11 @@ import {HttpClientModule, HttpClient,HTTP_INTERCEPTORS} from '@angular/common/ht
 import { AuthService } from '../shared/auth/auth.service';
 
 import { MenuNavigationComponent } from './menu-navigation.component';
-//import { MatSidenav } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatListModule} from '@angular/material/list';
+//import { Router, Routes, RouterModule } from '@angular/router';
+import { By } from '@angular/platform-browser';
 
 describe('MenuNavigationComponent', () => {
   let component: MenuNavigationComponent;
@@ -20,11 +24,14 @@ describe('MenuNavigationComponent', () => {
         NoopAnimationsModule,
         LayoutModule,
         HttpClientModule,
-       // MatSidenav
+        MatSidenavModule,
+        MatToolbarModule,
+        MatListModule
       ],
       providers: [
           HttpClient,
-          AuthService
+          AuthService,
+          MatSidenav
       ]
     }).compileComponents();
   }));
@@ -38,6 +45,28 @@ describe('MenuNavigationComponent', () => {
   it('should compile', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should create the menu navigation component', waitForAsync(() => {
+    const fixture = TestBed.createComponent(MenuNavigationComponent);
+    const appHeader = fixture.debugElement.componentInstance;
+    expect(appHeader).toBeTruthy();}))
+
+  it('drawer should default to open', () => {
+    expect(component.drawer.opened).toBe(true);})
+
+  it('drawer should close when toggled', () => {
+    component.drawer.toggle()
+    expect(component.drawer.opened).toBe(false);})
+
+  it('should have content in navbar', () => {
+    const navbar = fixture.debugElement.query(By.css('.sidenav'));
+    expect(navbar).toBeTruthy();})
+
+  it('should have a list in the navbar', () => {
+    const list = fixture.debugElement.query(By.css('mat-nav-list'));
+    expect(list).toBeTruthy();})
+
+    
 
 
 });
