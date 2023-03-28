@@ -123,10 +123,8 @@ Frontend Angular unit tests are located in files ending in `.spec.ts`. Each comp
 When tests run, the built-in Angular testing platform (run `ng test`, or `npm test` from recipeApp/client) will generate a screen which looks like this:
 
 ![Karma Jasmine unit test results snapshot 1](https://cdn.discordapp.com/attachments/1062897591240638631/1090420789976768522/image.png)
-![Karma Jasmine unit test results snapshot 2]
-(https://cdn.discordapp.com/attachments/1062897591240638631/1090420790257795183/image.png)
-![Karma Jasmine unit test results snapshot 3]
-(https://cdn.discordapp.com/attachments/1062897591240638631/1090420790505263164/image.png)
+![Karma Jasmine unit test results snapshot 2](https://cdn.discordapp.com/attachments/1062897591240638631/1090420790257795183/image.png)
+![Karma Jasmine unit test results snapshot 3](https://cdn.discordapp.com/attachments/1062897591240638631/1090420790505263164/image.png)
 
 > Note: We have prioritized angular (Karma/Jasmine) unit tests in this sprint, so there are no changes to Cypress test coverage since Sprint 2.
 
