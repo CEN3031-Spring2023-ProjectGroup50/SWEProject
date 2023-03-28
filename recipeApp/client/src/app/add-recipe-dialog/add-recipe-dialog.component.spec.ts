@@ -1,5 +1,5 @@
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../shared/auth/auth.service';
 import { MatInputModule } from '@angular/material/input';
@@ -40,4 +40,5 @@ describe('AddRecipeDialogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

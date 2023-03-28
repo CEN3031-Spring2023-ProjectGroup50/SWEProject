@@ -10,7 +10,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
 
-
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { MatDialogHarness } from '@angular/material/dialog/testing';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonHarness } from '@angular/material/button/testing';
 
 describe('EditRecipeContentModule', () => {
   let componentBtn: EditRecipeModule;
@@ -27,7 +33,8 @@ describe('EditRecipeContentModule', () => {
         ReactiveFormsModule,
         MatDialogModule,
         BrowserAnimationsModule,
-        MatIconModule
+        MatIconModule,
+        MatButtonModule
       ],
       providers: [
         {provide: MAT_DIALOG_DATA, useValue: {}},
@@ -75,6 +82,12 @@ describe('EditRecipeContentModule', () => {
     Dialog text
     Submitting Form
     Supplying Data to DB? Not sure if that is FE testable*/
+
+  /* Note from Shannon:
+      Good stack overflow example for testing an API call
+      i.e. should call 'delete' once when Submit button pressed and not cancelled
+      https://stackoverflow.com/questions/52968940/dialogref-afterclosed-is-not-a-function
+  */
 
 });
 

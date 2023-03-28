@@ -3,7 +3,7 @@ import { GroceryListPageComponent } from './grocery-list-page.component';
 import { AppModule } from '../app.module';
 import { WelcomeComponent } from '../welcome/welcome.component';
 
-describe('GroceryListComponent', () => {
+describe('GroceryListPageComponent', () => {
   let component: GroceryListPageComponent;
   let fixture: ComponentFixture<GroceryListPageComponent>;
 
@@ -26,10 +26,10 @@ describe('GroceryListComponent', () => {
     expect(component).toBeTruthy();
   })
 
-  it('should create the welcome component', waitForAsync(() => {
+  it('should create the grocery list page component', waitForAsync(() => {
     const fixture = TestBed.createComponent(GroceryListPageComponent);
-    const appHeader = fixture.debugElement.componentInstance;
-    expect(appHeader).toBeTruthy();}))
+    const grocListPage = fixture.debugElement.componentInstance;
+    expect(grocListPage).toBeTruthy();}))
 
 
 });
