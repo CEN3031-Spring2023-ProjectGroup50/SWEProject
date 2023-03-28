@@ -13,7 +13,7 @@ const docTemplate = `{
             "name": "Wes Ahearn, Seth Paul"
         },
         "license": {
-            "name": "unknown"
+            "name": "Apache 2.0"
         },
         "version": "{{.Version}}"
     },
@@ -38,6 +38,54 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/handler.userBody"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/server/recipecount": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get the correct count of recipes for any pagination scenario",
+                "parameters": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "specify one or more keywords",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "specify one or more ingredients",
+                        "name": "ingredient",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "specify a user id",
+                        "name": "uid",
+                        "in": "query"
                     }
                 ],
                 "responses": {
