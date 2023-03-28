@@ -28,7 +28,6 @@ import { AuthService } from '../shared/auth/auth.service';
 
 describe('RecipesComponent', () => {
 
-
     let component: RecipesComponent;
     let fixture: ComponentFixture<RecipesComponent>;
 
