@@ -557,6 +557,111 @@ Search by combination keyword and ingredient, default pagination, filter by user
 ]
 ```
 
+##### Recipe - Get Count
+
+> HTTP
+> 
+> GET http://localhost:5000/server/recipecount
+
+##### URI Parameters
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| id                  | False       | string    | Unique id of recipe   |
+| keyword             | False       | string    | Search keyword        |
+| ingredient          | False       | string    | Search ingredient     |
+
+##### Request Body
+
+Empty
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+| 400 Bad Request | Error     | No recipes returned     |
+
+##### Sample Request
+
+Default, get count of all recipes
+
+> HTTP
+>
+> GET http://localhost:5000/server/recipecount?uid=0
+>
+
+##### Sample Response
+```
+{
+  "total": 13527
+}
+```
+
+##### Sample Request
+
+Get count of recipes for a specific user
+
+> HTTP
+>
+> GET http://localhost:5000/server/recipecount?uid=2
+>
+
+##### Sample Response
+```
+{
+  "total": 7
+}
+```
+
+##### Sample Request
+
+Get count of recipes filtered by keyword
+
+> HTTP
+>
+> GET http://localhost:5000/server/recipecount?uid=2
+>
+
+##### Sample Response
+```
+{
+  "total": 5
+}
+```
+
+##### Sample Request
+
+Get count of recipes filtered by keyword and ingredient
+
+> HTTP
+>
+> GET http://localhost:5000/server/recipecount?keyword=crock%20pot&ingredient=chicken&uid=0
+>
+
+##### Sample Response
+```
+{
+  "total": 2
+}
+```
+
+##### Sample Request
+
+Get count of recipes filtered by keyword and ingredient, for a specific user
+
+> HTTP
+>
+> GET http://localhost:5000/server/recipecount?keyword=crock%20pot&ingredient=chicken&uid=2
+>
+
+##### Sample Response
+```
+{
+  "total": 0
+}
+```
+
 
 
 ## Swagger
