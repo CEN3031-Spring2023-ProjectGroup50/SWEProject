@@ -25,6 +25,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../shared/auth/auth.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('RecipesComponent', () => {
 
@@ -61,7 +62,8 @@ describe('RecipesComponent', () => {
             LayoutModule,
             MatPaginatorModule,
             CommonModule,
-            RouterTestingModule
+            RouterTestingModule,
+            MatDialogModule
         ],
         providers: [
             AuthService,
@@ -71,6 +73,7 @@ describe('RecipesComponent', () => {
                 multi: true
             },
             HttpClient,
+
         ]
       }).compileComponents();
    }));
