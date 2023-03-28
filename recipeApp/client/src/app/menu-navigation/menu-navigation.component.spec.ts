@@ -5,7 +5,9 @@ import {HttpClientModule, HttpClient,HTTP_INTERCEPTORS} from '@angular/common/ht
 import { AuthService } from '../shared/auth/auth.service';
 
 import { MenuNavigationComponent } from './menu-navigation.component';
-//import { MatSidenav } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatListModule} from '@angular/material/list';
 
 describe('MenuNavigationComponent', () => {
   let component: MenuNavigationComponent;
@@ -20,11 +22,14 @@ describe('MenuNavigationComponent', () => {
         NoopAnimationsModule,
         LayoutModule,
         HttpClientModule,
-       // MatSidenav
+        MatSidenavModule,
+        MatToolbarModule,
+        MatListModule
       ],
       providers: [
           HttpClient,
-          AuthService
+          AuthService,
+          MatSidenav
       ]
     }).compileComponents();
   }));
