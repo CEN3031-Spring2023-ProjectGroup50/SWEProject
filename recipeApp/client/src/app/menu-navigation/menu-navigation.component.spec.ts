@@ -44,5 +44,17 @@ describe('MenuNavigationComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should create the menu navigation component', waitForAsync(() => {
+    const fixture = TestBed.createComponent(MenuNavigationComponent);
+    const appHeader = fixture.debugElement.componentInstance;
+    expect(appHeader).toBeTruthy();}))
+
+  it('drawer should default to open', () => {
+    expect(component.drawer.opened).toBe(true);})
+
+    it('drawer should close when toggled', () => {
+      component.drawer.toggle()
+      expect(component.drawer.opened).toBe(false);})
+
 
 });

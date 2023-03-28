@@ -26,7 +26,7 @@ describe('GroceryListComponent', () => {
     expect(component).toBeTruthy();
   })
 
-  it('should create the welcome component', waitForAsync(() => {
+  it('should create the grocery list component', waitForAsync(() => {
     const fixture = TestBed.createComponent(GroceryListComponent);
     const appHeader = fixture.debugElement.componentInstance;
     expect(appHeader).toBeTruthy();}))
