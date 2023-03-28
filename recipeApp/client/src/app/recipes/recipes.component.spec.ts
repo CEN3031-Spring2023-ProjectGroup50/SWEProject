@@ -29,7 +29,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 describe('RecipesComponent', () => {
 
-
     let component: RecipesComponent;
     let fixture: ComponentFixture<RecipesComponent>;
 
