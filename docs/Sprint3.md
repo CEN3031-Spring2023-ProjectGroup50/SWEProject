@@ -1,20 +1,30 @@
 # Sprint 3
 2/28/2023 - 3/29/2023 (4 weeks)
 
-## Work completed in sprint 2
+| Contents of this document:
+| :---
+| [Work completed in sprint 3](#work-completed-in-sprint-3)
+| [Frontend Unit tests](#frontend-unit-tests)
+| [Backend Unit tests](#backend-unit-tests)
+| [API documentation](#api-documentation)
+| [Swagger tool for viewing APIs](#swagger)
+| [Demo video recordings](#links-to-sprint-3-video-recordings)
+
+## Work completed in sprint 3
 
 See the [Sprint 3 Taskboard](https://github.com/orgs/CEN3031-Spring2023-ProjectGroup50/projects/7/views/1) for a kanban style view of work planned and accomplished.
 
-### User stories planned for Sprint 2
+### User stories planned for Sprint 3
 As a group, we reviewed the incomplete user stories from Sprint 2 as well as the backlog of user stories, and defined the goal for Sprint 3:
-(Tasks marked with an * were transferred from Sprint 2)
 
 #### Closed:
 
 1. [4] As a user, I can click on a recipe card (or a recipe in the list) to view a side pane pop-up blade with details about the recipe including ingredients and directions. #19
 2. [5] As a user, I can add a new recipe to the database that includes an ingredients list and directions, so that I can access it later.#9
 3. [6] As a user, I can edit previously created recipes so that I can make updates or fix mistakes.#44
-4. 
+4. [16] As a user, when I log in, I want the app to track my personal data with a secure token so that my experience can be more personalized. #32
+5. As a user I want to search for my recipes so that I can easily find everything I created. #120
+6. As a user I want to search for my recipes by keyword or ingredient so that I can easily find what I am looking for #121
 
 #### Open:
 
@@ -24,6 +34,7 @@ As a group, we reviewed the incomplete user stories from Sprint 2 as well as the
 4. [9] As a user, I would like to search the recipe list based on type of cuisine so I can more easily find what I am looking for.#10
 5. [11] As a user, I can search the recipe list based on type of cuisine so I can more easily find what I am looking for.#47 (duplicate)
 6. [10] As a user, I would like to search the recipe list based on meal type so I can more easily find what I am looking for. #27
+7. [6] Modify user registration to assign a uid upon user creation. #92
 
 ### Tasks planned for Sprint 3
 
@@ -47,17 +58,14 @@ As a group, we reviewed the incomplete user stories from Sprint 2 as well as the
 18. [4] FE view recipe details experience#68
 19. Shore up prior testing efforts on completed code.#84
 
-#### In Progress:
+#### To Do & In-Progress:
 
-1. [3] Investigate BE & FE image strategy (stretch goal)#62
-
-#### To Do:
-
-1. [18] Investigate error handling in FE so we have a better idea of what errors to surface in the backend (stretch goal)#64
-2. Find existing library for image upload for create recipe experience#102
+1. 1. [3] Investigate BE & FE image strategy (stretch goal)#62
+2. [18] Investigate error handling in FE so we have a better idea of what errors to surface in the backend (stretch goal)#64
+3. Find existing library for image upload for create recipe experience#102
 
 ## Frontend Unit tests
-Frontend Angular unit tests are located in files ending in `.spec.ts`. Each component has its own unit test file.
+Frontend Angular unit tests are located in files ending in `.spec.ts`. Each component and service has its own unit test file.
 
 | Component test file                   | Test Description
 | :---                                  |  :---
@@ -105,7 +113,7 @@ Frontend Angular unit tests are located in files ending in `.spec.ts`. Each comp
 | welcome.component.spec.ts             | should have as list of size 3 (currently hardcoded)
 | welcome-dashboard.component.spec.ts   | Should compile
 
-When tests run, the built-in Angular testing platform (run `ng test`, or "npm test" from recipeApp/client) will generate a screen which looks like this:
+When tests run, the built-in Angular testing platform (run `ng test`, or `npm test` from recipeApp/client) will generate a screen which looks like this:
 
 ![Karma Jasmine unit test results snapshot 1](https://cdn.discordapp.com/attachments/1062897591240638631/1090315347053252618/image.png)
 ![Karma Jasmine unit test results snapshot 2](https://cdn.discordapp.com/attachments/1062897591240638631/1090315703321632808/image.png)
@@ -473,18 +481,18 @@ Empty
 ]
 ```
 
+## Swagger
+
 Our internal API document can be found at:
 
 http://localhost:5000/server/docs/index.html#  when running the server locally.
 
-![The API test platform](https://cdn.discordapp.com/attachments/1062897591240638631/1080041659531800646/image.png)
+![The API test platform](insert here)
 
 Example trying out a sample API call:
-![GET Recipes sample API call](https://cdn.discordapp.com/attachments/1062897591240638631/1080042411545350195/image.png)
-![GET Recipes sample API call](https://cdn.discordapp.com/attachments/1062897591240638631/1080043016133300244/image.png)
+![Sample API call](insert here)
 
-
-## Links to sprint 2 video recordings
+## Links to sprint 3 video recordings
 
 * [Backend Video (Part 1)](insert here)
   * 0:00 - XX
