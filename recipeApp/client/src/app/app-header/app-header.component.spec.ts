@@ -45,7 +45,7 @@ describe('AppHeaderComponent', () => {
   it('should display titleLoggedOut when logged out.', waitForAsync(() => {
     const fixture = TestBed.createComponent(AppHeaderComponent);
     let comp: AppHeaderComponent = fixture.componentInstance;
-    comp.titleLoggedOut = 'Welcome to Mallow';
+    //comp.titleLoggedOut = 'Welcome to Mallow';
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('#titleLoggedOut').textContent).toContain('Welcome to Mallow');
@@ -56,13 +56,13 @@ describe('AppHeaderComponent', () => {
   });
 
   it('should display titleLoggedIn when logged in.', waitForAsync(() => {
-    const fixture = TestBed.createComponent(AppHeaderComponent);
-    let comp: AppHeaderComponent = fixture.componentInstance;
-    comp.titleLoggedIn = 'Save time, and savor every meal with Mallow.';
-    comp.isUserLoggedIn = true;
-    fixture.detectChanges();
+    //const fixture = TestBed.createComponent(AppHeaderComponent);
+    //let comp: AppHeaderComponent = fixture.componentInstance;
+    //comp.titleLoggedIn = 'Save time, and savor every meal with Mallow.';
+    component.isUserLoggedIn = true;
+    //fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('#titleLoggedIn').textContent).toContain('Save time, and savor every meal with Mallow.');
+    expect(compiled.querySelector('#titleLoggedIn').textContent).toContain(component.titleLoggedIn);
   }));
 
 
