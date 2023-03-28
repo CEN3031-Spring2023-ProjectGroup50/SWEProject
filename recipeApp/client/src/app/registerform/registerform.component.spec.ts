@@ -92,6 +92,11 @@ describe('registerForm', () => {
     }).compileComponents();
  }));
 
+ beforeEach(() => {
+  fixture = TestBed.createComponent(registerFormComponent);
+  component = fixture.componentInstance;
+});
+
   it('should compile', () => {
     expect(component).toBeTruthy();
   });

@@ -55,6 +55,11 @@ describe('LoginEditorComponent', () => {
         }).compileComponents();
      }));
 
+     beforeEach(() => {
+        fixture = TestBed.createComponent(LoginEditorComponent);
+        component = fixture.componentInstance;
+      });
+
      it('should compile', () => {
         expect(component).toBeTruthy();
       });
