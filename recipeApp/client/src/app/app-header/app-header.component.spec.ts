@@ -32,6 +32,12 @@ describe('AppHeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should create the App header component', waitForAsync(() => {
+    const fixture = TestBed.createComponent(AppHeaderComponent);
+    const appHeader = fixture.debugElement.componentInstance;
+    expect(appHeader).toBeTruthy();
+  }));
+
   it('should have titleLoggedOut value of "Welcome to Mallow".', () => {
     expect(component.titleLoggedOut).toBe('Welcome to Mallow!');
   });

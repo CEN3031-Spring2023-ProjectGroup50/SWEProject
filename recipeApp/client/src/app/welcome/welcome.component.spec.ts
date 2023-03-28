@@ -32,7 +32,12 @@ describe('WelcomeComponent', () => {
 
   it('should compile', () => {
     expect(component).toBeTruthy();
-  })
+  });
 
+  it('should create the welcome component', waitForAsync(() => {
+    const fixture = TestBed.createComponent(WelcomeComponent);
+    const appHeader = fixture.debugElement.componentInstance;
+    expect(appHeader).toBeTruthy();
+  }));
 
 })
