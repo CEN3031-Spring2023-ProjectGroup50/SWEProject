@@ -32,7 +32,7 @@ import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../shared/auth/auth.service';
 
-describe('registrationForm', () => {
+describe('registerForm', () => {
 
   let component: registerFormComponent;
   let fixture: ComponentFixture<registerFormComponent>;
@@ -92,21 +92,14 @@ describe('registrationForm', () => {
     }).compileComponents();
  }));
 
-  it('should compile', waitForAsync(() => {
+  it('should compile', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should create the registerform component', waitForAsync(() => {
     const fixture = TestBed.createComponent(registerFormComponent);
     const regForm = fixture.debugElement.componentInstance;
     expect(regForm).toBeTruthy();
   }));
-
-
-  // The email field, password field, and register button should render
-
-  // Display error message when email is blank
-
-  // Display error message when password is blank
-
-  // Display error message when email & password combo exists
-
-  // Successful login should route the user to home page
 
 })
