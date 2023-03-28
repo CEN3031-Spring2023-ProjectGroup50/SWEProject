@@ -1,10 +1,9 @@
 import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
 import { MealPlanComponent } from './meal-plan.component';
 import { AppModule } from '../app.module';
-import { WelcomeComponent } from '../welcome/welcome.component';
 import { MatTableDataSource } from '@angular/material/table';
 
-describe('GroceryListComponent', () => {
+describe('MealPlanComponent', () => {
   let component: MealPlanComponent;
   let fixture: ComponentFixture<MealPlanComponent>;
 
@@ -27,10 +26,10 @@ describe('GroceryListComponent', () => {
     expect(component).toBeTruthy();
   })
 
-  it('should create the welcome component', waitForAsync(() => {
+  it('should create the meal plan component', waitForAsync(() => {
     const fixture = TestBed.createComponent(MealPlanComponent);
-    const appHeader = fixture.debugElement.componentInstance;
-    expect(appHeader).toBeTruthy();}))
+    const mealPlan = fixture.debugElement.componentInstance;
+    expect(mealPlan).toBeTruthy();}))
 
   it('should contain users', waitForAsync(() => {
     expect(component.dataSource.data.length).toEqual(100)}))
