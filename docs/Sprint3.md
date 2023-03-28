@@ -79,6 +79,13 @@ Frontend Angular unit tests are located in files ending in `.spec.ts`. Each comp
 | app-header.component.spec.ts          | should have titleLoggedIn value of "Save time, and savor every meal with Mallow."
 | app-header.component.spec.ts          | should display titleLoggedIn when logged in.
 | auth.service.spec.ts                  | should be created
+| auth.service.spec.ts                  | should have a login function
+| auth.service.spec.ts                  | should have a logout function
+| auth.service.spec.ts                  | should set tokens in local storage
+| auth.service.spec.ts                  | should return true for isAuthenticated when login is called
+| auth.service.spec.ts                  | should return false for isAuthenticated when logout is called
+| auth.service.spec.ts                  | should remove token from local storage when logout is called
+| auth.service.spec.ts                  | should remove refresh token from local storage when logout is called
 | edit-recipe.component.spec.ts         | should create EditRecipeModule
 | edit-recipe.component.spec.ts         | should create EditRecipeContentModule
 | edit-recipe.component.spec.ts         | ERM opens the dialog upon button click
@@ -115,8 +122,11 @@ Frontend Angular unit tests are located in files ending in `.spec.ts`. Each comp
 
 When tests run, the built-in Angular testing platform (run `ng test`, or `npm test` from recipeApp/client) will generate a screen which looks like this:
 
-![Karma Jasmine unit test results snapshot 1](https://cdn.discordapp.com/attachments/1062897591240638631/1090315347053252618/image.png)
-![Karma Jasmine unit test results snapshot 2](https://cdn.discordapp.com/attachments/1062897591240638631/1090315703321632808/image.png)
+![Karma Jasmine unit test results snapshot 1](https://cdn.discordapp.com/attachments/1062897591240638631/1090420789976768522/image.png)
+![Karma Jasmine unit test results snapshot 2]
+(https://cdn.discordapp.com/attachments/1062897591240638631/1090420790257795183/image.png)
+![Karma Jasmine unit test results snapshot 3]
+(https://cdn.discordapp.com/attachments/1062897591240638631/1090420790505263164/image.png)
 
 > Note: We have prioritized angular (Karma/Jasmine) unit tests in this sprint, so there are no changes to Cypress test coverage since Sprint 2.
 
