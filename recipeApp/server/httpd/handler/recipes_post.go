@@ -43,9 +43,12 @@ func CreateRecipe() gin.HandlerFunc {
 			Image_Name:   requestBody.Image_Name,
 			Uid:          requestBody.Uid,
 		}
-		var numRecipes int64
-		initialize.Db.Table("recipe").Count(&numRecipes)
-		recipe.Rid = uint(numRecipes + 1)
+
+		var last models.Recipe
+		initialize.Db.Table("recipe").Last(&last)
+		lastNum := last.Rid
+		recipe.Rid = uint(lastNum + 1)
+
 		result := initialize.Db.Table("recipe").Create(&recipe)
 
 		if result.Error != nil {
