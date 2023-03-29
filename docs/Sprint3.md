@@ -136,30 +136,69 @@ When tests run, the built-in Angular testing platform (run `ng test`, or `npm te
 ## Backend Unit tests
 Backend unit tests are located in main_test.go
 
-|Function                   | Test Description                                          |
-| :---                      |  :---                                                     |
-| TestRecipesRoute          | Return status OK (Retrieve all Recipes)                   |
-| TestRecipesRoute          | Recipe list is not empty                                  |
-| TestRecipesRoute          | Number of recipes returned = records in database          |
-| TestRecipeGetByID         | Return status OK (Single recipe returned)                 |
-| TestRecipeGetByID         | Recipe Id matches the requested recipe                    |
-| TestRecipeGetByKeyword    | Return status OK (Retrieved recipes with keyword)         |
-| TestRecipeGetByKeyword    | Did not return empty set                                  |
-| TestRecipeGetByKeyword    | All recipes returned contain keyword                      |
-| TestRecipeGetByIngredient | Return status OK (Retrieved recipes with ingredient)      |
-| TestRecipeGetByIngredient | Did not return empty set                                  |
-| TestRecipeGetByIngredient | All recipes returned have desired ingredient              |
-| TestRecipeGetByPage       | Return status OK (Recipes returned)                       |
-| TestRecipeGetByPage       | Amount of recipes returned is correct                     |
-| TestRecipeGetByPage       | The expected last element matches the rID in sorted order |
-| TestRecipePost            | Able to post desired recipe body                          |
-| TestRecipePost            | Not able to post non-unique recipe                        |
-| TestRecipeDelete          | Able to delete recipes added in TestRecipePost            |
-| TestRecipeDelete          | Able to delete a non-existent recipe (Idempotent)         |
-| TestLogin                 | Test valid user login returns status OK                   |
-| TestLogin                 | Test invalid user login returns status 400                |
-| TestRegister              | Test existing user cannot be registered                   |
-| TestRegister              | Test new user register returns status OK                  |
+|Function                               | Test Description                                          
+| :---                                  |  :---                                                             
+| TestRecipeGetByKeyword                | Return status OK (Retrieved recipes with keyword) 
+| TestRecipeGetByKeyword                | Check that result is empty if it should be  
+| TestRecipeGetByKeyword                | Check that result is not empty if it should contain recipes
+| TestRecipeGetByKeyword                | Check that all returned results contain the keyword
+| TestRecipeGetByKeywordCount           | Return status OK (Retrieved count of recipes) 
+| TestRecipeGetByKeywordCount           | Returned the expected number of results for given keyword
+| TestRecipeGetByIngredient             | Return status OK (Retrieved recipes with ingredient) 
+| TestRecipeGetByIngredient             | Check that result is empty if it should be  
+| TestRecipeGetByIngredient             | Check that result is not empty if it should contain recipes
+| TestRecipeGetByIngredient             | Check that all returned results contain the ingredient
+| TestRecipeGetByIngredientCount        | Return status OK (Retrieved count of recipes)
+| TestRecipeGetByIngredientCount        | Returned the expected number of results for given ingredient         
+| TestRecipeGetByPage                   | Return status OK (Recipes returned)                       
+| TestRecipeGetByPage                   | Amount of recipes returned is correct                     
+| TestRecipeGetByPage                   | The expected last element matches the rID in sorted order 
+| TestRecipePost                        | Return status OK (Able to post recipe)                        
+| TestRecipePost                        | Response recipe ID is the same as supplied
+| TestRecipePost                        | Response title is the same as supplied                        
+| TestRecipePost                        | Response instructions are the same as supplied 
+| TestRecipePost                        | Response ingredient is the same as supplied  
+| TestRecipePost                        | Response image name is the same as supplied 
+| TestRecipePost                        | Response user ID is the same as supplied 
+| TestRecipeEdit                        | Return status OK (Able to edit recipe)                         
+| TestRecipeEdit                        | Response recipe ID is the same as supplied
+| TestRecipeEdit                        | Response title is the same as supplied                        
+| TestRecipeEdit                        | Response instructions are the same as supplied 
+| TestRecipeEdit                        | Response ingredient is the same as supplied  
+| TestRecipeEdit                        | Response image name is the same as supplied 
+| TestRecipeEdit                        | Return bad request for a recipe ID that does not exist
+| TestRecipeDelete                      | Able to delete recipes added in TestRecipePost            
+| TestRecipeDelete                      | Return bad request for a recipe ID that does not exist       
+| TestLogin                             | Test valid user login returns status OK                   
+| TestLogin                             | Test valid user login returns access token
+| TestLogin                             | Test valid user login returns refresh token    
+| TestLogin                             | Test invalid user login returns status 400     
+| TestLogin                             | Test invalid user login returns no access token
+| TestLogin                             | Test invalid user login returns no refresh token
+| TestRegister                          | Test existing user cannot be registered 
+| TestRegister                          | Test existing user returns no access token   
+| TestRegister                          | Test existing user returns no refresh token   
+| TestRegister                          | Test new user register returns status OK   
+| TestRegister                          | Test new user register returns access token
+| TestRegister                          | Test new user register returns refresh token
+| TestAccountAuth                       | Auth fails with invalid key
+| TestAccountAuth                       | No user ID returned with invalid key
+| TestAccountAuth                       | Authentication fails with expired token
+| TestAccountAuth                       | No user ID returned with expired token
+| TestAccountAuth                       | Auth passes with correct key
+| TestAccountAuth                       | User ID returned with correct key
+| TestRefresh                           | Auth fails with invalid key
+| TestRefresh                           | No access token returned with failed auth
+| TestRefresh                           | No refresh token returned with failed auth
+| TestRefresh                           | Auth fails with expired time
+| TestRefresh                           | No access token returned with expired time
+| TestRefresh                           | No refresh token returned with expired time
+| TestRefresh                           | Auth succeeds with correct key
+| TestRefresh                           | Token returned with correct key
+| TestRefresh                           | Refresh token returned with correct key
+| TestRefresh                           | Checks that token is refreshed
+| TestRefresh                           | Checks that refresh token is refreshed
+
 
 ## API documentation
 
