@@ -678,10 +678,10 @@ Our internal API document can be found at:
 
 http://localhost:5000/server/docs/index.html#  when running the server locally.
 
-![The API test platform](insert here)
+![The API test platform](https://media.discordapp.net/attachments/1062897591240638631/1090425713775087626/image.png?width=804&height=645)
 
 Example trying out a sample API call:
-![Sample API call](insert here)
+![Sample API call](https://media.discordapp.net/attachments/1062897591240638631/1090425871535444008/image.png?width=828&height=645)
 
 ## Links to sprint 3 video recordings
 
