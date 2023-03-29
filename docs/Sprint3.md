@@ -10,6 +10,11 @@
 | [Swagger tool for viewing APIs](#swagger)
 | [Demo video recordings](#links-to-sprint-3-video-recordings)
 
+## Links to sprint 3 video recordings
+
+* [Demo Pt1: Application Walk-Through](https://drive.google.com/file/d/1INluQAmsXQmAUYd5Uia3h_o3GjAqM75Q/view?usp=sharing)
+* [Demo Pt2: Frontend Unit Tests, Backend Unit Tests, and Backend Implementation]()
+
 ## Work completed in sprint 3
 
 See the [Sprint 3 Taskboard](https://github.com/orgs/CEN3031-Spring2023-ProjectGroup50/projects/7/views/1) for a kanban style view of work planned and accomplished.
@@ -682,10 +687,3 @@ http://localhost:5000/server/docs/index.html#  when running the server locally.
 
 Example trying out a sample API call:
 ![Sample API call](https://media.discordapp.net/attachments/1062897591240638631/1090425871535444008/image.png?width=828&height=645)
-
-## Links to sprint 3 video recordings
-
-* [Backend Video (Part 1)](insert here)
-  * 0:00 - XX
-* [Frontend Video (Part 2)](insert here)
-  * 0:00 - XX
