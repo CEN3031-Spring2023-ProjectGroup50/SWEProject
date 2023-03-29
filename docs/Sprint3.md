@@ -3,12 +3,12 @@
 
 | Contents of this document:
 | :---
+| [Demo video recordings](#links-to-sprint-3-video-recordings)
 | [Work completed in sprint 3](#work-completed-in-sprint-3)
 | [Frontend Unit tests](#frontend-unit-tests)
 | [Backend Unit tests](#backend-unit-tests)
 | [API documentation](#api-documentation)
 | [Swagger tool for viewing APIs](#swagger)
-| [Demo video recordings](#links-to-sprint-3-video-recordings)
 
 ## Links to sprint 3 video recordings
 
