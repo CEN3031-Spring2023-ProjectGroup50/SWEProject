@@ -646,7 +646,7 @@ Default, get count of all recipes
 ##### Sample Response
 ```
 {
-  "total": 13527
+  "total": 13528
 }
 ```
 
@@ -672,7 +672,7 @@ Get count of recipes filtered by keyword
 
 > HTTP
 >
-> GET http://localhost:5000/server/recipecount?uid=2
+> GET http://localhost:5000/server/recipecount?keyword=crock%20pot&uid=0
 >
 
 ##### Sample Response
