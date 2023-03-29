@@ -166,6 +166,7 @@ Backend unit tests are located in main_test.go
 | TestRecipeEdit                        | Response instructions are the same as supplied 
 | TestRecipeEdit                        | Response ingredient is the same as supplied  
 | TestRecipeEdit                        | Response image name is the same as supplied 
+| TestRecipeEdit                        | Response user ID is the same as supplied 
 | TestRecipeEdit                        | Return bad request for a recipe ID that does not exist
 | TestRecipeDelete                      | Able to delete recipes added in TestRecipePost            
 | TestRecipeDelete                      | Return bad request for a recipe ID that does not exist       
