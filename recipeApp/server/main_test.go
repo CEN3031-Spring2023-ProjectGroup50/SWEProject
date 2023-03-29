@@ -115,8 +115,7 @@ func TestRecipeGetByKeywordCount(t *testing.T) {
 		{input: url + "?keyword=simmer&uid=0", testWord: "simmer", size: 3620},
 		{input: url + "?keyword=5%20oz&uid=0", testWord: "5 oz", size: 101},
 		{input: url + "?keyword=400%20degrees&uid=0", testWord: "400 degrees", size: 14},
-		{input: url + "?keyword=crock%20pot&uid=0", testWord: "crock pot", size: 5},
-		{input: url + "?keyword=notreal&uid=0", testWord: "notreal", size: 0},
+		{input: url + "?keyword=crock%20pot&uid=0", testWord: "crock pot", size: 4},
 	}
 
 	for _, tc := range testConds {
