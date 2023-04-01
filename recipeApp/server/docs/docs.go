@@ -50,6 +50,36 @@ const docTemplate = `{
                 }
             }
         },
+        "/server/meals/add": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "post a mealplan item to the database",
+                "parameters": [
+                    {
+                        "description": "meal data",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.mealPostRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/server/recipecount": {
             "get": {
                 "consumes": [
@@ -136,7 +166,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "summary": "get a json object (recipes) of default 10 recipes at a time",
+                "summary": "Get a list of recipes in predefined amounts, searchable by keyword and ingredient.",
                 "parameters": [
                     {
                         "type": "integer",
@@ -287,6 +317,21 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "handler.mealPostRequest": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "recipeid": {
+                    "type": "integer"
+                },
+                "userid": {
+                    "description": "Mid      uint ` + "`" + `json:\"mid\"` + "`" + `",
+                    "type": "integer"
+                }
+            }
+        },
         "handler.recipeEditRequest": {
             "type": "object",
             "properties": {

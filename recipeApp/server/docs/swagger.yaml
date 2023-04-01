@@ -1,5 +1,15 @@
 basePath: /
 definitions:
+  handler.mealPostRequest:
+    properties:
+      date:
+        type: string
+      recipeid:
+        type: integer
+      userid:
+        description: Mid      uint `json:"mid"`
+        type: integer
+    type: object
   handler.recipeEditRequest:
     properties:
       image:
@@ -70,6 +80,25 @@ paths:
         "400":
           description: Bad Request
       summary: allows a user to login
+  /server/meals/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: meal data
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/handler.mealPostRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: post a mealplan item to the database
   /server/recipecount:
     get:
       consumes:
@@ -162,7 +191,8 @@ paths:
           description: OK
         "400":
           description: Bad Request
-      summary: get a json object (recipes) of default 10 recipes at a time
+      summary: Get a list of recipes in predefined amounts, searchable by keyword
+        and ingredient.
   /server/recipes/delete/{id}:
     delete:
       consumes:

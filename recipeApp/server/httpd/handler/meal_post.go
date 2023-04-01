@@ -18,6 +18,13 @@ type mealPostRequest struct {
 	Date     string `json:"date"`
 }
 
+// @Summary post a mealplan item to the database
+// @param requestBody body mealPostRequest	true "meal data"
+// @Accept json
+// @Produce json
+// @Success 200
+// @Failure 400
+// @Router /server/meals/add [post]
 func CreateMeal() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
