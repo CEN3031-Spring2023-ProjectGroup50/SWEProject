@@ -455,9 +455,7 @@ func TestCreateMeal(t *testing.T) {
 		models.Meal{Userid: 2,
 			Recipeid: 13526, Date: "2023-04-02", Mealtype: "Other"}, //User 2 can add another user's meal
 		models.Meal{Userid: 8,
-			Recipeid: 1, Date: "2023-04-01", Mealtype: "Dinner"}, //User 2 can add multiple meals under a category.
-		models.Meal{Userid: 8,
-			Recipeid: 1, Date: "2023-04-01", Mealtype: "Dinner"},
+			Recipeid: 1, Date: "2023-04-02", Mealtype: "Other"}, //User 2 can add multiple meals under a category.
 	)
 
 	var response models.Meal
@@ -471,6 +469,10 @@ func TestCreateMeal(t *testing.T) {
 		r.ServeHTTP(w, req)
 
 		json.Unmarshal(w.Body.Bytes(), &response)
+		t.Log(response.Mid)
+		t.Log(response.Recipeid)
+		t.Log(response.Date)
+		t.Log(response.Mealtype)
 		assert.Equal(t, http.StatusOK, w.Code, "Could not create meal "+strconv.Itoa(tc+1))
 		assert.Equal(t, testMeals[tc].Mealtype, response.Mealtype, "Mealtype was not correct")
 		assert.Equal(t, testMeals[tc].Userid, response.Userid, "Meal user ID was not the same as expected")
@@ -484,6 +486,7 @@ func TestCreateMeal(t *testing.T) {
 	var delete models.Meal
 	for i := 0; i < 5; i++ {
 		initialize.Db.Table("meals").Last(&delete).Delete(&delete)
+		delete = models.Meal{}
 	}
 	var badMeals []models.Meal
 	badMeals = append(badMeals,
@@ -501,12 +504,6 @@ func TestCreateMeal(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, w.Code, "Able to create malformed meal "+strconv.Itoa(val+1))
 		assert.Contains(t, w.Body.String(), "error", "Able to create malformed meal "+strconv.Itoa(val+1))
 	}
-
-	/*/ Teardown
-	for val := range meals {
-		t.Log(meals[val])
-		initialize.Db.Table("meals").Where("mid = ?", val).Delete(&models.Meal{})
-	}*/
 
 }
 

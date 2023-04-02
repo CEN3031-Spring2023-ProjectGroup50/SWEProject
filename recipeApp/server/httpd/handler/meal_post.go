@@ -74,7 +74,7 @@ func CreateMeal() gin.HandlerFunc {
 			}
 
 		}
-		var response mealPostRequest
+		var response models.Meal
 
 		initialize.Db.Table("meals").Where("mid = ?", meal.Mid).Find(&response)
 
