@@ -15,13 +15,13 @@ type favPostRequest struct {
 	Recipeid uint `json:"recipeid"`
 }
 
-// @Summary post a mealplan item to the database
-// @param requestBody body mealPostRequest	true "meal data"
+// @Summary add a favorite item to the database
+// @param requestBody body favPostRequest	true "favorite data"
 // @Accept json
 // @Produce json
 // @Success 200
 // @Failure 400
-// @Router /server/meals/add [post]
+// @Router /server/favorites/add [post]
 func AddFavorite() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
