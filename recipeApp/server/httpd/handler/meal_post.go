@@ -52,15 +52,18 @@ func CreateMeal() gin.HandlerFunc {
 		if result.Error != nil {
 			fmt.Print(result.Error)
 			if strings.Contains(result.Error.Error(), "meals_user") {
-				fmt.Print("User does not exist")
 				c.JSON(http.StatusBadRequest, gin.H{
 					"error": "User does not exist",
 				})
 				return
 			} else if strings.Contains(result.Error.Error(), "meals_recipe") {
-				fmt.Print("Recipe does not exist")
 				c.JSON(http.StatusBadRequest, gin.H{
 					"error": "Recipe does not exist",
+				})
+				return
+			} else if strings.Contains(result.Error.Error(), "meals_mealtype") {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"error": "Recipe does not have allowed type",
 				})
 				return
 			} else {

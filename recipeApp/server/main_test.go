@@ -470,7 +470,8 @@ func TestCreateMeal(t *testing.T) {
 		r.ServeHTTP(w, req)
 
 		json.Unmarshal(w.Body.Bytes(), &response)
-		assert.Equal(t, http.StatusOK, w.Code, "Could not create meal "+strconv.Itoa(tc))
+		assert.Equal(t, http.StatusOK, w.Code, "Could not create meal "+strconv.Itoa(tc+1))
+		assert.Equal(t, testMeals[tc].Mealtype, response.Mealtype, "Mealtype was not correct")
 		assert.Equal(t, testMeals[tc].Userid, response.Userid, "Meal user ID was not the same as expected")
 		assert.Equal(t, testMeals[tc].Recipeid, response.Recipeid, "Meal recipe ID was not the same as expected")
 		assert.Equal(t, testMeals[tc].Date, response.Date, "Meal date was not the same as expected")
@@ -483,6 +484,7 @@ func TestCreateMeal(t *testing.T) {
 	badMeals = append(badMeals,
 		models.Meal{Userid: 1111, Recipeid: 1, Date: "2023-03-31", Mealtype: "Breakfast"},
 		models.Meal{Userid: 1, Recipeid: 65577, Date: "2021-01-01", Mealtype: "Lunch"},
+		models.Meal{Userid: 2, Recipeid: 1, Date: "2023-04-02", Mealtype: "bOther"},
 	)
 	for val := range badMeals {
 		jsonValue, _ := json.Marshal(badMeals[val])
@@ -491,8 +493,8 @@ func TestCreateMeal(t *testing.T) {
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
 
-		assert.Equal(t, http.StatusBadRequest, w.Code, "Able to create malformed meal "+strconv.Itoa(val))
-		assert.Contains(t, w.Body.String(), "error", "Able to create malformed meal "+strconv.Itoa(val))
+		assert.Equal(t, http.StatusBadRequest, w.Code, "Able to create malformed meal "+strconv.Itoa(val+1))
+		assert.Contains(t, w.Body.String(), "error", "Able to create malformed meal "+strconv.Itoa(val+1))
 	}
 
 	// Teardown
