@@ -3,5 +3,5 @@ package initialize
 import "recipeApp/models"
 
 func SyncDB() {
-	Db.AutoMigrate(&models.User{}, &models.Recipe{}, &models.Meal{})
+	Db.AutoMigrate(&models.User{}, &models.Recipe{}, &models.Meal{}, &models.Favorite{})
 }

@@ -53,6 +53,7 @@ func main() {
 		server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 		server.GET("/recipecount", handler.RecipeGetCount())
 		server.POST("/meals/add", handler.CreateMeal())
+		server.POST("/favorites/add", handler.AddFavorite())
 	}
 
 	r.Run("0.0.0.0:5000") //Listen and serve
