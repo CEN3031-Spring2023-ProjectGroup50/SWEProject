@@ -446,10 +446,16 @@ func TestCreateMeal(t *testing.T) {
 	var testMeals []models.Meal
 
 	testMeals = append(testMeals,
-		models.Meal{Userid: 1, Recipeid: 1, Date: "2023-04-01"},     //Mallow can add a mallow meal
-		models.Meal{Userid: 2, Recipeid: 1, Date: "2023-04-02"},     //User 2 can add a mallow meal
-		models.Meal{Userid: 2, Recipeid: 13510, Date: "2023-04-02"}, //User 2 can add a user 2 meal
-		models.Meal{Userid: 2, Recipeid: 13526, Date: "2023-04-02"}, //User 2 can add another user's meal
+		models.Meal{Userid: 1,
+			Recipeid: 1, Date: "2023-04-01", Mealtype: "Breakfast"}, //Mallow can add a mallow meal
+		models.Meal{Userid: 2,
+			Recipeid: 1, Date: "2023-04-02", Mealtype: "Lunch"}, //User 2 can add a mallow meal
+		models.Meal{Userid: 2,
+			Recipeid: 13510, Date: "2023-04-02", Mealtype: "Dinner"}, //User 2 can add a user 2 meal
+		models.Meal{Userid: 2,
+			Recipeid: 13526, Date: "2023-04-02", Mealtype: "Other"}, //User 2 can add another user's meal
+		models.Meal{Userid: 2,
+			Recipeid: 1, Date: "2023-04-02", Mealtype: "Other"}, //User 2 can add multiple meals under a category.
 	)
 
 	var response models.Meal
@@ -475,8 +481,8 @@ func TestCreateMeal(t *testing.T) {
 	}
 	var badMeals []models.Meal
 	badMeals = append(badMeals,
-		models.Meal{Userid: 1111, Recipeid: 1, Date: "2023-03-31"},
-		models.Meal{Userid: 1, Recipeid: 65577, Date: "2021-01-01"},
+		models.Meal{Userid: 1111, Recipeid: 1, Date: "2023-03-31", Mealtype: "Breakfast"},
+		models.Meal{Userid: 1, Recipeid: 65577, Date: "2021-01-01", Mealtype: "Lunch"},
 	)
 	for val := range badMeals {
 		jsonValue, _ := json.Marshal(badMeals[val])

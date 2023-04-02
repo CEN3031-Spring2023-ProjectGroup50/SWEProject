@@ -11,11 +11,10 @@ import (
 )
 
 type mealPostRequest struct {
-
-	//Mid      uint `json:"mid"`
 	Userid   uint   `json:"userid"`
 	Recipeid uint   `json:"recipeid"`
 	Date     string `json:"date"`
+	Mealtype string `json:"mealtype"`
 }
 
 // @Summary post a mealplan item to the database
@@ -36,12 +35,12 @@ func CreateMeal() gin.HandlerFunc {
 			})
 			return
 		}
-		//parsedDate, _ := time.Parse("2006-01-02", requestBody.Date)
 		meal := models.Meal{
-			//Mid:      requestBody.Mid,
+
 			Userid:   requestBody.Userid,
 			Recipeid: requestBody.Recipeid,
 			Date:     requestBody.Date,
+			Mealtype: requestBody.Mealtype,
 		}
 		recipe := models.Recipe{
 			Rid: 0,

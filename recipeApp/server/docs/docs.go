@@ -323,11 +323,13 @@ const docTemplate = `{
                 "date": {
                     "type": "string"
                 },
+                "mealtype": {
+                    "type": "string"
+                },
                 "recipeid": {
                     "type": "integer"
                 },
                 "userid": {
-                    "description": "Mid      uint ` + "`" + `json:\"mid\"` + "`" + `",
                     "type": "integer"
                 }
             }
