@@ -454,12 +454,13 @@ func TestCreateMeal(t *testing.T) {
 			Recipeid: 13510, Date: "2023-04-02", Mealtype: "Dinner"}, //User 2 can add a user 2 meal
 		models.Meal{Userid: 2,
 			Recipeid: 13526, Date: "2023-04-02", Mealtype: "Other"}, //User 2 can add another user's meal
-		models.Meal{Userid: 2,
-			Recipeid: 1, Date: "2023-04-02", Mealtype: "Other"}, //User 2 can add multiple meals under a category.
+		models.Meal{Userid: 8,
+			Recipeid: 1, Date: "2023-04-01", Mealtype: "Dinner"}, //User 2 can add multiple meals under a category.
+		models.Meal{Userid: 8,
+			Recipeid: 1, Date: "2023-04-01", Mealtype: "Dinner"},
 	)
 
 	var response models.Meal
-	var meals []uint
 
 	// Test
 	for tc := range testMeals {
@@ -475,10 +476,14 @@ func TestCreateMeal(t *testing.T) {
 		assert.Equal(t, testMeals[tc].Userid, response.Userid, "Meal user ID was not the same as expected")
 		assert.Equal(t, testMeals[tc].Recipeid, response.Recipeid, "Meal recipe ID was not the same as expected")
 		assert.Equal(t, testMeals[tc].Date, response.Date, "Meal date was not the same as expected")
-		meals = append(meals, response.Mid)
+
 		if w.Code != http.StatusOK {
 			t.Errorf("Expected status code 200, got %v", w.Code)
 		}
+	}
+	var delete models.Meal
+	for i := 0; i < 5; i++ {
+		initialize.Db.Table("meals").Last(&delete).Delete(&delete)
 	}
 	var badMeals []models.Meal
 	badMeals = append(badMeals,
@@ -497,10 +502,11 @@ func TestCreateMeal(t *testing.T) {
 		assert.Contains(t, w.Body.String(), "error", "Able to create malformed meal "+strconv.Itoa(val+1))
 	}
 
-	// Teardown
-	for _, val := range meals {
+	/*/ Teardown
+	for val := range meals {
+		t.Log(meals[val])
 		initialize.Db.Table("meals").Where("mid = ?", val).Delete(&models.Meal{})
-	}
+	}*/
 
 }
 
