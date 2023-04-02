@@ -454,7 +454,7 @@ func TestCreateMeal(t *testing.T) {
 			Recipeid: 13510, Date: "2023-04-02", Mealtype: "Dinner"}, //User 2 can add a user 2 meal
 		models.Meal{Userid: 2,
 			Recipeid: 13526, Date: "2023-04-02", Mealtype: "Other"}, //User 2 can add another user's meal
-		models.Meal{Userid: 8,
+		models.Meal{Userid: 2,
 			Recipeid: 1, Date: "2023-04-02", Mealtype: "Other"}, //User 2 can add multiple meals under a category.
 	)
 
