@@ -80,6 +80,34 @@ const docTemplate = `{
                 }
             }
         },
+        "/server/meals/delete/{id}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "delete a meal",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of meal to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/server/recipecount": {
             "get": {
                 "consumes": [

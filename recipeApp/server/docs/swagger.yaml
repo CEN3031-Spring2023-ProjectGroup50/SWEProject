@@ -100,6 +100,24 @@ paths:
         "400":
           description: Bad Request
       summary: post a mealplan item to the database
+  /server/meals/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: id of meal to delete
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: delete a meal
   /server/recipecount:
     get:
       consumes:
