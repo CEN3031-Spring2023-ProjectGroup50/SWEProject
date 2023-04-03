@@ -1,5 +1,12 @@
 basePath: /
 definitions:
+  handler.favPostRequest:
+    properties:
+      recipeid:
+        type: integer
+      userid:
+        type: integer
+    type: object
   handler.mealPostRequest:
     properties:
       date:
@@ -62,6 +69,48 @@ info:
   title: Mallow Recipe Server API
   version: "1.0"
 paths:
+  /server/favorites/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: favorite data
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/handler.favPostRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: add a favorite item to the database
+  /server/favorites/delete/{uid}/{rid}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: user id of favorite to delete
+        in: path
+        name: uid
+        required: true
+        type: integer
+      - description: recipe id of favorite to delete
+        in: path
+        name: rid
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: delete a favorite item from the database
   /server/login:
     post:
       consumes:
