@@ -65,7 +65,7 @@
           <mat-menu #menu="matMenu" xPosition="before">
             <recipe-details [recipe]=backendItem></recipe-details>
             <edit-recipe *ngIf="backendItem.Uid == this.uid" [recipe]=backendItem></edit-recipe>
-            <button *ngIf="backendItem.Uid == this.uid" mat-menu-item>Delete recipe</button>
+            <app-recipe-delete-dialog *ngIf="backendItem.Uid == this.uid" [recipe]="backendItem"></app-recipe-delete-dialog>
           </mat-menu>
 
           <mat-card-subtitle class="recipe-card-subtitle">{{backendItem.Email}}</mat-card-subtitle>

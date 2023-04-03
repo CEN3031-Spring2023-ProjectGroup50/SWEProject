@@ -49,7 +49,7 @@ import { AuthService } from './shared/auth/auth.service';
 import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
 import { CanActivateViaAuthGuard } from './shared/auth/can-activate-via-auth.guard';
 import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
-import { RecipeDeleteDialogComponent } from './recipe-delete-dialog/recipe-delete-dialog.component';
+import { RecipeDeleteDialogComponent, RecipeDeleteDialogContent } from './recipe-delete-dialog/recipe-delete-dialog.component';
 
 
 @NgModule({
@@ -72,6 +72,7 @@ import { RecipeDeleteDialogComponent } from './recipe-delete-dialog/recipe-delet
         EditRecipeModule,
         EditRecipeContentModule,
         RecipeDeleteDialogComponent,
+        RecipeDeleteDialogContent
     ],
     providers: [
         AuthService,

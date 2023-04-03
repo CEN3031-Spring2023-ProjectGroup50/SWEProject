@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Inject } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
-import { RecipesComponent } from '../recipes/recipes.component';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../shared/auth/auth.service';
 
 
@@ -26,9 +25,7 @@ export class RecipeDeleteDialogComponent {
 
   @Input() recipe: IRecipeItem;
 
-  constructor(public dialog: MatDialog,
-    private httpClient: HttpClient,
-    private authService: AuthService) {}
+  constructor(public dialog: MatDialog) {}
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -40,20 +37,7 @@ export class RecipeDeleteDialogComponent {
     });
   }
 
-  async deleteRecipe() {
-    let RidString = this.recipe.Rid.toString();
-    let URL = `/server/recipes/delete/${RidString}`
 
-    await this.httpClient.put(URL, {Rid: this.recipe.Rid})
-      .subscribe({
-        next: data=>{
-          console.log('Recipe Deleted');
-        },
-        error: error=>{
-          console.log('Delete Failed')
-        }
-      })
-  }
 
 
 }
@@ -63,4 +47,26 @@ export class RecipeDeleteDialogComponent {
   templateUrl: 'recipe-delete-dialog-content.component.html'
 })
 
-export class RecipeDeleteDialogContent {}
+export class RecipeDeleteDialogContent {
+
+
+  constructor(@Inject(MAT_DIALOG_DATA) public recipe: IRecipeItem,
+      private httpClient: HttpClient,
+      private authService: AuthService){}
+
+
+  async deleteRecipe() {
+    let Rid = this.recipe.Rid;
+    let URL = `/server/recipes/delete/${Rid}`
+
+    await this.httpClient.delete(URL)
+      .subscribe({
+        next: data=>{
+          console.log('Recipe Deleted');
+        },
+        error: error=>{
+          console.log('Delete Failed')
+        }
+      })
+  }
+}
