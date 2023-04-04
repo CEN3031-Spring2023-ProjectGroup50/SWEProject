@@ -8,8 +8,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AddRecipeDialogComponent } from './add-recipe-dialog.component';
+import { By } from '@angular/platform-browser';
 
-describe('AddRecipeDialogComponent', () => {
+describe('AddRecipeDialogModule', () => {
   let component: AddRecipeDialogComponent;
   let fixture: ComponentFixture<AddRecipeDialogComponent>;
 
@@ -37,8 +38,23 @@ describe('AddRecipeDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should compile', () => {
     expect(component).toBeTruthy();
+  });
+  it('submitting form calls addRecipe()', () => {
+    let spy = spyOn(component, "addRecipe");
+    let form = fixture.debugElement.query(By.css('#form'));
+
+    form.triggerEventHandler('submit', null);
+    fixture.detectChanges();
+
+    expect(spy).toHaveBeenCalled();
+  });
+  it('clicking Cancel calls onNoClick() (closes the dialog)', () => {
+    let spy = spyOn(component, "onNoClick");
+    let btn = fixture.debugElement.query(By.css('#cancel'));
+    btn.nativeElement.click();
+    expect(spy).toHaveBeenCalled();
   });
 
 });
