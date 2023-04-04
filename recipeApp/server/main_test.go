@@ -507,6 +507,67 @@ func TestCreateMeal(t *testing.T) {
 
 }
 
+func TestCreateFavorite(t *testing.T) {
+
+	// Setup
+	r := SetUpRouter()
+	r.POST("/server/favorites/add", handler.CreateMeal())
+
+	var testFavs []models.Favorite
+
+	testFavs = append(testFavs,
+		models.Favorite{Userid: 1,
+			Recipeid: 1}, //Mallow can add a mallow recipe as favorite
+		models.Favorite{Userid: 2,
+			Recipeid: 1}, //User 2 can add a mallow recipe as favorite
+		models.Favorite{Userid: 2,
+			Recipeid: 13510}, //User 2 can add a user 2 recipe as favorite
+		models.Favorite{Userid: 2,
+			Recipeid: 13526}, //User 2 can add another user's recipe as favorite
+	)
+
+	var response models.Favorite
+
+	// Test
+	for tc := range testFavs {
+		jsonValue, _ := json.Marshal(testFavs[tc])
+		req, _ := http.NewRequest("POST", "/server/favorites/add", bytes.NewBuffer(jsonValue))
+		req.Header.Set("Content-Type", "application/json")
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		json.Unmarshal(w.Body.Bytes(), &response)
+		t.Log(response.Fid)
+		t.Log(response.Userid)
+		t.Log(response.Recipeid)
+		assert.Equal(t, http.StatusOK, w.Code, "Could not add favorite "+strconv.Itoa(tc+1))
+		assert.Equal(t, testFavs[tc].Userid, response.Userid, "Fav user ID was not the same as expected")
+		assert.Equal(t, testFavs[tc].Recipeid, response.Recipeid, "Fav recipe ID was not the same as expected")
+
+		if w.Code != http.StatusOK {
+			t.Errorf("Expected status code 200, got %v", w.Code)
+		}
+	}
+
+	var badFavs []models.Favorite
+	badFavs = append(badFavs,
+		models.Favorite{Userid: 1111, Recipeid: 1},  // User 1111 does not exist
+		models.Favorite{Userid: 1, Recipeid: 65577}, // Recipe 65577 does not exist
+		models.Favorite{Userid: 2, Recipeid: 13510}, // Favorite already exists
+	)
+	for val := range badFavs {
+		jsonValue, _ := json.Marshal(badFavs[val])
+		req, _ := http.NewRequest("POST", "/server/favorites/add", bytes.NewBuffer(jsonValue))
+		req.Header.Set("Content-Type", "application/json")
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code, "Able to create malformed fav "+strconv.Itoa(val+1))
+		assert.Contains(t, w.Body.String(), "error", "Able to create malformed fav "+strconv.Itoa(val+1))
+	}
+
+}
+
 func TestLogin(t *testing.T) {
 
 	r := SetUpRouter()
