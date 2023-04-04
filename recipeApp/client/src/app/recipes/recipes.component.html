@@ -46,7 +46,7 @@
     showFirstLastButtons="true">
   </mat-paginator>
 
-  <mat-grid-list *ngIf="backendItems?.length" cols="5" rowHeight="400px">
+  <mat-grid-list *ngIf="backendItems?.length" cols="4" rowHeight="400px">
     <mat-grid-tile *ngFor="let backendItem of backendItems">
       <mat-card class="dashboard-recipe">
         <mat-card-header>
@@ -75,7 +75,7 @@
         <img mat-card-image class="recipe-image" src="{{'data:image/jpeg;base64,' +backendItem.Image}}"
           alt="alt text example">
 
-        <mat-card-actions>
+        <!-- <mat-card-actions>
           <mat-form-field appearance="fill">
             <mat-label>Schedule meal</mat-label>
             <input matInput [matDatepicker]="picker">
@@ -83,12 +83,18 @@
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-        </mat-card-actions>
+        </mat-card-actions> -->
 
         <mat-card-actions>
-          <button mat-button>SAVE</button>
-        </mat-card-actions>
+          
+          <button mat-raised-button>Add to meal plan</button>
 
+          <!-- Right now this toggles all recipe cards. I will eventually set the icon in TS based on favorites logged in backend -->
+            <button mat-icon-button color="{{iconColor}}" (click)="toggleIcon()">
+              <mat-icon>{{icon}}</mat-icon>
+            </button>
+
+        </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
