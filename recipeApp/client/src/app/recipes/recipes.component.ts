@@ -58,6 +58,8 @@ export class RecipesComponent {
   keywordSearchTerm = "";
   ingredientSearchTerm = "";
 
+  icon = "favorite_border"
+  iconColor = "basic"
 
   @ViewChild(MatPaginator, {static:false})
   paginator!: MatPaginator;
@@ -133,6 +135,15 @@ async loadItems() {
 
 }
 
+toggleIcon() {
+  if (this.icon === 'favorite_border') {
+    this.icon = 'favorite';
+    this.iconColor = 'warn';
+  } else {
+    this.icon = 'favorite_border'
+    this.iconColor = 'basic';
+  }
+}
 
 
 pageChanged(event: PageEvent) {

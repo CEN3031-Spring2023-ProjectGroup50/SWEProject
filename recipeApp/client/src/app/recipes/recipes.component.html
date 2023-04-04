@@ -86,15 +86,15 @@
         </mat-card-actions> -->
 
         <mat-card-actions>
+          
           <button mat-raised-button>Add to meal plan</button>
-          <button mat-icon-button aria-label="Example icon button with a heart icon">
-            <mat-icon>favorite_border</mat-icon>
-          </button>
-          <!-- <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon">
-            <mat-icon>favorite</mat-icon>
-          </button> -->
-        </mat-card-actions>
 
+          <!-- Right now this toggles all recipe cards. I will eventually set the icon in TS based on favorites logged in backend -->
+            <button mat-icon-button color="{{iconColor}}" (click)="toggleIcon()">
+              <mat-icon>{{icon}}</mat-icon>
+            </button>
+
+        </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
