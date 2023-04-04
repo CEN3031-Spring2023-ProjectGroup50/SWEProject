@@ -1,8 +1,9 @@
+import { MbscModule } from '@mobiscroll/angular';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms'
-import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http'
+import {HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http'
 import { ReactiveFormsModule } from '@angular/forms'
 import {MatInputModule} from '@angular/material/input'
 import {MatToolbarModule} from '@angular/material/toolbar'
@@ -50,7 +51,6 @@ import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
 import { CanActivateViaAuthGuard } from './shared/auth/can-activate-via-auth.guard';
 import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
 
-
 @NgModule({
     declarations: [
         AppComponent,
@@ -86,7 +86,8 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         }
     ],
     bootstrap: [AppComponent],
-    imports: [
+    imports: [ 
+    MbscModule,
         BrowserModule,
         FormsModule,
         HttpClientModule,
@@ -115,7 +116,9 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         MatTableModule,
         MatSortModule,
         MatDialogModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MbscModule,
+        HttpClientJsonpModule
     ],
     exports: [RecipesComponent,],
 })

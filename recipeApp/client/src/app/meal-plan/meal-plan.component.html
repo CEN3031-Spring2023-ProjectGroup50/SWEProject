@@ -1,4 +1,19 @@
-<div class="example-header">
+
+<mbsc-eventcalendar 
+  [data]="myEvents" 
+  [view]="{ calendar:
+    {
+        labels: 'all',
+        type: 'week'
+    }
+  }" 
+  [eventOrder]="orderMyEvents">
+</mbsc-eventcalendar>
+
+
+<!-- TABLE STARTS HERE -->
+
+<!-- <div class="example-header">
     <mat-form-field>
       <input matInput (keyup)="applyFilter($any($event.target).value)" placeholder="Filter">
     </mat-form-field>
@@ -8,25 +23,21 @@
   
     <mat-table [dataSource]="dataSource" matSort>
   
-      <!-- ID Column -->
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
       </ng-container>
   
-      <!-- Progress Column -->
       <ng-container matColumnDef="progress">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.progress}}% </mat-cell>
       </ng-container>
   
-      <!-- Name Column -->
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
       </ng-container>
   
-      <!-- Color Column -->
       <ng-container matColumnDef="color">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Color </mat-header-cell>
         <mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </mat-cell>
@@ -38,5 +49,6 @@
     </mat-table>
   
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-  </div>
+  </div> -->
   
+  <!-- TABLE ENDS HERE -->
