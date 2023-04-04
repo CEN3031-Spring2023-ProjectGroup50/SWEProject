@@ -36,10 +36,6 @@ export class RecipeDeleteDialogComponent {
       }
     });
   }
-
-
-
-
 }
 
 @Component({

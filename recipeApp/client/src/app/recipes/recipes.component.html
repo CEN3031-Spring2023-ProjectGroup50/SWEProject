@@ -24,17 +24,17 @@
         </mat-form-field>
       </td>
       <td>
-        <button mat-icon-button color="primary" (click)="setFilters(keywordSearchTerm, ingredientSearchTerm)">
+        <button mat-icon-button color="primary" (click)="setFilters(keywordSearchTerm, ingredientSearchTerm)" id="search">
           <mat-icon>search</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="clearFilters()">
+        <button mat-icon-button color="primary" (click)="clearFilters()" id="clear">
           <mat-icon>clear</mat-icon>
         </button>
       </td>
       <td>
         <mat-button-toggle-group name="filter" aria-label="Filter">
-          <mat-button-toggle (change)="onAll($event.value)" value="all">All Recipes</mat-button-toggle>
-          <mat-button-toggle (change)="onUser($event.value)" value="user">My Recipes</mat-button-toggle>
+          <mat-button-toggle (change)="onAll($event.value)" value="all" id="allFilter">All Recipes</mat-button-toggle>
+          <mat-button-toggle (change)="onUser($event.value)" value="user" id="userFilter">My Recipes</mat-button-toggle>
         </mat-button-toggle-group>
         <button mat-raised-button (click)="openDialog()" color="primary" id="add">Add Recipe</button>
       </td>
