@@ -1,73 +1,51 @@
-# Sprint 3
-2/28/2023 - 3/29/2023 (4 weeks)
+# Sprint 4
+3/28/2023 - 4/19/2023 (3 weeks)
 
 | Contents of this document:
 | :---
-| [Demo video recordings](#links-to-sprint-3-video-recordings)
-| [Work completed in sprint 3](#work-completed-in-sprint-3)
+| [Demo video recordings](#links-to-sprint-4-video-recordings)
+| [Work completed in sprint 4](#work-completed-in-sprint-4)
 | [Frontend Unit tests](#frontend-unit-tests)
 | [Backend Unit tests](#backend-unit-tests)
 | [API documentation](#api-documentation)
 | [Swagger tool for viewing APIs](#swagger)
 
-## Links to sprint 3 video recordings
+## Links to sprint 4 video recordings
 
-* [Demo Pt1: Application Walk-Through](https://drive.google.com/file/d/1INluQAmsXQmAUYd5Uia3h_o3GjAqM75Q/view?usp=sharing)
-* [Demo Pt2: Frontend Unit Tests, Backend Unit Tests, and Backend Implementation](https://drive.google.com/file/d/1P2yYfxSpW4Q9fGW7OmGTws4O3bgHnsX4/view?usp=sharing)
+* [Demo]()
 
-## Work completed in sprint 3
+## Work completed in sprint 4
 
-See the [Sprint 3 Taskboard](https://github.com/orgs/CEN3031-Spring2023-ProjectGroup50/projects/7/views/1) for a kanban style view of work planned and accomplished.
+See the [Sprint 4 Taskboard](https://github.com/orgs/CEN3031-Spring2023-ProjectGroup50/projects/9) for a kanban style view of work planned and accomplished.
 
-### User stories planned for Sprint 3
-As a group, we reviewed the incomplete user stories from Sprint 2 as well as the backlog of user stories, and defined the goal for Sprint 3:
+### User stories planned for Sprint 4
 
-#### Closed:
+At the end of Sprint 3, users could almost completely manage recipes in the application. They were able to view all recipes, click to view more details, 
+search and filter using various criteria, add/edit recipes, and navigate easily throughout the UI. Next we needed to incorporate deletion of recipes 
+and focus on the other primary purposes of our application: meal planning and grocery list generation. 
 
-1. [4] As a user, I can click on a recipe card (or a recipe in the list) to view a side pane pop-up blade with details about the recipe including ingredients and directions. #19
-2. [5] As a user, I can add a new recipe to the database that includes an ingredients list and directions, so that I can access it later.#9
-3. [6] As a user, I can edit previously created recipes so that I can make updates or fix mistakes.#44
-4. [16] As a user, when I log in, I want the app to track my personal data with a secure token so that my experience can be more personalized. #32
-5. As a user I want to search for my recipes so that I can easily find everything I created. #120
-6. As a user I want to search for my recipes by keyword or ingredient so that I can easily find what I am looking for #121
+As a group, we reviewed the incomplete user stories from Sprint 3 as well as the backlog of user stories, and defined the goal for Sprint 4. 
+Because our time was limited with this being the last sprint of the semester, our primary goal was to establish a minimal viable product (MVP) for an end-to-end application. 
+With any remaining time, we hoped to enhance different elements of the app with nice-to-have features which may not be necessary for baseline functionality. 
+We came up with the following plan.
 
-#### Open:
-
+MVP
 1. [7] As a user, I can delete previously created recipes so that I can keep my list up to date. #45
-2. [18] As a user, I receive errors that help guide me so I know what to do next#65
-3. [19] As a user, I want to upload a picture to accompany my recipe.#91
-4. [9] As a user, I would like to search the recipe list based on type of cuisine so I can more easily find what I am looking for.#10
-5. [11] As a user, I can search the recipe list based on type of cuisine so I can more easily find what I am looking for.#47 (duplicate)
-6. [10] As a user, I would like to search the recipe list based on meal type so I can more easily find what I am looking for. #27
-7. [6] Modify user registration to assign a uid upon user creation. #92
+2. [12] As a user, I can add a recipe from the list to my meal plan so I can set up my schedule for the week.#48
+3. [13] As a user, I can view the current week's planned recipes in a list so I know what I will be cooking.#49
+4. [14] As a user, I can navigate between each week’s meal plan views so I can look forward in time.#30
+5. [15] As a user, I can click to generate a static list of groceries based on recipes in the schedule for specified days or weeks up to 1 month, so I know what I need from the grocery store.#31
+6. [8] As a user, I would like to be able to save recipes so I can easily find and access them later. #46
 
-### Tasks planned for Sprint 3
+Nice-to-have
+1. [18] As a user, I receive errors that help guide me so I know what to do next#65
+2. [19] As a user, I want to upload a picture to accompany my recipe. 
+3. [10] As a user, I would like to search the recipe list based on meal type so I can more easily find what I am looking for. #27
+4. [9] As a user, I would like to search the recipe list based on type of cuisine so I can more easily find what I am looking for.
 
-#### Closed:
+### Tasks completed for Sprint 4
 
-1. [5] Establish user-recipe backend relationship database design#81
-2. [17] Add refresh tokens to update expired access tokens#88
-5. [3] Add pagination component to recipe dashboard#59
-6. Pagination not working for search results#108
-7. [5] API design for edit recipe experience#83
-8. [4] FE view recipe details experience#68
-9. Edit/delete recipe options are visible on recipes created by other users#109
-10. [17] Test authentication#57
-11. [3] Add pagination component to recipe dashboard#59
-12. Add a spinner to the browse recipe experience to ease user experience.#93
-13. Max characters per title in card and change column size#97
-14. Fix welcome screen so only toolbar, menu, and page contents are shown after login#86
-15. [7] Add a toggle button to filter recipes to list those created by the user.#95
-16. Fix the spin into oblivion when clicking on "User Recipes" with no recipes returned#113
-17. Frontend create recipe experience#82
-18. [4] FE view recipe details experience#68
-19. Shore up prior testing efforts on completed code.#84
-
-#### To Do & In-Progress:
-
-1. 1. [3] Investigate BE & FE image strategy (stretch goal)#62
-2. [18] Investigate error handling in FE so we have a better idea of what errors to surface in the backend (stretch goal)#64
-3. Find existing library for image upload for create recipe experience#102
+1. [Insert here]
 
 ## Frontend Unit tests
 Frontend Angular unit tests are located in files ending in `.spec.ts`. Each component and service has its own unit test file.
@@ -127,11 +105,20 @@ Frontend Angular unit tests are located in files ending in `.spec.ts`. Each comp
 
 When tests run, the built-in Angular testing platform (run `ng test`, or `npm test` from recipeApp/client) will generate a screen which looks like this:
 
-![Karma Jasmine unit test results snapshot 1](https://cdn.discordapp.com/attachments/1062897591240638631/1090420789976768522/image.png)
-![Karma Jasmine unit test results snapshot 2](https://cdn.discordapp.com/attachments/1062897591240638631/1090420790257795183/image.png)
-![Karma Jasmine unit test results snapshot 3](https://cdn.discordapp.com/attachments/1062897591240638631/1090420790505263164/image.png)
+![Karma Jasmine unit test results snapshot 1]()
 
-> Note: We have prioritized angular (Karma/Jasmine) unit tests in this sprint, so there are no changes to Cypress test coverage since Sprint 2.
+### Cypress tests
+Frontend Cypress tests are located in files ending in `.cy.ts`. Each component will have its own Cypress test file.
+
+| Component test file             | Test Name                                                 | Test Description
+| :---                            |  :---                                                     | :--
+| menu-navigation.component.cy.ts | Return status OK (Single recipe returned)                 |
+| stepper.component.cy.ts         | Return status OK (Single recipe returned)                 |
+| registerform.component.spec.ts  | Return status OK (Single recipe returned)                 |
+
+When a test is successful, the Cypress testing platform (run `npx cypress open`) will generate a screen which looks like this:
+
+![Cypress test results]()
 
 ## Backend Unit tests
 Backend unit tests are located in main_test.go
