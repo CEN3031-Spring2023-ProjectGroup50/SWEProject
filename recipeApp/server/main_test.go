@@ -511,7 +511,7 @@ func TestCreateFavorite(t *testing.T) {
 
 	// Setup
 	r := SetUpRouter()
-	r.POST("/server/favorites/add", handler.CreateMeal())
+	r.POST("/server/favorites/add", handler.AddFavorite())
 
 	var testFavs []models.Favorite
 
@@ -566,6 +566,35 @@ func TestCreateFavorite(t *testing.T) {
 		assert.Contains(t, w.Body.String(), "error", "Able to create malformed fav "+strconv.Itoa(val+1))
 	}
 
+}
+
+func TestDeleteFavorite(t *testing.T) {
+
+	// Setup
+	r := SetUpRouter()
+	r.DELETE("/server/favorites/delete/:uid/:rid", handler.DeleteFavorite())
+
+	for i := 0; i < 4; i++ {
+		var last models.Favorite
+		initialize.Db.Table("favorites").Last(&last)
+		lastUid := last.Userid
+		lastRid := last.Recipeid
+		uid := strconv.FormatInt(int64(lastUid), 10)
+		rid := strconv.FormatInt(int64(lastRid), 10)
+
+		req, _ := http.NewRequest("DELETE", "/server/favorites/delete/"+uid+"/"+rid, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code, "Could not delete favorite "+strconv.Itoa(i+1))
+	}
+
+	bogus := "55000"
+	req, _ := http.NewRequest("DELETE", "/server/favorites/delete/"+bogus+"/"+bogus, nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Deleted bogus favorite")
 }
 
 func TestLogin(t *testing.T) {
