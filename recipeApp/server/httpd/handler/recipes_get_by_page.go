@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary get a json object (recipes) of default 10 recipes at a time
+// @Summary Get a list of recipes in predefined amounts, searchable by keyword and ingredient.
 // @Accept json
 // @Produce json
 // @Param page	query	int	false	"specify page number"	default(1)
