@@ -434,7 +434,7 @@ func TestRecipeDelete(t *testing.T) {
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusBadRequest, w.Code, "Could not delete recipe "+bogus)
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Deleted bogus recipe "+bogus)
 }
 
 func TestCreateMeal(t *testing.T) {
@@ -483,11 +483,7 @@ func TestCreateMeal(t *testing.T) {
 			t.Errorf("Expected status code 200, got %v", w.Code)
 		}
 	}
-	var delete models.Meal
-	for i := 0; i < 5; i++ {
-		initialize.Db.Table("meals").Last(&delete).Delete(&delete)
-		delete = models.Meal{}
-	}
+
 	var badMeals []models.Meal
 	badMeals = append(badMeals,
 		models.Meal{Userid: 1111, Recipeid: 1, Date: "2023-03-31", Mealtype: "Breakfast"},
@@ -505,6 +501,37 @@ func TestCreateMeal(t *testing.T) {
 		assert.Contains(t, w.Body.String(), "error", "Able to create malformed meal "+strconv.Itoa(val+1))
 	}
 
+}
+
+func TestDeleteMeal(t *testing.T) {
+	r := SetUpRouter()
+	r.DELETE("/server/meals/delete/:id", handler.DeleteMeal())
+
+	var last models.Meal
+	initialize.Db.Table("meals").Last(&last)
+	lastNum := last.Mid
+
+	rids := []string{strconv.FormatInt(int64(lastNum-4), 10),
+		strconv.FormatInt(int64(lastNum-3), 10),
+		strconv.FormatInt(int64(lastNum-2), 10),
+		strconv.FormatInt(int64(lastNum-1), 10),
+		strconv.FormatInt(int64(lastNum), 10)}
+
+	for _, val := range rids {
+		req, _ := http.NewRequest("DELETE", "/server/meals/delete/"+val, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code, "Could not delete meal "+val)
+
+	}
+
+	bogus := "55000"
+	req, _ := http.NewRequest("DELETE", "/server/meals/delete/"+bogus, nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Deleted bogus meal "+bogus)
 }
 
 func TestCreateFavorite(t *testing.T) {
