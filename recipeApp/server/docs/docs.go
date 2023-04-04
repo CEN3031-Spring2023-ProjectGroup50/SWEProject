@@ -20,6 +20,71 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/server/favorites/add": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "add a favorite item to the database",
+                "parameters": [
+                    {
+                        "description": "favorite data",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.favPostRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/server/favorites/delete/{uid}/{rid}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "delete a favorite item from the database",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "user id of favorite to delete",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "recipe id of favorite to delete",
+                        "name": "rid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/server/login": {
             "post": {
                 "consumes": [
@@ -38,6 +103,64 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/handler.userBody"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/server/meals/add": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "post a mealplan item to the database",
+                "parameters": [
+                    {
+                        "description": "meal data",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.mealPostRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/server/meals/delete/{id}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "delete a meal",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of meal to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -136,7 +259,7 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
-                "summary": "get a json object (recipes) of default 10 recipes at a time",
+                "summary": "Get a list of recipes in predefined amounts, searchable by keyword and ingredient.",
                 "parameters": [
                     {
                         "type": "integer",
@@ -287,6 +410,34 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "handler.favPostRequest": {
+            "type": "object",
+            "properties": {
+                "recipeid": {
+                    "type": "integer"
+                },
+                "userid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handler.mealPostRequest": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "mealtype": {
+                    "type": "string"
+                },
+                "recipeid": {
+                    "type": "integer"
+                },
+                "userid": {
+                    "type": "integer"
+                }
+            }
+        },
         "handler.recipeEditRequest": {
             "type": "object",
             "properties": {

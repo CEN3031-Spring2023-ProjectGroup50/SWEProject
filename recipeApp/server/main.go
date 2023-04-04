@@ -52,6 +52,10 @@ func main() {
 		server.DELETE("/recipes/delete/:id", handler.DeleteRecipe())
 		server.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 		server.GET("/recipecount", handler.RecipeGetCount())
+		server.POST("/meals/add", handler.CreateMeal())
+		server.DELETE("/meals/delete/:id", handler.DeleteMeal())
+		server.POST("/favorites/add", handler.AddFavorite())
+		server.DELETE(("favorites/delete/:uid/:rid"), handler.DeleteFavorite())
 	}
 
 	r.Run("0.0.0.0:5000") //Listen and serve
