@@ -1,18 +1,16 @@
 <mat-card><mat-card-content>Register your Account Here</mat-card-content></mat-card>
 <div class="example-container">
     <div class="form-container">
-      <form [formGroup]="registerForm" (submit)="addLogin()">
-        <mat-form-field class="form-field" appearance="outline">
-          <mat-label> E-mail
-          </mat-label>
+      <form [formGroup]="registerForm" (submit)="addLogin()" id="form">
+        <mat-form-field class="form-field" appearance="outline" id="email">
+          <mat-label id="emailLabel">E-mail</mat-label>
           <input matInput formControlName="email" required>
         </mat-form-field>
-        <mat-form-field class="form-field" appearance="outline">
-          <mat-label> Password
-          </mat-label>
+        <mat-form-field class="form-field" appearance="outline" id="pass">
+          <mat-label id="passLabel">Password</mat-label>
           <input matInput formControlName="password" type="password" required>
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Register</button>
+        <button mat-raised-button color="primary" type="submit" id="submit">Register</button>
       </form>
     </div>
   </div>
