@@ -59,7 +59,6 @@ describe('AppHeaderComponent', () => {
     if (compiled) {
       expect(compiled.querySelector('#titleLoggedIn').innerHTML).toBe(component.titleLoggedIn);
     }
-
   }));
 
 
