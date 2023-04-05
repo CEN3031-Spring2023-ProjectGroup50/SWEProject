@@ -49,6 +49,7 @@ import { AuthService } from './shared/auth/auth.service';
 import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
 import { CanActivateViaAuthGuard } from './shared/auth/can-activate-via-auth.guard';
 import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
+import { AddMealplanDialogComponent } from './add-mealplan-dialog/add-mealplan-dialog.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
         RecipeDetailsContentModule,
         EditRecipeModule,
         EditRecipeContentModule,
+        AddMealplanDialogComponent,
     ],
     providers: [
         AuthService,
