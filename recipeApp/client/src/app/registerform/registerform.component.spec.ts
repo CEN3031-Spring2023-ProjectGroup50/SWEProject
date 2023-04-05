@@ -113,7 +113,6 @@ describe('registerForm', () => {
     fixture.detectChanges();
     expect(textTest.querySelector('#emailLabel').textContent).toBe('E-mail');
     expect(textTest.querySelector('#passLabel').textContent).toBe('Password');
-
   });
 
   it('clicking "Register" submits the registration form and calls addLogin()', () => {

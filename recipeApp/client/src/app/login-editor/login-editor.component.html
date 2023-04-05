@@ -4,12 +4,12 @@
 <div class="example-container">
     <div class="form-container">
       <form [formGroup]="loginForm" (submit)="addLogin()" id="loginForm">
-        <mat-form-field class="form-field" appearance="outline">
+        <mat-form-field class="form-field" appearance="outline" id="email">
           <mat-label> E-mail
           </mat-label>
           <input matInput formControlName="email" required>
         </mat-form-field>
-        <mat-form-field class="form-field" appearance="outline">
+        <mat-form-field class="form-field" appearance="outline" id="pass">
           <mat-label> Password
           </mat-label>
           <input matInput formControlName="password" type="password" required>
