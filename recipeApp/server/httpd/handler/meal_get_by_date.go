@@ -9,6 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get a list of meals in predefined date range.
+// @Accept json
+// @Produce json
+// @Param date	query	string	true	"specify start date"	default(2023-04-01)
+// @Param uid	query	int	true "specify a user id"	default(1)
+// @Success 200
+// @Failure 400
+// @Router /server/meals/bydate [get]
 func MealGetByDate() gin.HandlerFunc {
 
 	type userMeals struct {

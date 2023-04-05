@@ -145,6 +145,43 @@ const docTemplate = `{
                 }
             }
         },
+        "/server/meals/bydate": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a list of meals in predefined date range.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "2023-04-01",
+                        "description": "specify start date",
+                        "name": "date",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "specify a user id",
+                        "name": "uid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/server/meals/delete/{id}": {
             "delete": {
                 "consumes": [
