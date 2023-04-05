@@ -3,7 +3,7 @@
 
 <div class="example-container">
     <div class="form-container">
-      <form [formGroup]="loginForm" (submit)="addLogin()">
+      <form [formGroup]="loginForm" (submit)="addLogin()" id="loginForm">
         <mat-form-field class="form-field" appearance="outline">
           <mat-label> E-mail
           </mat-label>
@@ -14,7 +14,7 @@
           </mat-label>
           <input matInput formControlName="password" type="password" required>
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Log In</button>
+        <button mat-raised-button color="primary" type="submit" id="loginBtn">Log In</button>
       </form>
     </div>
   </div>
