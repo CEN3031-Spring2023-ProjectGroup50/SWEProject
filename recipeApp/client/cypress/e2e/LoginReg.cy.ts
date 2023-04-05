@@ -1,4 +1,9 @@
-describe('Initial Test', () => {
+/* THESE TESTS REQUIRE THAT BOTH THE SERVER AND CLIENT ARE UP AND RUNNING
+    RUN "MAKE" IN THE SERVER FOLDER
+    RUN "NPM RUN START" IN THE CLIENT FOLDER
+    THEN RUN "NPX CYPRESS OPEN" IN THE CLIENT FOLDER TO BEGIN TESTS */
+
+describe('Login Page', () => {
   it('visits the site', () => {
     cy.visit('http://localhost:4200/')
   })
