@@ -1,1 +1,31 @@
-<p>add-mealplan-dialog works!</p>
+
+<h1 mat-dialog-title class="center">Add to Meal Plan</h1>
+<mat-dialog-content><b>When do you want to make this item?</b></mat-dialog-content>
+<form [formGroup]="recipeForm" (submit)="addRecipe()">
+  <mat-form-field class="form-field" appearance = "fill" [style.width.px]="650">
+    <mat-label>Schedule meal</mat-label>
+    <input matInput [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field><br />
+
+  <mat-dialog-content><b>What meal will this be a part of?</b></mat-dialog-content>
+  <mat-form-field class="form-field" appearance ="fill" [style.width.px]="650">
+    <mat-label>Choose an option</mat-label>
+    <mat-select>
+    <mat-option *ngFor="let mealtype of mealtypes" [value]="mealtype">
+      {{mealtype}}
+    </mat-option>
+  </mat-select>
+  </mat-form-field><br />
+
+
+<mat-dialog-actions>
+<div class ="bottom">
+ <button mat-raised-button [mat-dialog-close] type="submit" color="primary">Save</button>
+ <button mat-flat-button [mat-dialog-close]="" (click)="onNoClick()">Cancel</button>
+</div>
+</mat-dialog-actions>
+
+</form>

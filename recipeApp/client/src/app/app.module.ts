@@ -24,6 +24,7 @@ import { CommonModule } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
@@ -116,6 +117,7 @@ import { AddMealplanDialogComponent } from './add-mealplan-dialog/add-mealplan-d
         RouterModule,
         MatTableModule,
         MatSortModule,
+        MatSelectModule,
         MatDialogModule,
         MatTooltipModule
     ],
