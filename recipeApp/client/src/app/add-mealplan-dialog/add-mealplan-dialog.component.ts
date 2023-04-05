@@ -52,8 +52,7 @@ export class AddMealplanDialogComponent {
 })
 export class AddMealplanContentComponent {
   mealForm!: FormGroup;
-  @ViewChild(RecipesComponent) recipes: any;
-  @ViewChild(RecipesComponent) accountData: any;
+  accountData: string;
 
   mealtypes: string[] = ['Breakfast', 'Lunch', 'Dinner', 'Other'];
 
