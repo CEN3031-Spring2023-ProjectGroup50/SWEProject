@@ -1,25 +1,64 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, Inject, ViewChild } from '@angular/core';
 import { FormGroup,FormControl } from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatSelect } from '@angular/material/select';
 import { RecipesComponent } from '../recipes/recipes.component';
 import { AuthService } from '../shared/auth/auth.service';
 
+interface IRecipeItem {
+  Rid: number,
+  Title: string,
+  Ingredients: string,
+  Instructions: string,
+  Image_name: string,
+  Uid: number,
+  Email: string,
+  Image: Uint8Array[],
+
+}
+
 @Component({
-  selector: 'app-add-mealplan-dialog',
+  selector: 'add-mealplan-dialog',
   templateUrl: './add-mealplan-dialog.component.html',
-  styleUrls: ['./add-mealplan-dialog.component.css']
+  //styleUrls: ['./add-mealplan-dialog.component.css']
 })
 export class AddMealplanDialogComponent {
-  recipeForm!: FormGroup;
+  @Input() recipe: IRecipeItem;
+
+  constructor(public dialog: MatDialog) {}
+
+  openDialog() {
+
+    const dialogRef = this.dialog.open(AddMealplanContentComponent, {
+      data: {
+        Rid: this.recipe.Rid,
+        Title: this.recipe.Title,
+      }
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+}
+
+@Component({
+  selector: 'add-mealplan-dialog-content',
+  templateUrl: './add-mealplan-dialog-content.component.html',
+  styleUrls: ['./add-mealplan-dialog.component.css']
+})
+export class AddMealplanContentComponent {
+  mealForm!: FormGroup;
   @ViewChild(RecipesComponent) recipes: any;
   @ViewChild(RecipesComponent) accountData: any;
 
   mealtypes: string[] = ['Breakfast', 'Lunch', 'Dinner', 'Other'];
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public recipe: IRecipeItem,
     public dialogRef: MatDialogRef<AddMealplanDialogComponent>,
     private httpClient: HttpClient,
     private authService: AuthService
@@ -30,12 +69,11 @@ export class AddMealplanDialogComponent {
   }
 
   ngOnInit() {
-    this.recipeForm = new FormGroup({
-      title: new FormControl(''),
-      ingredients: new FormControl(''),
-      instructions: new FormControl(''),
+    this.mealForm = new FormGroup({
+      date: new FormControl(''),
+      mealtype: new FormControl(''),
     })
-    this.recipeForm.valueChanges.subscribe();
+    this.mealForm.valueChanges.subscribe();
     this.authService.getAccount().subscribe(
       (res: any) => {
           this.accountData = res.toString();
@@ -45,15 +83,15 @@ export class AddMealplanDialogComponent {
       })
   }
 
-  async addRecipe() {
-    await this.httpClient.post('/server/recipes/add', {
+  async addToMeal() {
+    await this.httpClient.post('/server/meals/add', {
       image_name: "test_image_1",
       //ingredients: formatIngredientsForAPI(this.recipeForm.value['ingredients']),
       //instructions: formatInstructionsForAPI(this.recipeForm.value['instructions']),
-      title: this.recipeForm.value['title'],
+      title: this.mealForm.value['title'],
       uid: parseInt(this.accountData)
     }).subscribe((post)=>{
-      console.log("Recipe Added for User", this.accountData);
+      console.log("Recipe Added To Meal For User", this.accountData);
     });
   }
 }
