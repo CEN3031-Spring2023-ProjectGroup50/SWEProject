@@ -85,11 +85,10 @@ export class AddMealplanContentComponent {
 
   async addToMeal() {
     await this.httpClient.post('/server/meals/add', {
-      image_name: "test_image_1",
-      //ingredients: formatIngredientsForAPI(this.recipeForm.value['ingredients']),
-      //instructions: formatInstructionsForAPI(this.recipeForm.value['instructions']),
-      title: this.mealForm.value['title'],
-      uid: parseInt(this.accountData)
+      userid: parseInt(this.accountData),
+      recipeid: this.recipe.Rid,
+      date: this.mealForm.value['date'],
+      mealtype: this.mealForm.value['mealtype']
     }).subscribe((post)=>{
       console.log("Recipe Added To Meal For User", this.accountData);
     });

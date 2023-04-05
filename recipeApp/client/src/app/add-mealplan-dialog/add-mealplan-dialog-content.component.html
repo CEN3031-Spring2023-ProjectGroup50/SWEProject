@@ -4,7 +4,7 @@
 <form [formGroup]="mealForm" (submit)="addToMeal()">
   <mat-form-field class="form-field" appearance = "fill" [style.width.px]="650">
     <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker">
+    <input matInput [matDatepicker]="picker" formControlName="date">
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
@@ -13,7 +13,7 @@
   <mat-dialog-content><b>What meal will this be a part of?</b></mat-dialog-content>
   <mat-form-field class="form-field" appearance ="fill" [style.width.px]="650">
     <mat-label>Choose an option</mat-label>
-    <mat-select>
+    <mat-select formControlName="mealtype">
     <mat-option *ngFor="let mealtype of mealtypes" [value]="mealtype">
       {{mealtype}}
     </mat-option>
