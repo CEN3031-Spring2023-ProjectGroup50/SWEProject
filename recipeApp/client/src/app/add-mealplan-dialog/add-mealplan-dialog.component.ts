@@ -4,8 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatSelect } from '@angular/material/select';
-import { RecipesComponent } from '../recipes/recipes.component';
 import { AuthService } from '../shared/auth/auth.service';
+import { DatePipe } from '@angular/common';
 
 interface IRecipeItem {
   Rid: number,
@@ -52,6 +52,7 @@ export class AddMealplanDialogComponent {
 })
 export class AddMealplanContentComponent {
   mealForm!: FormGroup;
+  currentDate: Date;
   accountData: string;
 
   mealtypes: string[] = ['Breakfast', 'Lunch', 'Dinner', 'Other'];
@@ -68,6 +69,7 @@ export class AddMealplanContentComponent {
   }
 
   ngOnInit() {
+    this.currentDate = new Date();
     this.mealForm = new FormGroup({
       date: new FormControl(''),
       mealtype: new FormControl(''),
