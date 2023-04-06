@@ -64,9 +64,9 @@ describe('EditRecipeContentModule', () => {
     expect(componentDia).toBeTruthy();
   });
 
-  it('ERM contains a button "Edit Recipe" to open dialog', () => {
+  it('ERM contains a button "Edit recipe" to open dialog', () => {
     const buttonElement = fixtureBtn.debugElement.nativeElement.querySelector('#edit');
-    expect(buttonElement.innerHTML).toBe('Edit Recipe');
+    expect(buttonElement.innerHTML).toBe('Edit recipe');
   });
 
   it('ERM opens the dialog upon button click', fakeAsync(() => {
