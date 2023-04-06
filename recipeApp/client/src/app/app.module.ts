@@ -50,6 +50,7 @@ import { AuthService } from './shared/auth/auth.service';
 import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
 import { CanActivateViaAuthGuard } from './shared/auth/can-activate-via-auth.guard';
 import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
+import { RecipeDeleteDialogComponent, RecipeDeleteDialogContent } from './recipe-delete-dialog/recipe-delete-dialog.component';
 import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-mealplan-dialog/add-mealplan-dialog.component';
 
 
@@ -72,6 +73,8 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
         RecipeDetailsContentModule,
         EditRecipeModule,
         EditRecipeContentModule,
+        RecipeDeleteDialogComponent,
+        RecipeDeleteDialogContent,
         AddMealplanDialogComponent,
         AddMealplanContentComponent
     ],

@@ -13,6 +13,7 @@ import { AddMealplanDialogComponent } from '../add-mealplan-dialog/add-mealplan-
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import {TooltipPosition} from '@angular/material/tooltip';
 import { isNull } from 'cypress/types/lodash'
+import { RecipeDeleteDialogComponent } from '../recipe-delete-dialog/recipe-delete-dialog.component'
 
 
 
@@ -97,17 +98,13 @@ async loadItems() {
 
     // If there are no search terms, the page will be generated via the API defined in recipes_get_by_count.go
 
-    
-
       let URL = `/server/recipes/bypage?page=${this.currentPage + 1}&per_page=${this.pageSize}`
       //let params = new HttpParams().set('uid', this.defaultAccount)
       let params = new HttpParams()
 
       if (this.ingredientSearchTerm!="" && this.keywordSearchTerm !=""){
-
         params = params.append('keyword',this.keywordSearchTerm)
         params = params.append('ingredient',this.ingredientSearchTerm)
-        
       }
       else if (this.ingredientSearchTerm!=""){
         params = params.append('ingredient',this.ingredientSearchTerm)
@@ -115,11 +112,10 @@ async loadItems() {
       else if (this.keywordSearchTerm != ""){
         params = params.append('keyword',this.keywordSearchTerm)
       }
-      
 
       if (this.filter == "user") {
         params = params.append('uid', this.accountData)
-        
+
       }
       else {
         params = params.append('uid', this.defaultAccount)
@@ -177,13 +173,6 @@ openAddRecipeDialog() {
   dialogConfig.autoFocus = true;
   this.dialog.open(AddRecipeDialogComponent, dialogConfig);
 }
-
-openAddMealplanDialog() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    this.dialog.open(AddMealplanDialogComponent, dialogConfig);
-}
-
 setFilters(keywordSearchTerm: string, ingredientSearchTerm: string){
   this.keywordSearchTerm = keywordSearchTerm;
   this.ingredientSearchTerm = ingredientSearchTerm;

@@ -8,7 +8,7 @@ import { FormGroup,FormControl,FormBuilder } from '@angular/forms'
 import { HomeComponent } from '../home/home.component';
 
 import { AuthInterceptorService } from '../shared/auth/auth-interceptor.service';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms'
 import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http'
@@ -101,10 +101,27 @@ describe('registerForm', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create the registerform component', waitForAsync(() => {
-    const fixture = TestBed.createComponent(registerFormComponent);
-    const regForm = fixture.debugElement.componentInstance;
-    expect(regForm).toBeTruthy();
-  }));
+  it('contains form fields for email and password', () => {
+    let email = fixture.debugElement.query(By.css('#email'));
+    let pass = fixture.debugElement.query(By.css('#pass'));
+    let textTest = fixture.debugElement.nativeElement;
+
+
+    expect(email).toBeTruthy();
+    expect(pass).toBeTruthy();
+
+    fixture.detectChanges();
+    expect(textTest.querySelector('#emailLabel').textContent).toBe('E-mail');
+    expect(textTest.querySelector('#passLabel').textContent).toBe('Password');
+  });
+
+  it('clicking "Register" submits the registration form and calls addLogin()', () => {
+    let spy = spyOn(component, "addLogin");
+    let btn = fixture.debugElement.query(By.css('#submit'));
+
+    btn.nativeElement.click();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalled();
+  });
 
 })

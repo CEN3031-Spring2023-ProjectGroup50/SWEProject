@@ -77,18 +77,18 @@ describe('EditRecipeContentModule', () => {
 
     expect(componentBtn.openDialog).toHaveBeenCalled();
   }));
-
-  /*Tests Required for:
-    Dialog text
-    Submitting Form
-    Supplying Data to DB? Not sure if that is FE testable*/
+  it('ERCM calls editRecipe() when form is submitted', () => {
+    let spy = spyOn(componentDia, "editRecipe");
+    let btn = fixtureDia.debugElement.query(By.css('#submit'));
+    btn.nativeElement.click();
+    expect(spy).toHaveBeenCalled();
+  });
 
   /* Note from Shannon:
       Good stack overflow example for testing an API call
       i.e. should call 'delete' once when Submit button pressed and not cancelled
       https://stackoverflow.com/questions/52968940/dialogref-afterclosed-is-not-a-function
   */
-
 });
 
 

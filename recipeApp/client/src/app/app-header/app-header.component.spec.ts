@@ -2,6 +2,7 @@ import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
 import { AppHeaderComponent } from './app-header.component';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import { AppModule } from '../app.module';
+import { By } from '@angular/platform-browser';
 
 describe('AppHeaderComponent', () => {
 
@@ -43,10 +44,6 @@ describe('AppHeaderComponent', () => {
   });
 
   it('should display titleLoggedOut when logged out.', waitForAsync(() => {
-    const fixture = TestBed.createComponent(AppHeaderComponent);
-    let comp: AppHeaderComponent = fixture.componentInstance;
-    //comp.titleLoggedOut = 'Welcome to Mallow';
-    fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('#titleLoggedOut').textContent).toContain('Welcome to Mallow');
   }));
@@ -56,13 +53,12 @@ describe('AppHeaderComponent', () => {
   });
 
   it('should display titleLoggedIn when logged in.', waitForAsync(() => {
-    //const fixture = TestBed.createComponent(AppHeaderComponent);
-    //let comp: AppHeaderComponent = fixture.componentInstance;
-    //comp.titleLoggedIn = 'Save time, and savor every meal with Mallow.';
-    component.isUserLoggedIn = true;
-    //fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('#titleLoggedIn').textContent).toContain(component.titleLoggedIn);
+    component.authService.login(1);
+    fixture.detectChanges();
+    let compiled = fixture.debugElement.nativeElement;
+    if (compiled) {
+      expect(compiled.querySelector('#titleLoggedIn').innerHTML).toBe(component.titleLoggedIn);
+    }
   }));
 
 

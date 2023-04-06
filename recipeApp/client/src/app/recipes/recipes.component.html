@@ -14,27 +14,27 @@
       <td>
         <mat-form-field class="full-width">
           <mat-label>Search by keyword</mat-label>
-          <input matInput [(ngModel)]="keywordSearchTerm" placeholder="Ex. Crock pot">
+          <input matInput [(ngModel)]="keywordSearchTerm" placeholder="Ex. Crock pot" id="keyword">
         </mat-form-field>
       </td>
       <td>
         <mat-form-field class="full-width">
           <mat-label>Search by ingredient</mat-label>
-          <input matInput [(ngModel)]="ingredientSearchTerm" placeholder="Ex. Cornichon">
+          <input matInput [(ngModel)]="ingredientSearchTerm" placeholder="Ex. Cornichon" id="ingred">
         </mat-form-field>
       </td>
       <td>
-        <button mat-icon-button color="primary" (click)="setFilters(keywordSearchTerm, ingredientSearchTerm)">
+        <button mat-icon-button color="primary" (click)="setFilters(keywordSearchTerm, ingredientSearchTerm)" id="search">
           <mat-icon>search</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="clearFilters()">
+        <button mat-icon-button color="primary" (click)="clearFilters()" id="clear">
           <mat-icon>clear</mat-icon>
         </button>
       </td>
       <td>
         <mat-button-toggle-group name="filter" aria-label="Filter">
-          <mat-button-toggle (change)="onAll($event.value)" value="all">All Recipes</mat-button-toggle>
-          <mat-button-toggle (change)="onUser($event.value)" value="user">My Recipes</mat-button-toggle>
+          <mat-button-toggle (change)="onAll($event.value)" value="all" id="allFilter">All Recipes</mat-button-toggle>
+          <mat-button-toggle (change)="onUser($event.value)" value="user" id="userFilter">My Recipes</mat-button-toggle>
         </mat-button-toggle-group>
         <button mat-raised-button (click)="openAddRecipeDialog()" color="primary" id="add">Add Recipe</button>
       </td>
@@ -65,7 +65,7 @@
           <mat-menu #menu="matMenu" xPosition="before">
             <recipe-details [recipe]=backendItem></recipe-details>
             <edit-recipe *ngIf="backendItem.Uid == this.uid" [recipe]=backendItem></edit-recipe>
-            <button *ngIf="backendItem.Uid == this.uid" mat-menu-item>Delete recipe</button>
+            <app-recipe-delete-dialog *ngIf="backendItem.Uid == this.uid" [recipe]="backendItem"></app-recipe-delete-dialog>
           </mat-menu>
 
           <mat-card-subtitle class="recipe-card-subtitle">{{backendItem.Email}}</mat-card-subtitle>
