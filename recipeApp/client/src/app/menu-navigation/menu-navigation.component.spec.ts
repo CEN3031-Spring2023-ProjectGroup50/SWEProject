@@ -66,7 +66,14 @@ describe('MenuNavigationComponent', () => {
     const list = fixture.debugElement.query(By.css('mat-nav-list'));
     expect(list).toBeTruthy();})
 
-    
+  it('should have links for Recipes, Meal Plan, and Grocery List', () => {
+    let test = fixture.debugElement.nativeElement;
+    fixture.detectChanges();
+    expect(test.querySelector('#recipes').textContent).toBe('Recipes');
+    expect(test.querySelector('#mealplan').textContent).toBe('Meal Plan');
+    expect(test.querySelector('#grocerylist').textContent).toBe('Grocery List');
+
+  });
 
 
 });

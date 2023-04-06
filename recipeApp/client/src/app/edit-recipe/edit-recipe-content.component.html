@@ -1,4 +1,4 @@
-<form [formGroup]="editRecipeForm">
+<form [formGroup]="editRecipeForm" id="edit">
 
 <mat-form-field class="full-width">
     <mat-label>Title</mat-label>
@@ -38,7 +38,7 @@
 
 
 <mat-dialog-actions align="end">
-    <button mat-flat-button color="primary" mat-dialog-close (click)="editRecipe()">Update recipe</button>
+    <button mat-flat-button color="primary" mat-dialog-close (click)="editRecipe()" id="submit">Update recipe</button>
     <button mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>
 

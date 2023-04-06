@@ -7,15 +7,15 @@
       </button>
     </div>
 
-    <span *ngIf="!authService.isAuthenticated" id="titleLoggedOut">{{titleLoggedOut}}</span>
-    <span *ngIf="authService.isAuthenticated" id="titleLoggedIn">{{titleLoggedIn}}</span>
+    <span *ngIf="!authService.isAuthenticated || !isUserLoggedIn" id="titleLoggedOut">{{titleLoggedOut}}</span>
+    <span *ngIf="authService.isAuthenticated || isUserLoggedIn" id="titleLoggedIn">{{titleLoggedIn}}</span>
 
     <span class="example-spacer"></span>
 
     <div *ngIf="!isUserLoggedIn">
       <nav>
         <div class="toolbar-button-row">
-          <a mat-raised-button color="primary" [routerLink]="'/login'" id="loginButton" *ngIf="!authService.isAuthenticated">Login</a>
+          <a mat-raised-button color="primary" [routerLink]="'/login'" id="loginButton" data-cy="loginButton" *ngIf="!authService.isAuthenticated">Login</a>
           <a mat-raised-button color="primary" [routerLink]="'/register'" id="registerButton" *ngIf="!authService.isAuthenticated">Register</a>
         </div>
       </nav>
