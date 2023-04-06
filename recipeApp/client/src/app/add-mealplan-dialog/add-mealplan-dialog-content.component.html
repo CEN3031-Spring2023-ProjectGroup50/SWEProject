@@ -4,7 +4,8 @@
 <form [formGroup]="mealForm" (submit)="addToMeal()">
   <mat-form-field class="form-field" appearance = "fill" [style.width.px]="650">
     <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker" [min]="currentDate" formControlName="date">
+    <input matInput [matDatepicker]="picker" [min]="currentDate" formControlName="date" [errorStateMatcher]="matcher" required>
+    <mat-error *ngIf="mealForm.get('date') == null">Date is required</mat-error>
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
@@ -13,7 +14,8 @@
   <mat-dialog-content><b>What meal will this be a part of?</b></mat-dialog-content>
   <mat-form-field class="form-field" appearance ="fill" [style.width.px]="650">
     <mat-label>Choose an option</mat-label>
-    <mat-select formControlName="mealtype">
+    <mat-select formControlName="mealtype" [errorStateMatcher]="matcher" required>
+    <mat-error *ngIf="mealForm.get('mealtype') == null">Meal type is required</mat-error>
     <mat-option *ngFor="let mealtype of mealtypes" [value]="mealtype">
       {{mealtype}}
     </mat-option>
@@ -23,7 +25,7 @@
 
 <mat-dialog-actions>
 <div class ="bottom">
- <button mat-raised-button [mat-dialog-close] type="submit" color="primary">Save</button>
+ <button mat-raised-button [mat-dialog-close] type="submit" color="primary" [disabled]="!(mealForm.valid && mealForm.dirty)">Save</button>
  <button mat-flat-button [mat-dialog-close]="" (click)="onNoClick()">Cancel</button>
 </div>
 </mat-dialog-actions>

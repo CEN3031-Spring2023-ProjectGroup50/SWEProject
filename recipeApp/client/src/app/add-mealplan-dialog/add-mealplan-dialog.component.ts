@@ -1,5 +1,6 @@
 import { Component, Input, Inject, ViewChild } from '@angular/core';
-import { FormGroup,FormControl } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { FormGroup,FormControl,Validators, FormGroupDirective } from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
@@ -45,6 +46,15 @@ export class AddMealplanDialogComponent {
   }
 }
 
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | null): boolean {
+    //condition true
+    const isSubmitted = form && form.submitted;
+    //false
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
 @Component({
   selector: 'add-mealplan-dialog-content',
   templateUrl: './add-mealplan-dialog-content.component.html',
@@ -54,6 +64,7 @@ export class AddMealplanContentComponent {
   mealForm!: FormGroup;
   currentDate: Date;
   accountData: string;
+  matcher: ErrorStateMatcher;
 
   mealtypes: string[] = ['Breakfast', 'Lunch', 'Dinner', 'Other'];
 
@@ -71,9 +82,10 @@ export class AddMealplanContentComponent {
   ngOnInit() {
     this.currentDate = new Date();
     this.mealForm = new FormGroup({
-      date: new FormControl(''),
-      mealtype: new FormControl(''),
+      date: new FormControl('', [Validators.required]),
+      mealtype: new FormControl('', [Validators.required]),
     })
+    this.matcher = new MyErrorStateMatcher();
     this.mealForm.valueChanges.subscribe();
     this.authService.getAccount().subscribe(
       (res: any) => {
