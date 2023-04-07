@@ -204,6 +204,36 @@
                 }
             }
         },
+        "/server/meals/edit": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "update a mealplan item in the database",
+                "parameters": [
+                    {
+                        "description": "meal data",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.mealEditRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/server/recipecount": {
             "get": {
                 "consumes": [
@@ -448,6 +478,23 @@
                     "type": "integer"
                 },
                 "userid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handler.mealEditRequest": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "mealtype": {
+                    "type": "string"
+                },
+                "mid": {
+                    "type": "integer"
+                },
+                "recipeid": {
                     "type": "integer"
                 }
             }

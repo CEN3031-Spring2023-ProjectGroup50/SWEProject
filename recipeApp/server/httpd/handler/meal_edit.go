@@ -15,6 +15,13 @@ type mealEditRequest struct {
 	Recipeid uint   `json:"recipeid"`
 }
 
+// @Summary update a mealplan item in the database
+// @param requestBody body mealEditRequest	true "meal data"
+// @Accept json
+// @Produce json
+// @Success 200
+// @Failure 400
+// @Router /server/meals/edit [put]
 func EditMeal() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		requestBody := mealEditRequest{}
