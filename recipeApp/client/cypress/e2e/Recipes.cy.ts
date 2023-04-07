@@ -1,0 +1,11 @@
+/* THESE TESTS REQUIRE THAT BOTH THE SERVER AND CLIENT ARE UP AND RUNNING
+    RUN "MAKE" IN THE SERVER FOLDER
+    RUN "NPM RUN START" IN THE CLIENT FOLDER
+    THEN RUN "NPX CYPRESS OPEN" IN THE CLIENT FOLDER TO BEGIN TESTS */
+
+
+describe('Home Page(Recipes)', () => {
+  it('passes', () => {
+    cy.visit('http://localhost:4200')
+  })
+})

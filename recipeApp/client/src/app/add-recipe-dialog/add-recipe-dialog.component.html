@@ -1,6 +1,6 @@
 
   <h1 mat-dialog-title class="center">Add a Recipe</h1>
-  <form [formGroup]="recipeForm" (submit)="addRecipe()">
+  <form [formGroup]="recipeForm" (submit)="addRecipe()" id="form">
     <mat-form-field class="form-field" appearance = "outline" [style.width.px]="650">
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" required>
@@ -21,8 +21,8 @@
 
   <mat-dialog-actions>
   <div class ="bottom">
-   <button mat-raised-button [mat-dialog-close] type="submit" color="primary">Save</button>
-   <button mat-flat-button [mat-dialog-close]="" (click)="onNoClick()">Cancel</button>
+   <button mat-raised-button [mat-dialog-close] type="submit" color="primary" id="save">Save</button>
+   <button mat-flat-button [mat-dialog-close]="" (click)="onNoClick()" id="cancel">Cancel</button>
   </div>
   </mat-dialog-actions>
 

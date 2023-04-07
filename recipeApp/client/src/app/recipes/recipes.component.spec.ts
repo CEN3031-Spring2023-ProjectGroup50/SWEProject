@@ -101,4 +101,89 @@ describe('RecipesComponent', () => {
 
     expect(component.openDialog).toHaveBeenCalled();
   }));
+
+  it('clicking "Search" calls setFilters() (no inputs)', () => {
+    let spy = spyOn(component, "setFilters");
+    let btn = fixture.debugElement.query(By.css('#search'));
+
+    btn.nativeElement.click();
+    expect(spy).toHaveBeenCalled();
+  });
+  it('clicking "Search" with \'crock pot\' in the keyword field calls setFilters(\'crock pot\', null)', () => {
+    let hostElement: HTMLElement = fixture.nativeElement;
+    let searchInput: HTMLInputElement = hostElement.querySelector('#keyword')!;
+    let spy = spyOn(component, "setFilters");
+    let btn = fixture.debugElement.query(By.css('#search'));
+
+    searchInput.value = 'crock pot';
+    searchInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    btn.nativeElement.click();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalledWith(searchInput.value, "");
+  });
+
+  it('clicking "Search" with \'cornichon\' in the ingredient field calls setFilters(null, \'cornichon\')', () => {
+    let hostElement: HTMLElement = fixture.nativeElement;
+    let searchInput: HTMLInputElement = hostElement.querySelector('#ingred')!;
+    let spy = spyOn(component, "setFilters");
+    let btn = fixture.debugElement.query(By.css('#search'));
+
+    searchInput.value = 'cornichon';
+    searchInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    btn.nativeElement.click();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalledWith("", searchInput.value);
+  });
+
+  it('clicking "Search" with search terms \'crock pot\' and \'cornichon\' calls setFilters(crock pot, cornichon)', () => {
+    let hostElement: HTMLElement = fixture.nativeElement;
+    let searchInput1: HTMLInputElement = hostElement.querySelector('#keyword')!;
+    let searchInput2: HTMLInputElement = hostElement.querySelector('#ingred')!;
+    let spy = spyOn(component, "setFilters");
+    let btn = fixture.debugElement.query(By.css('#search'));
+
+    searchInput1.value = 'crock pot';
+    searchInput1.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    searchInput2.value = 'cornichon';
+    searchInput2.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    btn.nativeElement.click();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalledWith(searchInput1.value, searchInput2.value);
+  });
+
+  it('clicking "Clear" calls clearFilters()', () => {
+    let spy = spyOn(component, "clearFilters");
+
+    let buttonElement = fixture.debugElement.query(By.css('#clear'));
+    buttonElement.nativeElement.click();
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('clicking "All Recipes" calls onAll()', () => {
+    let spy = spyOn(component, "onAll");
+
+    let buttonElement = fixture.debugElement.query(By.css('#allFilter'));
+    buttonElement.nativeElement.dispatchEvent(new Event('change'))
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('clicking "My Recipes" calls onUser()', () => {
+    let spy = spyOn(component, "onUser");
+
+    let buttonElement = fixture.debugElement.query(By.css('#userFilter'));
+    buttonElement.nativeElement.dispatchEvent(new Event('change'))
+
+    expect(spy).toHaveBeenCalled();
+  });
+
 });
