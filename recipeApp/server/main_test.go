@@ -109,13 +109,13 @@ func TestRecipeGetByKeywordCount(t *testing.T) {
 	r.GET(url, handler.RecipeGetCount())
 
 	testConds := []test{
-		{input: url + "?keyword=pumpkin&uid=0", testWord: "pumpkin", size: 259},
-		{input: url + "?keyword=pepperoncini&uid=0", testWord: "pepperoncini", size: 7},
-		{input: url + "?keyword=yellow&uid=0", testWord: "yellow", size: 773},
-		{input: url + "?keyword=simmer&uid=0", testWord: "simmer", size: 3620},
-		{input: url + "?keyword=5%20oz&uid=0", testWord: "5 oz", size: 101},
-		{input: url + "?keyword=400%20degrees&uid=0", testWord: "400 degrees", size: 14},
-		{input: url + "?keyword=crock%20pot&uid=0", testWord: "crock pot", size: 4},
+		{input: url + "?keyword=pumpkin&uid=1", testWord: "pumpkin", size: 259},
+		{input: url + "?keyword=pepperoncini&uid=1", testWord: "pepperoncini", size: 7},
+		{input: url + "?keyword=yellow&uid=1", testWord: "yellow", size: 773},
+		{input: url + "?keyword=simmer&uid=1", testWord: "simmer", size: 3612},
+		{input: url + "?keyword=5%20oz&uid=1", testWord: "5 oz", size: 101},
+		{input: url + "?keyword=400%20degrees&uid=1", testWord: "400 degrees", size: 14},
+		{input: url + "?keyword=crock%20pot&uid=1", testWord: "crock pot", size: 4},
 	}
 
 	for _, tc := range testConds {

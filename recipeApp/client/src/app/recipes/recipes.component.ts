@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddRecipeDialogComponent } from '../add-recipe-dialog/add-recipe-dialog.component';
+import { AddMealplanDialogComponent } from '../add-mealplan-dialog/add-mealplan-dialog.component'
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import {TooltipPosition} from '@angular/material/tooltip';
 import { isNull } from 'cypress/types/lodash'
@@ -166,7 +167,7 @@ async onUser(event: { value: string; }) {
   await this.loadItems();
 }
 
-openDialog() {
+openAddRecipeDialog() {
 
   const dialogConfig = new MatDialogConfig();
   dialogConfig.autoFocus = true;

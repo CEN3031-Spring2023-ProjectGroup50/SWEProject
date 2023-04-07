@@ -1,0 +1,9 @@
+.center {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .bottom {
+    display: flex;
+    justify-content: bottom;
+  }
