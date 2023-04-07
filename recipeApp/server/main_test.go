@@ -503,6 +503,56 @@ func TestCreateMeal(t *testing.T) {
 
 }
 
+func TestMealGetByDate(t *testing.T) {
+	r := SetUpRouter()
+	r.GET("/server/meals/bydate", handler.MealGetByDate())
+
+	type test struct {
+		input string
+		start string
+		end   string
+		uid   int
+	}
+	var response []models.Meal
+
+	url := "/server/meals/bydate"
+	testConds := []test{
+		{input: url + "?date=2023-04-01&uid=1", start: "2023-04-01", end: "2023-04-07", uid: 1},
+		{input: url + "?date=2023-04-02&uid=2", start: "2023-04-02", end: "2023-04-08", uid: 2},
+	}
+
+	for _, tc := range testConds {
+		req, _ := http.NewRequest("GET", tc.input, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		json.Unmarshal(w.Body.Bytes(), &response)
+		assert.Equal(t, http.StatusOK, w.Code, "Could not get meal "+tc.input)
+
+		inBound := true
+
+		for _, meal := range response {
+			inBound = inBound && meal.Date >= tc.start && meal.Date <= tc.end
+
+			if !inBound {
+				break
+			}
+
+		}
+		assert.Equal(t, inBound, true, "Response data was out of range")
+
+	}
+
+	/*
+		bogus := "55000"
+		req, _ := http.NewRequest("GET", "/server/meals/date/"+bogus, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code, "Got bogus meal "+bogus)
+	*/
+}
+
 func TestDeleteMeal(t *testing.T) {
 	r := SetUpRouter()
 	r.DELETE("/server/meals/delete/:id", handler.DeleteMeal())
