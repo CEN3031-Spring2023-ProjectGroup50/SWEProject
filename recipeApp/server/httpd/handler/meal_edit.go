@@ -1,0 +1,45 @@
+package handler
+
+import (
+	"net/http"
+	"recipeApp/initialize"
+	"recipeApp/models"
+
+	"github.com/gin-gonic/gin"
+)
+
+type mealEditRequest struct {
+	Mid      uint   `json:"mid"`
+	Date     string `json:"date"`
+	Mealtype string `json:"mealtype"`
+	Recipeid uint   `json:"recipeid"`
+}
+
+func EditMeal() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		requestBody := mealEditRequest{}
+
+		if c.Bind(&requestBody) != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Failed to read body",
+			})
+			return
+		}
+
+		var meal models.Meal
+		initialize.Db.Table("meals").Where("mid = ?", requestBody.Mid).Find(&meal)
+
+		result := initialize.Db.Table("meals").Select("date", "mealtype", "recipeid").
+			Where("mid = ?", meal.Mid).Updates(
+			map[string]interface{}{
+				"date":     requestBody.Date,
+				"mealtype": requestBody.Mealtype,
+				"recipeid": requestBody.Recipeid,
+			})
+
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Meal updated",
+			"result":  result,
+		})
+	}
+}

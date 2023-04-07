@@ -20,6 +20,7 @@ import (
 func MealGetByDate() gin.HandlerFunc {
 
 	type userMeals struct {
+		Mid          uint
 		Date         string
 		Mealtype     string
 		Title        string
@@ -43,7 +44,7 @@ func MealGetByDate() gin.HandlerFunc {
 		beginString := begin.Format("2006-01-02")
 		endString := end.Format("2006-01-02")
 
-		initialize.Db.Table("meals").Select("meals.date, meals.mealtype, recipe.title, recipe.ingredients, recipe.instructions, recipe.image_name, users.email, recipe.image").
+		initialize.Db.Table("meals").Select("meals.mid,meals.date, meals.mealtype, recipe.title, recipe.ingredients, recipe.instructions, recipe.image_name, users.email, recipe.image").
 			Joins("JOIN recipe ON meals.recipeid = recipe.rid").
 			Joins("JOIN users ON meals.userid = users.id").
 			Where("meals.userid = ? AND meals.date BETWEEN ? AND ?", uid, beginString, endString).
