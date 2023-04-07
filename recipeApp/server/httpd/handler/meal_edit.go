@@ -37,9 +37,15 @@ func EditMeal() gin.HandlerFunc {
 				"recipeid": requestBody.Recipeid,
 			})
 
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Meal updated",
-			"result":  result,
-		})
+		if result.Error != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Failed to update meal",
+			})
+			return
+		}
+		initialize.Db.Table("meals").Where("mid = ?", meal.Mid).Find(&meal)
+		c.JSON(http.StatusOK, meal)
+
 	}
+
 }
