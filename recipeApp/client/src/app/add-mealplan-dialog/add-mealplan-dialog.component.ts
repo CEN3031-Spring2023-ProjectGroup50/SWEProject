@@ -100,7 +100,7 @@ export class AddMealplanContentComponent {
     await this.httpClient.post('/server/meals/add', {
       userid: parseInt(this.accountData),
       recipeid: this.recipe.Rid,
-      date: this.mealForm.value['date'],
+      date: new DatePipe('en-US').transform(this.mealForm.value['date'], 'yyyy-MM-dd'),
       mealtype: this.mealForm.value['mealtype']
     }).subscribe((post)=>{
       console.log("Recipe Added To Meal For User", this.accountData);
