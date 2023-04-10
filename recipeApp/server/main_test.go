@@ -434,7 +434,7 @@ func TestRecipeDelete(t *testing.T) {
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
-	assert.Equal(t, http.StatusBadRequest, w.Code, "Could not delete recipe "+bogus)
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Deleted bogus recipe "+bogus)
 }
 
 func TestCreateMeal(t *testing.T) {
@@ -483,11 +483,7 @@ func TestCreateMeal(t *testing.T) {
 			t.Errorf("Expected status code 200, got %v", w.Code)
 		}
 	}
-	var delete models.Meal
-	for i := 0; i < 5; i++ {
-		initialize.Db.Table("meals").Last(&delete).Delete(&delete)
-		delete = models.Meal{}
-	}
+
 	var badMeals []models.Meal
 	badMeals = append(badMeals,
 		models.Meal{Userid: 1111, Recipeid: 1, Date: "2023-03-31", Mealtype: "Breakfast"},
@@ -505,6 +501,177 @@ func TestCreateMeal(t *testing.T) {
 		assert.Contains(t, w.Body.String(), "error", "Able to create malformed meal "+strconv.Itoa(val+1))
 	}
 
+}
+
+func TestMealGetByDate(t *testing.T) {
+	r := SetUpRouter()
+	r.GET("/server/meals/bydate", handler.MealGetByDate())
+
+	type test struct {
+		input string
+		start string
+		end   string
+		uid   int
+	}
+	var response []models.Meal
+
+	url := "/server/meals/bydate"
+	testConds := []test{
+		{input: url + "?date=2023-04-01&uid=1", start: "2023-04-01", end: "2023-04-07", uid: 1},
+		{input: url + "?date=2023-04-02&uid=2", start: "2023-04-02", end: "2023-04-08", uid: 2},
+	}
+
+	for _, tc := range testConds {
+		req, _ := http.NewRequest("GET", tc.input, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		json.Unmarshal(w.Body.Bytes(), &response)
+		assert.Equal(t, http.StatusOK, w.Code, "Could not get meal "+tc.input)
+
+		inBound := true
+
+		for _, meal := range response {
+			inBound = inBound && meal.Date >= tc.start && meal.Date <= tc.end
+
+			if !inBound {
+				break
+			}
+
+		}
+		assert.Equal(t, inBound, true, "Response data was out of range")
+
+	}
+
+	/*
+		bogus := "55000"
+		req, _ := http.NewRequest("GET", "/server/meals/date/"+bogus, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code, "Got bogus meal "+bogus)
+	*/
+}
+
+func TestDeleteMeal(t *testing.T) {
+	r := SetUpRouter()
+	r.DELETE("/server/meals/delete/:id", handler.DeleteMeal())
+
+	var last models.Meal
+	initialize.Db.Table("meals").Last(&last)
+	lastNum := last.Mid
+
+	rids := []string{strconv.FormatInt(int64(lastNum-4), 10),
+		strconv.FormatInt(int64(lastNum-3), 10),
+		strconv.FormatInt(int64(lastNum-2), 10),
+		strconv.FormatInt(int64(lastNum-1), 10),
+		strconv.FormatInt(int64(lastNum), 10)}
+
+	for _, val := range rids {
+		req, _ := http.NewRequest("DELETE", "/server/meals/delete/"+val, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code, "Could not delete meal "+val)
+
+	}
+
+	bogus := "55000"
+	req, _ := http.NewRequest("DELETE", "/server/meals/delete/"+bogus, nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Deleted bogus meal "+bogus)
+}
+
+func TestCreateFavorite(t *testing.T) {
+
+	// Setup
+	r := SetUpRouter()
+	r.POST("/server/favorites/add", handler.AddFavorite())
+
+	var testFavs []models.Favorite
+
+	testFavs = append(testFavs,
+		models.Favorite{Userid: 1,
+			Recipeid: 1}, //Mallow can add a mallow recipe as favorite
+		models.Favorite{Userid: 2,
+			Recipeid: 1}, //User 2 can add a mallow recipe as favorite
+		models.Favorite{Userid: 2,
+			Recipeid: 13510}, //User 2 can add a user 2 recipe as favorite
+		models.Favorite{Userid: 2,
+			Recipeid: 13526}, //User 2 can add another user's recipe as favorite
+	)
+
+	var response models.Favorite
+
+	// Test
+	for tc := range testFavs {
+		jsonValue, _ := json.Marshal(testFavs[tc])
+		req, _ := http.NewRequest("POST", "/server/favorites/add", bytes.NewBuffer(jsonValue))
+		req.Header.Set("Content-Type", "application/json")
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		json.Unmarshal(w.Body.Bytes(), &response)
+		t.Log(response.Fid)
+		t.Log(response.Userid)
+		t.Log(response.Recipeid)
+		assert.Equal(t, http.StatusOK, w.Code, "Could not add favorite "+strconv.Itoa(tc+1))
+		assert.Equal(t, testFavs[tc].Userid, response.Userid, "Fav user ID was not the same as expected")
+		assert.Equal(t, testFavs[tc].Recipeid, response.Recipeid, "Fav recipe ID was not the same as expected")
+
+		if w.Code != http.StatusOK {
+			t.Errorf("Expected status code 200, got %v", w.Code)
+		}
+	}
+
+	var badFavs []models.Favorite
+	badFavs = append(badFavs,
+		models.Favorite{Userid: 1111, Recipeid: 1},  // User 1111 does not exist
+		models.Favorite{Userid: 1, Recipeid: 65577}, // Recipe 65577 does not exist
+		models.Favorite{Userid: 2, Recipeid: 13510}, // Favorite already exists
+	)
+	for val := range badFavs {
+		jsonValue, _ := json.Marshal(badFavs[val])
+		req, _ := http.NewRequest("POST", "/server/favorites/add", bytes.NewBuffer(jsonValue))
+		req.Header.Set("Content-Type", "application/json")
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code, "Able to create malformed fav "+strconv.Itoa(val+1))
+		assert.Contains(t, w.Body.String(), "error", "Able to create malformed fav "+strconv.Itoa(val+1))
+	}
+
+}
+
+func TestDeleteFavorite(t *testing.T) {
+
+	// Setup
+	r := SetUpRouter()
+	r.DELETE("/server/favorites/delete/:uid/:rid", handler.DeleteFavorite())
+
+	for i := 0; i < 4; i++ {
+		var last models.Favorite
+		initialize.Db.Table("favorites").Last(&last)
+		lastUid := last.Userid
+		lastRid := last.Recipeid
+		uid := strconv.FormatInt(int64(lastUid), 10)
+		rid := strconv.FormatInt(int64(lastRid), 10)
+
+		req, _ := http.NewRequest("DELETE", "/server/favorites/delete/"+uid+"/"+rid, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code, "Could not delete favorite "+strconv.Itoa(i+1))
+	}
+
+	bogus := "55000"
+	req, _ := http.NewRequest("DELETE", "/server/favorites/delete/"+bogus+"/"+bogus, nil)
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code, "Deleted bogus favorite")
 }
 
 func TestLogin(t *testing.T) {

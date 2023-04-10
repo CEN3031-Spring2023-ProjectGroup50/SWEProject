@@ -7,6 +7,17 @@ definitions:
       userid:
         type: integer
     type: object
+  handler.mealEditRequest:
+    properties:
+      date:
+        type: string
+      mealtype:
+        type: string
+      mid:
+        type: integer
+      recipeid:
+        type: integer
+    type: object
   handler.mealPostRequest:
     properties:
       date:
@@ -149,6 +160,31 @@ paths:
         "400":
           description: Bad Request
       summary: post a mealplan item to the database
+  /server/meals/bydate:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: "2023-04-01"
+        description: specify start date
+        in: query
+        name: date
+        required: true
+        type: string
+      - default: 1
+        description: specify a user id
+        in: query
+        name: uid
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Get a list of meals in predefined date range.
   /server/meals/delete/{id}:
     delete:
       consumes:
@@ -167,6 +203,25 @@ paths:
         "400":
           description: Bad Request
       summary: delete a meal
+  /server/meals/edit:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: meal data
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/handler.mealEditRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: update a mealplan item in the database
   /server/recipecount:
     get:
       consumes:
