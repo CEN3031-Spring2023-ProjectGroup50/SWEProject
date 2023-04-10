@@ -31,6 +31,9 @@ import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dia
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
+import { CalendarHeaderComponent } from './meal-plan/calendar-header.component';
+
+
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor/login-editor.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
@@ -78,7 +81,8 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
         RecipeDeleteDialogComponent,
         RecipeDeleteDialogContent,
         AddMealplanDialogComponent,
-        AddMealplanContentComponent
+        AddMealplanContentComponent,
+        CalendarHeaderComponent
     ],
     providers: [
         AuthService,
@@ -131,6 +135,6 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
             useFactory: adapterFactory,
           })
     ],
-    exports: [RecipesComponent,],
+    exports: [RecipesComponent,CalendarHeaderComponent],
 })
 export class AppModule { }
