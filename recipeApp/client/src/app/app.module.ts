@@ -28,9 +28,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
 import { CalendarHeaderComponent } from './meal-plan/calendar-header.component';
 
 
@@ -133,7 +134,9 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
         CalendarModule.forRoot({
             provide: DateAdapter,
             useFactory: adapterFactory,
-          })
+          }),
+          NgbModalModule,
+
     ],
     exports: [RecipesComponent,CalendarHeaderComponent],
 })
