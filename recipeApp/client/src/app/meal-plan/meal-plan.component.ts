@@ -1,5 +1,7 @@
 import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
 import { AuthService } from '../shared/auth/auth.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { SharedFunctionsService } from '../shared/shared-functions.service'
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { addDays, addHours, startOfDay } from 'date-fns';
 import { colors } from './colors';
@@ -13,6 +15,29 @@ import { colors } from './colors';
 
 })
 export class MealPlanComponent {
+
+  accountData="0"
+  uid = 0
+
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService,
+    private sharedService: SharedFunctionsService,
+  ){
+    this.sharedService.getReloadResponse().subscribe(()=>{
+
+      });
+  }
+
+  async ngOnInit() {
+    this.authService.getAccount().subscribe(
+      (res: any) => {
+          this.accountData = res.toString();
+          this.uid = parseInt(this.accountData);
+          console.log("UID = " + this.uid)
+      }
+    );
+  }
 
   view: CalendarView = CalendarView.Week;
   
