@@ -4,8 +4,7 @@ import { CalendarView } from 'angular-calendar';
 @Component({
   selector: 'mwl-calendar-header',
   templateUrl: './calendar-header.component.html',
-  styleUrls: [
-    "../../../node_modules/bootstrap/dist/css/bootstrap.min.css"],
+  styleUrls: ["../../../node_modules/bootstrap/dist/css/bootstrap.min.css", './meal-plan.component.css'],
 })
 export class CalendarHeaderComponent {
   @Input() view: CalendarView;

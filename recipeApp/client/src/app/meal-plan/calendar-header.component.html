@@ -1,61 +1,43 @@
-<div class="row text-center">
-    <div class="col-md-4">
-      <div class="btn-group">
-        <div
-          class="btn btn-primary"
-          mwlCalendarPreviousView
-          [view]="view"
-          [(viewDate)]="viewDate"
-          (viewDateChange)="viewDateChange.next(viewDate)"
-        >
-          Previous
-        </div>
-        <div
-          class="btn btn-outline-secondary"
-          mwlCalendarToday
-          [(viewDate)]="viewDate"
-          (viewDateChange)="viewDateChange.next(viewDate)"
-        >
-          Today
-        </div>
-        <div
-          class="btn btn-primary"
-          mwlCalendarNextView
-          [view]="view"
-          [(viewDate)]="viewDate"
-          (viewDateChange)="viewDateChange.next(viewDate)"
-        >
-          Next
-        </div>
-      </div>
+<mat-toolbar>
+
+
+    <div class="tight-button-row">
+        <button mat-stroked-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="viewDateChange.next(viewDate)">
+            Previous
+        </button>
+        <button mat-stroked-button color="primary" mwlCalendarToday [(viewDate)]="viewDate"
+            (viewDateChange)="viewDateChange.next(viewDate)">
+            Today
+        </button>
+        <button mat-stroked-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="viewDateChange.next(viewDate)">
+            Next
+        </button>
     </div>
-    <div class="col-md-4">
-      <h3>{{ viewDate | calendarDate: view + 'ViewTitle':locale }}</h3>
-    </div>
-    <div class="col-md-4">
-      <div class="btn-group">
-        <div
-          class="btn btn-primary"
-          (click)="viewChange.emit(CalendarView.Month)"
-          [class.active]="view === CalendarView.Month"
-        >
-          Month
-        </div>
-        <div
-          class="btn btn-primary"
-          (click)="viewChange.emit(CalendarView.Week)"
-          [class.active]="view === CalendarView.Week"
-        >
-          Week
-        </div>
-        <div
-          class="btn btn-primary"
-          (click)="viewChange.emit(CalendarView.Day)"
-          [class.active]="view === CalendarView.Day"
-        >
-          Day
-        </div>
-      </div>
-    </div>
-  </div>
-  <br />
+
+    <span class="example-spacer"></span>
+
+
+    <h3>{{ viewDate | calendarDate: view + 'ViewTitle':locale }}</h3>
+
+    <span class="example-spacer"></span>
+
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle value="bold" (click)="viewChange.emit(CalendarView.Month)"
+            [class.active]="view === CalendarView.Month">
+            Month
+        </mat-button-toggle>
+        <mat-button-toggle value="bold" (click)="viewChange.emit(CalendarView.Week)"
+            [class.active]="view === CalendarView.Week">
+            Week
+        </mat-button-toggle>
+        <mat-button-toggle value="bold" (click)="viewChange.emit(CalendarView.Day)"
+            [class.active]="view === CalendarView.Day">
+            Day
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+
+</mat-toolbar>
+
+<br />

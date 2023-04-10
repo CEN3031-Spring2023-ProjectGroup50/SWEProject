@@ -10,3 +10,42 @@
 .cal-week-view .cal-events-row {
   margin-left: 0 !important;
 }
+
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+
+
+section {
+  display: table;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.tight-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
+
+.tight-button-row .mat-mdc-button-base {
+  margin: 8px 0px 8px 0;
+}
+
+.tight-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.tight-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
