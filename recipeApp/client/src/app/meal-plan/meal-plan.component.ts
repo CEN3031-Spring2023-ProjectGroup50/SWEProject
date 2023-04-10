@@ -28,19 +28,19 @@ export class MealPlanComponent {
       {
         start: startOfDay(new Date()),
         title: 'An event',
-        color: colors.yellow,
+        color: colors.blue,
         allDay: true,
       },
       {
         start: startOfDay(new Date()),
         title: 'An event',
-        color: colors.yellow,
+        color: colors.red,
         allDay: true,
       },
       {
         start: addDays(startOfDay(new Date()), 2),
         title: 'An event',
-        color: colors.yellow,
+        color: colors.gray,
         allDay: true,
       },
 
