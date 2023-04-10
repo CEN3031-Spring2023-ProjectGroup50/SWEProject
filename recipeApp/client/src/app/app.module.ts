@@ -28,6 +28,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor/login-editor.component';
@@ -123,7 +125,11 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
         MatSortModule,
         MatSelectModule,
         MatDialogModule,
-        MatTooltipModule
+        MatTooltipModule,
+        CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory,
+          })
     ],
     exports: [RecipesComponent,],
 })
