@@ -57,6 +57,8 @@ func main() {
 		server.POST("/favorites/add", handler.AddFavorite())
 		server.GET("/favorites/bypage", handler.FavoritesGetByPage())
 		server.DELETE(("favorites/delete/:uid/:rid"), handler.DeleteFavorite())
+		server.GET("/meals/bydate", handler.MealGetByDate())
+		server.PUT("/meals/edit", handler.EditMeal())
 	}
 
 	r.Run("0.0.0.0:5000") //Listen and serve

@@ -19,18 +19,18 @@ func DeleteMeal() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Param("id")
 		var meal models.Meal
-		result := initialize.Db.Table("meals").Where("mid = ?", id).Find(&meal)
-		if result.Error != nil {
+		initialize.Db.Table("meals").Where("mid = ?", id).Find(&meal)
+		if meal.Mid == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{
-				"error": "Could not find recipe",
+				"error": "Could not find meal",
 			})
 			return
 		}
-		result = initialize.Db.Table("meals").Where("mid = ?", id).Delete(&meal)
+		result := initialize.Db.Table("meals").Where("mid = ?", id).Delete(&meal)
 
 		if result.Error != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
-				"error": "Could not delete recipe",
+				"error": "Could not delete meal",
 			})
 			return
 

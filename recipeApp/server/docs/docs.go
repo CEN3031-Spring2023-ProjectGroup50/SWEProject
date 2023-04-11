@@ -145,6 +145,43 @@ const docTemplate = `{
                 }
             }
         },
+        "/server/meals/bydate": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a list of meals in predefined date range.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "2023-04-01",
+                        "description": "specify start date",
+                        "name": "date",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "specify a user id",
+                        "name": "uid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/server/meals/delete/{id}": {
             "delete": {
                 "consumes": [
@@ -161,6 +198,36 @@ const docTemplate = `{
                         "name": "id",
                         "in": "path",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/server/meals/edit": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "update a mealplan item in the database",
+                "parameters": [
+                    {
+                        "description": "meal data",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.mealEditRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -417,6 +484,23 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "userid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handler.mealEditRequest": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "mealtype": {
+                    "type": "string"
+                },
+                "mid": {
+                    "type": "integer"
+                },
+                "recipeid": {
                     "type": "integer"
                 }
             }
