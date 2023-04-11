@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
 import { AuthService } from '../shared/auth/auth.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SharedFunctionsService } from '../shared/shared-functions.service'
@@ -15,6 +15,16 @@ import { colors } from './colors';
 
 })
 export class MealPlanComponent {
+
+  @Input() locale: string = 'en';
+
+  @Output() viewChange = new EventEmitter<CalendarView>();
+
+  @Output() viewDateChange = new EventEmitter<Date>();
+
+  view: CalendarView = CalendarView.Week;
+  
+  viewDate: Date = new Date();
 
   accountData="0"
   uid = 0
@@ -37,11 +47,8 @@ export class MealPlanComponent {
           console.log("UID = " + this.uid)
       }
     );
+    console.log("ViewDate = " + this.viewDate);
   }
-
-  view: CalendarView = CalendarView.Week;
-  
-    viewDate: Date = new Date();
   
     events: CalendarEvent[] = [
       {
