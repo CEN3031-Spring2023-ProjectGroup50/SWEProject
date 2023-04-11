@@ -284,9 +284,12 @@ func TestRecipeGetByPage(t *testing.T) {
 		r.ServeHTTP(w, req)
 
 		json.Unmarshal(w.Body.Bytes(), &recipes)
+		lastrID := int(recipes[len(recipes)-1].Rid)
 
 		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with test conditions "+tc.input)
 		assert.Equal(t, tc.size, len(recipes), "Did not retrieve the correct number of recipes, expected "+strconv.Itoa(tc.size)+".")
+		assert.Equal(t, tc.page*tc.size-1, int(lastrID), "Last retrieved element was different, expected "+strconv.Itoa(lastrID))
+
 	}
 
 }
@@ -736,12 +739,9 @@ func TestFavoriteGetByPage(t *testing.T) {
 		r.ServeHTTP(w, req)
 
 		json.Unmarshal(w.Body.Bytes(), &recipes)
-		lastrID := int(recipes[len(recipes)-1].Rid)
 
 		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with test conditions "+tc.input)
 		assert.Equal(t, tc.size, len(recipes), "Did not retrieve the correct number of recipes, expected "+strconv.Itoa(tc.size)+".")
-		assert.Equal(t, tc.page*tc.size-1, int(lastrID), "Last retrieved element was different, expected "+strconv.Itoa(lastrID))
-
 	}
 
 }
