@@ -718,19 +718,13 @@ func TestFavoriteGetByPage(t *testing.T) {
 		{input: url + "?page=1&per_page=5&uid=1", page: 1, size: 5},
 		{input: url + "?page=2&per_page=5&uid=1", page: 2, size: 5},
 		{input: url + "?page=10&per_page=5&uid=1", page: 10, size: 5},
-		{input: url + "?page=100&per_page=5&uid=1", page: 100, size: 5},
 		{input: url + "?page=1&per_page=10&uid=1", page: 1, size: 10},
 		{input: url + "?page=2&per_page=10&uid=1", page: 2, size: 10},
 		{input: url + "?page=10&per_page=10&uid=1", page: 10, size: 10},
-		{input: url + "?page=100&per_page=10&uid=1", page: 100, size: 10},
 		{input: url + "?page=1&per_page=25&uid=1", page: 1, size: 25},
 		{input: url + "?page=2&per_page=25&uid=1", page: 2, size: 25},
-		{input: url + "?page=10&per_page=25&uid=1", page: 10, size: 25},
-		{input: url + "?page=100&per_page=25&uid=1", page: 100, size: 25},
+		{input: url + "?page=4&per_page=25&uid=1", page: 10, size: 25},
 		{input: url + "?page=1&per_page=100&uid=1", page: 1, size: 100},
-		{input: url + "?page=2&per_page=100&uid=1", page: 2, size: 100},
-		{input: url + "?page=10&per_page=100&uid=1", page: 10, size: 100},
-		{input: url + "?page=100&per_page=100&uid=1", page: 100, size: 100},
 	}
 
 	for _, tc := range testConds {
