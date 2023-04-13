@@ -24,6 +24,7 @@ import { CommonModule } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
@@ -50,6 +51,7 @@ import { AuthInterceptorService } from './shared/auth/auth-interceptor.service';
 import { CanActivateViaAuthGuard } from './shared/auth/can-activate-via-auth.guard';
 import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
 import { RecipeDeleteDialogComponent, RecipeDeleteDialogContent } from './recipe-delete-dialog/recipe-delete-dialog.component';
+import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-mealplan-dialog/add-mealplan-dialog.component';
 
 
 @NgModule({
@@ -72,7 +74,9 @@ import { RecipeDeleteDialogComponent, RecipeDeleteDialogContent } from './recipe
         EditRecipeModule,
         EditRecipeContentModule,
         RecipeDeleteDialogComponent,
-        RecipeDeleteDialogContent
+        RecipeDeleteDialogContent,
+        AddMealplanDialogComponent,
+        AddMealplanContentComponent
     ],
     providers: [
         AuthService,
@@ -117,6 +121,7 @@ import { RecipeDeleteDialogComponent, RecipeDeleteDialogContent } from './recipe
         RouterModule,
         MatTableModule,
         MatSortModule,
+        MatSelectModule,
         MatDialogModule,
         MatTooltipModule
     ],

@@ -94,12 +94,12 @@ describe('RecipesComponent', () => {
   });
 
   it('RecipeComponent opens the addRecipeDialog upon button click', fakeAsync(() => {
-    spyOn(component, "openDialog");
+    spyOn(component, "openAddRecipeDialog");
 
     let buttonElement = fixture.debugElement.query(By.css('#add'));
     buttonElement.nativeElement.click();
 
-    expect(component.openDialog).toHaveBeenCalled();
+    expect(component.openAddRecipeDialog).toHaveBeenCalled();
   }));
 
   it('clicking "Search" calls setFilters() (no inputs)', () => {

@@ -1,15 +1,17 @@
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import { EditRecipeModule, EditRecipeContentModule } from './edit-recipe.component';
+import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-mealplan-dialog.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { AuthService } from '../shared/auth/auth.service';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { By } from '@angular/platform-browser';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -18,15 +20,15 @@ import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonHarness } from '@angular/material/button/testing';
 
-describe('EditRecipeContentModule', () => {
-  let componentBtn: EditRecipeModule;
-  let fixtureBtn: ComponentFixture<EditRecipeModule>;
-  let componentDia: EditRecipeContentModule;
-  let fixtureDia: ComponentFixture<EditRecipeContentModule>;
+describe('AddMealplanContentComponent', () => {
+  let componentBtn: AddMealplanDialogComponent;
+  let fixtureBtn: ComponentFixture<AddMealplanDialogComponent>;
+  let componentDia: AddMealplanContentComponent;
+  let fixtureDia: ComponentFixture<AddMealplanContentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditRecipeModule ],
+      declarations: [ AddMealplanDialogComponent ],
       imports: [
         MatInputModule,
         FormsModule,
@@ -34,10 +36,14 @@ describe('EditRecipeContentModule', () => {
         MatDialogModule,
         BrowserAnimationsModule,
         MatIconModule,
-        MatButtonModule
+        MatButtonModule,
+        MatDatepickerModule,
+        MatSelectModule,
+        MatNativeDateModule
       ],
       providers: [
         {provide: MAT_DIALOG_DATA, useValue: {}},
+        {provide: MatDialogRef, useValue: {}},
         HttpClient,
         HttpHandler,
         AuthService
@@ -45,52 +51,37 @@ describe('EditRecipeContentModule', () => {
     })
     .compileComponents();
 
-    fixtureBtn = TestBed.createComponent(EditRecipeModule);
+    fixtureBtn = TestBed.createComponent(AddMealplanDialogComponent);
     componentBtn = fixtureBtn.componentInstance;
     fixtureBtn.detectChanges();
 
-    fixtureDia = TestBed.createComponent(EditRecipeContentModule);
+    fixtureDia = TestBed.createComponent(AddMealplanContentComponent);
     componentDia = fixtureDia.componentInstance;
     fixtureDia.detectChanges();
 
   });
 
 
-  it('should create EditRecipeModule', () => {
+  it('should create AddMealplanDialogComponent', () => {
     expect(componentBtn).toBeTruthy();
   });
 
-  it('should create EditRecipeContentModule', () => {
+  it('should create AddMealplanContentComponent', () => {
     expect(componentDia).toBeTruthy();
   });
 
-  it('ERM contains a button "Edit recipe" to open dialog', () => {
-    const buttonElement = fixtureBtn.debugElement.nativeElement.querySelector('#edit');
-    expect(buttonElement.innerHTML).toBe('Edit recipe');
+  it('AMDC contains a button "Add to meal plan" to open dialog', () => {
+    const buttonElement = fixtureBtn.debugElement.nativeElement.querySelector('#addMeal');
+    expect(buttonElement.textContent).toBe('Add to meal plan');
   });
 
-  it('ERM opens the dialog upon button click', fakeAsync(() => {
+  it('AMDC opens the dialog upon button click', fakeAsync(() => {
     spyOn(componentBtn, "openDialog");
 
-    let buttonElement = fixtureBtn.debugElement.query(By.css('#edit'));
+    let buttonElement = fixtureBtn.debugElement.query(By.css('#addMeal'));
     buttonElement.nativeElement.click();
 
     expect(componentBtn.openDialog).toHaveBeenCalled();
   }));
-  it('ERCM calls editRecipe() when form is submitted', () => {
-    let spy = spyOn(componentDia, "editRecipe");
-    let btn = fixtureDia.debugElement.query(By.css('#submit'));
-    btn.nativeElement.click();
-    expect(spy).toHaveBeenCalled();
-  });
 
-  /* Note from Shannon:
-      Good stack overflow example for testing an API call
-      i.e. should call 'delete' once when Submit button pressed and not cancelled
-      https://stackoverflow.com/questions/52968940/dialogref-afterclosed-is-not-a-function
-  */
 });
-
-
-
-
