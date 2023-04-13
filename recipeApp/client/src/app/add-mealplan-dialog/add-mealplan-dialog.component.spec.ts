@@ -84,4 +84,21 @@ describe('AddMealplanContentComponent', () => {
     expect(componentBtn.openDialog).toHaveBeenCalled();
   }));
 
+  it('submitting form calls addToMeal()', () => {
+    let spy = spyOn(componentDia, "addToMeal");
+    let form = fixtureDia.debugElement.query(By.css('#form'));
+
+    form.triggerEventHandler('submit', null);
+    fixtureDia.detectChanges();
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('clicking Cancel calls onNoClick() (closes the dialog)', () => {
+    let spy = spyOn(componentDia, "onNoClick");
+    let btn = fixtureDia.debugElement.query(By.css('#cancel'));
+    btn.nativeElement.click();
+    expect(spy).toHaveBeenCalled();
+  });
+
 });
