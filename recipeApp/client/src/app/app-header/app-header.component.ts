@@ -11,7 +11,7 @@ import { SharedFunctionsService } from '../shared/shared-functions.service';
 
 export class AppHeaderComponent {
 
-    @Input() public isUserLoggedIn: boolean|undefined;
+    @Input() public isUserLoggedIn: boolean|false;
 
     titleLoggedOut = 'Welcome to Mallow!';
 

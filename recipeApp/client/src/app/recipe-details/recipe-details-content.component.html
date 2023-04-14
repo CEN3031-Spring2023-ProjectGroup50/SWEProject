@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{recipe.Title}}</h1>
+<h1 mat-dialog-title id="view-dialog">{{recipe.Title}}</h1>
 
 <mat-dialog-content class="mat-typography">
 
@@ -9,14 +9,14 @@
     <br><br>
 
     <h2>Ingredients</h2>
-    <p style="white-space: pre-line">
+    <p style="white-space: pre-line" id="dialog-ing">
         {{recipe.Ingredients}}
     </p>
 
     <br>
 
     <h2>Instructions</h2>
-    <p style="white-space: pre-line">
+    <p style="white-space: pre-line" id="dialog-inst">
         {{recipe.Instructions}}
     </p>
 
