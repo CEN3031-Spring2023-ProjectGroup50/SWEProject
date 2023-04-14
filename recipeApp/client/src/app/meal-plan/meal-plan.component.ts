@@ -58,6 +58,14 @@ export class MealPlanComponent {
   }
 
   async ngOnInit() {
+    this.authService.getAccount().subscribe(
+      (res: any) => {
+          this.accountData = res.toString();
+          this.uid = parseInt(this.accountData);
+          console.log("UID from auth service = " + this.uid)
+      }
+    );
+    console.log("ViewDate = " + this.viewDate);
     this.loadMeals();
   }
   
@@ -93,23 +101,13 @@ export class MealPlanComponent {
     
   async loadMeals() {
 
-    this.authService.getAccount().subscribe(
-      (res: any) => {
-          this.accountData = res.toString();
-          this.uid = parseInt(this.accountData);
-          console.log("UID from auth service = " + this.uid)
-      }
-    );
-    console.log("ViewDate = " + this.viewDate);
-
-
     console.log("UID in loadMeals = " + this.uid.toString())
 
     let URL = `/server/meals/bydate`;
 
     let params = new HttpParams()
     params = params.append('date', "2023-04-09") // this.calendarHeader.getSunday())
-    params = params.append('uid', "8")
+    params = params.append('uid', this.uid.toString())
 
     this.userMeals = await this.httpClient.get<userMeals[]>(URL, { params: params }).toPromise();
 
