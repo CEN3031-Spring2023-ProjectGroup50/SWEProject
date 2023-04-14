@@ -44,6 +44,68 @@
                 }
             }
         },
+        "/server/favorites/bypage": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a list of user's favorite recipes in predefined amounts, searchable by keyword and ingredient.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "specify page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "results per page",
+                        "name": "per_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "specify one or more keywords",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "specify one or more ingredients",
+                        "name": "ingredient",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "specify a user id",
+                        "name": "uid",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/server/favorites/delete/{uid}/{rid}": {
             "delete": {
                 "consumes": [
@@ -139,6 +201,43 @@
                 }
             }
         },
+        "/server/meals/bydate": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get a list of meals in predefined date range.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "2023-04-01",
+                        "description": "specify start date",
+                        "name": "date",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "specify a user id",
+                        "name": "uid",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/server/meals/delete/{id}": {
             "delete": {
                 "consumes": [
@@ -155,6 +254,36 @@
                         "name": "id",
                         "in": "path",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/server/meals/edit": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "update a mealplan item in the database",
+                "parameters": [
+                    {
+                        "description": "meal data",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.mealEditRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -411,6 +540,23 @@
                     "type": "integer"
                 },
                 "userid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handler.mealEditRequest": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string"
+                },
+                "mealtype": {
+                    "type": "string"
+                },
+                "mid": {
+                    "type": "integer"
+                },
+                "recipeid": {
                     "type": "integer"
                 }
             }
