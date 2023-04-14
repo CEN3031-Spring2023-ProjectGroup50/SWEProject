@@ -2,7 +2,7 @@
 
 <mat-form-field class="full-width">
     <mat-label>Title</mat-label>
-    <textarea  formControlName="title" matInput value="{{recipe.Title}}"></textarea>
+    <textarea  formControlName="title" matInput value="{{recipe.Title}}" id="title"></textarea>
 </mat-form-field>
 
 <mat-dialog-content class="mat-typography">
@@ -22,7 +22,7 @@
     <h2>Ingredients</h2>
     <mat-form-field class="full-width">
         <mat-label>Ingredients</mat-label>
-        <textarea  formControlName="ingredients" matInput rows="5" placeholder="Ex. Chicken" value="{{recipe.Ingredients}}"></textarea>
+        <textarea  formControlName="ingredients" matInput rows="5" placeholder="Ex. Chicken" value="{{recipe.Ingredients}}" id="ingredients"></textarea>
         <mat-hint>Separate ingredients with a new line.</mat-hint>
     </mat-form-field>
 
@@ -31,7 +31,7 @@
     <h2>Instructions</h2>
     <mat-form-field class="full-width">
         <mat-label>Instructions</mat-label>
-        <textarea  formControlName="instructions" matInput rows="10" placeholder="Ex. Chicken" value="{{recipe.Instructions}}"></textarea>
+        <textarea  formControlName="instructions" matInput rows="10" placeholder="Ex. Chicken" value="{{recipe.Instructions}}" id="instructions"></textarea>
     </mat-form-field>
 
 </mat-dialog-content>

@@ -584,6 +584,162 @@ func TestDeleteMeal(t *testing.T) {
 	assert.Equal(t, http.StatusBadRequest, w.Code, "Deleted bogus meal "+bogus)
 }
 
+func TestFavoritesGetByKeyword(t *testing.T) {
+	/*Testing the get_by_page endpoint on favorite recipe retrieval by keyword./
+	  This test will check that each recipe returned from the user's favorites list
+	  includes results that have the keyword in either the title, ingredients,
+	  or instructions field.
+	  It also checks for an HTTP OK response.
+	  For a keyword that is nonsensical, it returns an empty result*/
+
+	r := SetUpRouter()
+	url := "/server/favorites/bypage"
+	type test struct {
+		input    string
+		testWord string
+	}
+	var recipes []models.Recipe
+
+	r.GET(url, handler.FavoritesGetByPage())
+
+	testConds := []test{
+		{input: url + "?page=1&per_page=100&keyword=water&uid=1", testWord: "water"},
+		{input: url + "?page=1&per_page=100&keyword=semolina&uid=1", testWord: "semolina"},
+		{input: url + "?page=1&per_page=100&keyword=chicken&uid=1", testWord: "chicken"},
+		{input: url + "?page=1&per_page=100&keyword=boil&uid=1", testWord: "boil"},
+		{input: url + "?page=1&per_page=100&keyword=4%20oz&uid=1", testWord: "4 oz"},
+		{input: url + "?page=1&per_page=100&keyword=30%20minutes&uid=1", testWord: "30 minutes"},
+		{input: url + "?page=1&per_page=100&keyword=curried%20chicken&uid=1", testWord: "curried chicken"},
+		{input: url + "?page=1&per_page=100&keyword=wedonthaveit&uid=1", testWord: "wedonthaveit"},
+	}
+
+	for _, tc := range testConds {
+		req, _ := http.NewRequest("GET", tc.input, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		json.Unmarshal(w.Body.Bytes(), &recipes)
+
+		hasKeyword := true
+
+		for _, recipe := range recipes {
+			hasKeyword = (strings.Contains(strings.ToLower(recipe.Title), tc.testWord) ||
+				strings.Contains(strings.ToLower(recipe.Ingredients), tc.testWord) ||
+				strings.Contains(strings.ToLower(recipe.Instructions), tc.testWord))
+
+			if !hasKeyword {
+				break
+			}
+
+		}
+
+		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with keyword "+tc.testWord+".")
+		if tc.testWord == "wedonthaveit" {
+			assert.Empty(t, recipes)
+		} else {
+			assert.NotEmpty(t, recipes)
+		}
+		assert.Equal(t, hasKeyword, true, "One or more recipes did not contain keyword "+tc.testWord+".")
+
+	}
+
+}
+
+func TestFavoritesGetByIngredient(t *testing.T) {
+	/*Testing the get_by_page endpoint on favorite recipe retrieval by ingredient/
+	  This test will check that each recipe returned includes an ingredient with the search term.
+	  It also checks for an HTTP OK response.*/
+
+	r := SetUpRouter()
+	url := "/server/favorites/bypage"
+	type test struct {
+		input    string
+		testWord string
+	}
+	var recipes []models.Recipe
+
+	r.GET(url, handler.FavoritesGetByPage())
+
+	testConds := []test{
+		{input: url + "?page=1&per_page=100&ingredient=water&uid=1", testWord: "water"},
+		{input: url + "?page=1&per_page=100&ingredient=semolina&uid=1", testWord: "semolina"},
+		{input: url + "?page=1&per_page=100&ingredient=chicken&uid=1", testWord: "chicken"},
+		{input: url + "?page=1&per_page=10&ingredient=wedonthaveit&uid=1", testWord: "wedonthaveit"},
+	}
+
+	for _, tc := range testConds {
+		req, _ := http.NewRequest("GET", tc.input, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		json.Unmarshal(w.Body.Bytes(), &recipes)
+
+		hasIngredient := true
+
+		for _, recipe := range recipes {
+			hasIngredient =
+				strings.Contains(strings.ToLower(recipe.Ingredients), tc.testWord)
+
+			if !hasIngredient {
+				break
+			}
+
+		}
+
+		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with ingredient "+tc.testWord+".")
+		if tc.testWord == "wedonthaveit" {
+			assert.Empty(t, recipes)
+		} else {
+			assert.NotEmpty(t, recipes)
+		}
+
+		assert.Equal(t, hasIngredient, true, "One or more recipes did not contain ingredient"+tc.testWord+".")
+
+	}
+
+}
+
+func TestFavoriteGetByPage(t *testing.T) {
+
+	r := SetUpRouter()
+
+	r.GET("/server/favorites/bypage", handler.FavoritesGetByPage())
+
+	type test struct {
+		input string
+		page  int
+		size  int
+	}
+	//var recipes []models.Recipe
+	url := "/server/favorites/bypage"
+	var recipes []models.Recipe
+
+	testConds := []test{
+		{input: url + "?page=1&per_page=5&uid=1", page: 1, size: 5},
+		{input: url + "?page=2&per_page=5&uid=1", page: 2, size: 5},
+		{input: url + "?page=10&per_page=5&uid=1", page: 10, size: 5},
+		{input: url + "?page=1&per_page=10&uid=1", page: 1, size: 10},
+		{input: url + "?page=2&per_page=10&uid=1", page: 2, size: 10},
+		{input: url + "?page=10&per_page=10&uid=1", page: 10, size: 10},
+		{input: url + "?page=1&per_page=25&uid=1", page: 1, size: 25},
+		{input: url + "?page=2&per_page=25&uid=1", page: 2, size: 25},
+		{input: url + "?page=4&per_page=25&uid=1", page: 10, size: 25},
+		{input: url + "?page=1&per_page=100&uid=1", page: 1, size: 100},
+	}
+
+	for _, tc := range testConds {
+		req, _ := http.NewRequest("GET", tc.input, nil)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		json.Unmarshal(w.Body.Bytes(), &recipes)
+
+		assert.Equal(t, http.StatusOK, w.Code, "Unable to retrieve recipes with test conditions "+tc.input)
+		assert.Equal(t, tc.size, len(recipes), "Did not retrieve the correct number of recipes, expected "+strconv.Itoa(tc.size)+".")
+	}
+
+}
+
 func TestCreateFavorite(t *testing.T) {
 
 	// Setup
