@@ -7,7 +7,7 @@ import { addDays, addHours, startOfDay } from 'date-fns';
 import { colors } from './colors';
 import { CalendarHeaderComponent } from './calendar-header.component';
 
-interface userMeals {
+interface userMeal {
   Mid: number,
   Date: Date,
   Mealtype: string,
@@ -44,7 +44,7 @@ export class MealPlanComponent {
   accountData="0"
   uid = 0
   defaultAccount = "0"
-  public userMeals: userMeals[] | undefined = []
+  public userMeals: userMeal[] | undefined = []
   public events: CalendarEvent[]
 
   constructor(
@@ -53,18 +53,11 @@ export class MealPlanComponent {
     private sharedService: SharedFunctionsService,
   ){
     this.sharedService.getReloadResponse().subscribe(()=>{
-
+      this.loadMeals();
       });
   }
 
-  async ngOnInit() {
-    this.authService.getAccount().subscribe(
-      (res: any) => {
-          this.accountData = res.toString();
-          this.uid = parseInt(this.accountData);
-          console.log("UID from auth service = " + this.uid)
-      }
-    );
+  ngOnInit() {
     console.log("ViewDate = " + this.viewDate);
     this.loadMeals();
   }
@@ -101,18 +94,63 @@ export class MealPlanComponent {
     
   async loadMeals() {
 
-    console.log("UID in loadMeals = " + this.uid.toString())
+    this.getAccountData()
+
+    console.log("UID after calling loadMeals = " + this.uid.toString())
+    console.log("accountData after calling loadMeals = " + this.accountData.toString())
 
     let URL = `/server/meals/bydate`;
 
     let params = new HttpParams()
     params = params.append('date', "2023-04-09") // this.calendarHeader.getSunday())
-    params = params.append('uid', this.uid.toString())
+    params = params.append('uid', "8")
 
-    this.userMeals = await this.httpClient.get<userMeals[]>(URL, { params: params }).toPromise();
+    this.userMeals = await this.httpClient.get<userMeal[]>(URL, { params: params }).toPromise()
 
+    console.log("user meals in loadMeals")
     console.log(this.userMeals)
 
+    if (this.userMeals?.length != 0) {this.convertToEvents()}
+
+    
+  }
+
+  getAccountData(){
+    this.authService.getAccount().subscribe(
+      (res: any) => {
+          this.accountData = res.toString();
+          this.uid = parseInt(this.accountData);
+          console.log("UID after calling auth service = " + this.uid)
+      }
+    );
+    console.log("ViewDate = " + this.viewDate);
+  }
+
+  async convertToEvents(){
+
+    console.log("user meals in convertToEvents")
+    console.log(this.userMeals)
+
+    for (let meal of this.userMeals!) {
+      
+      let mealEvent: CalendarEvent;
+
+      let mealColor = colors.Other;
+      if (meal.Mealtype == "Breakfast") {mealColor = colors.Breakfast}
+      else if (meal.Mealtype == "Lunch") {mealColor = colors.Lunch}
+      else if (meal.Mealtype == "Dinner") {mealColor = colors.Dinner}
+      else {let mealColor = colors.Other}
+
+      mealEvent = 
+      {
+        start: meal.Date,
+        title: meal.Title,
+        color: mealColor,
+        allDay: true,
+      }
+      this.events.push
+      
+    }
   }
 
 
