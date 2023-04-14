@@ -53,7 +53,7 @@ describe('AppHeaderComponent', () => {
   });
 
   it('should display titleLoggedIn when logged in.', waitForAsync(() => {
-    component.authService.login(1);
+    component.isUserLoggedIn = true;
     fixture.detectChanges();
     let compiled = fixture.debugElement.nativeElement;
     if (compiled) {
