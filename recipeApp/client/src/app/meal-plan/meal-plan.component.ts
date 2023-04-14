@@ -5,6 +5,19 @@ import { SharedFunctionsService } from '../shared/shared-functions.service'
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { addDays, addHours, startOfDay } from 'date-fns';
 import { colors } from './colors';
+import { CalendarHeaderComponent } from './calendar-header.component';
+
+interface userMeals {
+  Mid: number,
+  Date: Date,
+  Mealtype: string,
+  Title: string,
+  Ingredients: string,
+  Instructions: string,
+  Image_name: string,
+  Email: string,
+  Image: Uint8Array[],
+}
 
 @Component({
   selector: 'app-meal-plan',
@@ -15,6 +28,8 @@ import { colors } from './colors';
 
 })
 export class MealPlanComponent {
+
+  @Input() calendarHeader!: CalendarHeaderComponent;
 
   @Input() locale: string = 'en';
 
@@ -28,6 +43,9 @@ export class MealPlanComponent {
 
   accountData="0"
   uid = 0
+  defaultAccount = "0"
+  public userMeals: userMeals[] | undefined = []
+  public events: CalendarEvent[]
 
   constructor(
     private httpClient: HttpClient,
@@ -48,35 +66,53 @@ export class MealPlanComponent {
       }
     );
     console.log("ViewDate = " + this.viewDate);
+    this.loadMeals();
   }
   
-    events: CalendarEvent[] = [
-      {
-        start: startOfDay(new Date()),
-        title: 'An event',
-        color: colors.yellow,
-        allDay: true,
-      },
-      {
-        start: startOfDay(new Date()),
-        title: 'An event',
-        color: colors.blue,
-        allDay: true,
-      },
-      {
-        start: startOfDay(new Date()),
-        title: 'An event',
-        color: colors.red,
-        allDay: true,
-      },
-      {
-        start: addDays(startOfDay(new Date()), 2),
-        title: 'An event',
-        color: colors.gray,
-        allDay: true,
-      },
+    // events: CalendarEvent[] = [
+    //   {
+    //     start: startOfDay(new Date()),
+    //     title: 'Meal title',
+    //     color: colors.Breakfast,
+    //     allDay: true,
+    //   },
+    //   {
+    //     start: startOfDay(new Date()),
+    //     title: 'An event',
+    //     color: colors.Lunch,
+    //     allDay: true,
+    //   },
+    //   {
+    //     start: startOfDay(new Date()),
+    //     title: 'An event',
+    //     color: colors.Dinner,
+    //     allDay: true,
+    //   },
+    //   {
+    //     start: addDays(startOfDay(new Date()), 2),
+    //     title: 'An event',
+    //     color: colors.Other,
+    //     allDay: true,
+    //   },
 
-    ];
+    // ];
+
+    
+    
+  async loadMeals() {
+
+    let URL = `/server/meals/bydate`;
+
+    let params = new HttpParams()
+    params = params.append('uid', this.uid)
+    params = params.append('date', this.calendarHeader.getSunday())
+
+    this.userMeals = await this.httpClient.get<userMeals[]>(URL, { params: params }).toPromise()
+
+    console.log(this.userMeals)
+
+  }
+
 
   }
   

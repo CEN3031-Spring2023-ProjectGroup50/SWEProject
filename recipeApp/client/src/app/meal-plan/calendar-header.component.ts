@@ -18,6 +18,10 @@ export class CalendarHeaderComponent {
 
   CalendarView = CalendarView;
 
+  async ngOnInit() {
+    this.getSunday();
+  }
+
   getSunday(){
     console.log("ViewDate = " + this.viewDate.toDateString());
     console.log("Random Hard Coded Date = " + new Date("2023-09-14"));
@@ -105,5 +109,7 @@ export class CalendarHeaderComponent {
 
     var dateForAPI = yearNum + "-" + monthNum + "-" + dayNum
     console.log("dateForAPI = " + dateForAPI);
+
+    return dateForAPI;
    }
 }
