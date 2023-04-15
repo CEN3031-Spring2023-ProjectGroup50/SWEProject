@@ -57,14 +57,15 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
   ){
     this.sharedService.getReloadResponse().subscribe(()=>{
       this.loadMeals();
+      this.convertToEvents(this.userMeals);
       });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log("ViewDate = " + this.viewDate);
     this.getAccountData()
-    this.loadMeals();
-    this.convertToEvents(this.userMeals)
+    await this.loadMeals()
+    console.log(this.accountData)
     console.log("events" + this.events)
   }
 
@@ -121,7 +122,11 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     console.log("user meals in loadMeals")
     console.log(this.userMeals)
 
-    if (this.userMeals?.length != 0) {this.convertToEvents(this.userMeals)}
+    if (this.userMeals?.length != 0) {this.events = this.convertToEvents(this.userMeals)}
+
+    console.log("events in loadMeals", this.events)
+
+    return this.events
 
     
   }
@@ -141,7 +146,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     console.log("This uid " + this.uid)
   }
 
-  async convertToEvents(meals: userMeal[]|undefined){
+  convertToEvents(meals: userMeal[]|undefined){
     //localEvents: CalendarEvent[]
     console.log("user meals in convertToEvents")
     console.log(meals)
