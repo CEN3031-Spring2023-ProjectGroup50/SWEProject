@@ -85,6 +85,7 @@ export class RecipesComponent {
       (res: any) => {
           this.accountData = res.toString();
           this.uid = parseInt(this.accountData);
+          console.log("ngOnInit uid = " + this.uid)
       }
     );
     await this.loadItems();
@@ -93,6 +94,8 @@ export class RecipesComponent {
   }
 
 async loadItems() {
+
+  console.log("loadItems uid = " + this.uid)
 
     this.loading = true;
 
