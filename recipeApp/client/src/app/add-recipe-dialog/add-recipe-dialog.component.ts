@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup,FormControl,FormBuilder } from '@angular/forms';
+import { FormGroup,FormControl,FormBuilder, Validators } from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 import { RecipesComponent } from '../recipes/recipes.component';
 import { AuthService } from '../shared/auth/auth.service';
+import { requiredFileType } from './requireFileType';
+
+
 
 @Component({
   selector: 'app-add-recipe-dialog',
@@ -15,6 +18,9 @@ export class AddRecipeDialogComponent {
   recipeForm!: FormGroup;
   @ViewChild(RecipesComponent) recipes: any;
   @ViewChild(RecipesComponent) accountData: any;
+  file_store: FileList;
+  file_list: Array<string> = [] ;
+  error: string;
 
   constructor(
     public dialogRef: MatDialogRef<AddRecipeDialogComponent>,
@@ -31,6 +37,7 @@ export class AddRecipeDialogComponent {
       title: new FormControl(''),
       ingredients: new FormControl(''),
       instructions: new FormControl(''),
+      image: new FormControl( [Validators.required,requiredFileType('jpg')])
     })
     this.recipeForm.valueChanges.subscribe();
     this.authService.getAccount().subscribe(
@@ -54,7 +61,23 @@ export class AddRecipeDialogComponent {
     });
   }
 
+  handleFileInputChange(l: FileList ): void | null {
+    this.file_store = l;
+    if (l.length) {
+      if (l.length > 1) this.error = "Only one file at time allowed";
+      else{
+      const f = l[0];
+      this.recipeForm.patchValue({image: `${f.name}`});
+      }
+    } else {
+      this.recipeForm.patchValue({image: ""});
+    }
+  }
+
 }
+
+
+
 
 function formatIngredientsForAPI(Ingredients: string,) {
   let result = "['";
@@ -66,3 +89,5 @@ function formatIngredientsForAPI(Ingredients: string,) {
 function formatInstructionsForAPI(Instructions: string,) {
   return Instructions.replaceAll("\n\n", "\n");
 }
+
+
