@@ -5,6 +5,7 @@ import { SharedFunctionsService } from '../shared/shared-functions.service'
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { addDays, addHours, startOfDay } from 'date-fns';
 import { colors } from './colors';
+import {OnInit, AfterViewInit} from '@angular/core';
 import { CalendarHeaderComponent } from './calendar-header.component';
 
 interface userMeal {
@@ -27,9 +28,9 @@ interface userMeal {
   styleUrls: ['./meal-plan.component.css'],
 
 })
-export class MealPlanComponent {
+export class MealPlanComponent implements OnInit, AfterViewInit {
 
-  @Input() calendarHeader!: CalendarHeaderComponent;
+  @ViewChild(CalendarHeaderComponent) calendar: CalendarHeaderComponent;
 
   @Input() locale: string = 'en';
 
@@ -40,6 +41,8 @@ export class MealPlanComponent {
   view: CalendarView = CalendarView.Week;
   
   viewDate: Date = new Date();
+
+  getSun: string;
 
   accountData="0"
   uid = 0
@@ -60,6 +63,11 @@ export class MealPlanComponent {
   ngOnInit() {
     console.log("ViewDate = " + this.viewDate);
     this.loadMeals();
+  }
+
+  async ngAfterViewInit() {
+    this.getSun = await this.calendar.getSunday();
+    console.log("getSun = " + this.getSun);
   }
   
     // events: CalendarEvent[] = [
@@ -102,7 +110,7 @@ export class MealPlanComponent {
     let URL = `/server/meals/bydate`;
 
     let params = new HttpParams()
-    params = params.append('date', "2023-04-09") // this.calendarHeader.getSunday())
+    params = params.append('date', this.getSun)
     params = params.append('uid', "8")
 
     this.userMeals = await this.httpClient.get<userMeal[]>(URL, { params: params }).toPromise()

@@ -22,7 +22,7 @@ export class CalendarHeaderComponent {
     this.getSunday();
   }
 
-  getSunday(){
+  async getSunday() {
     console.log("ViewDate = " + this.viewDate.toDateString());
     console.log("Random Hard Coded Date = " + new Date("2023-09-14"));
     
