@@ -68,42 +68,19 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     console.log(this.accountData)
     console.log("events")
     console.log(this.events)
+
+    this.sharedService.aClickedEvent
+    .subscribe((data:string) => {
+      console.log('Event message from Component A: ' + data);
+      this.loadMeals();
+      this.convertToEvents(this.userMeals);
+    });
   }
 
   async ngAfterViewInit() {
     this.getSun = await this.calendar.getSunday();
     console.log("getSun = " + this.getSun);
   }
-  
-    // events: CalendarEvent[] = [
-    //   {
-    //     start: startOfDay(new Date()),
-    //     title: 'Meal title',
-    //     color: colors.Breakfast,
-    //     allDay: true,
-    //   },
-    //   {
-    //     start: startOfDay(new Date()),
-    //     title: 'An event',
-    //     color: colors.Lunch,
-    //     allDay: true,
-    //   },
-    //   {
-    //     start: startOfDay(new Date()),
-    //     title: 'An event',
-    //     color: colors.Dinner,
-    //     allDay: true,
-    //   },
-    //   {
-    //     start: addDays(startOfDay(new Date()), 2),
-    //     title: 'An event',
-    //     color: colors.Other,
-    //     allDay: true,
-    //   },
-
-    // ];
-
-    
     
   async loadMeals() {
 
@@ -149,6 +126,9 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
   }
 
   convertToEvents(meals: userMeal[]|undefined){
+
+    this.events = [] // clear prev list
+
     //localEvents: CalendarEvent[]
     console.log("user meals in convertToEvents")
     console.log(meals)
@@ -165,7 +145,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
       mealEvent = 
       {
-        start: new Date(meal.Date),
+        start: new Date (meal.Date.toString()),
         title: meal.Title,
         color: mealColor,
         allDay: true,

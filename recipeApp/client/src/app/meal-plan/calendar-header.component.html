@@ -25,15 +25,15 @@
 
     <div class="tight-button-row">
         <button mat-stroked-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-            (viewDateChange)="viewDateChange.next(viewDate)" (click)="getSunday()">
+            (viewDateChange)="viewDateChange.next(viewDate)" (click)="getSunday()" (click)="onClick()">
             Previous
         </button>
         <button mat-stroked-button color="primary" mwlCalendarToday [(viewDate)]="viewDate"
-            (viewDateChange)="viewDateChange.next(viewDate)" (click)="getSunday()">
+            (viewDateChange)="viewDateChange.next(viewDate)" (click)="getSunday()" (click)="onClick()">
             Today
         </button>
         <button mat-stroked-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-            (viewDateChange)="viewDateChange.next(viewDate)" (click)="getSunday()">
+            (viewDateChange)="viewDateChange.next(viewDate)" (click)="getSunday()" (click)="onClick()">
             Next
         </button>
     </div>

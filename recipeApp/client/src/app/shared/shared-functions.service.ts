@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
@@ -26,5 +26,14 @@ export class SharedFunctionsService {
   getReloadResponse(): Observable<any>{
     return this.reloadSub.asObservable();
   }
+
+
+  @Output() aClickedEvent = new EventEmitter<string>();
+
+  AClicked(msg: string) {
+  this.aClickedEvent.emit(msg);
+  return this.reloadSub.asObservable();
+
+}
 
 }

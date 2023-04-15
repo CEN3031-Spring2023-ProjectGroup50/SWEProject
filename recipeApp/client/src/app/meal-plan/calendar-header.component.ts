@@ -3,6 +3,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { yearsPerRow } from '@angular/material/datepicker';
 import { end } from '@popperjs/core';
 import { CalendarView } from 'angular-calendar';
+import { AuthService } from '../shared/auth/auth.service';
+import { SharedFunctionsService } from '../shared/shared-functions.service'
 
 @Component({
   selector: 'mwl-calendar-header',
@@ -18,8 +20,24 @@ export class CalendarHeaderComponent {
 
   CalendarView = CalendarView;
 
+  
+  constructor(
+    private authService: AuthService,
+    private sharedService: SharedFunctionsService,
+  ){
+    this.sharedService.getReloadResponse().subscribe(()=>{
+
+    });
+  }
+
   async ngOnInit() {
     this.getSunday();
+  }
+
+  onClick() {
+    this.sharedService.AClicked('Calendar component nav button is clicked!');
+    this.getSunday();
+
   }
 
   async getSunday() {
