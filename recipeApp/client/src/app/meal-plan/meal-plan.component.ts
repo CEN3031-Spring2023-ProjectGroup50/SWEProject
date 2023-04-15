@@ -48,7 +48,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
   uid = 0
   defaultAccount = "0"
   public userMeals: userMeal[] | undefined = []
-  public events: CalendarEvent[]
+  public events: CalendarEvent[] = []
 
   constructor(
     private httpClient: HttpClient,
@@ -64,6 +64,8 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     console.log("ViewDate = " + this.viewDate);
     this.getAccountData()
     this.loadMeals();
+    this.convertToEvents(this.userMeals)
+    console.log("events" + this.events)
   }
 
   async ngAfterViewInit() {
@@ -119,7 +121,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     console.log("user meals in loadMeals")
     console.log(this.userMeals)
 
-    if (this.userMeals?.length != 0) {this.convertToEvents()}
+    if (this.userMeals?.length != 0) {this.convertToEvents(this.userMeals)}
 
     
   }
@@ -139,12 +141,12 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     console.log("This uid " + this.uid)
   }
 
-  async convertToEvents(){
-
+  async convertToEvents(meals: userMeal[]|undefined){
+    //localEvents: CalendarEvent[]
     console.log("user meals in convertToEvents")
-    console.log(this.userMeals)
+    console.log(meals)
 
-    for (let meal of this.userMeals!) {
+    for (let meal of meals!) {
       
       let mealEvent: CalendarEvent;
 
@@ -161,9 +163,14 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
         color: mealColor,
         allDay: true,
       }
-      this.events.push
-      
+      this.events.push(mealEvent)
+
+      console.log("events in convertToEvents")
+
+      console.log(this.events)
     }
+
+    return this.events
   }
 
 
