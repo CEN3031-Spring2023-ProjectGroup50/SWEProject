@@ -62,6 +62,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     console.log("ViewDate = " + this.viewDate);
+    this.getAccountData()
     this.loadMeals();
   }
 
@@ -102,7 +103,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     
   async loadMeals() {
 
-    this.getAccountData()
+    this.accountData = await this.getAccountData()
 
     console.log("UID after calling loadMeals = " + this.uid.toString())
     console.log("accountData after calling loadMeals = " + this.accountData.toString())
@@ -111,7 +112,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     let params = new HttpParams()
     params = params.append('date', this.getSun)
-    params = params.append('uid', "8")
+    params = params.append('uid', this.uid.toString())
 
     this.userMeals = await this.httpClient.get<userMeal[]>(URL, { params: params }).toPromise()
 
@@ -123,15 +124,19 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     
   }
 
-  getAccountData(){
-    this.authService.getAccount().subscribe(
+  async getAccountData(){
+     this.authService.getAccount().subscribe(
       (res: any) => {
           this.accountData = res.toString();
           this.uid = parseInt(this.accountData);
           console.log("UID after calling auth service = " + this.uid)
       }
     );
+    await this.authService.getAccount().toPromise();
+    return this.accountData
     console.log("ViewDate = " + this.viewDate);
+    console.log("This account data " + this.accountData)
+    console.log("This uid " + this.uid)
   }
 
   async convertToEvents(){
