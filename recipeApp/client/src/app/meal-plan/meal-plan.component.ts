@@ -24,7 +24,7 @@ interface userMeal {
 
 @Component({
   selector: 'app-meal-plan',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './meal-plan.component.html',
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./meal-plan.component.css'],
