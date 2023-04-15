@@ -50,26 +50,6 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
   public userMeals: userMeal[] | undefined = []
   public events: CalendarEvent[]
 
-  constructor(
-    private httpClient: HttpClient,
-    private authService: AuthService,
-    private sharedService: SharedFunctionsService,
-  ){
-    this.sharedService.getReloadResponse().subscribe(()=>{
-      this.loadMeals();
-      });
-  }
-
-  ngOnInit() {
-    console.log("ViewDate = " + this.viewDate);
-    this.loadMeals();
-  }
-
-  async ngAfterViewInit() {
-    this.getSun = await this.calendar.getSunday();
-    console.log("getSun = " + this.getSun);
-  }
-  
     // events: CalendarEvent[] = [
     //   {
     //     start: startOfDay(new Date()),
@@ -98,20 +78,43 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     // ];
 
-    
+
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService,
+    private sharedService: SharedFunctionsService,
+  ){
+    this.sharedService.getReloadResponse().subscribe(()=>{
+      this.loadMeals();
+      });
+  }
+
+  ngOnInit() {
+    console.log("_________ngOnInit IS RUNNING_________");
+    console.log("ViewDate = " + this.viewDate);
+    this.getAccountData();
+  }
+
+  async ngAfterViewInit() {
+    console.log("_________ngAfterViewInit IS RUNNING_________");
+    this.getSun = await this.calendar.getSunday();
+    console.log("getSun = " + this.getSun);
+    this.loadMeals();
+  }  
     
   async loadMeals() {
 
-    this.getAccountData()
-
-    console.log("UID after calling loadMeals = " + this.uid.toString())
-    console.log("accountData after calling loadMeals = " + this.accountData.toString())
+    console.log("_________loadMeals IS RUNNING_________");
+    
+    console.log("UID in loadMeals = " + this.uid.toString())
+    //console.log("accountData after calling loadMeals = " + this.accountData.toString())
+    console.log("getSun in loadMeals = " + this.getSun)
 
     let URL = `/server/meals/bydate`;
 
     let params = new HttpParams()
     params = params.append('date', this.getSun)
-    params = params.append('uid', "8")
+    params = params.append('uid', this.uid)
 
     this.userMeals = await this.httpClient.get<userMeal[]>(URL, { params: params }).toPromise()
 
@@ -119,19 +122,20 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     console.log(this.userMeals)
 
     if (this.userMeals?.length != 0) {this.convertToEvents()}
-
     
   }
 
   getAccountData(){
+    console.log("_________getAccountData IS RUNNING_________");
+
     this.authService.getAccount().subscribe(
       (res: any) => {
           this.accountData = res.toString();
           this.uid = parseInt(this.accountData);
           console.log("UID after calling auth service = " + this.uid)
+          return res.toString();
       }
     );
-    console.log("ViewDate = " + this.viewDate);
   }
 
   async convertToEvents(){
