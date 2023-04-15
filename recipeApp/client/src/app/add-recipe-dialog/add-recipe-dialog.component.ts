@@ -21,6 +21,8 @@ export class AddRecipeDialogComponent {
   file_store: FileList;
   file_list: Array<string> = [] ;
   error: string;
+  imageString: string;
+  imageName: string;
 
   constructor(
     public dialogRef: MatDialogRef<AddRecipeDialogComponent>,
@@ -37,8 +39,9 @@ export class AddRecipeDialogComponent {
       title: new FormControl(''),
       ingredients: new FormControl(''),
       instructions: new FormControl(''),
-      image: new FormControl( [Validators.required,requiredFileType('jpg')])
+      image: new FormControl('',Validators.required)
     })
+
     this.recipeForm.valueChanges.subscribe();
     this.authService.getAccount().subscribe(
       (res: any) => {
@@ -51,10 +54,11 @@ export class AddRecipeDialogComponent {
 
   async addRecipe() {
     await this.httpClient.post('/server/recipes/add', {
-      image_name: "test_image_1",
+      image_name: this.imageName,
       ingredients: formatIngredientsForAPI(this.recipeForm.value['ingredients']),
       instructions: formatInstructionsForAPI(this.recipeForm.value['instructions']),
       title: this.recipeForm.value['title'],
+      image: this.imageString,
       uid: parseInt(this.accountData)
     }).subscribe((post)=>{
       console.log("Recipe Added for User", this.accountData);
@@ -67,12 +71,24 @@ export class AddRecipeDialogComponent {
       if (l.length > 1) this.error = "Only one file at time allowed";
       else{
       const f = l[0];
+      this.imageName = f.name;
       this.recipeForm.patchValue({image: `${f.name}`});
+      var reader = new FileReader();
+
+        reader.onload =this._handleReaderLoaded.bind(l);
+
+        reader.readAsBinaryString(f);
       }
     } else {
       this.recipeForm.patchValue({image: ""});
     }
   }
+
+  _handleReaderLoaded(Filelist: any) {
+    var binaryString = Filelist.target.result;
+           this.imageString= btoa(binaryString);
+           console.log(this.imageString);
+   }
 
 }
 
