@@ -28,13 +28,16 @@
         #f_input
         (change)="handleFileInputChange(f_input.files!)"
       />
+      <div class="error" *ngIf="error">
+        Only one file at time allowed!
+      </div>
 
     </mat-form-field>
 
 
   <mat-dialog-actions>
   <div class ="bottom">
-   <button mat-raised-button [mat-dialog-close] type="submit" color="primary" id="save">Save</button>
+   <button mat-raised-button [disabled]="error != ''"  [mat-dialog-close] type="submit" color="primary" id="save">Save</button>
    <button mat-flat-button [mat-dialog-close]="" (click)="onNoClick()" id="cancel">Cancel</button>
   </div>
   </mat-dialog-actions>

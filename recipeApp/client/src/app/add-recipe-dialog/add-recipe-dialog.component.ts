@@ -20,7 +20,7 @@ export class AddRecipeDialogComponent {
   @ViewChild(RecipesComponent) accountData: any;
   file_store: FileList;
   file_list: Array<string> = [] ;
-  error: string;
+  error: string = "";
   imageString: string;
   imageName: string;
 
@@ -71,13 +71,13 @@ export class AddRecipeDialogComponent {
 
 
   handleFileInputChange(l: FileList ): void | null {
+    this.error = "";
     this.file_store = l;
     if (l.length) {
       if (l.length > 1) this.error = "Only one file at time allowed";
       else{
       const f = l[0];
       this.imageName = f.name;
-      this.imageString = "I changed!"
       this.recipeForm.patchValue({image: `${f.name}`});
       var reader = new FileReader();
       
