@@ -74,10 +74,14 @@ export class AddRecipeDialogComponent {
     this.error = "";
     this.file_store = l;
     if (l.length) {
+      console.log(l.length)
+      
       if (l.length > 1) this.error = "Only one file at time allowed";
       else{
       const f = l[0];
       this.imageName = f.name;
+      var extension = f.name.split('.')[1].toLowerCase();
+      if (extension!="jpg") this.error = "Only .jpg files allowed";
       this.recipeForm.patchValue({image: `${f.name}`});
       var reader = new FileReader();
       

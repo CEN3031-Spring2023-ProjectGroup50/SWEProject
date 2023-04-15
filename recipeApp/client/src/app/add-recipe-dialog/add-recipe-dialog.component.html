@@ -29,7 +29,7 @@
         (change)="handleFileInputChange(f_input.files!)"
       />
       <div class="error" *ngIf="error">
-        Only one file at time allowed!
+        {{error}}
       </div>
 
     </mat-form-field>
