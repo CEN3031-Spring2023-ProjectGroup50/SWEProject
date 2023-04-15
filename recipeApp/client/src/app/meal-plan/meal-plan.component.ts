@@ -61,18 +61,14 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     private changeDetectorRef: ChangeDetectorRef
   ){
     this.sharedService.getReloadResponse().subscribe(()=>{
-      //this.loadMeals();
-      //this.convertToEvents(this.userMeals);
+      
       });
   }
 
   async ngOnInit() {
-    console.log("ViewDate = " + this.viewDate);
     this.getAccountData()
     await this.loadMeals()
     console.log(this.accountData)
-    console.log("events in ngOnInit")
-    console.log(this.events)
 
     this.sharedService.aClickedEvent
     .subscribe((data:string) => {
@@ -80,6 +76,11 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
       this.ngAfterViewInit();
       this.changeDetectorRef.detectChanges();
       this.refreshCalendar.next();
+
+      console.log("events")
+      console.log(this.events)
+      console.log("userMeals")
+      console.log(this.userMeals)
     });
   }
 
@@ -93,9 +94,6 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     this.accountData = await this.getAccountData()
 
-    console.log("UID after calling loadMeals = " + this.uid.toString())
-    console.log("accountData after calling loadMeals = " + this.accountData.toString())
-
     let URL = `/server/meals/bydate`;
 
     let params = new HttpParams()
@@ -104,17 +102,9 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     this.userMeals = await this.httpClient.get<userMeal[]>(URL, { params: params }).toPromise()
 
-    console.log("user meals in loadMeals")
-    console.log(this.userMeals)
-
     if (this.userMeals?.length != 0) {this.events = this.convertToEvents(this.userMeals)}
 
-    console.log("events in loadMeals")
-    console.log(this.events)
-
     return this.events
-
-    
   }
 
   async getAccountData(){
@@ -122,23 +112,15 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
       (res: any) => {
           this.accountData = res.toString();
           this.uid = parseInt(this.accountData);
-          console.log("UID after calling auth service = " + this.uid)
       }
     );
     await this.authService.getAccount().toPromise();
     return this.accountData
-    console.log("ViewDate = " + this.viewDate);
-    console.log("This account data " + this.accountData)
-    console.log("This uid " + this.uid)
   }
 
   convertToEvents(meals: userMeal[]|undefined){
 
     this.events = [] // clear prev list
-
-    //localEvents: CalendarEvent[]
-    console.log("user meals in convertToEvents")
-    console.log(meals)
 
     for (let meal of meals!) {
       
@@ -158,10 +140,6 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
         allDay: true,
       }
       this.events.push(mealEvent)
-
-      console.log("events in convertToEvents")
-
-      console.log(this.events)
     }
 
     return this.events

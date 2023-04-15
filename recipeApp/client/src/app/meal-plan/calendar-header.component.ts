@@ -43,11 +43,9 @@ export class CalendarHeaderComponent {
   }
 
   async getSunday() {
-    console.log("ViewDate = " + this.viewDate.toDateString());
-    console.log("Random Hard Coded Date = " + new Date("2023-09-14"));
     
     let today = this.viewDate.toDateString().substring(0,3);
-    console.log("today = " + today);
+    //console.log("today = " + today);
     
     let sunday: Date = this.viewDate;
     if (today == "Sun"){
@@ -71,7 +69,7 @@ export class CalendarHeaderComponent {
     if (today == "Sat"){
       sunday.setDate(sunday.getDate() - 6);
     }
-    console.log("Sunday = " + sunday);
+    //console.log("Sunday = " + sunday);
     
     var day, month, yearNum, monthNum, dayNum = "";
 
@@ -122,13 +120,13 @@ export class CalendarHeaderComponent {
         break;
    }
 
-    console.log("sunday's monthName = " + month);
-    console.log("sunday's yearNum = " + yearNum);
-    console.log("sunday's monthNum = " + monthNum);
-    console.log("sunday's dayNum = " + dayNum);
+   var dateForAPI = yearNum + "-" + monthNum + "-" + dayNum
 
-    var dateForAPI = yearNum + "-" + monthNum + "-" + dayNum
-    console.log("dateForAPI = " + dateForAPI);
+    // console.log("sunday's monthName = " + month);
+    // console.log("sunday's yearNum = " + yearNum);
+    // console.log("sunday's monthNum = " + monthNum);
+    // console.log("sunday's dayNum = " + dayNum);
+    // console.log("dateForAPI = " + dateForAPI);
 
     return dateForAPI;
    }
