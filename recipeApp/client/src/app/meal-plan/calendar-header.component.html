@@ -1,0 +1,43 @@
+<mat-toolbar>
+
+    <!-- We are scoping to week view only -->
+    <!-- <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle value="bold" (click)="viewChange.emit(CalendarView.Month)"
+            [class.active]="view === CalendarView.Month">
+            Month
+        </mat-button-toggle>
+        <mat-button-toggle value="bold" (click)="viewChange.emit(CalendarView.Week)"
+            [class.active]="view === CalendarView.Week">
+            Week
+        </mat-button-toggle>
+        <mat-button-toggle value="bold" (click)="viewChange.emit(CalendarView.Day)"
+            [class.active]="view === CalendarView.Day">
+            Day
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <span class="example-spacer"></span> -->
+
+
+    <h3>{{ viewDate | calendarDate: view + 'ViewTitle':locale }}</h3>
+
+    <span class="example-spacer"></span>
+
+    <div class="tight-button-row">
+        <button mat-stroked-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="viewDateChange.next(viewDate)" (click)="getSunday()">
+            Previous
+        </button>
+        <button mat-stroked-button color="primary" mwlCalendarToday [(viewDate)]="viewDate"
+            (viewDateChange)="viewDateChange.next(viewDate)" (click)="getSunday()">
+            Today
+        </button>
+        <button mat-stroked-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="viewDateChange.next(viewDate)" (click)="getSunday()">
+            Next
+        </button>
+    </div>
+
+</mat-toolbar>
+
+<br />

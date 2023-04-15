@@ -1,75 +1,166 @@
-import { Component, ViewChild} from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
 import { AuthService } from '../shared/auth/auth.service';
-import { MatSort} from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table'
-import { MatPaginator } from '@angular/material/paginator';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { SharedFunctionsService } from '../shared/shared-functions.service'
+import { CalendarEvent, CalendarView } from 'angular-calendar';
+import { addDays, addHours, startOfDay } from 'date-fns';
+import { colors } from './colors';
+import {OnInit, AfterViewInit} from '@angular/core';
+import { CalendarHeaderComponent } from './calendar-header.component';
 
-/**
- * @title Data table with sorting, pagination, and filtering.
- */
+interface userMeal {
+  Mid: number,
+  Date: Date,
+  Mealtype: string,
+  Title: string,
+  Ingredients: string,
+  Instructions: string,
+  Image_name: string,
+  Email: string,
+  Image: Uint8Array[],
+}
+
 @Component({
   selector: 'app-meal-plan',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './meal-plan.component.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./meal-plan.component.css'],
 
 })
-export class MealPlanComponent {
+export class MealPlanComponent implements OnInit, AfterViewInit {
 
-    displayedColumns = ['id', 'name', 'progress', 'color'];
-    dataSource: MatTableDataSource<UserData>;
+  @ViewChild(CalendarHeaderComponent) calendar: CalendarHeaderComponent;
+
+  @Input() locale: string = 'en';
+
+  @Output() viewChange = new EventEmitter<CalendarView>();
+
+  @Output() viewDateChange = new EventEmitter<Date>();
+
+  view: CalendarView = CalendarView.Week;
   
-    @ViewChild(MatPaginator) paginator :any = MatPaginator;
-    @ViewChild(MatSort) sort :any = MatSort;
-  
-    constructor() {
-      // Create 100 users
-      const users: UserData[] = [];
-      for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
-  
-      // Assign the data to the data source for the table to render
-      this.dataSource = new MatTableDataSource(users);
-    }
-  
-    /**
-     * Set the paginator and sort after the view init since this component will
-     * be able to query its view for the initialized paginator and sort.
-     */
-    ngAfterViewInit() {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-  
-    applyFilter(filterValue: string) {
-      filterValue = filterValue.trim(); // Remove whitespace
-      filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-      this.dataSource.filter = filterValue;
-    }
+  viewDate: Date = new Date();
+
+  getSun: string;
+
+  accountData="0"
+  uid = 0
+  defaultAccount = "0"
+  public userMeals: userMeal[] | undefined = []
+  public events: CalendarEvent[]
+
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService,
+    private sharedService: SharedFunctionsService,
+  ){
+    this.sharedService.getReloadResponse().subscribe(()=>{
+      this.loadMeals();
+      });
+  }
+
+  ngOnInit() {
+    console.log("ViewDate = " + this.viewDate);
+    this.loadMeals();
+  }
+
+  async ngAfterViewInit() {
+    this.getSun = await this.calendar.getSunday();
+    console.log("getSun = " + this.getSun);
   }
   
-  /** Builds and returns a new User. */
-  function createNewUser(id: number): UserData {
-    const name =
-        NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-        NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-  
-    return {
-      id: id.toString(),
-      name: name,
-      progress: Math.round(Math.random() * 100).toString(),
-      color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-    };
+    // events: CalendarEvent[] = [
+    //   {
+    //     start: startOfDay(new Date()),
+    //     title: 'Meal title',
+    //     color: colors.Breakfast,
+    //     allDay: true,
+    //   },
+    //   {
+    //     start: startOfDay(new Date()),
+    //     title: 'An event',
+    //     color: colors.Lunch,
+    //     allDay: true,
+    //   },
+    //   {
+    //     start: startOfDay(new Date()),
+    //     title: 'An event',
+    //     color: colors.Dinner,
+    //     allDay: true,
+    //   },
+    //   {
+    //     start: addDays(startOfDay(new Date()), 2),
+    //     title: 'An event',
+    //     color: colors.Other,
+    //     allDay: true,
+    //   },
+
+    // ];
+
+    
+    
+  async loadMeals() {
+
+    this.getAccountData()
+
+    console.log("UID after calling loadMeals = " + this.uid.toString())
+    console.log("accountData after calling loadMeals = " + this.accountData.toString())
+
+    let URL = `/server/meals/bydate`;
+
+    let params = new HttpParams()
+    params = params.append('date', this.getSun)
+    params = params.append('uid', "8")
+
+    this.userMeals = await this.httpClient.get<userMeal[]>(URL, { params: params }).toPromise()
+
+    console.log("user meals in loadMeals")
+    console.log(this.userMeals)
+
+    if (this.userMeals?.length != 0) {this.convertToEvents()}
+
+    
+  }
+
+  getAccountData(){
+    this.authService.getAccount().subscribe(
+      (res: any) => {
+          this.accountData = res.toString();
+          this.uid = parseInt(this.accountData);
+          console.log("UID after calling auth service = " + this.uid)
+      }
+    );
+    console.log("ViewDate = " + this.viewDate);
+  }
+
+  async convertToEvents(){
+
+    console.log("user meals in convertToEvents")
+    console.log(this.userMeals)
+
+    for (let meal of this.userMeals!) {
+      
+      let mealEvent: CalendarEvent;
+
+      let mealColor = colors.Other;
+      if (meal.Mealtype == "Breakfast") {mealColor = colors.Breakfast}
+      else if (meal.Mealtype == "Lunch") {mealColor = colors.Lunch}
+      else if (meal.Mealtype == "Dinner") {mealColor = colors.Dinner}
+      else {let mealColor = colors.Other}
+
+      mealEvent = 
+      {
+        start: meal.Date,
+        title: meal.Title,
+        color: mealColor,
+        allDay: true,
+      }
+      this.events.push
+      
+    }
+  }
+
+
   }
   
-  /** Constants used to fill up our data base. */
-  const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-    'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-  const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-    'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-    'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
-  
-  export interface UserData {
-    id: string;
-    name: string;
-    progress: string;
-    color: string;
-  }
