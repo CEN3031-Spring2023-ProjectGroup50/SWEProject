@@ -101,30 +101,6 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     //   },
 
     // ];
-
-
-  constructor(
-    private httpClient: HttpClient,
-    private authService: AuthService,
-    private sharedService: SharedFunctionsService,
-  ){
-    this.sharedService.getReloadResponse().subscribe(()=>{
-      this.loadMeals();
-      });
-  }
-
-  ngOnInit() {
-    console.log("_________ngOnInit IS RUNNING_________");
-    console.log("ViewDate = " + this.viewDate);
-    this.getAccountData();
-  }
-
-  async ngAfterViewInit() {
-    console.log("_________ngAfterViewInit IS RUNNING_________");
-    this.getSun = await this.calendar.getSunday();
-    console.log("getSun = " + this.getSun);
-    this.loadMeals();
-  }  
     
   async loadMeals() {
 
@@ -144,7 +120,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     console.log("user meals in loadMeals")
     console.log(this.userMeals)
 
-    if (this.userMeals?.length != 0) {this.convertToEvents()}
+    if (this.userMeals?.length != 0) {this.convertToEvents(this.userMeals)}
 
     
   }
