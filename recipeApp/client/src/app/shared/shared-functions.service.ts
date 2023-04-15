@@ -31,9 +31,8 @@ export class SharedFunctionsService {
   @Output() aClickedEvent = new EventEmitter<string>();
 
   AClicked(msg: string) {
-  this.aClickedEvent.emit(msg);
-  return this.reloadSub.asObservable();
-
+    this.aClickedEvent.emit(msg);
+    return this.reloadSub.asObservable();
 }
 
 }

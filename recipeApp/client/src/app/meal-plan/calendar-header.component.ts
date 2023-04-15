@@ -5,6 +5,7 @@ import { end } from '@popperjs/core';
 import { CalendarView } from 'angular-calendar';
 import { AuthService } from '../shared/auth/auth.service';
 import { SharedFunctionsService } from '../shared/shared-functions.service'
+import { MealPlanComponent } from './meal-plan.component';
 
 @Component({
   selector: 'mwl-calendar-header',
@@ -12,6 +13,7 @@ import { SharedFunctionsService } from '../shared/shared-functions.service'
   styleUrls: ["../../../node_modules/bootstrap/dist/css/bootstrap.min.css", './meal-plan.component.css'],
 })
 export class CalendarHeaderComponent {
+
   @Input() view: CalendarView;
   @Input() viewDate: Date;
   @Input() locale: string = 'en';

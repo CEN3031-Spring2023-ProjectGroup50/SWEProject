@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation, Input, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import { AuthService } from '../shared/auth/auth.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SharedFunctionsService } from '../shared/shared-functions.service'
@@ -7,6 +7,8 @@ import { addDays, addHours, startOfDay } from 'date-fns';
 import { colors } from './colors';
 import {OnInit, AfterViewInit} from '@angular/core';
 import { CalendarHeaderComponent } from './calendar-header.component';
+import { Subject } from 'rxjs';
+
 
 interface userMeal {
   Mid: number,
@@ -29,6 +31,8 @@ interface userMeal {
 
 })
 export class MealPlanComponent implements OnInit, AfterViewInit {
+
+  refreshCalendar: Subject<void> = new Subject();
 
   @ViewChild(CalendarHeaderComponent) calendar: CalendarHeaderComponent;
 
@@ -54,10 +58,11 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     private httpClient: HttpClient,
     private authService: AuthService,
     private sharedService: SharedFunctionsService,
+    private changeDetectorRef: ChangeDetectorRef
   ){
     this.sharedService.getReloadResponse().subscribe(()=>{
-      this.loadMeals();
-      this.convertToEvents(this.userMeals);
+      //this.loadMeals();
+      //this.convertToEvents(this.userMeals);
       });
   }
 
@@ -66,20 +71,22 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     this.getAccountData()
     await this.loadMeals()
     console.log(this.accountData)
-    console.log("events")
+    console.log("events in ngOnInit")
     console.log(this.events)
 
     this.sharedService.aClickedEvent
     .subscribe((data:string) => {
-      console.log('Event message from Component A: ' + data);
-      this.loadMeals();
-      this.convertToEvents(this.userMeals);
+      console.log('Event message from Calendar Header: ' + data);
+      this.ngAfterViewInit();
+      this.changeDetectorRef.detectChanges();
+      this.refreshCalendar.next();
     });
   }
 
   async ngAfterViewInit() {
     this.getSun = await this.calendar.getSunday();
     console.log("getSun = " + this.getSun);
+    this.loadMeals();
   }
     
   async loadMeals() {
