@@ -553,6 +553,82 @@ func TestMealGetByDate(t *testing.T) {
 	*/
 }
 
+func TestEditMeal(t *testing.T) {
+	r := SetUpRouter()
+	r.PUT("/server/meals/edit/", handler.EditMeal())
+
+	var last models.Meal
+	initialize.Db.Table("meals").Last(&last)
+	lastNum := last.Mid
+
+	mids := []string{strconv.FormatInt(int64(lastNum-4), 10),
+		strconv.FormatInt(int64(lastNum-3), 10),
+		strconv.FormatInt(int64(lastNum-2), 10),
+		strconv.FormatInt(int64(lastNum-1), 10),
+		strconv.FormatInt(int64(lastNum), 10)}
+
+	for ix, val := range mids {
+
+		var meal models.Meal
+		initialize.Db.Table("meals").Where("mid = ?", val).Find(&meal)
+
+		switch ix {
+		case 0:
+			meal.Mealtype = "Lunch"
+			meal.Date = "2023-05-01"
+			meal.Recipeid = 15
+		case 1:
+			meal.Mealtype = "Dinner"
+			meal.Date = "2023-05-02"
+			meal.Recipeid = 16
+		case 2:
+			meal.Mealtype = "Breakfast"
+			meal.Date = "2023-05-03"
+			meal.Recipeid = 17
+		case 3:
+			meal.Mealtype = "Other"
+			meal.Date = "2024-06-04"
+		case 4:
+			meal.Date = "2023-02-02"
+		}
+
+		jsonValue, _ := json.Marshal(meal)
+		req, _ := http.NewRequest("PUT", "/server/meals/edit/", bytes.NewBuffer(jsonValue))
+		req.Header.Set("Content-Type", "application/json")
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code, "Could not edit meal "+val)
+		switch ix {
+		case 0:
+			assert.Contains(t, w.Body.String(), "Lunch", "Could not edit meal "+val)
+			assert.Contains(t, w.Body.String(), "2023-05-01", "Could not edit meal "+val)
+			assert.Contains(t, w.Body.String(), "15", "Could not edit meal "+val)
+		case 1:
+			assert.Contains(t, w.Body.String(), "Dinner", "Could not edit meal "+val)
+			assert.Contains(t, w.Body.String(), "2023-05-02", "Could not edit meal "+val)
+			assert.Contains(t, w.Body.String(), "16", "Could not edit meal "+val)
+		case 2:
+			assert.Contains(t, w.Body.String(), "Breakfast", "Could not edit meal "+val)
+			assert.Contains(t, w.Body.String(), "2023-05-03", "Could not edit meal "+val)
+			assert.Contains(t, w.Body.String(), "17", "Could not edit meal "+val)
+		case 3:
+			assert.Contains(t, w.Body.String(), "Other", "Could not edit meal "+val)
+			assert.Contains(t, w.Body.String(), "2024-06-04", "Could not edit meal "+val)
+		case 4:
+			assert.Contains(t, w.Body.String(), "2023-02-02", "Could not edit meal "+val)
+
+		}
+		//assert.Contains(t, w.Body.String(), "Lunch", "Could not edit meal "+val)
+	}
+
+	//bogus := "55000"
+	//req, _ := http.NewRequest("PUT", "/server/meals/edit/"+bogus, nil)
+	//w := httptest.NewRecorder()
+	//r.ServeHTTP(w, req)
+	//assert.Equal(t, http.StatusBadRequest, w.Code, "Got bogus meal "+bogus)
+}
+
 func TestDeleteMeal(t *testing.T) {
 	r := SetUpRouter()
 	r.DELETE("/server/meals/delete/:id", handler.DeleteMeal())
