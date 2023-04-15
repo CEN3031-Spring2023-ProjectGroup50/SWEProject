@@ -132,9 +132,12 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
       else if (meal.Mealtype == "Dinner") {mealColor = colors.Dinner}
       else {let mealColor = colors.Other}
 
+      var d = new Date(meal.Date.toString());
+      d.setMinutes( d.getMinutes() + d.getTimezoneOffset() );
+
       mealEvent = 
       {
-        start: new Date (meal.Date.toString()),
+        start: d,
         title: meal.Title,
         color: mealColor,
         allDay: true,
