@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 import { RecipesComponent } from '../recipes/recipes.component';
 import { AuthService } from '../shared/auth/auth.service';
-import { requiredFileType } from './requireFileType';
+
 
 
 
@@ -39,7 +39,7 @@ export class AddRecipeDialogComponent {
       title: new FormControl(''),
       ingredients: new FormControl(''),
       instructions: new FormControl(''),
-      image: new FormControl('',Validators.required)
+      image: new FormControl('')
     })
 
     this.recipeForm.valueChanges.subscribe();
