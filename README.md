@@ -17,6 +17,33 @@ Save time, and savor every meal with **Mallow**.
 
 For more details of the "North Star" vision of this app and its user stories, see the [specification](docs/RecipeAppRequirementSpec.md#feature-summary-and-user-stories).
 
+## Setup & Installation
+REQUIREMENTS: You must have the following installed prior to following these steps:
+- [Go](https://go.dev/dl/)
+- [Node.js (LTS)](https://nodejs.org/en/download) 
+- make (or MinGW)
+
+### Unlocking secured files
+This step is **IMPORTANT**. Some of the files in this repo are encrypted using git-crypt; you must unlock them before proceeding.
+1. In the `/SWEProject` root folder:<br>
+    Run `git-crypt unlock git-crypt-key`
+    
+### Installing dependencies
+2. In the `/SWEProject/recipeApp/server/` folder:<br>
+   - Run `make install` or `mingw32-make install` to install all Go dependencies
+3. In the `/SWEProject/recipeApp/client/` folder:<br>
+   - Run `make install` or `mingw32-make install` to install all Angular dependencies
+
+## Starting Mallow
+1. Open a new terminal
+2. In the `/SWEProject/recipeApp/server/` folder:<br>
+   - Run `make dev` or `mingw32-make dev` to start the backend server
+3. Open a 2nd terminal (do NOT close the first one)
+4. In the `/SWEProject/recipeApp/client/` folder:<br>
+   - Run `make dev` or `mingw32-make dev` to build the Angular frontend
+
+To stop running, press Ctrl+C in both terminals to exit.
+
 ## Team Members
 
 Backend       | Frontend
