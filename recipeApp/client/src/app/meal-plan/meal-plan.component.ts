@@ -48,8 +48,32 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
   uid = 0
   defaultAccount = "0"
   public userMeals: userMeal[] | undefined = []
-  public events: CalendarEvent[]
+  public events: CalendarEvent[] = []
 
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService,
+    private sharedService: SharedFunctionsService,
+  ){
+    this.sharedService.getReloadResponse().subscribe(()=>{
+      this.loadMeals();
+      this.convertToEvents(this.userMeals);
+      });
+  }
+
+  async ngOnInit() {
+    console.log("ViewDate = " + this.viewDate);
+    this.getAccountData()
+    await this.loadMeals()
+    console.log(this.accountData)
+    console.log("events" + this.events)
+  }
+
+  async ngAfterViewInit() {
+    this.getSun = await this.calendar.getSunday();
+    console.log("getSun = " + this.getSun);
+  }
+  
     // events: CalendarEvent[] = [
     //   {
     //     start: startOfDay(new Date()),
@@ -104,17 +128,16 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     
   async loadMeals() {
 
-    console.log("_________loadMeals IS RUNNING_________");
-    
-    console.log("UID in loadMeals = " + this.uid.toString())
-    //console.log("accountData after calling loadMeals = " + this.accountData.toString())
-    console.log("getSun in loadMeals = " + this.getSun)
+    this.getAccountData()
+
+    console.log("UID after calling loadMeals = " + this.uid.toString())
+    console.log("accountData after calling loadMeals = " + this.accountData.toString())
 
     let URL = `/server/meals/bydate`;
 
     let params = new HttpParams()
     params = params.append('date', this.getSun)
-    params = params.append('uid', this.uid)
+    params = params.append('uid', "8")
 
     this.userMeals = await this.httpClient.get<userMeal[]>(URL, { params: params }).toPromise()
 
@@ -122,12 +145,11 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     console.log(this.userMeals)
 
     if (this.userMeals?.length != 0) {this.convertToEvents()}
+
     
   }
 
   getAccountData(){
-    console.log("_________getAccountData IS RUNNING_________");
-
     this.authService.getAccount().subscribe(
       (res: any) => {
           this.accountData = res.toString();
@@ -136,14 +158,15 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
           return res.toString();
       }
     );
+    console.log("ViewDate = " + this.viewDate);
   }
 
-  async convertToEvents(){
-
+  convertToEvents(meals: userMeal[]|undefined){
+    //localEvents: CalendarEvent[]
     console.log("user meals in convertToEvents")
-    console.log(this.userMeals)
+    console.log(meals)
 
-    for (let meal of this.userMeals!) {
+    for (let meal of meals!) {
       
       let mealEvent: CalendarEvent;
 
@@ -160,9 +183,14 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
         color: mealColor,
         allDay: true,
       }
-      this.events.push
-      
+      this.events.push(mealEvent)
+
+      console.log("events in convertToEvents")
+
+      console.log(this.events)
     }
+
+    return this.events
   }
 
 
