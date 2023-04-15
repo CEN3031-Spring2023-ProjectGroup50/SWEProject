@@ -53,7 +53,9 @@ export class AddRecipeDialogComponent {
   }
 
   async addRecipe() {
-    await this.httpClient.post('/server/recipes/add', {
+    console.log(this.imageName);
+    console.log(this.imageString);
+    await this.httpClient.post('/server/recipes/add',{
       image_name: this.imageName,
       ingredients: formatIngredientsForAPI(this.recipeForm.value['ingredients']),
       instructions: formatInstructionsForAPI(this.recipeForm.value['instructions']),
@@ -62,8 +64,11 @@ export class AddRecipeDialogComponent {
       uid: parseInt(this.accountData)
     }).subscribe((post)=>{
       console.log("Recipe Added for User", this.accountData);
+
     });
   }
+
+
 
   handleFileInputChange(l: FileList ): void | null {
     this.file_store = l;
@@ -72,21 +77,24 @@ export class AddRecipeDialogComponent {
       else{
       const f = l[0];
       this.imageName = f.name;
+      this.imageString = "I changed!"
       this.recipeForm.patchValue({image: `${f.name}`});
       var reader = new FileReader();
+      
 
-        reader.onload =this._handleReaderLoaded.bind(l);
+        reader.onload =this._handleReaderLoaded.bind(this);
 
         reader.readAsBinaryString(f);
+        //this.imageString = btoa(reader.result!.toString())
+        //console.log(this.imageString)
       }
     } else {
       this.recipeForm.patchValue({image: ""});
     }
   }
 
-  _handleReaderLoaded(Filelist: any) {
-    var binaryString = Filelist.target.result;
-           this.imageString= btoa(binaryString);
+  _handleReaderLoaded(f: any) {
+    this.imageString = btoa(f.target.result);
            console.log(this.imageString);
    }
 
