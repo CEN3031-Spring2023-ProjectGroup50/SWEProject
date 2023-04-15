@@ -66,7 +66,8 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     this.getAccountData()
     await this.loadMeals()
     console.log(this.accountData)
-    console.log("events" + this.events)
+    console.log("events")
+    console.log(this.events)
   }
 
   async ngAfterViewInit() {
@@ -124,7 +125,8 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     if (this.userMeals?.length != 0) {this.events = this.convertToEvents(this.userMeals)}
 
-    console.log("events in loadMeals", this.events)
+    console.log("events in loadMeals")
+    console.log(this.events)
 
     return this.events
 
@@ -163,7 +165,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
       mealEvent = 
       {
-        start: meal.Date,
+        start: new Date(meal.Date),
         title: meal.Title,
         color: mealColor,
         allDay: true,
