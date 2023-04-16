@@ -2,6 +2,7 @@
 </mwl-calendar-header-grocery>
 
 <mat-divider></mat-divider>
-<mat-list id="list">
-  <mat-list-item *ngFor="let data of ingredients | keyvalue">{{data.value}}</mat-list-item>
+<mat-list id="list" *ngFor="let data of ingredients | keyvalue">
+  <h2 mat-subheader>{{data.key}}</h2>
+  <mat-list-item>{{data.value}}<hr/></mat-list-item>
 </mat-list>
