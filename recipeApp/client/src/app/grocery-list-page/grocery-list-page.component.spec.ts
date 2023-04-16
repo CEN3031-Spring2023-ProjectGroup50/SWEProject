@@ -30,11 +30,12 @@ describe('GroceryListPageComponent', () => {
   it('should create the grocery list page component', waitForAsync(() => {
     const fixture = TestBed.createComponent(GroceryListPageComponent);
     const grocListPage = fixture.debugElement.componentInstance;
-    expect(grocListPage).toBeTruthy();}))
+    expect(grocListPage).toBeTruthy();
+  }))
   
-    it('should display the menu-nav for the grocery list page', () => {
-      let element = fixture.debugElement.query(By.css('#menuNav'));
-      expect(element.nativeElement).toBeTruthy();
-    })
+  it('should display the menu-nav for the grocery list page', () => {
+    let element = fixture.debugElement.query(By.css('#menuNav'));
+    expect(element.nativeElement).toBeTruthy();
+  })
 
 });
