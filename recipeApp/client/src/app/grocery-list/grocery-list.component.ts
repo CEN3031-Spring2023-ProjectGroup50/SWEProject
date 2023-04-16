@@ -8,11 +8,8 @@ import {OnInit, AfterViewInit} from '@angular/core';
 import { colors } from '../calendar-header/colors';
 import { Subject } from 'rxjs';
 import { CalendarHeaderComponent } from '../calendar-header/calendar-header.component';
-import { ChecklistModule } from 'angular-checklist';
 
-/**
- * @title Data table with sorting, pagination, and filtering.
- */
+
 interface userMeal {
   Mid: number,
   Date: Date,
