@@ -2,6 +2,7 @@ import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
 import { GroceryListPageComponent } from './grocery-list-page.component';
 import { AppModule } from '../app.module';
 import { WelcomeComponent } from '../welcome/welcome.component';
+import { By } from '@angular/platform-browser';
 
 describe('GroceryListPageComponent', () => {
   let component: GroceryListPageComponent;
@@ -30,6 +31,10 @@ describe('GroceryListPageComponent', () => {
     const fixture = TestBed.createComponent(GroceryListPageComponent);
     const grocListPage = fixture.debugElement.componentInstance;
     expect(grocListPage).toBeTruthy();}))
-
+  
+    it('should display the menu-nav for the grocery list page', () => {
+      let element = fixture.debugElement.query(By.css('#menuNav'));
+      expect(element.nativeElement).toBeTruthy();
+    })
 
 });
