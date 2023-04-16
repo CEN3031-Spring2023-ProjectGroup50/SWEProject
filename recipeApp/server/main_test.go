@@ -521,7 +521,7 @@ func TestMealGetByDate(t *testing.T) {
 		{input: url + "?date=2023-04-02&uid=2", start: "2023-04-02", end: "2023-04-08", uid: 2},
 	}
 
-	for _, tc := range testConds {
+	for i, tc := range testConds {
 		req, _ := http.NewRequest("GET", tc.input, nil)
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
@@ -540,6 +540,12 @@ func TestMealGetByDate(t *testing.T) {
 
 		}
 		assert.Equal(t, inBound, true, "Response data was out of range")
+		if i == 0 {
+			assert.Equal(t, len(response), 1, "Response data was not the correct length")
+		}
+		if i == 1 {
+			assert.Equal(t, len(response), 4, "Response data was not the correct length")
+		}
 
 	}
 
