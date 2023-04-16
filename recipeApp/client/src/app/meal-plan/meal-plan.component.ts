@@ -310,8 +310,11 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
 
+      var d = new Date(this.data.Date.toString());
+      d.setMinutes( d.getMinutes() + d.getTimezoneOffset() );
+
       this.editMealForm = new FormGroup({
-        date: new FormControl(this.data.Date, [Validators.required]),
+        date: new FormControl(d, [Validators.required]),
         mealtype: new FormControl(this.data.Mealtype, [Validators.required]),
       })
       this.matcher = new MyErrorStateMatcher();
