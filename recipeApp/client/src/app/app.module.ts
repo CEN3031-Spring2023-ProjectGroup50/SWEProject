@@ -44,7 +44,7 @@ import { registerFormComponent } from './registerform/registerform.component';
 import { MenuNavigationComponent} from './menu-navigation/menu-navigation.component';
 import { HomeComponent } from './home/home.component';
 import { RecipesComponent } from './recipes/recipes.component';
-import { MealPlanComponent } from './meal-plan/meal-plan.component';
+import { MealPlanComponent, MealDialog } from './meal-plan/meal-plan.component';
 import { MealPlanPageComponent } from './meal-plan-page/meal-plan-page.component';
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { GroceryListPageComponent } from './grocery-list-page/grocery-list-page.component';
@@ -83,7 +83,8 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
         RecipeDeleteDialogContent,
         AddMealplanDialogComponent,
         AddMealplanContentComponent,
-        CalendarHeaderComponent
+        CalendarHeaderComponent,
+        MealDialog
     ],
     providers: [
         AuthService,

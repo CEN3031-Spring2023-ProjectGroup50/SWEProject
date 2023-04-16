@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"recipeApp/initialize"
 	"recipeApp/models"
@@ -14,6 +15,7 @@ type recipePostRequest struct {
 	Ingredients  string `json:"ingredients"`
 	Instructions string `json:"instructions"`
 	Image_Name   string `json:"image_name"`
+	Image        []byte `json:"image"`
 	Uid          uint   `json:"uid"`
 }
 
@@ -41,8 +43,12 @@ func CreateRecipe() gin.HandlerFunc {
 			Ingredients:  requestBody.Ingredients,
 			Instructions: requestBody.Instructions,
 			Image_Name:   requestBody.Image_Name,
+			Image:        requestBody.Image,
 			Uid:          requestBody.Uid,
 		}
+
+		fmt.Printf("Incoming Image:  %s", requestBody.Image)
+		fmt.Printf("Image: %s", recipe.Image)
 
 		var last models.Recipe
 		initialize.Db.Table("recipe").Last(&last)
@@ -59,7 +65,7 @@ func CreateRecipe() gin.HandlerFunc {
 
 		}
 
-		var response recipePostRequest
+		var response models.Recipe
 
 		initialize.Db.Table("recipe").Where("rid = ?", recipe.Rid).Find(&response)
 

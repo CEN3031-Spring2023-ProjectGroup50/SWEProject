@@ -18,10 +18,26 @@
       <textarea matInput formControlName="instructions" required id="instructions"></textarea>
     </mat-form-field><br />
 
+    <mat-form-field class="form-field" appearance ="outline" [style.width.px]="650">
+      <mat-label>Image Upload</mat-label>
+      <input  readonly matInput  formControlName="image" (click)="f_input.click()" />
+			<input
+        type="file"
+        multiple
+        hidden
+        #f_input
+        (change)="handleFileInputChange(f_input.files!)"
+      />
+      <div class="error" *ngIf="error">
+        {{error}}
+      </div>
+
+    </mat-form-field>
+
 
   <mat-dialog-actions>
   <div class ="bottom">
-   <button mat-raised-button [mat-dialog-close] type="submit" color="primary" id="save">Save</button>
+   <button mat-raised-button [disabled]="error != ''"  [mat-dialog-close] type="submit" color="primary" id="save">Save</button>
    <button mat-flat-button [mat-dialog-close]="" (click)="onNoClick()" id="cancel">Cancel</button>
   </div>
   </mat-dialog-actions>

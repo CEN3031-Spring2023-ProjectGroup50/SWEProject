@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation, Input, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ViewEncapsulation, Input, Output, EventEmitter, ChangeDetectorRef, Inject} from '@angular/core';
 import { AuthService } from '../shared/auth/auth.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SharedFunctionsService } from '../shared/shared-functions.service'
@@ -8,7 +8,9 @@ import { colors } from '../calendar-header/colors';
 import {OnInit, AfterViewInit} from '@angular/core';
 import { CalendarHeaderComponent } from '../calendar-header/calendar-header.component';
 import { Subject } from 'rxjs';
-
+import { MatMenuTrigger } from '@angular/material/menu';
+import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { FormGroup,FormControl,FormBuilder, Validators } from '@angular/forms'
 
 interface userMeal {
   Mid: number,
@@ -33,23 +35,13 @@ interface userMeal {
 export class MealPlanComponent implements OnInit, AfterViewInit {
 
   refreshCalendar: Subject<void> = new Subject();
-
   @ViewChild(CalendarHeaderComponent) calendar: CalendarHeaderComponent;
-
   @Input() locale: string = 'en';
-
   @Output() viewChange = new EventEmitter<CalendarView>();
-
   @Output() viewDateChange = new EventEmitter<Date>();
-
   view: CalendarView = CalendarView.Week;
-  
   viewDate: Date = new Date();
-
   getSun: string;
-
-  myArray = [2];
-
   accountData="0"
   uid = 0
   defaultAccount = "0"
@@ -60,7 +52,8 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     private httpClient: HttpClient,
     private authService: AuthService,
     private sharedService: SharedFunctionsService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    public dialog: MatDialog
   ){
     this.sharedService.getReloadResponse().subscribe(()=>{
       
@@ -139,6 +132,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
       mealEvent = 
       {
+        id: meal.Mid,
         start: d,
         title: meal.Title,
         color: mealColor,
@@ -151,5 +145,63 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
   }
 
 
+  @Input() clickedMeal: userMeal
+  eventClicked({ event }: { event: CalendarEvent }): void {
+    console.log('Event clicked', event);
+
+    this.clickedMeal = this.userMeals?.find(meal => meal.Mid === event.id)!;
+    console.log("meal clicked: ")
+    console.log(this.clickedMeal)
+
+    this.openDialog()
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(MealDialog, {
+      data: {
+        Mid: this.clickedMeal.Mid,
+        Date: this.clickedMeal.Date,
+        Mealtype: this.clickedMeal.Mealtype,
+        Title: this.clickedMeal.Title,
+        Ingredients: formatIngredients(this.clickedMeal.Ingredients),
+        Instructions: formatInstructions(this.clickedMeal.Instructions),
+        Image_name: this.clickedMeal.Image_name,
+        Email: this.clickedMeal.Email,
+        Image: this.clickedMeal.Image,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   }
   
+
+  @Component({
+    selector: 'meal-details-dialog',
+    templateUrl: 'meal-details.html',
+  })
+  export class MealDialog {
+    constructor(
+      public dialogRef: MatDialogRef<MealPlanComponent>,
+      @Inject(MAT_DIALOG_DATA) public meal: userMeal,
+    ) {}
+  
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+  }
+
+
+
+  function formatIngredients(Ingredients: string,) {
+    let result = Ingredients.substring(2, Ingredients.length-2);
+    result = result.replaceAll("\', \'" , "\n");
+    return result;
+  }
+  
+  function formatInstructions(Instructions: string,) {
+    return Instructions.replaceAll("\n", "\n\n");
+  }
