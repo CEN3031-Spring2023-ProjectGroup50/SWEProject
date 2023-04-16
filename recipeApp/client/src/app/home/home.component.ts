@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
         this.authService.getAccount().subscribe(
             (res: any) => {
                 this.accountData = res;
-                console.log(this.accountData)
+                console.log("uid = " + this.accountData)
             }, (err: any) => {
                 this.router.navigateByUrl('/login');
             }

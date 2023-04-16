@@ -1,8 +1,8 @@
 .recipe-details-image {
-    object-fit:inherit;
-    height: 100%;
-    width: 100%;
-    background-size: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 300px;
 }
 
 .recipe-image {

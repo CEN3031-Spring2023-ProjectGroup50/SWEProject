@@ -3,7 +3,7 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { HttpClient, HttpParams } from '@angular/common/http'
 import {AuthService} from '../shared/auth/auth.service'
 import { SharedFunctionsService } from '../shared/shared-functions.service';
-import { FormGroup,FormControl,FormBuilder } from '@angular/forms'
+import { FormGroup,FormControl,FormBuilder, Validators } from '@angular/forms'
 
 
 interface IRecipeItem {
@@ -66,6 +66,12 @@ export class EditRecipeContentModule {
   errorMessage = "";
   editRecipeForm!: FormGroup
 
+  imageName = this.recipe.Image_name;
+  imageString = this.recipe.Image.toString() // I tried this too with no luck: new TextDecoder().decode(this.recipe.Image)
+  file_store: FileList;
+  file_list: Array<string> = [] ;
+  error: string = "";
+
   constructor(@Inject(MAT_DIALOG_DATA) public recipe: IRecipeItem,
       private httpClient: HttpClient,
       private authService: AuthService,
@@ -76,6 +82,7 @@ export class EditRecipeContentModule {
 
     this.editRecipeForm = new FormGroup({
       title: new FormControl(this.recipe.Title),
+      image: new FormControl(this.recipe.Image.toString()),
       ingredients: new FormControl(this.recipe.Ingredients),
       instructions: new FormControl(this.recipe.Instructions)
     })
@@ -91,22 +98,24 @@ export class EditRecipeContentModule {
 
     let RidString = this.recipe.Rid.toString();
 
-    // 13512 is a hardcoded Rid for testing API. 
-    // Trying to figure out how to pass in the recipe data using ${this.recipe.Rid} without it being undefined.
     let URL = `/server/recipes/edit/${RidString}`
 
+    console.log("imageName = " + this.imageName);
+    console.log("imageString = " + this.imageString);
     await this.httpClient.put(URL, {
-      Rid: this.recipe.Rid,
-      Title: this.editRecipeForm.value['title'],
-      Ingredients: formatIngredientsForAPI(this.editRecipeForm.value['ingredients']),
-      Instructions: formatInstructionsForAPI(this.editRecipeForm.value['instructions']),
-      Image_Name: this.recipe.Image_name,
-      Uid: this.recipe.Uid,
+      rid: this.recipe.Rid,
+      title: this.editRecipeForm.value['title'],
+      ingredients: formatIngredientsForAPI(this.editRecipeForm.value['ingredients']),
+      instructions: formatInstructionsForAPI(this.editRecipeForm.value['instructions']),
+      image_name: this.imageName,
+      uid: this.recipe.Uid,
+      image: this.imageString
     })
       .subscribe({
         next: data => {
           this.loading = false;
           this.sharedService.reload();
+          console.log("Recipe Edited for User", this.recipe.Uid);
         },
         error: error => {
           this.errorMessage = error.message;
@@ -114,6 +123,38 @@ export class EditRecipeContentModule {
         },
       });    
     }
+
+    handleFileInputChange(l: FileList ): void | null {
+      this.error = "";
+      this.file_store = l;
+      if (l.length) {
+        console.log(l.length)
+  
+        if (l.length > 1) this.error = "Only one file at time allowed";
+        else{
+        const f = l[0];
+        this.imageName = f.name;
+        var extension = f.name.split('.')[1].toLowerCase();
+        if (extension!="jpg") this.error = "Only .jpg files allowed";
+        this.editRecipeForm.patchValue({image: `${f.name}`});
+        var reader = new FileReader();
+    
+          reader.onload =this._handleReaderLoaded.bind(this);
+  
+          reader.readAsBinaryString(f);
+          //this.imageString = btoa(reader.result!.toString())
+          //console.log(this.imageString)
+        }
+      } else {
+        this.editRecipeForm.patchValue({image: ""});
+      }
+    }
+  
+    _handleReaderLoaded(f: any) {
+      this.imageString = btoa(f.target.result);
+      //console.log(this.imageString);
+     }
+
 }
 
 function formatIngredients(Ingredients: string,) {
@@ -136,3 +177,4 @@ function formatIngredientsForAPI(Ingredients: string,) {
 function formatInstructionsForAPI(Instructions: string,) {
   return Instructions.replaceAll("\n\n", "\n");
 }
+
