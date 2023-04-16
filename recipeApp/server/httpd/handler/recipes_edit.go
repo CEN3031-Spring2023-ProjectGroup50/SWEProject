@@ -49,13 +49,14 @@ func EditRecipe() gin.HandlerFunc {
 			return
 		}
 
-		result := initialize.Db.Table("recipe").Select("title", "ingredients", "instructions", "image_name").
+		result := initialize.Db.Table("recipe").Select("title", "ingredients", "instructions", "image_name", "image").
 			Where("rid = ? and uid !=?", id, mallowid).Updates(
 			map[string]interface{}{
 				"title":        requestBody.Title,
 				"ingredients":  requestBody.Ingredients,
 				"instructions": requestBody.Instructions,
 				"image_name":   requestBody.Image_Name,
+				"image":        requestBody.Image,
 			})
 
 		if result.Error != nil {
