@@ -10,7 +10,9 @@ import { CalendarHeaderComponent } from './calendar-header.component';
 import { Subject } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material/menu';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { FormGroup,FormControl,FormBuilder, Validators } from '@angular/forms'
+import { FormGroup,FormControl,FormBuilder, Validators, FormGroupDirective } from '@angular/forms'
+import { ErrorStateMatcher } from '@angular/material/core';
+
 
 interface userMeal {
   Mid: number,
@@ -199,11 +201,15 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     }
 
     async deleteMeal(mealId: number){
-      this.openDialog() // opens confirmation dialog
+      this.openDeleteMealDialog() // opens confirmation dialog
+    }
+
+    async editMeal(mealId: number){
+      this.openEditMealDialog() // opens confirmation dialog
     }
 
     @Input() mealId: number
-    openDialog(): void {
+    openDeleteMealDialog(): void {
       const dialogRef = this.dialog.open(MealDeleteConfirmationDialog, {
         data: {
           mealId : this.meal.Mid,
@@ -215,6 +221,22 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
         this.dialogRef.close(); // ideally we should only close this one if 'delete' is pressed on the confirmation dialog, but not if 'No' is pressed
       });
     }
+
+    openEditMealDialog(): void {
+      const dialogRef = this.dialog.open(MealEditDialog, {
+        data: {
+          Mid: this.meal.Mid,
+          Date: this.meal.Date,
+          Mealtype: this.meal.Mealtype,
+          Title: this.meal.Title,
+        },
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The edit meal dialog was closed');
+      });
+    }
+    
   }
 
   
@@ -250,6 +272,59 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
             console.log('Delete Failed')
           }
         })
+    }
+  }
+
+
+
+  export class MyErrorStateMatcher implements ErrorStateMatcher {
+    isErrorState(control: FormControl | null, form: FormGroupDirective | null): boolean {
+      //condition true
+      const isSubmitted = form && form.submitted;
+      //false
+      return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    }
+  }
+
+  @Component({
+    selector: 'meal-edit-dialog',
+    templateUrl: 'meal-edit.html',
+  })
+  export class MealEditDialog {
+    constructor(
+      private httpClient: HttpClient,
+      private authService: AuthService,
+      private sharedService: SharedFunctionsService,
+      public dialog: MatDialog,
+      public dialogRef: MatDialogRef<MealPlanComponent>,
+      private formBuilder: FormBuilder,
+      @Inject(MAT_DIALOG_DATA) public data: any,
+    ) {}
+
+    editMealForm!: FormGroup
+    currentDate: Date;
+    matcher: ErrorStateMatcher;
+    errorMessage = ""
+    mealtypes: string[] = ['Breakfast', 'Lunch', 'Dinner', 'Other'];
+
+
+    ngOnInit() {
+
+      this.editMealForm = new FormGroup({
+        date: new FormControl(this.data.Date, [Validators.required]),
+        mealtype: new FormControl(this.data.Mealtype, [Validators.required]),
+      })
+      this.matcher = new MyErrorStateMatcher();
+      this.editMealForm.valueChanges.subscribe(() =>
+        this.errorMessage = 'error')
+    }
+  
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+
+    async editMeal(mealId: number){
+
     }
   }
 

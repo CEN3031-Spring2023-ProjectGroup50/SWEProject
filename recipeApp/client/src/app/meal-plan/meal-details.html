@@ -22,8 +22,8 @@
 
 
 <div mat-dialog-actions>
-  <button mat-flat-button>Reschedule meal</button>
+  <button mat-flat-button (click)="editMeal(meal.Mid)">Update meal date or type</button>
   <button mat-flat-button (click)="deleteMeal(meal.Mid)">Remove from meal plan</button>
-  <button mat-flat-button (click)="onNoClick()">Close</button>
+  <button mat-flat-button (click)="onNoClick()" align="end">Close</button>
 
 </div>
