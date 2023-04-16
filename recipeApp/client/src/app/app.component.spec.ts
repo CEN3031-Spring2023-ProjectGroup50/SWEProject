@@ -30,14 +30,13 @@ describe('AppComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should compile', () => {
+  it('app component should compile', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create the app', waitForAsync(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
+  it('displays the app-header', () => {
+    let element = fixture.debugElement.query(By.css('#app-header'));
+    expect(element.nativeElement).toBeTruthy();
+  })
 
 });

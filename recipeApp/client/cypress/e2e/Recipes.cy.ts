@@ -1,10 +1,7 @@
 /* THESE TESTS REQUIRE THAT BOTH THE SERVER AND CLIENT ARE UP AND RUNNING
-    RUN "MAKE" IN THE SERVER FOLDER
-    RUN "NPM RUN START" IN THE CLIENT FOLDER
+    RUN "MAKE DEV" IN THE SERVER FOLDER
+    RUN "MAKE DEV" IN THE CLIENT FOLDER
     THEN RUN "NPX CYPRESS OPEN" IN THE CLIENT FOLDER TO BEGIN TESTS */
-
-import { AddRecipeDialogComponent } from "src/app/add-recipe-dialog/add-recipe-dialog.component"
-
 
 describe('Home Page(Recipes)', () => {
 
