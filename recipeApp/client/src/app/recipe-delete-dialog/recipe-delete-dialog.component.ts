@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild, Inject } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../shared/auth/auth.service';
+import { SharedFunctionsService } from '../shared/shared-functions.service'
 
 
 interface IRecipeItem {
@@ -48,6 +49,7 @@ export class RecipeDeleteDialogContent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public recipe: IRecipeItem,
       private httpClient: HttpClient,
+      private sharedService: SharedFunctionsService,
       private authService: AuthService){}
 
 
@@ -59,6 +61,7 @@ export class RecipeDeleteDialogContent {
       .subscribe({
         next: data=>{
           console.log('Recipe Deleted');
+          this.sharedService.reload();
         },
         error: error=>{
           console.log('Delete Failed')
