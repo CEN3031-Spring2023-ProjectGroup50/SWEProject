@@ -4,9 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 import { RecipesComponent } from '../recipes/recipes.component';
 import { AuthService } from '../shared/auth/auth.service';
-
-
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-recipe-dialog',
@@ -27,7 +25,8 @@ export class AddRecipeDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<AddRecipeDialogComponent>,
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private _snackBar: MatSnackBar,
     ) {}
 
   onNoClick(): void {
@@ -64,7 +63,7 @@ export class AddRecipeDialogComponent {
       uid: parseInt(this.accountData)
     }).subscribe((post)=>{
       console.log("Recipe Added for User", this.accountData);
-
+      this._snackBar.open("Recipe successfully added!", "", {duration: 2000});
     });
   }
 
