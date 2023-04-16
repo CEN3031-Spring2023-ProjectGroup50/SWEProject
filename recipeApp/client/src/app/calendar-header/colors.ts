@@ -4,7 +4,7 @@ export const colors: any = {
       secondary: '#D1E8FF',
     },
     Breakfast: { // yellow
-      primary: '#e3bc08',
+      primary: '#b79a16',
       secondary: '#FDF1BA',
     },
     Dinner: { // red
@@ -12,7 +12,7 @@ export const colors: any = {
       secondary: '#FAE3E3',
     },
     Other: { // gray
-      primary: '#aaaaaa',
+      primary: '#7a7a7a',
       secondary: '#f0f0f0', // fill color
     },
   };
