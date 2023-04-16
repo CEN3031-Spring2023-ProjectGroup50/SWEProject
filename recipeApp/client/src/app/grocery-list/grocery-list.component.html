@@ -3,7 +3,9 @@
 
 <mat-divider></mat-divider>
 <mat-list id="list" *ngFor="let data of ingredients | keyvalue">
-  <h2 mat-subheader>{{data.key}}</h2>
+  <body [ngStyle]="{'background-color': storedColors.get(data.key).secondary}">
+    <h2 mat-subheader [ngStyle]="{'\color': storedColors.get(data.key).primary}">{{data.key}}</h2>
+  </body>
   <mat-list-item *ngFor="let ingredient of data.value">
     {{ingredient}}
     <hr/>

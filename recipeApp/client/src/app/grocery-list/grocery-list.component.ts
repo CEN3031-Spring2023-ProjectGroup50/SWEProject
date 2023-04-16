@@ -54,6 +54,7 @@ export class GroceryListComponent {
   defaultAccount = "0"
   public userMeals: userMeal[] | undefined = []
   public ingredients = new Map<string, string[]>()
+  public storedColors = new Map<string, any>()
 
   constructor(
     private httpClient: HttpClient,
@@ -125,8 +126,21 @@ export class GroceryListComponent {
 
     for (let meal of meals!) {
       var newIngredients = this.formatIngredients(meal.Ingredients)
-
       this.ingredients.set(meal.Title, newIngredients)
+
+      if (meal.Mealtype == "Breakfast") {
+        this.storedColors.set(meal.Title, colors.Breakfast)
+      }
+      else if (meal.Mealtype == "Lunch") {
+        this.storedColors.set(meal.Title, colors.Lunch)
+      }
+      else if (meal.Mealtype == "Dinner") {
+        this.storedColors.set(meal.Title, colors.Dinner)
+      }
+      else {
+        this.storedColors.set(meal.Title, colors.Other)
+      }
+      console.log(this.storedColors.get(meal.Title))
     }
 
     return this.ingredients
