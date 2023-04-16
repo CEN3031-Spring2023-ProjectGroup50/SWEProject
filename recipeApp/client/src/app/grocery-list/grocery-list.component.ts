@@ -52,7 +52,7 @@ export class GroceryListComponent {
   uid = 0
   defaultAccount = "0"
   public userMeals: userMeal[] | undefined = []
-  public ingredients = new Map<string, string>()
+  public ingredients = new Map<string, string[]>()
 
   constructor(
     private httpClient: HttpClient,
@@ -125,10 +125,19 @@ export class GroceryListComponent {
     this.ingredients.clear()  // clear prev list
 
     for (let meal of meals!) {
-      this.ingredients.set(meal.Title, meal.Ingredients)
+      var newIngredients = this.formatIngredients(meal.Ingredients)
+
+      this.ingredients.set(meal.Title, newIngredients)
     }
 
     return this.ingredients
+  }
+
+  formatIngredients(Ingredients: string,) {
+    let result = Ingredients.substring(2, Ingredients.length-2);
+    result = result.replaceAll("\', \'" , "\n");
+    var splitIngredients = result.split("\n")
+    return splitIngredients;
   }
 
 }
