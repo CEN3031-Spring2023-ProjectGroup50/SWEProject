@@ -5,6 +5,7 @@ import { SharedFunctionsService } from '../shared/shared-functions.service'
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { addDays, addHours, startOfDay } from 'date-fns';
 import {OnInit, AfterViewInit} from '@angular/core';
+import { colors } from '../meal-plan/colors';
 import { Subject } from 'rxjs';
 import { CalendarHeaderGroceryComponent } from './calendar-header-grocery.component';
 import { ChecklistModule } from 'angular-checklist';
@@ -102,9 +103,7 @@ export class GroceryListComponent {
 
     this.userMeals = await this.httpClient.get<userMeal[]>(URL, { params: params }).toPromise()
 
-    if (this.userMeals?.length != 0) {
-      this.ingredients = this.getIngredients(this.userMeals)
-    }
+    this.ingredients = this.getIngredients(this.userMeals)
 
     return this.ingredients
   }

@@ -9,3 +9,8 @@
     <hr/>
   </mat-list-item>
 </mat-list>
+
+<ng-container *ngIf="!ingredients?.size">
+  <h1>No recipes added for this week</h1>
+  Add some recipes to your meal plan to see your grocery list.
+</ng-container>
