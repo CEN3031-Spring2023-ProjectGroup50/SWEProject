@@ -11,8 +11,19 @@
 
     <img mat-card-image class="recipe-details-image" src="{{'data:image/jpeg;base64,' +recipe.Image}}">
 
-    <button mat-icon-button aria-label="Upload icon">
+    <button mat-icon-button aria-label="Upload icon" (click)="f_input.click()">
         <mat-icon>upload</mat-icon>
+        <input readonly matInput formControlName="image"/>
+        <input
+          type="file"
+          multiple
+          hidden
+          #f_input
+          (change)="handleFileInputChange(f_input.files!)"
+        />
+        <div class="error" *ngIf="error">
+          {{error}}
+        </div>
     </button>
 
     Upload new image
