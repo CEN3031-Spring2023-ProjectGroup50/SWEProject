@@ -82,7 +82,7 @@ export class EditRecipeContentModule {
 
     this.editRecipeForm = new FormGroup({
       title: new FormControl(this.recipe.Title),
-      image: new FormControl(this.recipe.Image),
+      image: new FormControl(this.recipe.Image.toString()),
       ingredients: new FormControl(this.recipe.Ingredients),
       instructions: new FormControl(this.recipe.Instructions)
     })
@@ -103,13 +103,13 @@ export class EditRecipeContentModule {
     console.log("imageName = " + this.imageName);
     console.log("imageString = " + this.imageString);
     await this.httpClient.put(URL, {
-      Rid: this.recipe.Rid,
-      Title: this.editRecipeForm.value['title'],
-      Ingredients: formatIngredientsForAPI(this.editRecipeForm.value['ingredients']),
-      Instructions: formatInstructionsForAPI(this.editRecipeForm.value['instructions']),
-      Image_Name: this.imageName,
-      Uid: this.recipe.Uid,
-      Image: btoa(this.imageString)
+      rid: this.recipe.Rid,
+      title: this.editRecipeForm.value['title'],
+      ingredients: formatIngredientsForAPI(this.editRecipeForm.value['ingredients']),
+      instructions: formatInstructionsForAPI(this.editRecipeForm.value['instructions']),
+      image_name: this.imageName,
+      uid: this.recipe.Uid,
+      image: this.imageString
     })
       .subscribe({
         next: data => {
