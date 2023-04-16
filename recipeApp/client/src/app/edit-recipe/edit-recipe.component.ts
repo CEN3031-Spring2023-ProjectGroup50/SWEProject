@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import {AuthService} from '../shared/auth/auth.service'
 import { SharedFunctionsService } from '../shared/shared-functions.service';
 import { FormGroup,FormControl,FormBuilder, Validators } from '@angular/forms'
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 interface IRecipeItem {
   Rid: number,
@@ -76,7 +76,9 @@ export class EditRecipeContentModule {
       private httpClient: HttpClient,
       private authService: AuthService,
       private sharedService: SharedFunctionsService,
-      private formBuilder: FormBuilder,) {}
+      private formBuilder: FormBuilder,
+      private _snackBar: MatSnackBar,
+      ) {}
   
   ngOnInit() {
 
@@ -116,6 +118,7 @@ export class EditRecipeContentModule {
           this.loading = false;
           this.sharedService.reload();
           console.log("Recipe Edited for User", this.recipe.Uid);
+          this._snackBar.open("Meal successfully edited!", "", {duration: 2000});
         },
         error: error => {
           this.errorMessage = error.message;
