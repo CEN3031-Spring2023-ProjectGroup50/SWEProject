@@ -1,0 +1,8 @@
+<h1 id="delete--meal-dialog">Delete Meal</h1>
+<mat-dialog-content class="typography">
+  <p align="center"> Are you sure you want to remove this meal from your meal plan?</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button color="primary" mat-dialog-close (click)="deleteMeal(mealId)" id="delete">Yes, Remove this Meal</button>
+  <button mat-button mat-dialog-close cdkFousInitial id="cancel">No</button>
+</mat-dialog-actions>

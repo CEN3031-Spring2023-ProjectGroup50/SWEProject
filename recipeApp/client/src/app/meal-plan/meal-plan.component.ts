@@ -157,7 +157,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(MealDialog, {
+    const dialogRef = this.dialog.open(MealDetailsDialog, {
       data: {
         Mid: this.clickedMeal.Mid,
         Date: this.clickedMeal.Date,
@@ -172,7 +172,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The meal details dialog was closed');
     });
   }
 
@@ -183,8 +183,12 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     selector: 'meal-details-dialog',
     templateUrl: 'meal-details.html',
   })
-  export class MealDialog {
+  export class MealDetailsDialog {
     constructor(
+      private httpClient: HttpClient,
+      private authService: AuthService,
+      private sharedService: SharedFunctionsService,
+      public dialog: MatDialog,
       public dialogRef: MatDialogRef<MealPlanComponent>,
       @Inject(MAT_DIALOG_DATA) public meal: userMeal,
     ) {}
@@ -192,8 +196,59 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     onNoClick(): void {
       this.dialogRef.close();
     }
+
+    async deleteMeal(mealId: number){
+      this.openDialog() // opens confirmation dialog
+    }
+
+    @Input() mealId: number
+    openDialog(): void {
+      const dialogRef = this.dialog.open(MealDeleteConfirmationDialog, {
+        data: {
+          mealId : this.meal.Mid,
+        },
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The confirm meal deletion dialog was closed');
+      });
+    }
   }
 
+  
+  @Component({
+    selector: 'meal-delete-confirmation-dialog',
+    templateUrl: 'meal-delete-confirmation-dialog.html',
+  })
+  export class MealDeleteConfirmationDialog {
+    constructor(
+      private httpClient: HttpClient,
+      private authService: AuthService,
+      private sharedService: SharedFunctionsService,
+      public dialog: MatDialog,
+      public dialogRef: MatDialogRef<MealPlanComponent>,
+      @Inject(MAT_DIALOG_DATA) public mealId: number,
+    ) {}
+  
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+
+    async deleteMeal(mealId: number){
+
+      let URL = `/server/meals/delete/${mealId.toString()}`;
+ 
+      await this.httpClient.delete(URL)
+        .subscribe({
+          next: data=>{
+            console.log('Meal Deleted');
+          },
+          error: error=>{
+            console.log('Delete Failed')
+          }
+        })
+    }
+  }
 
 
   function formatIngredients(Ingredients: string,) {
