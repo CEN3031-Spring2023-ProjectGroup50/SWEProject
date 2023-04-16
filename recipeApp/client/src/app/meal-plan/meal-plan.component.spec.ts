@@ -2,6 +2,7 @@ import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
 import { MealPlanComponent } from './meal-plan.component';
 import { AppModule } from '../app.module';
 import { MatTableDataSource } from '@angular/material/table';
+import { By } from '@angular/platform-browser';
 
 describe('MealPlanModule', () => {
   let component: MealPlanComponent;
@@ -75,7 +76,7 @@ describe('MealPlanModule', () => {
   })
 
 
-  it('dummy should contain meals', () => {
+  it('component contains a list of meals', () => {
     component.userMeals = [testMeal1, testMeal2, testMeal3];
     expect(component.userMeals.length).toBe(3);
   })
@@ -86,8 +87,9 @@ describe('MealPlanModule', () => {
     expect(component.events.length).toBe(3);
   })
 
-  it('displays the date in the header', () => {
-
+  it('displays the header', () => {
+    let element = fixture.debugElement.query(By.css('#header'));
+    expect(element.nativeElement).toBeTruthy();
   })
 
 });
