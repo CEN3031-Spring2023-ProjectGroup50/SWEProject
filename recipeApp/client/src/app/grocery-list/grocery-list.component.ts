@@ -5,9 +5,9 @@ import { SharedFunctionsService } from '../shared/shared-functions.service'
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { addDays, addHours, startOfDay } from 'date-fns';
 import {OnInit, AfterViewInit} from '@angular/core';
-import { colors } from '../meal-plan/colors';
+import { colors } from '../calendar-header/colors';
 import { Subject } from 'rxjs';
-import { CalendarHeaderGroceryComponent } from './calendar-header-grocery.component';
+import { CalendarHeaderComponent } from '../calendar-header/calendar-header.component';
 import { ChecklistModule } from 'angular-checklist';
 
 /**
@@ -35,7 +35,7 @@ interface userMeal {
 export class GroceryListComponent {
   refreshCalendar: Subject<void> = new Subject();
 
-  @ViewChild(CalendarHeaderGroceryComponent) calendar: CalendarHeaderGroceryComponent;
+  @ViewChild(CalendarHeaderComponent) calendar: CalendarHeaderComponent;
 
   @Input() locale: string = 'en';
 

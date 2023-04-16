@@ -32,8 +32,7 @@ import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dia
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { CalendarHeaderComponent } from './meal-plan/calendar-header.component';
-import { CalendarHeaderGroceryComponent } from './grocery-list/calendar-header-grocery.component';
+import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
 import { ChecklistModule } from 'angular-checklist';
 
 import { AppComponent } from './app.component';
@@ -84,8 +83,7 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
         RecipeDeleteDialogContent,
         AddMealplanDialogComponent,
         AddMealplanContentComponent,
-        CalendarHeaderComponent,
-        CalendarHeaderGroceryComponent
+        CalendarHeaderComponent
     ],
     providers: [
         AuthService,
