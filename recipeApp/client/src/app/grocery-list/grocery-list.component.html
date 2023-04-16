@@ -3,24 +3,5 @@
 
 <mat-divider></mat-divider>
 <mat-list id="list">
-  <mat-list-item id="dynamicGroceryItem">Hard coded grocery item #1</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="mealplan">Hard coded grocery item #2</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #3</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #4</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #5</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #6</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #7</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #8</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #9</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #10</mat-list-item>
-  <mat-divider></mat-divider>
+  <mat-list-item *ngFor="let data of ingredients | keyvalue">{{data.value}}</mat-list-item>
 </mat-list>

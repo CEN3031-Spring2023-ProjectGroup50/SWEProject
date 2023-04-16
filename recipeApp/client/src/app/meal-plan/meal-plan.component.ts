@@ -48,6 +48,8 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
   getSun: string;
 
+  myArray = [2];
+
   accountData="0"
   uid = 0
   defaultAccount = "0"

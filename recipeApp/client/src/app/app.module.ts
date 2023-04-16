@@ -34,6 +34,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarHeaderComponent } from './meal-plan/calendar-header.component';
 import { CalendarHeaderGroceryComponent } from './grocery-list/calendar-header-grocery.component';
+import { ChecklistModule } from 'angular-checklist';
 
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor/login-editor.component';
@@ -136,8 +137,8 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
             provide: DateAdapter,
             useFactory: adapterFactory,
           }),
-          NgbModalModule,
-
+        NgbModalModule,
+        ChecklistModule
     ],
     exports: [RecipesComponent,CalendarHeaderComponent],
 })

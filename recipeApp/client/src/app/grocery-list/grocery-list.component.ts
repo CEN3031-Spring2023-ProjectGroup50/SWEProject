@@ -7,10 +7,24 @@ import { addDays, addHours, startOfDay } from 'date-fns';
 import {OnInit, AfterViewInit} from '@angular/core';
 import { Subject } from 'rxjs';
 import { CalendarHeaderGroceryComponent } from './calendar-header-grocery.component';
+import { ChecklistModule } from 'angular-checklist';
 
 /**
  * @title Data table with sorting, pagination, and filtering.
  */
+interface userMeal {
+  Mid: number,
+  Date: Date,
+  Mealtype: string,
+  Title: string,
+  Ingredients: string,
+  Instructions: string,
+  Image_name: string,
+  Email: string,
+  Image: Uint8Array[],
+}
+
+
 @Component({
   selector: 'app-grocery-list',
   templateUrl: './grocery-list.component.html',
@@ -20,9 +34,101 @@ import { CalendarHeaderGroceryComponent } from './calendar-header-grocery.compon
 export class GroceryListComponent {
   refreshCalendar: Subject<void> = new Subject();
 
+  @ViewChild(CalendarHeaderGroceryComponent) calendar: CalendarHeaderGroceryComponent;
+
+  @Input() locale: string = 'en';
+
+  @Output() viewChange = new EventEmitter<CalendarView>();
+
+  @Output() viewDateChange = new EventEmitter<Date>();
+
   view: CalendarView = CalendarView.Week;
 
   viewDate: Date = new Date();
 
-  public events: CalendarEvent[] = []
+  getSun: string;
+
+  accountData="0"
+  uid = 0
+  defaultAccount = "0"
+  public userMeals: userMeal[] | undefined = []
+  public ingredients = new Map<string, string>()
+
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService,
+    private sharedService: SharedFunctionsService,
+    private changeDetectorRef: ChangeDetectorRef
+  ){
+    this.sharedService.getReloadResponse().subscribe(()=>{
+      
+      });
+  }
+
+  async ngOnInit() {
+    this.getAccountData()
+    await this.loadItems()
+    console.log(this.accountData)
+
+    this.sharedService.aClickedEvent
+    .subscribe((data:string) => {
+      console.log('Event message from Calendar Header: ' + data);
+      this.ngAfterViewInit();
+      this.changeDetectorRef.detectChanges();
+      this.refreshCalendar.next();
+
+      console.log("ingredients")
+      console.log(this.ingredients)
+      console.log("userMeals")
+      console.log(this.userMeals)
+    });
+  }
+
+  async ngAfterViewInit() {
+    this.getSun = await this.calendar.getSunday();
+    console.log("getSun = " + this.getSun);
+    this.loadItems();
+  }
+
+  async loadItems() {
+
+    this.accountData = await this.getAccountData()
+
+    let URL = `/server/meals/bydate`;
+
+    let params = new HttpParams()
+    params = params.append('date', this.getSun)
+    params = params.append('uid', this.uid.toString())
+
+    this.userMeals = await this.httpClient.get<userMeal[]>(URL, { params: params }).toPromise()
+
+    if (this.userMeals?.length != 0) {
+      this.ingredients = this.getIngredients(this.userMeals)
+    }
+
+    return this.ingredients
+  }
+
+  async getAccountData(){
+     this.authService.getAccount().subscribe(
+      (res: any) => {
+          this.accountData = res.toString();
+          this.uid = parseInt(this.accountData);
+      }
+    );
+    await this.authService.getAccount().toPromise();
+    return this.accountData
+  }
+
+  getIngredients(meals: userMeal[]|undefined){
+
+    this.ingredients.clear()  // clear prev list
+
+    for (let meal of meals!) {
+      this.ingredients.set(meal.Title, meal.Ingredients)
+    }
+
+    return this.ingredients
+  }
+
 }
