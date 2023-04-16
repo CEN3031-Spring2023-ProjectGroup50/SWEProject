@@ -175,6 +175,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The meal details dialog was closed');
+      this.loadMeals();
       this.sharedService.reload();
     });
   }
@@ -218,7 +219,6 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
   
       dialogRef.afterClosed().subscribe(result => {
         console.log('The confirm meal deletion dialog was closed');
-        this.dialogRef.close(); // ideally we should only close this one if 'delete' is pressed on the confirmation dialog, but not if 'No' is pressed
       });
     }
 
