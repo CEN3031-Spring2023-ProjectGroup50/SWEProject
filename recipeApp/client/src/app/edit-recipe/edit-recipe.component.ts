@@ -67,7 +67,7 @@ export class EditRecipeContentModule {
   editRecipeForm!: FormGroup
 
   imageName = this.recipe.Image_name;
-  imageString = this.recipe.Image.toString() // I tried this too with no luck: new TextDecoder().decode(this.recipe.Image)
+  imageString = ''
   file_store: FileList;
   file_list: Array<string> = [] ;
   error: string = "";
@@ -82,9 +82,14 @@ export class EditRecipeContentModule {
   
   ngOnInit() {
 
+    if (this.recipe.Image != null)
+    {
+      this.imageString = this.recipe.Image.toString()
+    }
+
     this.editRecipeForm = new FormGroup({
       title: new FormControl(this.recipe.Title),
-      image: new FormControl(this.recipe.Image.toString()),
+      image: new FormControl(this.imageString),
       ingredients: new FormControl(this.recipe.Ingredients),
       instructions: new FormControl(this.recipe.Instructions)
     })
