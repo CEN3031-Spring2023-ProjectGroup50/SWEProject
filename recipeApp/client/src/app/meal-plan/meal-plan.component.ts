@@ -328,6 +328,23 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     async editMeal(mealId: number){
 
+    let URL = `/server/meals/edit/`
+    await this.httpClient.put(URL, {
+      Mid: this.data.Mid,
+      Date: this.editMealForm.value['date'],
+      Mealtype: this.editMealForm.value['mealtype'],
+    })
+      .subscribe({
+        next: data => {
+          this.sharedService.reload();
+          console.log("Meal Edit completed");
+        },
+        error: error => {
+          this.errorMessage = error.message;
+          console.error('There was an error!', error);
+        },
+      });    
+
     }
   }
 
