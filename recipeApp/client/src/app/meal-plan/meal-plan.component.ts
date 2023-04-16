@@ -12,6 +12,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { FormGroup,FormControl,FormBuilder, Validators, FormGroupDirective } from '@angular/forms'
 import { ErrorStateMatcher } from '@angular/material/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 interface userMeal {
@@ -251,6 +252,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
       private sharedService: SharedFunctionsService,
       public dialog: MatDialog,
       public dialogRef: MatDialogRef<MealPlanComponent>,
+      private _snackBar: MatSnackBar,
       @Inject(MAT_DIALOG_DATA) public data: any,
     ) {}
   
@@ -267,6 +269,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
         .subscribe({
           next: data=>{
             console.log('Meal Deleted');
+            this._snackBar.open("Meal successfully deleted!", "", {duration: 2000});
           },
           error: error=>{
             console.log('Delete Failed')
@@ -298,6 +301,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
       public dialog: MatDialog,
       public dialogRef: MatDialogRef<MealPlanComponent>,
       private formBuilder: FormBuilder,
+      private _snackBar: MatSnackBar,
       @Inject(MAT_DIALOG_DATA) public data: any,
     ) {}
 
@@ -338,6 +342,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
         next: data => {
           this.sharedService.reload();
           console.log("Meal Edit completed");
+          this._snackBar.open("Meal successfully edited!", "", {duration: 2000});
         },
         error: error => {
           this.errorMessage = error.message;

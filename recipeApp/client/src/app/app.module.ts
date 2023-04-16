@@ -28,6 +28,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import {MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -86,7 +87,7 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
         CalendarHeaderComponent,
         MealDetailsDialog,
         MealDeleteConfirmationDialog,
-        MealEditDialog
+        MealEditDialog,
     ],
     providers: [
         AuthService,
@@ -134,6 +135,7 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
         MatSelectModule,
         MatDialogModule,
         MatTooltipModule,
+        MatSnackBarModule,
         CalendarModule.forRoot({
             provide: DateAdapter,
             useFactory: adapterFactory,
