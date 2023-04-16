@@ -173,6 +173,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The meal details dialog was closed');
+      this.sharedService.reload();
     });
   }
 
@@ -211,7 +212,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
   
       dialogRef.afterClosed().subscribe(result => {
         console.log('The confirm meal deletion dialog was closed');
-        this.sharedService.reload();
+        this.dialogRef.close(); // ideally we should only close this one if 'delete' is pressed on the confirmation dialog, but not if 'No' is pressed
       });
     }
   }
@@ -228,7 +229,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
       private sharedService: SharedFunctionsService,
       public dialog: MatDialog,
       public dialogRef: MatDialogRef<MealPlanComponent>,
-      @Inject(MAT_DIALOG_DATA) public mealId: number,
+      @Inject(MAT_DIALOG_DATA) public data: any,
     ) {}
   
     onNoClick(): void {
@@ -239,6 +240,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
       let URL = `/server/meals/delete/${mealId.toString()}`;
  
+      console.log("URL = " + URL)
       await this.httpClient.delete(URL)
         .subscribe({
           next: data=>{
