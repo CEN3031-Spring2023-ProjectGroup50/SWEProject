@@ -59,7 +59,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog
   ){
     this.sharedService.getReloadResponse().subscribe(()=>{
-      
+
       });
   }
 
@@ -100,7 +100,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     this.userMeals = await this.httpClient.get<userMeal[]>(URL, { params: params }).toPromise()
 
-    if (this.userMeals?.length != 0) {this.events = this.convertToEvents(this.userMeals)}
+    this.events = this.convertToEvents(this.userMeals)
 
     return this.events
   }
@@ -211,9 +211,11 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     }
 
     @Input() mealId: number
+    @Input() prevDialog: MatDialogRef<MealPlanComponent>
     openDeleteMealDialog(): void {
       const dialogRef = this.dialog.open(MealDeleteConfirmationDialog, {
         data: {
+          prevDialog : this.dialogRef,
           mealId : this.meal.Mid,
         },
       });
@@ -226,6 +228,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     openEditMealDialog(): void {
       const dialogRef = this.dialog.open(MealEditDialog, {
         data: {
+          prevDialog : this.dialogRef,
           Mid: this.meal.Mid,
           Date: this.meal.Date,
           Mealtype: this.meal.Mealtype,
@@ -246,6 +249,8 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     templateUrl: 'meal-delete-confirmation-dialog.html',
   })
   export class MealDeleteConfirmationDialog {
+    @ViewChild(MealPlanComponent) mealplan: MealPlanComponent;
+
     constructor(
       private httpClient: HttpClient,
       private authService: AuthService,
@@ -270,6 +275,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
           next: data=>{
             console.log('Meal Deleted');
             this._snackBar.open("Meal successfully deleted!", "", {duration: 2000});
+            this.data.prevDialog.close();
           },
           error: error=>{
             console.log('Delete Failed')
@@ -313,6 +319,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
 
     ngOnInit() {
+      this.currentDate = new Date();
 
       var d = new Date(this.data.Date.toString());
       d.setMinutes( d.getMinutes() + d.getTimezoneOffset() );
@@ -340,9 +347,9 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     })
       .subscribe({
         next: data => {
-          this.sharedService.reload();
           console.log("Meal Edit completed");
           this._snackBar.open("Meal successfully edited!", "", {duration: 2000});
+          this.data.prevDialog.close();
         },
         error: error => {
           this.errorMessage = error.message;

@@ -15,8 +15,6 @@ definitions:
         type: string
       mid:
         type: integer
-      recipeid:
-        type: integer
     type: object
   handler.mealPostRequest:
     properties:
@@ -50,6 +48,10 @@ definitions:
     type: object
   handler.recipePostRequest:
     properties:
+      image:
+        items:
+          type: integer
+        type: array
       image_name:
         type: string
       ingredients:
