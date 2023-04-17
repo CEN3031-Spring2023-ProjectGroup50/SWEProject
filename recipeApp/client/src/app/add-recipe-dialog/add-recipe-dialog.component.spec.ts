@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AddRecipeDialogComponent } from './add-recipe-dialog.component';
 import { By } from '@angular/platform-browser';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 describe('AddRecipeDialogModule', () => {
   let component: AddRecipeDialogComponent;
@@ -28,7 +29,8 @@ describe('AddRecipeDialogModule', () => {
         FormsModule,
         ReactiveFormsModule,
         MatDialogModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatSnackBarModule
       ]
     })
     .compileComponents();

@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RecipeDeleteDialogComponent, RecipeDeleteDialogContent } from './recipe-delete-dialog.component';
 import { By } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 describe('RecipeDeleteDialogModule', () => {
   let componentBtn: RecipeDeleteDialogComponent;
@@ -28,7 +29,8 @@ describe('RecipeDeleteDialogModule', () => {
           MatInputModule,
           MatDialogModule,
           BrowserAnimationsModule,
-          MatButtonModule
+          MatButtonModule,
+          MatSnackBarModule
         ]
     })
     .compileComponents();

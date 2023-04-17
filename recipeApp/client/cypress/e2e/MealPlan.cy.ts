@@ -14,19 +14,15 @@ describe('Meal Plan Page', () => {
     cy.get('#pass').type('gogolbordello')
     cy.wait(150);
     cy.contains('Log In').click();
-  })
-
-  it('shows the meal plan page when clicked', () => {
     cy.wait(1000)
     cy.contains('Meal Plan').click();
     cy.wait(100)
+  })
+
+   it('shows the meal plan page when clicked', () => {
     cy.url().should('contain', '/mealplan');
   })
   it('displays the current week of meals', () => {
-    cy.wait(1000)
-    cy.contains('Meal Plan').click();
-    cy.wait(100)
-
     cy.get('.cal-day-headers > :nth-child(1)').should('contain', 'Sunday', 'Apr 9');
     cy.get('.cal-day-headers > :nth-child(2)').should('contain', 'Monday', 'Apr 10');
     cy.get('.cal-day-headers > :nth-child(3)').should('contain', 'Tuesday', 'Apr 11');
@@ -37,10 +33,6 @@ describe('Meal Plan Page', () => {
   })
 
   it('displays the previous and next weeks\' meals', () => {
-    cy.wait(1000)
-    cy.contains('Meal Plan').click();
-    cy.wait(100)
-
     //previous
     cy.get('[mwlcalendarpreviousview=""] > .mdc-button__label').click();
     cy.wait(500);
@@ -66,5 +58,35 @@ describe('Meal Plan Page', () => {
     cy.get('.cal-day-headers > :nth-child(5)').should('contain', 'Thursday', 'Apr 20');
     cy.get('.cal-day-headers > :nth-child(6)').should('contain', 'Friday', 'Apr 21');
     cy.get('.cal-day-headers > :nth-child(7)').should('contain', 'Saturday', 'Apr 22');
+  })
+
+  it('clicking on a meal displays its details', () => {
+    cy.get('.cal-event-title').click();
+    cy.wait(100);
+    cy.get('.mat-mdc-dialog-surface > .ng-star-inserted')
+      .should('be.visible');
+    cy.get('.mat-mdc-dialog-content').scrollTo('bottom');
+  })
+
+  it('clicking "Update meal" or "Remove from meal plan" open respective dialogs', () =>{
+    cy.get('.cal-event-title').click();
+    cy.wait(100);
+    cy.get('.mat-mdc-dialog-surface > .ng-star-inserted')
+      .should('be.visible');
+    cy.get('.mat-mdc-dialog-content').scrollTo('bottom', {duration: 2000});
+    cy.get('#updateMeal').scrollIntoView({duration: 1500}).click();
+    cy.wait(500);
+    cy.get('meal-edit-dialog.ng-star-inserted').should('be.visible');
+    cy.wait(1000);
+    cy.get('#cancelUpdate').click();
+    cy.wait(1500);
+
+    cy.get('#deleteMeal').scrollIntoView({duration: 1500}).click();
+    cy.get('#delete--meal-dialog')
+      .should('be.visible');
+    cy.wait(1500);
+    cy.get('#cancel').click();
+    cy.wait(500);
+
   })
 })
