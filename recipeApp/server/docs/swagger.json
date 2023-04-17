@@ -555,9 +555,6 @@
                 },
                 "mid": {
                     "type": "integer"
-                },
-                "recipeid": {
-                    "type": "integer"
                 }
             }
         },
@@ -610,6 +607,12 @@
         "handler.recipePostRequest": {
             "type": "object",
             "properties": {
+                "image": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
                 "image_name": {
                     "type": "string"
                 },
