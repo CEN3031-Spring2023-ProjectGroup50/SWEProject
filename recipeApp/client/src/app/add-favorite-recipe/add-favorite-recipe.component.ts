@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../shared/auth/auth.service';
+import { HttpParams } from '@angular/common/http';
 
 
 interface IRecipeItem {
@@ -28,6 +29,7 @@ export class AddFavoriteRecipeComponent {
   accountData: string;
   icon = "favorite_border"
   iconColor = "basic"
+  favid: string | undefined;
 
   @Input() recipe: IRecipeItem;
 
@@ -44,6 +46,14 @@ export class AddFavoriteRecipeComponent {
             this.accountData = res.toString();
         },)
 
+    }
+
+    async checkFavorite() {
+      let params = new HttpParams()
+      params = params.append('uid',this.accountData)
+      params = params.append('rid',this.recipe.Rid)
+      this.favid = await this.httpClient.get<string>(`/server/favorite/check`, { params: params }).toPromise()
+        
     }
 
     toggleIcon() {
