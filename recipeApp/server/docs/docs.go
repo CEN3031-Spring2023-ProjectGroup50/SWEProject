@@ -562,9 +562,6 @@ const docTemplate = `{
                 },
                 "mid": {
                     "type": "integer"
-                },
-                "recipeid": {
-                    "type": "integer"
                 }
             }
         },
@@ -617,6 +614,12 @@ const docTemplate = `{
         "handler.recipePostRequest": {
             "type": "object",
             "properties": {
+                "image": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
                 "image_name": {
                     "type": "string"
                 },

@@ -1,0 +1,32 @@
+<h1 mat-dialog-title class="center">Modify  "{{data.Title}}" date or meal type</h1>
+
+<form [formGroup]="editMealForm" id="editMeal">
+
+    <mat-dialog-content><b>When do you want to make this item?</b></mat-dialog-content>
+    <form [formGroup]="editMealForm" (submit)="editMeal(data.Mid)">
+    <mat-form-field class="form-field" appearance = "fill" [style.width.px]="650">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" [min]="currentDate" formControlName="date" [errorStateMatcher]="matcher" required value="{data.Date}">
+        <mat-error *ngIf="editMealForm.get('date') == null">Date is required</mat-error>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field><br />
+
+    <mat-dialog-content><b>What meal will this be a part of?</b></mat-dialog-content>
+    <mat-form-field class="form-field" appearance ="fill" [style.width.px]="650">
+      <mat-label>Choose an option</mat-label>
+      <mat-select formControlName="mealtype" [errorStateMatcher]="matcher" required>
+      <mat-error *ngIf="editMealForm.get('mealtype') == null">Meal type is required</mat-error>
+      <mat-option *ngFor="let mealtype of mealtypes" [value]="mealtype">
+        {{mealtype}}
+      </mat-option>
+    </mat-select>
+    </mat-form-field><br />
+    
+    <mat-dialog-actions align="end">
+        <button mat-flat-button color="primary" mat-dialog-close (click)="editMeal(data.Mid)" id="submit">Update meal</button>
+        <button mat-button mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+    
+    </form>
