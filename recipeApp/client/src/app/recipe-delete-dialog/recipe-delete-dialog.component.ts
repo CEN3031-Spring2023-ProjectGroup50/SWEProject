@@ -69,6 +69,7 @@ export class RecipeDeleteDialogContent {
         },
         error: error=>{
           console.log('Delete Failed')
+          this._snackBar.open("Cannot delete this recipe because it is used in your meal plan.", "", {duration: 2000});
         }
       })
   }
