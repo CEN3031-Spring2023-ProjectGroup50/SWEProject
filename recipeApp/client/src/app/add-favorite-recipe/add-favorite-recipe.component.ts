@@ -43,6 +43,7 @@ export class AddFavoriteRecipeComponent {
         (res: any) => {
             this.accountData = res.toString();
         },)
+
     }
 
     toggleIcon() {
@@ -55,6 +56,7 @@ export class AddFavoriteRecipeComponent {
       }
     }
 
+
     async addToFavorite() {
       await this.httpClient.post('/server/favorites/add', {
         userid: parseInt(this.accountData),
@@ -62,7 +64,23 @@ export class AddFavoriteRecipeComponent {
       }).subscribe((post)=>{
         console.log("Recipe Added To Meal For User", this.accountData);
       });
+  }
 
+  
+  async deleteFromFavorite() {
+
+    let RidString = this.recipe.Rid.toString();
+    let UidString = this.accountData.toString();
+    let URL = `/server/favorites/delete/${UidString}/${RidString}`
+    await this.httpClient.delete(URL)
+      .subscribe({
+        next: data=>{
+          console.log('Recipe Deleted');
+        },
+        error: error=>{
+          console.log('Delete Failed')
+        }
+      })
   }
 }
 
