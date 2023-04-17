@@ -10,7 +10,10 @@ import { CalendarHeaderComponent } from './calendar-header.component';
 import { Subject } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material/menu';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { FormGroup,FormControl,FormBuilder, Validators } from '@angular/forms'
+import { FormGroup,FormControl,FormBuilder, Validators, FormGroupDirective } from '@angular/forms'
+import { ErrorStateMatcher } from '@angular/material/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 interface userMeal {
   Mid: number,
@@ -56,7 +59,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog
   ){
     this.sharedService.getReloadResponse().subscribe(()=>{
-      
+
       });
   }
 
@@ -97,7 +100,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     this.userMeals = await this.httpClient.get<userMeal[]>(URL, { params: params }).toPromise()
 
-    if (this.userMeals?.length != 0) {this.events = this.convertToEvents(this.userMeals)}
+    this.events = this.convertToEvents(this.userMeals)
 
     return this.events
   }
@@ -157,7 +160,7 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(MealDialog, {
+    const dialogRef = this.dialog.open(MealDetailsDialog, {
       data: {
         Mid: this.clickedMeal.Mid,
         Date: this.clickedMeal.Date,
@@ -172,7 +175,9 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The meal details dialog was closed');
+      this.loadMeals();
+      this.sharedService.reload();
     });
   }
 
@@ -183,8 +188,12 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     selector: 'meal-details-dialog',
     templateUrl: 'meal-details.html',
   })
-  export class MealDialog {
+  export class MealDetailsDialog {
     constructor(
+      private httpClient: HttpClient,
+      private authService: AuthService,
+      private sharedService: SharedFunctionsService,
+      public dialog: MatDialog,
       public dialogRef: MatDialogRef<MealPlanComponent>,
       @Inject(MAT_DIALOG_DATA) public meal: userMeal,
     ) {}
@@ -192,8 +201,162 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     onNoClick(): void {
       this.dialogRef.close();
     }
+
+    async deleteMeal(mealId: number){
+      this.openDeleteMealDialog() // opens confirmation dialog
+    }
+
+    async editMeal(mealId: number){
+      this.openEditMealDialog() // opens confirmation dialog
+    }
+
+    @Input() mealId: number
+    @Input() prevDialog: MatDialogRef<MealPlanComponent>
+    openDeleteMealDialog(): void {
+      const dialogRef = this.dialog.open(MealDeleteConfirmationDialog, {
+        data: {
+          prevDialog : this.dialogRef,
+          mealId : this.meal.Mid,
+        },
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The confirm meal deletion dialog was closed');
+      });
+    }
+
+    openEditMealDialog(): void {
+      const dialogRef = this.dialog.open(MealEditDialog, {
+        data: {
+          prevDialog : this.dialogRef,
+          Mid: this.meal.Mid,
+          Date: this.meal.Date,
+          Mealtype: this.meal.Mealtype,
+          Title: this.meal.Title,
+        },
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The edit meal dialog was closed');
+      });
+    }
+    
   }
 
+  
+  @Component({
+    selector: 'meal-delete-confirmation-dialog',
+    templateUrl: 'meal-delete-confirmation-dialog.html',
+  })
+  export class MealDeleteConfirmationDialog {
+    constructor(
+      private httpClient: HttpClient,
+      private authService: AuthService,
+      private sharedService: SharedFunctionsService,
+      public dialog: MatDialog,
+      public dialogRef: MatDialogRef<MealPlanComponent>,
+      private _snackBar: MatSnackBar,
+      @Inject(MAT_DIALOG_DATA) public data: any,
+    ) {}
+  
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+
+    async deleteMeal(mealId: number){
+
+      let URL = `/server/meals/delete/${mealId.toString()}`;
+ 
+      console.log("URL = " + URL)
+      await this.httpClient.delete(URL)
+        .subscribe({
+          next: data=>{
+            console.log('Meal Deleted');
+            this._snackBar.open("Meal successfully deleted!", "", {duration: 2000});
+            this.data.prevDialog.close();
+          },
+          error: error=>{
+            console.log('Delete Failed')
+          }
+        })
+    }
+  }
+
+
+
+  export class MyErrorStateMatcher implements ErrorStateMatcher {
+    isErrorState(control: FormControl | null, form: FormGroupDirective | null): boolean {
+      //condition true
+      const isSubmitted = form && form.submitted;
+      //false
+      return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+    }
+  }
+
+  @Component({
+    selector: 'meal-edit-dialog',
+    templateUrl: 'meal-edit.html',
+  })
+  export class MealEditDialog {
+    constructor(
+      private httpClient: HttpClient,
+      private authService: AuthService,
+      private sharedService: SharedFunctionsService,
+      public dialog: MatDialog,
+      public dialogRef: MatDialogRef<MealPlanComponent>,
+      private formBuilder: FormBuilder,
+      private _snackBar: MatSnackBar,
+      @Inject(MAT_DIALOG_DATA) public data: any,
+    ) {}
+
+    editMealForm!: FormGroup
+    currentDate: Date;
+    matcher: ErrorStateMatcher;
+    errorMessage = ""
+    mealtypes: string[] = ['Breakfast', 'Lunch', 'Dinner', 'Other'];
+
+
+    ngOnInit() {
+      this.currentDate = new Date();
+
+      var d = new Date(this.data.Date.toString());
+      d.setMinutes( d.getMinutes() + d.getTimezoneOffset() );
+
+      this.editMealForm = new FormGroup({
+        date: new FormControl(d, [Validators.required]),
+        mealtype: new FormControl(this.data.Mealtype, [Validators.required]),
+      })
+      this.matcher = new MyErrorStateMatcher();
+      this.editMealForm.valueChanges.subscribe(() =>
+        this.errorMessage = 'error')
+    }
+  
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+
+    async editMeal(mealId: number){
+
+    let URL = `/server/meals/edit/`
+    await this.httpClient.put(URL, {
+      Mid: this.data.Mid,
+      Date: this.editMealForm.value['date'],
+      Mealtype: this.editMealForm.value['mealtype'],
+    })
+      .subscribe({
+        next: data => {
+          console.log("Meal Edit completed");
+          this._snackBar.open("Meal successfully edited!", "", {duration: 2000});
+          this.data.prevDialog.close();
+        },
+        error: error => {
+          this.errorMessage = error.message;
+          console.error('There was an error!', error);
+        },
+      });    
+
+    }
+  }
 
 
   function formatIngredients(Ingredients: string,) {
