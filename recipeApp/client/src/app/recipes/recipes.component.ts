@@ -59,6 +59,7 @@ export class RecipesComponent {
   loading = false;
   keywordSearchTerm = "";
   ingredientSearchTerm = "";
+  favorites = false;
 
 
   @ViewChild(MatPaginator, {static:false})
@@ -100,6 +101,9 @@ async loadItems() {
     // If there are no search terms, the page will be generated via the API defined in recipes_get_by_count.go
 
       let URL = `/server/recipes/bypage?page=${this.currentPage + 1}&per_page=${this.pageSize}`
+      if (this.favorites == true) {
+        URL = `/server/favorites/bypage?page=${this.currentPage + 1}&per_page=${this.pageSize}`
+      }
       //let params = new HttpParams().set('uid', this.defaultAccount)
       let params = new HttpParams()
 
@@ -150,15 +154,25 @@ pageBottomChanged(event: PageEvent) {
   }
 
 async onAll(event: { value: string; }) {
+  this.favorites = false
   this.filter = "all"
   await this.loadItems();
 }
 
 async onUser(event: { value: string; }) {
+  this.favorites = false
   this.filter = "user"
   this.currentPage = 0
   await this.loadItems();
 }
+
+async onFavorites() {
+  this.favorites = true
+  this.filter = "user"
+  this.currentPage = 0
+  await this.loadItems();
+}
+
 
 openAddRecipeDialog() {
 
