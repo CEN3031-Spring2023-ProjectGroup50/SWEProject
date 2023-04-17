@@ -1,23 +1,18 @@
+<mwl-calendar-header [(view)]="view" [(viewDate)]="viewDate" id="header">
+</mwl-calendar-header>
+
 <mat-divider></mat-divider>
-<mat-list id="list">
-  <mat-list-item id="dynamicGroceryItem">Hard coded grocery item #1</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="mealplan">Hard coded grocery item #2</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #3</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #4</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #5</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #6</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #7</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #8</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #9</mat-list-item>
-  <mat-divider></mat-divider>
-  <mat-list-item id="grocery">Hard coded grocery item #10</mat-list-item>
-  <mat-divider></mat-divider>
+<mat-list id="list" *ngFor="let data of ingredients | keyvalue">
+  <body [ngStyle]="{'background-color': storedColors.get(data.key).secondary}">
+    <h2 mat-subheader [ngStyle]="{'\color': storedColors.get(data.key).primary}">{{data.key}}</h2>
+  </body>
+  <mat-list-item *ngFor="let ingredient of data.value">
+    {{ingredient}}
+    <hr/>
+  </mat-list-item>
 </mat-list>
+
+<ng-container *ngIf="!ingredients?.size">
+  <h1>No recipes added for this week</h1>
+  Add some recipes to your meal plan to see your grocery list.
+</ng-container>

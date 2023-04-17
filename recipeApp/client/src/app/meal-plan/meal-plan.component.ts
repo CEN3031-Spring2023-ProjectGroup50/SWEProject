@@ -4,9 +4,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { SharedFunctionsService } from '../shared/shared-functions.service'
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { addDays, addHours, startOfDay } from 'date-fns';
-import { colors } from './colors';
+import { colors } from '../calendar-header/colors';
 import {OnInit, AfterViewInit} from '@angular/core';
-import { CalendarHeaderComponent } from './calendar-header.component';
+import { CalendarHeaderComponent } from '../calendar-header/calendar-header.component';
 import { Subject } from 'rxjs';
 import { MatMenuTrigger } from '@angular/material/menu';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
