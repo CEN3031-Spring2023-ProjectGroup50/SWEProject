@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -305,6 +306,7 @@ func TestRecipePost(t *testing.T) {
 		Instructions string `json:"instructions"`
 		Ingredients  string `json:"ingredients"`
 		Image_name   string `json:"image_name"`
+		Image        string `json:"image"`
 		Uid          uint   `json:"uid"`
 	}
 
@@ -316,11 +318,13 @@ func TestRecipePost(t *testing.T) {
 
 	testRecipes = append(testRecipes,
 		test{Rid: uint(lastNum + 1), Title: "Test Recipe 1", Ingredients: "paprika,pepper,serrano",
-			Instructions: "stir gently", Image_name: "test_image_1", Uid: 2},
+			Instructions: "stir gently", Image_name: "test_image_1", Image: "YW4gZXhhbXBsZSBpbWFnZQ==", Uid: 2},
 		test{Rid: uint(lastNum + 2), Title: "Test Recipe 2", Ingredients: "pasta",
-			Instructions: "heat in microwave", Image_name: "test_image_2", Uid: 2},
+			Instructions: "heat in microwave", Image_name: "test_image_2", Image: "YW4gZXhhbXBsZSBpbWFnZQ==", Uid: 2},
 		test{Rid: uint(lastNum + 3), Title: "Test Recipe 3", Ingredients: "deviled eggs, legumes",
-			Instructions: "party time", Image_name: "test_image_3", Uid: 2},
+			Instructions: "party time", Image_name: "test_image_3", Image: "YW4gZXhhbXBsZSBpbWFnZQ==", Uid: 2},
+		test{Rid: uint(lastNum + 4), Title: "Test Recipe 4", Ingredients: "this should have an image",
+			Instructions: "none", Image_name: "doge.jpg", Image: "YSBwaWN0dXJlIG9mIGEgZG9nZQ==", Uid: 2},
 	)
 
 	for tc := range testRecipes {
@@ -340,6 +344,8 @@ func TestRecipePost(t *testing.T) {
 		assert.Equal(t, response.Ingredients, testRecipes[tc].Ingredients, "Recipe ingredients were not the same as expected")
 		assert.Equal(t, response.Image_Name, testRecipes[tc].Image_name, "Recipe image name was not the same as expected")
 		assert.Equal(t, response.Uid, testRecipes[tc].Uid, "Recipe user ID was not the same as expected")
+		decode, _ := base64.StdEncoding.DecodeString(testRecipes[tc].Image)
+		assert.Equal(t, response.Image, decode, "Recipe image was not the same as expected")
 	}
 
 }
@@ -353,6 +359,7 @@ func TestRecipeEdit(t *testing.T) {
 		Instructions string `json:"instructions"`
 		Ingredients  string `json:"ingredients"`
 		Image_name   string `json:"image_name"`
+		Image        string `json:"image"`
 		Uid          uint   `json:"uid"`
 	}
 
@@ -363,15 +370,18 @@ func TestRecipeEdit(t *testing.T) {
 	lastNum := last.Rid
 
 	testRecipes = append(testRecipes,
-		test{Rid: uint(lastNum - 2), Title: "Edit Recipe 1", Ingredients: "paprika,pepper,serranooooo",
+		test{Rid: uint(lastNum - 3), Title: "Edit Recipe 1", Ingredients: "paprika,pepper,serranooooo",
 			Instructions: "mix gently", Image_name: "test_image_1234", Uid: 2},
-		test{Rid: uint(lastNum - 1), Title: "Edit Recipe 2", Ingredients: "pasta pepperoni",
+		test{Rid: uint(lastNum - 2), Title: "Edit Recipe 2", Ingredients: "pasta pepperoni",
 			Instructions: "burn in microwave", Image_name: "test_image_yes", Uid: 2},
-		test{Rid: uint(lastNum), Title: "Edit Recipe 3", Ingredients: "deviled eggs, no legumes",
+		test{Rid: uint(lastNum - 1), Title: "Edit Recipe 3", Ingredients: "deviled eggs, no legumes",
 			Instructions: "party time yo", Image_name: "test_image_no", Uid: 2},
+		test{Rid: uint(lastNum), Title: "Edit Recipe 4", Ingredients: "deviled eggs, no legumes",
+			Instructions: "party time yo", Image_name: "pbj.jpg", Image: "cGVhbnV0IGJ1dHRlciBhbmQgamVsbHkgc2FuZHdpY2g=", Uid: 2},
 	)
 
-	rids := []string{strconv.FormatInt(int64(lastNum-2), 10),
+	rids := []string{strconv.FormatInt(int64(lastNum-3), 10),
+		strconv.FormatInt(int64(lastNum-2), 10),
 		strconv.FormatInt(int64(lastNum-1), 10),
 		strconv.FormatInt(int64(lastNum), 10)}
 
@@ -396,6 +406,8 @@ func TestRecipeEdit(t *testing.T) {
 		assert.Equal(t, testRecipes[tc].Ingredients, response.Ingredients, "Recipe ingredients were not the same as expected")
 		assert.Equal(t, testRecipes[tc].Image_name, response.Image_Name, "Recipe image name was not the same as expected")
 		assert.Equal(t, testRecipes[tc].Uid, response.Uid, "Recipe user ID was not the same as expected")
+		decode, _ := base64.StdEncoding.DecodeString(testRecipes[tc].Image)
+		assert.Equal(t, response.Image, decode, "Recipe image was not the same as expected")
 		tc++
 	}
 
@@ -416,7 +428,8 @@ func TestRecipeDelete(t *testing.T) {
 	initialize.Db.Table("recipe").Last(&last)
 	lastNum := last.Rid
 
-	rids := []string{strconv.FormatInt(int64(lastNum-2), 10),
+	rids := []string{strconv.FormatInt(int64(lastNum-3), 10),
+		strconv.FormatInt(int64(lastNum-2), 10),
 		strconv.FormatInt(int64(lastNum-1), 10),
 		strconv.FormatInt(int64(lastNum), 10)}
 
@@ -521,7 +534,7 @@ func TestMealGetByDate(t *testing.T) {
 		{input: url + "?date=2023-04-02&uid=2", start: "2023-04-02", end: "2023-04-08", uid: 2},
 	}
 
-	for _, tc := range testConds {
+	for i, tc := range testConds {
 		req, _ := http.NewRequest("GET", tc.input, nil)
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
@@ -540,6 +553,12 @@ func TestMealGetByDate(t *testing.T) {
 
 		}
 		assert.Equal(t, inBound, true, "Response data was out of range")
+		if i == 0 {
+			assert.Equal(t, len(response), 1, "Response data was not the correct length")
+		}
+		if i == 1 {
+			assert.Equal(t, len(response), 4, "Response data was not the correct length")
+		}
 
 	}
 
@@ -551,6 +570,76 @@ func TestMealGetByDate(t *testing.T) {
 
 		assert.Equal(t, http.StatusBadRequest, w.Code, "Got bogus meal "+bogus)
 	*/
+}
+
+func TestEditMeal(t *testing.T) {
+	r := SetUpRouter()
+	r.PUT("/server/meals/edit/", handler.EditMeal())
+
+	var last models.Meal
+	initialize.Db.Table("meals").Last(&last)
+	lastNum := last.Mid
+
+	mids := []string{strconv.FormatInt(int64(lastNum-4), 10),
+		strconv.FormatInt(int64(lastNum-3), 10),
+		strconv.FormatInt(int64(lastNum-2), 10),
+		strconv.FormatInt(int64(lastNum-1), 10),
+		strconv.FormatInt(int64(lastNum), 10)}
+
+	for ix, val := range mids {
+
+		var meal models.Meal
+		initialize.Db.Table("meals").Where("mid = ?", val).Find(&meal)
+
+		switch ix {
+		case 0:
+			meal.Mealtype = "Lunch"
+			meal.Date = "2023-05-01"
+		case 1:
+			meal.Mealtype = "Dinner"
+			meal.Date = "2023-05-02"
+		case 2:
+			meal.Mealtype = "Breakfast"
+			meal.Date = "2023-05-03"
+		case 3:
+			meal.Mealtype = "Other"
+			meal.Date = "2024-06-04"
+		case 4:
+			meal.Date = "2023-02-02"
+		}
+
+		jsonValue, _ := json.Marshal(meal)
+		req, _ := http.NewRequest("PUT", "/server/meals/edit/", bytes.NewBuffer(jsonValue))
+		req.Header.Set("Content-Type", "application/json")
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusOK, w.Code, "Could not edit meal "+val)
+		switch ix {
+		case 0:
+			assert.Contains(t, w.Body.String(), "Lunch", "Could not edit meal "+val)
+			assert.Contains(t, w.Body.String(), "2023-05-01", "Could not edit meal "+val)
+		case 1:
+			assert.Contains(t, w.Body.String(), "Dinner", "Could not edit meal "+val)
+			assert.Contains(t, w.Body.String(), "2023-05-02", "Could not edit meal "+val)
+		case 2:
+			assert.Contains(t, w.Body.String(), "Breakfast", "Could not edit meal "+val)
+			assert.Contains(t, w.Body.String(), "2023-05-03", "Could not edit meal "+val)
+		case 3:
+			assert.Contains(t, w.Body.String(), "Other", "Could not edit meal "+val)
+			assert.Contains(t, w.Body.String(), "2024-06-04", "Could not edit meal "+val)
+		case 4:
+			assert.Contains(t, w.Body.String(), "2023-02-02", "Could not edit meal "+val)
+
+		}
+		//assert.Contains(t, w.Body.String(), "Lunch", "Could not edit meal "+val)
+	}
+
+	//bogus := "55000"
+	//req, _ := http.NewRequest("PUT", "/server/meals/edit/"+bogus, nil)
+	//w := httptest.NewRecorder()
+	//r.ServeHTTP(w, req)
+	//assert.Equal(t, http.StatusBadRequest, w.Code, "Got bogus meal "+bogus)
 }
 
 func TestDeleteMeal(t *testing.T) {
