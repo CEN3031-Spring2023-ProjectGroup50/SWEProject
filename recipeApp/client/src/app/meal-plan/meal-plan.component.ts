@@ -249,8 +249,6 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     templateUrl: 'meal-delete-confirmation-dialog.html',
   })
   export class MealDeleteConfirmationDialog {
-    @ViewChild(MealPlanComponent) mealplan: MealPlanComponent;
-
     constructor(
       private httpClient: HttpClient,
       private authService: AuthService,
