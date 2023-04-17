@@ -2,10 +2,24 @@ import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
 import { GroceryListComponent } from './grocery-list.component';
 import { AppModule } from '../app.module';
 import { WelcomeComponent } from '../welcome/welcome.component';
+import { By } from '@angular/platform-browser';
 
 describe('GroceryListComponent', () => {
   let component: GroceryListComponent;
   let fixture: ComponentFixture<GroceryListComponent>;
+
+  interface userMeal {
+    Mid: number,
+    Date: Date,
+    Mealtype: string,
+    Title: string,
+    Ingredients: string,
+    Instructions: string,
+    Image_name: string,
+    Email: string,
+    Image: Uint8Array[],
+  }
+  let testMeal1: userMeal;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -13,23 +27,40 @@ describe('GroceryListComponent', () => {
       imports: [
         AppModule
       ],
-      
-    }).compileComponents();
-  }));
 
-  beforeEach(() => {
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GroceryListComponent);
     component = fixture.componentInstance;
-  });
 
-  it('should compile', () => {
+
+    testMeal1 = {
+      Mid: 0,
+      Date: component.viewDate,
+      Mealtype: 'Breakfast',
+      Title: 'Test Meal 1',
+      Ingredients: '[\'carrots\', \'broccoli\', \'celery\']',
+      Instructions: '',
+      Image_name: '',
+      Email: '',
+      Image: []
+    }
+
+  }));
+
+  it('component should compile', () => {
     expect(component).toBeTruthy();
   })
 
-  it('should create the grocery list component', waitForAsync(() => {
-    const fixture = TestBed.createComponent(GroceryListComponent);
-    const grocList = fixture.debugElement.componentInstance;
-    expect(grocList).toBeTruthy();}))
+  it('test component should have 1 meal in userMeals', () => {
+    component.userMeals = [testMeal1];
+    expect(component.userMeals.length).toBe(1);
+  })
 
-
+  /*it('displays ingredients of testMeal1 to the screen', () => {
+    component.userMeals = [testMeal1];
+    fixture.detectChanges();
+    let list = fixture.debugElement.query(By.css('#list'));
+    expect(list).toContain('broccoli');
+  })*/
 });
