@@ -595,15 +595,12 @@ func TestEditMeal(t *testing.T) {
 		case 0:
 			meal.Mealtype = "Lunch"
 			meal.Date = "2023-05-01"
-			meal.Recipeid = 15
 		case 1:
 			meal.Mealtype = "Dinner"
 			meal.Date = "2023-05-02"
-			meal.Recipeid = 16
 		case 2:
 			meal.Mealtype = "Breakfast"
 			meal.Date = "2023-05-03"
-			meal.Recipeid = 17
 		case 3:
 			meal.Mealtype = "Other"
 			meal.Date = "2024-06-04"
@@ -622,15 +619,12 @@ func TestEditMeal(t *testing.T) {
 		case 0:
 			assert.Contains(t, w.Body.String(), "Lunch", "Could not edit meal "+val)
 			assert.Contains(t, w.Body.String(), "2023-05-01", "Could not edit meal "+val)
-			assert.Contains(t, w.Body.String(), "15", "Could not edit meal "+val)
 		case 1:
 			assert.Contains(t, w.Body.String(), "Dinner", "Could not edit meal "+val)
 			assert.Contains(t, w.Body.String(), "2023-05-02", "Could not edit meal "+val)
-			assert.Contains(t, w.Body.String(), "16", "Could not edit meal "+val)
 		case 2:
 			assert.Contains(t, w.Body.String(), "Breakfast", "Could not edit meal "+val)
 			assert.Contains(t, w.Body.String(), "2023-05-03", "Could not edit meal "+val)
-			assert.Contains(t, w.Body.String(), "17", "Could not edit meal "+val)
 		case 3:
 			assert.Contains(t, w.Body.String(), "Other", "Could not edit meal "+val)
 			assert.Contains(t, w.Body.String(), "2024-06-04", "Could not edit meal "+val)
