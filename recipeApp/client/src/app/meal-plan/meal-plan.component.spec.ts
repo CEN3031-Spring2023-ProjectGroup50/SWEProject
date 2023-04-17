@@ -3,6 +3,7 @@ import { MealPlanComponent } from './meal-plan.component';
 import { AppModule } from '../app.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { By } from '@angular/platform-browser';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 describe('MealPlanModule', () => {
   let component: MealPlanComponent;
@@ -26,7 +27,8 @@ describe('MealPlanModule', () => {
     TestBed.configureTestingModule({
       declarations: [MealPlanComponent],
       imports: [
-        AppModule
+        AppModule,
+        MatSnackBarModule
       ],
       providers: [MatTableDataSource]
     }).compileComponents();
