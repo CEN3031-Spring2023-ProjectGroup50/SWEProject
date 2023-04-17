@@ -128,11 +128,21 @@ async loadItems() {
 
       this.backendItems = await this.httpClient.get<IRecipeItem[]>(URL, { params: params }).toPromise()
 
-      this.httpClient.get<rCount>(`/server/recipecount`, { params: params })
+      if (this.favorites == true) {
+        this.httpClient.get<rCount>(`/server/favoritecount`, { params: params })
         .subscribe((data) => {
           this.totalRows = data.total;
           this.loading = false;
         })
+      }else{
+        this.httpClient.get<rCount>(`/server/recipecount`, { params: params })
+        .subscribe((data) => {
+          this.totalRows = data.total;
+          this.loading = false;
+        })
+      }
+
+ 
 
 
 }

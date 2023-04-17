@@ -56,6 +56,7 @@ func main() {
 		server.DELETE("/meals/delete/:id", handler.DeleteMeal())
 		server.POST("/favorites/add", handler.AddFavorite())
 		server.GET("/favorites/bypage", handler.FavoritesGetByPage())
+		server.GET("/favoritecount", handler.FavoritesGetCount())
 		server.DELETE(("favorites/delete/:uid/:rid"), handler.DeleteFavorite())
 		server.GET("/meals/bydate", handler.MealGetByDate())
 		server.PUT("/meals/edit", handler.EditMeal())
