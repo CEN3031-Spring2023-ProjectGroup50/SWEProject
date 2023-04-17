@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import {AuthService} from '../shared/auth/auth.service'
 import { SharedFunctionsService } from '../shared/shared-functions.service';
 import { FormGroup,FormControl,FormBuilder, Validators } from '@angular/forms'
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 interface IRecipeItem {
   Rid: number,
@@ -67,7 +67,7 @@ export class EditRecipeContentModule {
   editRecipeForm!: FormGroup
 
   imageName = this.recipe.Image_name;
-  imageString = this.recipe.Image.toString() // I tried this too with no luck: new TextDecoder().decode(this.recipe.Image)
+  imageString = ''
   file_store: FileList;
   file_list: Array<string> = [] ;
   error: string = "";
@@ -76,13 +76,20 @@ export class EditRecipeContentModule {
       private httpClient: HttpClient,
       private authService: AuthService,
       private sharedService: SharedFunctionsService,
-      private formBuilder: FormBuilder,) {}
+      private formBuilder: FormBuilder,
+      private _snackBar: MatSnackBar,
+      ) {}
   
   ngOnInit() {
 
+    if (this.recipe.Image != null)
+    {
+      this.imageString = this.recipe.Image.toString()
+    }
+
     this.editRecipeForm = new FormGroup({
       title: new FormControl(this.recipe.Title),
-      image: new FormControl(this.recipe.Image.toString()),
+      image: new FormControl(this.imageString),
       ingredients: new FormControl(this.recipe.Ingredients),
       instructions: new FormControl(this.recipe.Instructions)
     })
@@ -116,6 +123,7 @@ export class EditRecipeContentModule {
           this.loading = false;
           this.sharedService.reload();
           console.log("Recipe Edited for User", this.recipe.Uid);
+          this._snackBar.open("Meal successfully edited!", "", {duration: 2000});
         },
         error: error => {
           this.errorMessage = error.message;

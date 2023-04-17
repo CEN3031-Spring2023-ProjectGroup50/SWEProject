@@ -49,3 +49,22 @@ section {
   justify-content: center;
   width: 120px;
 }
+
+
+
+
+
+
+.recipe-details-image {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 300px;
+}
+
+.recipe-image {
+  object-fit:inherit;
+  height: 100%;
+  width: 100%;
+  background-size: 100%;
+}

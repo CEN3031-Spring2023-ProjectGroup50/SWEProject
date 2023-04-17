@@ -19,6 +19,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 describe('AddMealplanContentComponent', () => {
   let componentBtn: AddMealplanDialogComponent;
@@ -39,7 +40,8 @@ describe('AddMealplanContentComponent', () => {
         MatButtonModule,
         MatDatepickerModule,
         MatSelectModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatSnackBarModule
       ],
       providers: [
         {provide: MAT_DIALOG_DATA, useValue: {}},

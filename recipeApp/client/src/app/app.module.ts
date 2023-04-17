@@ -28,12 +28,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import {MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { CalendarHeaderComponent } from './meal-plan/calendar-header.component';
-
+import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
 
 import { AppComponent } from './app.component';
 import { LoginEditorComponent } from './login-editor/login-editor.component';
@@ -44,7 +44,7 @@ import { registerFormComponent } from './registerform/registerform.component';
 import { MenuNavigationComponent} from './menu-navigation/menu-navigation.component';
 import { HomeComponent } from './home/home.component';
 import { RecipesComponent } from './recipes/recipes.component';
-import { MealPlanComponent, MealDialog } from './meal-plan/meal-plan.component';
+import { MealPlanComponent, MealDetailsDialog, MealDeleteConfirmationDialog, MealEditDialog } from './meal-plan/meal-plan.component';
 import { MealPlanPageComponent } from './meal-plan-page/meal-plan-page.component';
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
 import { GroceryListPageComponent } from './grocery-list-page/grocery-list-page.component';
@@ -84,7 +84,9 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
         AddMealplanDialogComponent,
         AddMealplanContentComponent,
         CalendarHeaderComponent,
-        MealDialog
+        MealDetailsDialog,
+        MealDeleteConfirmationDialog,
+        MealEditDialog,
     ],
     providers: [
         AuthService,
@@ -132,12 +134,12 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
         MatSelectModule,
         MatDialogModule,
         MatTooltipModule,
+        MatSnackBarModule,
         CalendarModule.forRoot({
             provide: DateAdapter,
             useFactory: adapterFactory,
           }),
-          NgbModalModule,
-
+        NgbModalModule
     ],
     exports: [RecipesComponent,CalendarHeaderComponent],
 })

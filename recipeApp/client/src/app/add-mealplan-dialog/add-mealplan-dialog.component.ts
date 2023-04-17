@@ -7,6 +7,8 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MatSelect } from '@angular/material/select';
 import { AuthService } from '../shared/auth/auth.service';
 import { DatePipe } from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 interface IRecipeItem {
   Rid: number,
@@ -72,7 +74,8 @@ export class AddMealplanContentComponent {
     @Inject(MAT_DIALOG_DATA) public recipe: IRecipeItem,
     public dialogRef: MatDialogRef<AddMealplanDialogComponent>,
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private _snackBar: MatSnackBar,
     ) {}
 
   onNoClick(): void {
@@ -104,6 +107,7 @@ export class AddMealplanContentComponent {
       mealtype: this.mealForm.value['mealtype']
     }).subscribe((post)=>{
       console.log("Recipe Added To Meal For User", this.accountData);
+      this._snackBar.open("Meal successfully added to meal plan!", "", {duration: 2000});
     });
   }
 }

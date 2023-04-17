@@ -1,12 +1,26 @@
 import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
-import { MealPlanComponent } from './meal-plan.component';
+import { MealDeleteConfirmationDialog, MealDetailsDialog, MealEditDialog, MealPlanComponent } from './meal-plan.component';
 import { AppModule } from '../app.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { By } from '@angular/platform-browser';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('MealPlanModule', () => {
-  let component: MealPlanComponent;
-  let fixture: ComponentFixture<MealPlanComponent>;
+  let componentMain: MealPlanComponent;
+  let fixtureMain: ComponentFixture<MealPlanComponent>;
+
+  let componentDetails: MealDetailsDialog;
+  let fixtureDetails: ComponentFixture<MealDetailsDialog>;
+
+  let componentEdit: MealEditDialog;
+  let fixtureEdit: ComponentFixture<MealEditDialog>;
+
+  let componentDelete: MealDeleteConfirmationDialog;
+  let fixtureDelete: ComponentFixture<MealDeleteConfirmationDialog>;
+
+
   interface userMeal {
     Mid: number,
     Date: Date,
@@ -24,19 +38,40 @@ describe('MealPlanModule', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [MealPlanComponent],
+      declarations: [
+        MealPlanComponent,
+        MealDetailsDialog,
+        MealEditDialog,
+        MealDeleteConfirmationDialog ],
       imports: [
-        AppModule
+        AppModule,
+        MatSnackBarModule,
+        MatDialogModule
       ],
-      providers: [MatTableDataSource]
+      providers: [
+        {provide: MatDialogRef, useValue: {}},
+        {provide: MAT_DIALOG_DATA, useValue: {}},
+        MatTableDataSource,
+        HttpClient,
+        HttpHandler,
+        ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MealPlanComponent);
-    component = fixture.componentInstance;
+    fixtureMain = TestBed.createComponent(MealPlanComponent);
+    componentMain = fixtureMain.componentInstance;
+
+    fixtureDetails = TestBed.createComponent(MealDetailsDialog);
+    componentDetails = fixtureDetails.componentInstance;
+
+    fixtureEdit = TestBed.createComponent(MealEditDialog);
+    componentEdit = fixtureEdit.componentInstance;
+
+    fixtureDelete = TestBed.createComponent(MealDeleteConfirmationDialog);
+    componentDelete = fixtureDelete.componentInstance;
 
     testMeal1 = {
       Mid: 0,
-      Date: component.viewDate,
+      Date: componentMain.viewDate,
       Mealtype: 'Breakfast',
       Title: 'Test Meal 1',
       Ingredients: '',
@@ -47,7 +82,7 @@ describe('MealPlanModule', () => {
     }
     testMeal2 = {
       Mid: 1,
-      Date: component.viewDate,
+      Date: componentMain.viewDate,
       Mealtype: 'Lunch',
       Title: 'Test Meal 2',
       Ingredients: '',
@@ -58,7 +93,7 @@ describe('MealPlanModule', () => {
     }
     testMeal3 = {
       Mid: 2,
-      Date: component.viewDate,
+      Date: componentMain.viewDate,
       Mealtype: 'Dinner',
       Title: 'Test Meal 3',
       Ingredients: '',
@@ -71,25 +106,38 @@ describe('MealPlanModule', () => {
 
   }));
 
-  it('should compile', () => {
-    expect(component).toBeTruthy();
+  it('should compile all relevant components', () => {
+    expect(componentMain).toBeTruthy();
+    expect(componentDetails).toBeTruthy();
+    expect(componentEdit).toBeTruthy();
+    expect(componentDelete).toBeTruthy();
   })
 
-
-  it('component contains a list of meals', () => {
-    component.userMeals = [testMeal1, testMeal2, testMeal3];
-    expect(component.userMeals.length).toBe(3);
+  it('main mealplan component contains a list of meals', () => {
+    componentMain.userMeals = [testMeal1, testMeal2, testMeal3];
+    expect(componentMain.userMeals.length).toBe(3);
   })
 
   it('converts meals to events', () => {
-    component.userMeals = [testMeal1, testMeal2, testMeal3];
-    component.convertToEvents(component.userMeals);
-    expect(component.events.length).toBe(3);
+    componentMain.userMeals = [testMeal1, testMeal2, testMeal3];
+    componentMain.convertToEvents(componentMain.userMeals);
+    expect(componentMain.events.length).toBe(3);
   })
 
   it('displays the header', () => {
-    let element = fixture.debugElement.query(By.css('#header'));
+    let element = fixtureMain.debugElement.query(By.css('#header'));
     expect(element.nativeElement).toBeTruthy();
   })
 
+  it('clicking a meal in the calendar opens the details dialog', () => {
+    componentMain.userMeals = [testMeal1, testMeal2, testMeal3];
+    componentMain.convertToEvents(componentMain.userMeals);
+    let spy = spyOn(componentMain, "openDialog");
+
+    fixtureMain.detectChanges();
+    let buttonElement = fixtureMain.debugElement.query(By.css('mwl-calendar-week-view'));
+    buttonElement.triggerEventHandler('eventClicked', {event: testMeal1});
+
+    expect(spy).toHaveBeenCalled();
+  })
 });

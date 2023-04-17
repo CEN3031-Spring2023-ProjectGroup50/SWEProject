@@ -17,6 +17,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { MatDialogHarness } from '@angular/material/dialog/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 describe('EditRecipeContentModule', () => {
   let componentBtn: EditRecipeModule;
@@ -34,7 +35,8 @@ describe('EditRecipeContentModule', () => {
         MatDialogModule,
         BrowserAnimationsModule,
         MatIconModule,
-        MatButtonModule
+        MatButtonModule,
+        MatSnackBarModule
       ],
       providers: [
         {provide: MAT_DIALOG_DATA, useValue: {}},
