@@ -7,7 +7,7 @@
     <img mat-card-image class=recipe-details-image src="{{'data:image/jpeg;base64,' +meal.Image}}">
 
     <br><br>
-    
+
     <h2>Ingredients</h2>
     <p style="white-space: pre-line" id="dialog-ing">
         {{meal.Ingredients}}
@@ -21,9 +21,9 @@
     </p>
 
 
-<div mat-dialog-actions>
-  <button mat-flat-button>Reschedule meal</button>
-  <button mat-flat-button>Remove from meal plan</button>
-  <button mat-flat-button (click)="onNoClick()">Close</button>
+<div mat-dialog-actions align="end">
+  <button mat-flat-button (click)="editMeal(meal.Mid)" id="updateMeal">Update meal</button>
+  <button mat-flat-button (click)="deleteMeal(meal.Mid)" id="deleteMeal">Remove from meal plan</button>
+  <button mat-flat-button (click)="onNoClick()" id="close">Close</button>
 
 </div>

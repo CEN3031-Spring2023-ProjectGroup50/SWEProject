@@ -2,6 +2,8 @@ import { Component, Input, OnInit, ViewChild, Inject } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../shared/auth/auth.service';
+import { SharedFunctionsService } from '../shared/shared-functions.service'
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 interface IRecipeItem {
@@ -48,7 +50,10 @@ export class RecipeDeleteDialogContent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public recipe: IRecipeItem,
       private httpClient: HttpClient,
-      private authService: AuthService){}
+      private sharedService: SharedFunctionsService,
+      private authService: AuthService,
+      private _snackBar: MatSnackBar,
+      ){}
 
 
   async deleteRecipe() {
@@ -59,9 +64,12 @@ export class RecipeDeleteDialogContent {
       .subscribe({
         next: data=>{
           console.log('Recipe Deleted');
+          this.sharedService.reload();
+          this._snackBar.open("Meal successfully deleted!", "", {duration: 2000});
         },
         error: error=>{
           console.log('Delete Failed')
+          this._snackBar.open("Cannot delete this recipe because it is used in your meal plan.", "", {duration: 2000});
         }
       })
   }
