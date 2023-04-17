@@ -140,4 +140,63 @@ describe('MealPlanModule', () => {
 
     expect(spy).toHaveBeenCalled();
   })
+
+  it('clicking "Update meal" opens the update dialog', () => {
+    componentMain.userMeals = [testMeal1, testMeal2, testMeal3];
+    componentMain.convertToEvents(componentMain.userMeals);
+    fixtureMain.detectChanges();
+    let buttonElement = fixtureMain.debugElement.query(By.css('mwl-calendar-week-view'));
+    buttonElement.triggerEventHandler('eventClicked', {event: testMeal1});
+
+    let spy = spyOn(componentDetails, "openEditMealDialog");
+    let button = fixtureDetails.debugElement.query(By.css('#updateMeal'));
+    button.triggerEventHandler('click', testMeal1.Mid);
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('clicking "Delete meal" opens the delete dialog', () => {
+    componentMain.userMeals = [testMeal1, testMeal2, testMeal3];
+    componentMain.convertToEvents(componentMain.userMeals);
+    fixtureMain.detectChanges();
+    let buttonElement = fixtureMain.debugElement.query(By.css('mwl-calendar-week-view'));
+    buttonElement.triggerEventHandler('eventClicked', {event: testMeal1});
+
+    let spy = spyOn(componentDetails, "openDeleteMealDialog");
+    let button = fixtureDetails.debugElement.query(By.css('#deleteMeal'));
+    button.triggerEventHandler('click', testMeal1.Mid);
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('submitting the Update form calls Edit Dialog\'s "editMeal()', () => {
+    componentMain.userMeals = [testMeal1, testMeal2, testMeal3];
+    componentMain.convertToEvents(componentMain.userMeals);
+    fixtureMain.detectChanges();
+    let buttonElement = fixtureMain.debugElement.query(By.css('mwl-calendar-week-view'));
+    buttonElement.triggerEventHandler('eventClicked', {event: testMeal1});
+
+    let button = fixtureDetails.debugElement.query(By.css('#updateMeal'));
+    button.triggerEventHandler('click', testMeal1.Mid);
+
+    let submitBtn = fixtureEdit.debugElement.query(By.css('#submit'));
+    let spy = spyOn(componentEdit, "editMeal");
+    submitBtn.triggerEventHandler('click', testMeal1.Mid);
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('confirming deletion calls deleteDialog\'s deleteMeal()', () => {
+    componentMain.userMeals = [testMeal1, testMeal2, testMeal3];
+    componentMain.convertToEvents(componentMain.userMeals);
+    fixtureMain.detectChanges();
+    let buttonElement = fixtureMain.debugElement.query(By.css('mwl-calendar-week-view'));
+    buttonElement.triggerEventHandler('eventClicked', {event: testMeal1});
+
+    let button = fixtureDetails.debugElement.query(By.css('#deleteMeal'));
+    button.triggerEventHandler('click', testMeal1.Mid);
+
+    let deleteConf = fixtureDelete.debugElement.query(By.css('#delete'));
+    let spy = spyOn(componentDelete, "deleteMeal");
+    deleteConf.triggerEventHandler('click', testMeal1.Mid);
+    expect(spy).toHaveBeenCalled();
+
+  })
 });
