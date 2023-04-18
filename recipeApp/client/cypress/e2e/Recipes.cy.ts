@@ -66,7 +66,7 @@ describe('Home Page(Recipes)', () => {
   it('edits a recipe', () => {
     cy.get('#userFilter').click();
     cy.wait(500);
-    cy.get('[style="left: calc((25% - 0.75px + 1px) * 1); width: calc((25% - 0.75px) * 1 + 0px); top: calc(401px); height: calc(400px);"] > .mat-grid-tile-content > #card > .mat-mdc-card-header > #more > .mat-mdc-button-touch-target').scrollIntoView({duration: 1500}).click();
+    cy.get('[style="left: calc((25% - 0.75px + 1px) * 2); width: calc((25% - 0.75px) * 1 + 0px); top: calc(401px); height: calc(400px);"] > .mat-grid-tile-content > #card > .mat-mdc-card-header > #more > .mat-mdc-button-touch-target').scrollIntoView({duration: 1500}).click();
     cy.wait(100)
     cy.get('#edit-btn').click();
     cy.get('#edit').should('exist');
@@ -81,7 +81,7 @@ describe('Home Page(Recipes)', () => {
     cy.contains('Update recipe').click();
     cy.wait(1500);
 
-    cy.get('[style="left: calc((25% - 0.75px + 1px) * 1); width: calc((25% - 0.75px) * 1 + 0px); top: calc(401px); height: calc(400px);"] > .mat-grid-tile-content > #card > .mat-mdc-card-header > #more > .mat-mdc-button-touch-target').click();
+    cy.get('[style="left: calc((25% - 0.75px + 1px) * 2); width: calc((25% - 0.75px) * 1 + 0px); top: calc(401px); height: calc(400px);"] > .mat-grid-tile-content > #card > .mat-mdc-card-header > #more > .mat-mdc-button-touch-target').click();
     cy.wait(100)
     cy.get('#view').click();
     cy.get('#view-dialog').should('contain', 'Testing Meal Edited');
@@ -95,7 +95,7 @@ describe('Home Page(Recipes)', () => {
   it('deletes a recipe', () => {
     cy.get('#userFilter').click();
     cy.wait(500);
-    cy.get('[style="left: calc((25% - 0.75px + 1px) * 1); width: calc((25% - 0.75px) * 1 + 0px); top: calc(401px); height: calc(400px);"] > .mat-grid-tile-content > #card > .mat-mdc-card-header > #more > .mat-mdc-button-touch-target').click();
+    cy.get('[style="left: calc((25% - 0.75px + 1px) * 2); width: calc((25% - 0.75px) * 1 + 0px); top: calc(401px); height: calc(400px);"] > .mat-grid-tile-content > #card > .mat-mdc-card-header > #more > .mat-mdc-button-touch-target').click();
     cy.wait(100)
     cy.get('#delete-btn').click();
     cy.get('#delete-dialog').should('exist');
