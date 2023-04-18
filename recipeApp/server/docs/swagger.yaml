@@ -184,7 +184,7 @@ paths:
       parameters:
       - default: 0
         description: recipe id of favorite to delete
-        in: path
+        in: query
         name: rid
         required: true
         type: integer
@@ -192,6 +192,7 @@ paths:
         description: specify a user id
         in: query
         name: uid
+        required: true
         type: integer
       produces:
       - application/json

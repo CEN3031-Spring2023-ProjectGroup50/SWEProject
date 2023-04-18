@@ -176,7 +176,7 @@ const docTemplate = `{
                         "default": 0,
                         "description": "recipe id of favorite to delete",
                         "name": "rid",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     },
                     {
@@ -184,7 +184,8 @@ const docTemplate = `{
                         "default": 0,
                         "description": "specify a user id",
                         "name": "uid",
-                        "in": "query"
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
