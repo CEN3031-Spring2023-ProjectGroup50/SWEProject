@@ -154,6 +154,42 @@
                 }
             }
         },
+        "/server/favorites/check": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Check an individual recipe by user id and recipe id for favorite status.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "recipe id of favorite to delete",
+                        "name": "rid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 0,
+                        "description": "specify a user id",
+                        "name": "uid",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/server/favorites/delete/{uid}/{rid}": {
             "delete": {
                 "consumes": [

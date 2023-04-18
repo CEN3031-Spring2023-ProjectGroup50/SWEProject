@@ -16,7 +16,7 @@ import (
 // @Param uid	query	int	false "specify a user id"	default(0)
 // @Success 200
 // @Failure 400
-// @Router /server/favoritecount [get]
+// @Router /server/favorites/check [get]
 func CheckFavorite() gin.HandlerFunc {
 	return func(c *gin.Context) {
 

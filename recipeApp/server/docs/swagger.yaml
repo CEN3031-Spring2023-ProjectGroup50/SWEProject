@@ -177,6 +177,30 @@ paths:
           description: Bad Request
       summary: Get a list of user's favorite recipes in predefined amounts, searchable
         by keyword and ingredient.
+  /server/favorites/check:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - default: 0
+        description: recipe id of favorite to delete
+        in: path
+        name: rid
+        required: true
+        type: integer
+      - default: 0
+        description: specify a user id
+        in: query
+        name: uid
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Check an individual recipe by user id and recipe id for favorite status.
   /server/favorites/delete/{uid}/{rid}:
     delete:
       consumes:
