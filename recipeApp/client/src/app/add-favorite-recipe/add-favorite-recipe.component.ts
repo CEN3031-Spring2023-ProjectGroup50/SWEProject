@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../shared/auth/auth.service';
 import { HttpParams } from '@angular/common/http';
+import { SharedFunctionsService } from '../shared/shared-functions.service';
 
 
 interface IRecipeItem {
@@ -36,7 +37,8 @@ export class AddFavoriteRecipeComponent {
   constructor(
     //@Input() public recipe: IRecipeItem,
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private sharedService: SharedFunctionsService
     ) {}
 
     ngOnInit() {
@@ -75,6 +77,7 @@ export class AddFavoriteRecipeComponent {
         recipeid: this.recipe.Rid,
       }).subscribe((post)=>{
         console.log("Recipe Added To Meal For User", this.accountData);
+        this.sharedService.reload();
       });
   }
 
@@ -88,6 +91,7 @@ export class AddFavoriteRecipeComponent {
       .subscribe({
         next: data=>{
           console.log('Recipe Deleted');
+          this.sharedService.reload();
         },
         error: error=>{
           console.log('Delete Failed')
