@@ -12,7 +12,7 @@ import (
 // @Summary Check an individual recipe by user id and recipe id for favorite status.
 // @Accept json
 // @Produce json
-// @Param rid	path	int	true	"recipe id of favorite to delete"	default(0
+// @Param rid	path	int	true	"recipe id of favorite to delete"	default(0)
 // @Param uid	query	int	false "specify a user id"	default(0)
 // @Success 200
 // @Failure 400
