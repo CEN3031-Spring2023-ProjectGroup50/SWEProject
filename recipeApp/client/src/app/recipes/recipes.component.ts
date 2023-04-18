@@ -59,9 +59,8 @@ export class RecipesComponent {
   loading = false;
   keywordSearchTerm = "";
   ingredientSearchTerm = "";
+  favorites = false;
 
-  icon = "favorite_border"
-  iconColor = "basic"
 
   @ViewChild(MatPaginator, {static:false})
   paginator!: MatPaginator;
@@ -102,6 +101,9 @@ async loadItems() {
     // If there are no search terms, the page will be generated via the API defined in recipes_get_by_count.go
 
       let URL = `/server/recipes/bypage?page=${this.currentPage + 1}&per_page=${this.pageSize}`
+      if (this.favorites == true) {
+        URL = `/server/favorites/bypage?page=${this.currentPage + 1}&per_page=${this.pageSize}`
+      }
       //let params = new HttpParams().set('uid', this.defaultAccount)
       let params = new HttpParams()
 
@@ -126,24 +128,26 @@ async loadItems() {
 
       this.backendItems = await this.httpClient.get<IRecipeItem[]>(URL, { params: params }).toPromise()
 
-      this.httpClient.get<rCount>(`/server/recipecount`, { params: params })
+      if (this.favorites == true) {
+        this.httpClient.get<rCount>(`/server/favoritecount`, { params: params })
         .subscribe((data) => {
           this.totalRows = data.total;
           this.loading = false;
         })
+      }else{
+        this.httpClient.get<rCount>(`/server/recipecount`, { params: params })
+        .subscribe((data) => {
+          this.totalRows = data.total;
+          this.loading = false;
+        })
+      }
+
+ 
 
 
 }
 
-toggleIcon() {
-  if (this.icon === 'favorite_border') {
-    this.icon = 'favorite';
-    this.iconColor = 'warn';
-  } else {
-    this.icon = 'favorite_border'
-    this.iconColor = 'basic';
-  }
-}
+
 
 
 pageChanged(event: PageEvent) {
@@ -160,15 +164,25 @@ pageBottomChanged(event: PageEvent) {
   }
 
 async onAll(event: { value: string; }) {
+  this.favorites = false
   this.filter = "all"
   await this.loadItems();
 }
 
 async onUser(event: { value: string; }) {
+  this.favorites = false
   this.filter = "user"
   this.currentPage = 0
   await this.loadItems();
 }
+
+async onFavorites() {
+  this.favorites = true
+  this.filter = "user"
+  this.currentPage = 0
+  await this.loadItems();
+}
+
 
 openAddRecipeDialog() {
 

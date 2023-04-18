@@ -58,6 +58,7 @@ import { CanActivateViaAuthGuard } from './shared/auth/can-activate-via-auth.gua
 import { NegateAuthGuard } from './shared/auth/negate-auth.guard';
 import { RecipeDeleteDialogComponent, RecipeDeleteDialogContent } from './recipe-delete-dialog/recipe-delete-dialog.component';
 import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-mealplan-dialog/add-mealplan-dialog.component';
+import { AddFavoriteRecipeComponent } from './add-favorite-recipe/add-favorite-recipe.component';
 
 
 @NgModule({
@@ -87,6 +88,7 @@ import { AddMealplanDialogComponent, AddMealplanContentComponent } from './add-m
         MealDetailsDialog,
         MealDeleteConfirmationDialog,
         MealEditDialog,
+        AddFavoriteRecipeComponent,
     ],
     providers: [
         AuthService,
