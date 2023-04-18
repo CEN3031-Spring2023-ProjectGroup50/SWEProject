@@ -40,20 +40,22 @@ export class AddFavoriteRecipeComponent {
     ) {}
 
     ngOnInit() {
-
       this.authService.getAccount().subscribe(
         (res: any) => {
             this.accountData = res.toString();
-        },)
-
+            this.checkFavorite();
+        });
     }
 
     async checkFavorite() {
       let params = new HttpParams()
       params = params.append('uid',this.accountData)
       params = params.append('rid',this.recipe.Rid)
-      this.favid = await this.httpClient.get<string>(`/server/favorite/check`, { params: params }).toPromise()
-        
+      this.favid = await this.httpClient.get<string>(`/server/favorites/check`, { params: params }).toPromise()
+      if (this.favid != '0') {
+        this.icon = 'favorite';
+        this.iconColor = 'warn';
+      }
     }
 
     toggleIcon() {
