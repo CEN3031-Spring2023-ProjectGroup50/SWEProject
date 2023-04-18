@@ -35,8 +35,8 @@
         <mat-button-toggle-group name="filter" aria-label="Filter">
           <mat-button-toggle (change)="onAll($event.value)" value="all" id="allFilter">All Recipes</mat-button-toggle>
           <mat-button-toggle (change)="onUser($event.value)" value="user" id="userFilter">My Recipes</mat-button-toggle>
+          <mat-button-toggle (click)="onFavorites()">My Favorites</mat-button-toggle>
         </mat-button-toggle-group>
-        <button mat-raised-button (click)="onFavorites()" color="primary" id="fav">Favorites</button>
         <button mat-raised-button (click)="openAddRecipeDialog()" color="primary" id="add">Add Recipe</button>
       </td>
     </tr>
