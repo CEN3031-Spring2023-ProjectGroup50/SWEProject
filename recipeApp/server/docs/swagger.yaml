@@ -82,6 +82,39 @@ info:
   title: Mallow Recipe Server API
   version: "1.0"
 paths:
+  /server/favoritecount:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - collectionFormat: multi
+        description: specify one or more keywords
+        in: query
+        items:
+          type: string
+        name: keyword
+        type: array
+      - collectionFormat: multi
+        description: specify one or more ingredients
+        in: query
+        items:
+          type: string
+        name: ingredient
+        type: array
+      - default: 0
+        description: specify a user id
+        in: query
+        name: uid
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Get the correct count of user's favorite recipes for any pagination
+        scenario.
   /server/favorites/add:
     post:
       consumes:

@@ -554,10 +554,10 @@ func TestMealGetByDate(t *testing.T) {
 		}
 		assert.Equal(t, inBound, true, "Response data was out of range")
 		if i == 0 {
-			assert.Equal(t, len(response), 1, "Response data was not the correct length")
+			assert.Equal(t, len(response), 2, "Response data was not the correct length")
 		}
 		if i == 1 {
-			assert.Equal(t, len(response), 4, "Response data was not the correct length")
+			assert.Equal(t, len(response), 8, "Response data was not the correct length")
 		}
 
 	}
