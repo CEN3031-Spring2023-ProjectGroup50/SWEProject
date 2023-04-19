@@ -52,58 +52,10 @@ Nice-to-have
 ## Frontend Unit tests
 Frontend Angular unit tests are located in files ending in `.spec.ts`. Each component and service has its own unit test file.
 
-| Component test file                   | Test Description
-| :---                                  |  :---
-| add-recipe-dialog.component.spec.ts   | should create
-| app.component.spec.ts                 | should compile
-| app.component.spec.ts                 | should create the app
-| app-header.component.spec.ts          | should compile
-| app-header.component.spec.ts          | should create the App header component
-| app-header.component.spec.ts          | should have titleLoggedOut value of "Welcome to Mallow".
-| app-header.component.spec.ts          | should display titleLoggedOut when logged out.
-| app-header.component.spec.ts          | should have titleLoggedIn value of "Save time, and savor every meal with Mallow."
-| app-header.component.spec.ts          | should display titleLoggedIn when logged in.
-| auth.service.spec.ts                  | should be created
-| auth.service.spec.ts                  | should have a login function
-| auth.service.spec.ts                  | should have a logout function
-| auth.service.spec.ts                  | should set tokens in local storage
-| auth.service.spec.ts                  | should return true for isAuthenticated when login is called
-| auth.service.spec.ts                  | should return false for isAuthenticated when logout is called
-| auth.service.spec.ts                  | should remove token from local storage when logout is called
-| auth.service.spec.ts                  | should remove refresh token from local storage when logout is called
-| edit-recipe.component.spec.ts         | should create EditRecipeModule
-| edit-recipe.component.spec.ts         | should create EditRecipeContentModule
-| edit-recipe.component.spec.ts         | ERM opens the dialog upon button click
-| edit-recipe.component.spec.ts         | ERM contains a button "Edit Recipe" to open dialog
-| grocery-list.component.spec.ts        | should compile
-| grocery-list.component.spec.ts        | should create the grocery list component
-| grocery-list-page.component.spec.ts   | should compile
-| grocery-list-page.component.spec.ts   | should create the grocery list component
-| home.component.spec.ts                | should compile
-| login-editor.component.spec.ts        | should compile
-| login-editor.component.spec.ts        | should create the login-editor component
-| meal-plan.component.spec.ts           | should compile
-| meal-plan.component.spec.ts           | should create meal plan component
-| meal-plan.component.spec.ts           | should contain users
-| meal-plan-page.component.spec.ts      | should compile
-| meal-plan-page.component.spec.ts      | should create meal plan page component
-| menu-navigation.component.spec.ts     | Should compile
-| menu-navigation.component.spec.ts     | drawer should default to open
-| menu-navigation.component.spec.ts     | drawer should close when toggled
-| menu-navigation.component.spec.ts     | should create the menu navigation component
-| menu-navigation.component.spec.ts     | should have content in navbar
-| menu-navigation.component.spec.ts     | should have a list in the navbar
-| recipes.component.spec.ts             | should compile
-| recipes.component.spec.ts             | should contain "Add Recipe" button
-| recipes.component.spec.ts             | RecipeComponent opens the addRecipeDialog upon button click
-| recipe-details.component.spec.ts      | should compile
-| registerform.component.spec.ts        | should compile
-| registerform.component.spec.ts        | should create the registerform component
-| shared-functions.service.spec.ts      | should be created
-| welcome.component.spec.ts             | should compile
-| welcome.component.spec.ts             | should create the welcome component
-| welcome.component.spec.ts             | should have as list of size 3 (currently hardcoded)
-| welcome-dashboard.component.spec.ts   | Should compile
+![Part1](https://user-images.githubusercontent.com/93093369/232954280-46060d87-f0c4-405f-b2c7-8f6e6d8fd750.png)
+![Part2](https://user-images.githubusercontent.com/93093369/232954293-16957ce2-0005-4bb2-b8d6-617574bf50ea.png)
+![Part3](https://user-images.githubusercontent.com/93093369/232954303-4d79bb7c-c3e7-4d11-9194-5e85f8e107f1.png)
+
 
 When tests run, the built-in Angular testing platform (run `ng test`, or `npm test` from recipeApp/client) will generate a screen which looks like this:
 
