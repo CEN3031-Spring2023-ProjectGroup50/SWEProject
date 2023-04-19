@@ -192,6 +192,8 @@ Backend unit tests are located in main_test.go
 | :---            | :---                                    |
 | Recipes         | Provides operations related to Recipes  |
 | Users           | Provides operations related to Users    |
+| Meals           | Provides operations related to Meals    |
+| Favorites       | Provides operations related to Favorites|
 
 #### Users
 
@@ -286,8 +288,9 @@ HMAC generated auth token
 | :---          | :---                                          |
 | Create        | Create a Recipe                               |
 | Delete        | Delete a Recipe                               |
-| Get           | Retrieve information about Recipe(s)          |
+| Get Count     | Retrieve recipe count information             |
 | Get (Paginate)| Retrieve ordered, limited Recipes             |
+| Edit          | Edit an existing Recipe                       |
 
 ##### Recipe - Create
 
@@ -304,6 +307,7 @@ HMAC generated auth token
 | instructions        | True        | string    | Recipe instructions   |
 | ingredients         | True        | string    | Recipe ingredients    |
 | image_name          | True        | string    | Name of recipe image  |
+| image               | True        | string    | Data that represents image  |
 | cleaned_ingredients | True        | string    | Ingredients sanitized |
 
 ##### Responses
@@ -383,7 +387,6 @@ Empty
 | Name            | Type      | Description             |
 | :---            | :---      | :---                    |
 | 200 OK          | Recipe    | OK                      |
-| 400 Bad Request | Error     | No recipes returned     |
 
 ##### Sample Request
 
@@ -695,6 +698,71 @@ Get count of recipes filtered by keyword and ingredient, for a specific user
   "total": 0
 }
 ```
+
+##### Recipe - Edit
+
+> HTTP
+> 
+> POST http://localhost:5000/server/recipes/edit{id}
+
+##### Request Body
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| rid                 | True        | uint      | Unique id of recipe   |
+| title               | True        | string    | Title of recipe       |
+| instructions        | True        | string    | Recipe instructions   |
+| ingredients         | True        | string    | Recipe ingredients    |
+| image_name          | True        | string    | Name of recipe image  |
+| image               | True        | string    | Data that represents image  |
+| cleaned_ingredients | True        | string    | Ingredients sanitized |
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+| 400 Bad Request | Error     | Could not edit recipe   |
+
+##### Sample Request
+
+Edit recipe 13510
+
+> HTTP
+>
+> PUT http://localhost:5000/server/recipes/edit/13510
+>
+> \
+>  -H 'accept: application/json' \
+>  -H 'Content-Type: application/json' \
+>  -d '{
+>  "image": [
+>   0
+>  ],
+>  "image_name": "myimage",
+>  "ingredients": "carrots",
+>  "instructions": "chop carrots",
+>  "rid": 13510,
+>  "title": "Total Eclipse",
+>  "uid": 3
+>}'
+>   
+
+##### Sample Response
+
+```
+{
+  "rid": 13510,
+  "title": "Total Eclipse",
+  "ingredients": "carrots",
+  "instructions": "chop carrots",
+  "image_name": "myimage",
+  "uid": 2,
+  "image": "AA=="
+}
+
+```
+
 
 #### Meals
 
@@ -1191,7 +1259,7 @@ Our internal API document can be found at:
 
 http://localhost:5000/server/docs/index.html#  when running the server locally.
 
-![The API test platform](https://media.discordapp.net/attachments/1062897591240638631/1090425713775087626/image.png?width=804&height=645)
+![The API test platform](https://media.discordapp.net/attachments/1062897591240638629/1098110552745709588/image.png?width=778&height=624)
 
 Example trying out a sample API call:
 ![Sample API call](https://media.discordapp.net/attachments/1062897591240638631/1090425871535444008/image.png?width=828&height=645)
