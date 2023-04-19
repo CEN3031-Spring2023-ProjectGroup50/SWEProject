@@ -57,7 +57,11 @@ Frontend Angular unit tests are located in files ending in `.spec.ts`. Each comp
 ![Part3](https://user-images.githubusercontent.com/93093369/232954303-4d79bb7c-c3e7-4d11-9194-5e85f8e107f1.png)
 
 ### Cypress end-to-end (E2E) tests
-Frontend Cypress end-to-end tests are located in files ending in `.cy.ts`. Each component will have its own Cypress test file.
+Frontend Cypress end-to-end tests are located in files ending in `.cy.ts`. Each feature of Mallow has a Cypress file, including
+1. Login/Logout Feature
+2. Recipes View (including add, edit, and delete)
+3. Meal Plan View
+4. Grocery List View
 
 ![Cypress1](https://user-images.githubusercontent.com/93093369/232954470-f6ab35a2-8b30-4f7c-a9fb-9451de673e6a.png)
 
