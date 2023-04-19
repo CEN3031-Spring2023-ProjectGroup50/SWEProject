@@ -16,8 +16,6 @@
   flex: 1 1 auto;
 }
 
-
-
 section {
   display: table;
 }
@@ -49,11 +47,6 @@ section {
   justify-content: center;
   width: 120px;
 }
-
-
-
-
-
 
 .recipe-details-image {
   border: 1px solid #ddd;

@@ -51,9 +51,7 @@ export class RecipeDetailsModule {
 
 })
 export class RecipeDetailsContentModule {
-
   constructor(@Inject(MAT_DIALOG_DATA) public recipe: any) {}
-
 }
 
 function formatIngredients(Ingredients: string,) {

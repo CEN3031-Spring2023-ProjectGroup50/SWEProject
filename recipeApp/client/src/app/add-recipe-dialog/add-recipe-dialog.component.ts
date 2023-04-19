@@ -55,8 +55,6 @@ export class AddRecipeDialogComponent {
   }
 
   async addRecipe() {
-    console.log(this.imageName);
-    console.log(this.imageString);
     await this.httpClient.post('/server/recipes/add',{
       image_name: this.imageName,
       ingredients: formatIngredientsForAPI(this.recipeForm.value['ingredients']),
@@ -71,14 +69,10 @@ export class AddRecipeDialogComponent {
     });
   }
 
-
-
   handleFileInputChange(l: FileList ): void | null {
     this.error = "";
     this.file_store = l;
-    if (l.length) {
-      console.log(l.length)
-      
+    if (l.length) {      
       if (l.length > 1) this.error = "Only one file at time allowed";
       else{
       const f = l[0];
@@ -92,8 +86,6 @@ export class AddRecipeDialogComponent {
         reader.onload =this._handleReaderLoaded.bind(this);
 
         reader.readAsBinaryString(f);
-        //this.imageString = btoa(reader.result!.toString())
-        //console.log(this.imageString)
       }
     } else {
       this.recipeForm.patchValue({image: ""});
@@ -102,13 +94,9 @@ export class AddRecipeDialogComponent {
 
   _handleReaderLoaded(f: any) {
     this.imageString = btoa(f.target.result);
-           console.log(this.imageString);
    }
 
 }
-
-
-
 
 function formatIngredientsForAPI(Ingredients: string,) {
   let result = "['";

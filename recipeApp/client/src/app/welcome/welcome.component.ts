@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 
 @Component({
     selector: 'welcome',
@@ -8,8 +8,6 @@ import {Component, OnInit, Input} from '@angular/core'
 })
 
 export class WelcomeComponent {
-
-    @Input() public isUserLoggedIn: boolean|undefined;
-
+    @Input() public isUserLoggedIn: boolean | undefined;
 }
 

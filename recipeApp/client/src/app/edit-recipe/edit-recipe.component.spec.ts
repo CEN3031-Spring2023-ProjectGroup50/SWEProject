@@ -86,11 +86,6 @@ describe('EditRecipeContentModule', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  /* Note from Shannon:
-      Good stack overflow example for testing an API call
-      i.e. should call 'delete' once when Submit button pressed and not cancelled
-      https://stackoverflow.com/questions/52968940/dialogref-afterclosed-is-not-a-function
-  */
 });
 
 

@@ -37,15 +37,7 @@ describe('registerForm', () => {
   let component: registerFormComponent;
   let fixture: ComponentFixture<registerFormComponent>;
 
-  // const routes: Routes = [
-  //   {path: '', redirectTo: 'themen', pathMatch: 'full'},
-  //   {path: 'meeting', component: HomeComponent},
-  //   {path: '**', redirectTo: 'themen', pathMatch: 'full'}
-  // ];
-
   beforeEach(waitForAsync(() => {
-
-    //component = new registerFormComponent(routerSpy, new FormBuilder(), loginServiceSpy);
 
     TestBed.configureTestingModule({
       declarations: [
@@ -75,13 +67,10 @@ describe('registerForm', () => {
         MatPaginatorModule,
         CommonModule,
         HttpClientTestingModule
-        //RouterTestingModule
       ],
       providers: [
         HttpClient,
-        //{provide: registerFormComponent, useValue: loginServiceSpy},
         FormBuilder,
-        //{ provide: Router, useValue: routerSpy }
         AuthService,
             {
                 provide: HTTP_INTERCEPTORS,

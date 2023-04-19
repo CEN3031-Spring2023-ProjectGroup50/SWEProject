@@ -74,17 +74,11 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
       this.ngAfterViewInit();
       this.changeDetectorRef.detectChanges();
       this.refreshCalendar.next();
-
-      console.log("events")
-      console.log(this.events)
-      console.log("userMeals")
-      console.log(this.userMeals)
     });
   }
 
   async ngAfterViewInit() {
     this.getSun = await this.calendar.getSunday();
-    console.log("getSun = " + this.getSun);
     this.loadMeals();
   }
     
@@ -147,15 +141,9 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     return this.events
   }
 
-
   @Input() clickedMeal: userMeal
   eventClicked({ event }: { event: CalendarEvent }): void {
-    console.log('Event clicked', event);
-
     this.clickedMeal = this.userMeals?.find(meal => meal.Mid === event.id)!;
-    console.log("meal clicked: ")
-    console.log(this.clickedMeal)
-
     this.openDialog()
   }
 
@@ -183,7 +171,6 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
   }
   
-
   @Component({
     selector: 'meal-details-dialog',
     templateUrl: 'meal-details.html',
@@ -242,7 +229,6 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
     }
     
   }
-
   
   @Component({
     selector: 'meal-delete-confirmation-dialog',
@@ -281,8 +267,6 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
         })
     }
   }
-
-
 
   export class MyErrorStateMatcher implements ErrorStateMatcher {
     isErrorState(control: FormControl | null, form: FormGroupDirective | null): boolean {
@@ -357,7 +341,6 @@ export class MealPlanComponent implements OnInit, AfterViewInit {
 
     }
   }
-
 
   function formatIngredients(Ingredients: string,) {
     let result = Ingredients.substring(2, Ingredients.length-2);

@@ -13,7 +13,7 @@ export const colors: any = {
     },
     Other: { // gray
       primary: '#7a7a7a',
-      secondary: '#f0f0f0', // fill color
+      secondary: '#f0f0f0',
     },
   };
   

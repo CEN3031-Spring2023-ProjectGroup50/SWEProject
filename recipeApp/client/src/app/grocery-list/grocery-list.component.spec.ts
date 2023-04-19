@@ -33,7 +33,6 @@ describe('GroceryListComponent', () => {
     fixture = TestBed.createComponent(GroceryListComponent);
     component = fixture.componentInstance;
 
-
     testMeal1 = {
       Mid: 0,
       Date: component.viewDate,
@@ -57,10 +56,4 @@ describe('GroceryListComponent', () => {
     expect(component.userMeals.length).toBe(1);
   })
 
-  /*it('displays ingredients of testMeal1 to the screen', () => {
-    component.userMeals = [testMeal1];
-    fixture.detectChanges();
-    let list = fixture.debugElement.query(By.css('#list'));
-    expect(list).toContain('broccoli');
-  })*/
 });

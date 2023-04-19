@@ -1,4 +1,4 @@
-import { Component,Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AuthService } from './shared/auth/auth.service';
 import { Router } from '@angular/router';
 
@@ -9,12 +9,6 @@ import { Router } from '@angular/router';
 
 })
 export class AppComponent {
-
-  // ngOnInit() {
-  //         this.router.navigateByUrl('/login');
-  //       };
-  
   constructor(private router: Router, private authService: AuthService) {
-
   }
 }

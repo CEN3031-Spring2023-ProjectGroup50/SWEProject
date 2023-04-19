@@ -9,7 +9,6 @@ import { colors } from '../calendar-header/colors';
 import { Subject } from 'rxjs';
 import { CalendarHeaderComponent } from '../calendar-header/calendar-header.component';
 
-
 interface userMeal {
   Mid: number,
   Date: Date,
@@ -22,7 +21,6 @@ interface userMeal {
   Image: Uint8Array[],
 }
 
-
 @Component({
   selector: 'app-grocery-list',
   templateUrl: './grocery-list.component.html',
@@ -30,22 +28,15 @@ interface userMeal {
 
 })
 export class GroceryListComponent {
+  
   refreshCalendar: Subject<void> = new Subject();
-
   @ViewChild(CalendarHeaderComponent) calendar: CalendarHeaderComponent;
-
   @Input() locale: string = 'en';
-
   @Output() viewChange = new EventEmitter<CalendarView>();
-
   @Output() viewDateChange = new EventEmitter<Date>();
-
   view: CalendarView = CalendarView.Week;
-
   viewDate: Date = new Date();
-
   getSun: string;
-
   accountData="0"
   uid = 0
   defaultAccount = "0"
@@ -67,7 +58,6 @@ export class GroceryListComponent {
   async ngOnInit() {
     this.getAccountData()
     await this.loadItems()
-    console.log(this.accountData)
 
     this.sharedService.aClickedEvent
     .subscribe((data:string) => {
@@ -75,17 +65,11 @@ export class GroceryListComponent {
       this.ngAfterViewInit();
       this.changeDetectorRef.detectChanges();
       this.refreshCalendar.next();
-
-      console.log("ingredients")
-      console.log(this.ingredients)
-      console.log("userMeals")
-      console.log(this.userMeals)
     });
   }
 
   async ngAfterViewInit() {
     this.getSun = await this.calendar.getSunday();
-    console.log("getSun = " + this.getSun);
     this.loadItems();
   }
 
@@ -137,7 +121,6 @@ export class GroceryListComponent {
       else {
         this.storedColors.set(meal.Title, colors.Other)
       }
-      console.log(this.storedColors.get(meal.Title))
     }
 
     return this.ingredients
