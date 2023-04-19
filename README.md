@@ -41,11 +41,30 @@ This step is **IMPORTANT**. Some of the files in this repo are encrypted using g
 1. Open a new terminal
 2. In the `/SWEProject/recipeApp/server/` folder:<br>
    - Run `make dev` or `mingw32-make dev` to start the backend server
+   - If this is not successful, run `go run main.go`
 3. Open a 2nd terminal (do NOT close the first one)
 4. In the `/SWEProject/recipeApp/client/` folder:<br>
    - Run `make dev` or `mingw32-make dev` to build the Angular frontend
+   - If this is not successful, run `npm run start`
+ To stop running, press Ctrl+C in both terminals to exit.
 
-To stop running, press Ctrl+C in both terminals to exit.
+## Testing the application
+
+### Backend unit tests
+1. Open a new terminal
+2. Navigate to the `/SWEProject/recipeApp/server/` folder
+3. Run `go test`
+
+### Frontend unit tests (Karma/Jasmine)
+1. Open a new terminal
+2. Navigate to the `/SWEProject/recipeApp/client/` folder
+3. Run `npm test`
+
+### Frontend E2E tests (Cypress)
+1. Open a new terminal
+2. Navigate to the `/SWEProject/recipeApp/client/` folder
+3. Run `npx cypress open`
+4. Click on E2E testing and select your preferred browser
 
 ## Team Members
 
