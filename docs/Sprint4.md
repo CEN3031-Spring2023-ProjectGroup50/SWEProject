@@ -952,6 +952,237 @@ Get a week of meals scheduled for user 8 starting 4/20/2023
 ]
 ```
 
+#### Favorites
+
+##### Operations
+
+|               |                                               |
+| :---          | :---                                          |
+| Create        | Create a Favorite                             |
+| Delete        | Delete a Favorite                             |
+| Check         | Check if a Favorite exists                    |
+| Get (Paginate)| Get a list of Favorites, filtered             |
+| Count         | Get the count of Favorites                    |
+
+##### Favorites - Create
+
+> HTTP
+> 
+> POST http://localhost:5000/server/favorites/add
+
+##### Request Body
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| recipeid            | True        | uint      | Unique id of recipe   |
+| userid              | True        | uint      | User ID               |
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+| 400 Bad Request | Error     | Recipe already added as favorite |
+| 400 Bad Request | Error     | User does not exist     |
+| 400 Bad Request | Error     | Recipe does not exist   |
+| 400 Bad Request | Error     | Failed to add favorite  |
+
+##### Sample Request
+
+Create a favorite for user 124 with recipe 124
+
+> HTTP
+>
+> POST http://localhost:5000/server/favorites/add
+>  \
+> -H 'accept: application/json' \
+> -H 'Content-Type: application/json' \
+> -d '{
+  "recipeid": 124,
+  "userid": 124
+>}'
+>
+
+##### Sample Response
+```
+{
+  "Fid": 438,
+  "Userid": 124,
+  "Recipeid": 124
+}
+```
+
+##### Favorites - Delete
+
+> HTTP
+> 
+> POST http://localhost:5000/server/favorites/delete/{uid}/{rid}
+
+##### URI Parameters
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| rid                 | True        | uint      | Unique id of recipe   |
+| uid                 | True        | uint      | User ID               |
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+| 400 Bad Request | Error     | Could not delete favorite |
+
+##### Sample Request
+
+Delete a favorite for user 124 with recipe 124
+
+> HTTP
+>
+> DELETE http://localhost:5000/server/favorites/delete/124/124
+>
+
+##### Sample Response
+```
+{}
+
+```
+
+##### Favorites - Check
+
+> HTTP
+> 
+> POST http://localhost:5000/server/favorites/check
+
+##### URI Parameters
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| recipeid            | True        | uint      | Unique id of recipe   |
+| userid              | True        | uint      | User ID               |
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+
+##### Sample Request
+
+Check if user 124 has recipe 124 as a favorite
+
+> HTTP
+>
+> GET http://localhost:5000/server/favorites/check?rid=124&uid=124
+>  
+>
+
+##### Sample Response
+```
+0
+
+```
+
+##### Favorites - Count
+
+> HTTP
+> 
+> POST http://localhost:5000/server/favoritecount
+
+##### URI Parameters
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| userid              | True        | uint      | User ID               |
+| keyword             | False       | string    | Search keyword        |
+| ingredient          | False       | string    | Search ingredient     |
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+
+##### Sample Request
+
+Return favorites count of user 8
+
+> HTTP
+>
+> GET http://localhost:5000/server/favoritecount?uid=8
+>  
+>
+
+##### Sample Response
+```
+{
+  "total": 2
+}
+```
+
+##### Favorites - Get (paginate)
+
+> HTTP
+> 
+> POST http://localhost:5000/server/favorites/bypage
+
+##### URI Parameters
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| page                | True        | uint      | page number           |
+| per_page            | True        | uint      | results per page      |
+| userid              | True        | uint      | User ID               |
+| keyword             | False       | string    | Search keyword        |
+| ingredient          | False       | string    | Search ingredient     |
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+
+##### Sample Request
+
+Return favorites of user 8
+
+> HTTP
+>
+> GET http://localhost:5000/server/favorites/bypage?page=1&per_page=10&uid=8
+>  
+>
+
+##### Sample Response
+```
+[
+  {
+    "Rid": 2,
+    "Title": "Thanksgiving Mac and Cheese",
+    "Ingredients": "['1 cup evaporated milk', '1 cup whole milk', '1 tsp. garlic powder', '1 tsp. onion powder', '1 tsp. smoked paprika', '½ tsp. freshly ground black pepper', '1 tsp. kosher salt, plus more', '2 lb. extra-sharp cheddar, coarsely grated', '4 oz. full-fat cream cheese', '1 lb. elbow macaroni']",
+    "Instructions": "Place a rack in middle of oven; preheat to 400°. Bring evaporated milk and whole milk to a bare simmer in a large saucepan over medium heat. Whisk in garlic powder, onion powder, paprika, pepper, and 1 tsp. salt. Working in batches, whisk in three fourths of the cheddar, then all of the cream cheese.\nMeanwhile, bring a large pot of generously salted water to a boil (it should have a little less salt than seawater). Cook macaroni, stirring occasionally, until very al dente, about 4 minutes. Drain in a colander.\nAdd macaroni to cheese sauce in pan and mix until well coated. Evenly spread out half of macaroni mixture in a 13x9\" baking dish. Sprinkle half of remaining cheddar evenly over. Layer remaining macaroni mixture on top and sprinkle with remaining cheddar. Bake until all of the cheese is melted, about 10 minutes. Let cool slightly before serving.",
+    "Image_Name": "thanksgiving-mac-and-cheese-erick-williams",
+    "Uid": 1,
+    "Email": "",
+    "Image": "/9j/4AAQSk{...}cOgr1GGf/9k="
+  },
+  {
+    "Rid": 0,
+    "Title": "Miso-Butter Roast Chicken With Acorn Squash Panzanella",
+    "Ingredients": "['1 (3½–4-lb.) whole chicken', '2¾ tsp. kosher salt, divided, plus more', '2 small acorn squash (about 3 lb. total)', '2 Tbsp. finely chopped sage', '1 Tbsp. finely chopped rosemary', '6 Tbsp. unsalted butter, melted, plus 3 Tbsp. room temperature', '¼ tsp. ground allspice', 'Pinch of crushed red pepper flakes', 'Freshly ground black pepper', '⅓ loaf good-quality sturdy white bread, torn into 1\" pieces (about 2½ cups)', '2 medium apples (such as Gala or Pink Lady; about 14 oz. total), cored, cut into 1\" pieces', '2 Tbsp. extra-virgin olive oil', '½ small red onion, thinly sliced', '3 Tbsp. apple cider vinegar', '1 Tbsp. white miso', '¼ cup all-purpose flour', '2 Tbsp. unsalted butter, room temperature', '¼ cup dry white wine', '2 cups unsalted chicken broth', '2 tsp. white miso', 'Kosher salt, freshly ground pepper']",
+    "Instructions": "Pat chicken dry with paper towels, season all over with 2 tsp. salt, and tie legs together with kitchen twine. Let sit at room temperature 1 hour.\nMeanwhile, halve squash and scoop out seeds. Run a vegetable peeler along ridges of squash halves to remove skin. Cut each half into ½\"-thick wedges; arrange on a rimmed baking sheet.\nCombine sage, rosemary, and 6 Tbsp. melted butter in a large bowl; pour half of mixture over squash on baking sheet. Sprinkle squash with allspice, red pepper flakes, and ½ tsp. salt and season with black pepper; toss to coat.\nAdd bread, apples, oil, and ¼ tsp. salt to remaining herb butter in bowl; season with black pepper and toss to combine. Set aside.\nPlace onion and vinegar in a small bowl; season with salt and toss to coat. Let sit, tossing occasionally, until ready to serve.\nPlace a rack in middle and lower third of oven; preheat to 425°F. Mix miso and 3 Tbsp. room-temperature butter in a small bowl until smooth. Pat chicken dry with paper towels, then rub or brush all over with miso butter. Place chicken in a large cast-iron skillet and roast on middle rack until an instant-read thermometer inserted into the thickest part of breast registers 155°F, 50–60 minutes. (Temperature will climb to 165°F while chicken rests.) Let chicken rest in skillet at least 5 minutes, then transfer to a plate; reserve skillet.\nMeanwhile, roast squash on lower rack until mostly tender, about 25 minutes. Remove from oven and scatter reserved bread mixture over, spreading into as even a layer as you can manage. Return to oven and roast until bread is golden brown and crisp and apples are tender, about 15 minutes. Remove from oven, drain pickled onions, and toss to combine. Transfer to a serving dish.\nUsing your fingers, mash flour and butter in a small bowl to combine.\nSet reserved skillet with chicken drippings over medium heat. You should have about ¼ cup, but a little over or under is all good. (If you have significantly more, drain off and set excess aside.) Add wine and cook, stirring often and scraping up any browned bits with a wooden spoon, until bits are loosened and wine is reduced by about half (you should be able to smell the wine), about 2 minutes. Add butter mixture; cook, stirring often, until a smooth paste forms, about 2 minutes. Add broth and any reserved drippings and cook, stirring constantly, until combined and thickened, 6–8 minutes. Remove from heat and stir in miso. Taste and season with salt and black pepper.\nServe chicken with gravy and squash panzanella alongside.",
+    "Image_Name": "miso-butter-roast-chicken-acorn-squash-panzanella",
+    "Uid": 1,
+    "Email": "",
+    "Image": "/9j/4AAQSk{...}RX//2Q=="
+  }
+]
+```
+
+
+
+
+
+
+
 
 
 ## Swagger
