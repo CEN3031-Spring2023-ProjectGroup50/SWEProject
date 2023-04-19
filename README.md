@@ -26,9 +26,13 @@ REQUIREMENTS: You must have the following installed prior to following these ste
 ### Unlocking secured files
 This step is **IMPORTANT**. Some of the files in this repo are encrypted using git-crypt; you must unlock them before proceeding.
 1. Configure git-crypt on your machine
-   - Download [this executable](https://github.com/AGWA/git-crypt/releases/tag/0.7.0)
-   - Put the executable's path in your system's User PATH variable
-   - Rename the executable git-crypt.exe
+   - **Windows** users:
+     - Download [this executable](https://github.com/AGWA/git-crypt/releases/tag/0.7.0)
+     - Put the executable's path in your system's User PATH variable
+     - Rename the executable git-crypt.exe
+   - **Linux** users:
+     - Run `sudo apt install git-crypt` in terminal
+
 2. In the `/SWEProject` root folder:<br>
    - Add the file `git-crypt-key`
    - Add `git-crypt-key` to the .gitignore file
@@ -66,6 +70,7 @@ This step is **IMPORTANT**. Some of the files in this repo are encrypted using g
 3. Run `npm test`
 
 ### Frontend E2E tests (Cypress)
+Both the server and client must be running in order to run these tests. See [Starting Mallow](#starting-mallow).
 1. Open a new terminal
 2. Navigate to the `/SWEProject/recipeApp/client/` folder
 3. Run `npx cypress open`
