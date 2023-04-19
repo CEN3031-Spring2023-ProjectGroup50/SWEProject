@@ -22,7 +22,7 @@
 
 * [Overall Application Overview](https://drive.google.com/file/d/1onGFcXW0HyZ0RC94HAaIB9h1i7f4rMBs/view?usp=sharing) (~16 minutes)
 
-* [Overall API Overview](https://drive.google.com/file/d/1K5uyUWG65D_ZwzaT2kiTKY5l1bbYLY2i/view?usp=share_link) (~20 minutes) <-- Demonstrated on [Swagger](#swagger)
+* [Overall API Overview](https://drive.google.com/file/d/1K5uyUWG65D_ZwzaT2kiTKY5l1bbYLY2i/view?usp=share_link) (~20 minutes)
 
 ## Work completed in sprint 4
 
@@ -37,25 +37,25 @@ and focus on the other primary purposes of our application: meal planning and gr
 As a group, we reviewed the incomplete user stories from Sprint 3 as well as the backlog of user stories, and defined the goal for Sprint 4. 
 Because our time was limited with this being the last sprint of the semester, our primary goal was to establish a minimal viable product (MVP) for an end-to-end application. 
 With any remaining time, we hoped to enhance different elements of the app with nice-to-have features which may not be necessary for baseline functionality. 
-We came up with the following plan. The bold comments show the status of each of these user stories.
+We came up with the following plan.
 
 MVP
-1. [7] As a user, I can delete previously created recipes so that I can keep my list up to date. #45 _**(Done)**_
-2. [12] As a user, I can add a recipe from the list to my meal plan so I can set up my schedule for the week.#48 _**(Done)**_
-3. [13] As a user, I can view the current week's planned recipes in a list so I know what I will be cooking.#49 _**(Done)**_
-4. [14] As a user, I can navigate between each week’s meal plan views so I can look forward in time.#30 _**(Done)**_
-5. [15] As a user, I can click to generate a static list of groceries based on recipes in the schedule for specified days or weeks up to 1 month, so I know what I need from the grocery store.#31  _**(Done for up to 1 week)**_
-6. [8] As a user, I would like to be able to save recipes so I can easily find and access them later. #46 _**(Done)**_
+1. [7] As a user, I can delete previously created recipes so that I can keep my list up to date. #45
+2. [12] As a user, I can add a recipe from the list to my meal plan so I can set up my schedule for the week.#48
+3. [13] As a user, I can view the current week's planned recipes in a list so I know what I will be cooking.#49
+4. [14] As a user, I can navigate between each week’s meal plan views so I can look forward in time.#30
+5. [15] As a user, I can click to generate a static list of groceries based on recipes in the schedule for specified days or weeks up to 1 month, so I know what I need from the grocery store.#31
+6. [8] As a user, I would like to be able to save recipes so I can easily find and access them later. #46
 
 Nice-to-have
-1. [18] As a user, I receive errors that help guide me so I know what to do next#65 _**(Done partially, and added snackbar messages to users)**_
-2. [19] As a user, I want to upload a picture to accompany my recipe. _**(Done)**_
-3. [10] As a user, I would like to search the recipe list based on meal type so I can more easily find what I am looking for. #27 _**(In Backlog)**_
-4. [9] As a user, I would like to search the recipe list based on type of cuisine so I can more easily find what I am looking for. _**(In Backlog)**_
+1. [18] As a user, I receive errors that help guide me so I know what to do next#65
+2. [19] As a user, I want to upload a picture to accompany my recipe. 
+3. [10] As a user, I would like to search the recipe list based on meal type so I can more easily find what I am looking for. #27
+4. [9] As a user, I would like to search the recipe list based on type of cuisine so I can more easily find what I am looking for.
 
 ### Tasks completed for Sprint 4
 
-* For a complete list of tasks completed in sprint 4, see the "Done" column in the [Sprint 4 Taskboard](https://github.com/orgs/CEN3031-Spring2023-ProjectGroup50/projects/9).
+1. [Insert here]
 
 ## Frontend Unit tests
 Frontend Angular unit tests are located in files ending in `.spec.ts`. Each component and service has its own unit test file.
@@ -694,6 +694,262 @@ Get count of recipes filtered by keyword and ingredient, for a specific user
 {
   "total": 0
 }
+```
+
+#### Meals
+
+##### Operations
+
+|               |                                               |
+| :---          | :---                                          |
+| Create        | Create a Meal                                 |
+| Delete        | Delete a Meal                                 |
+| Edit          | Edit a Meal                                   |
+| Get (by date) | Retrieve Meals in a week-long period          |
+
+##### Meals - Create
+
+> HTTP
+> 
+> POST http://localhost:5000/server/meals/add
+
+##### Request Body
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| date                | True        | string    | Date to schedule      |
+| recipeid            | True        | uint      | Unique id of recipe   |
+| mealtype            | True        | string    | Type of Meal (Breakfast/Lunch/Dinner/Other)      |
+| userid              | True        | uint      | User ID               |
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+| 400 Bad Request | Error     | Recipe does not have allowed type |
+| 400 Bad Request | Error     | User does not exist     |
+| 400 Bad Request | Error     | Recipe does not exist   |
+| 400 Bad Request | Error     | Failed to create meal   |
+
+##### Sample Request
+
+Create a meal for user 124, schedule for 4/30/2023 as a Breakfast meal
+
+> HTTP
+>
+> POST http://localhost:5000/server/meals/add
+>  \
+> -H 'accept: application/json' \
+> -H 'Content-Type: application/json' \
+> -d '{
+> "date": "2023-04-30",
+> "mealtype": "Breakfast",
+> "recipeid": 5,
+> "userid": 124}'
+>
+
+##### Sample Response
+```
+{
+  "Mid": 466,
+  "Userid": 124,
+  "Recipeid": 5,
+  "Date": "2023-04-30",
+  "Mealtype": "Breakfast",
+}
+```
+
+##### Meals - Delete
+
+> HTTP
+> 
+> DELETE http://localhost:5000/server/meals/delete{id}
+
+##### Request Body
+
+Empty
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+| 400 Bad Request | Error     | Could not delete meal   |
+
+##### Sample Request
+
+Delete meal 466
+
+> HTTP
+> 
+> DELETE http://localhost:5000/server/meals/delete/466
+> 
+
+##### Sample Response
+```
+{}
+```
+
+##### Meals - Edit
+
+> HTTP
+> 
+> POST http://localhost:5000/server/meals/edit
+
+##### Request Body
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| date                | True        | string    | Date to schedule      |
+| mid                 | True        | string    | Unique id of meal     |
+| mealtype            | True        | string    | Type of Meal (Breakfast/Lunch/Dinner/Other      |
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+| 400 Bad Request | Error     | Failed to update meal   |
+
+##### Sample Request
+
+Edit meal 425 to be scheduled 4/22/2023 for Lunch
+
+> HTTP
+> 
+>'PUT' \
+>  'http://localhost:5000/server/meals/edit' \
+>  -H 'accept: application/json' \
+>  -H 'Content-Type: application/json' \
+>  -d '{
+>  "date": "2023-04-22",
+>  "mealtype": "Lunch",
+>  "mid": 425
+>}'
+>
+
+##### Sample Response
+```
+{  
+  "Mid": 425,
+  "Userid": 124,
+  "Recipeid": 39,
+  "Date": "2023-04-22",
+  "Mealtype": "Lunch",
+}
+```
+
+##### Meals - Get (by date)
+
+> HTTP
+> 
+> GET http://localhost:5000/server/meals/bydate
+
+##### URI Parameters
+
+|  Name               | Required    | Type      | Description           |
+| :---                | :---        | :---      | :---                  |
+| date                | True        | string    | Date to query         |
+| uid                 | True        | string    | User ID               |    
+
+##### Responses
+
+| Name            | Type      | Description             |
+| :---            | :---      | :---                    |
+| 200 OK          | Recipe    | OK                      |
+
+
+##### Sample Request
+
+Get a week of meals scheduled for user 8 starting 4/20/2023
+
+> HTTP
+> 
+>   GET http://localhost:5000/server/meals/bydate?date=2023-04-20&uid=8
+>
+
+##### Sample Response
+```
+[
+  {
+    "Mid": 428,
+    "Date": "2023-04-21T07:00:00.000Z",
+    "Mealtype": "Lunch",
+    "Title": "Grilling Cheese With Sweet Peppers and Black Lentils",
+    "Ingredients": "['Kosher salt', '¾ cup black beluga lentils', '3 Tbsp. sherry vinegar or red wine vinegar', '1 Tbsp. honey', '5 Tbsp. extra-virgin olive oil, divided', 'Freshly ground black pepper', '8 oz. grilling cheese (such as bread, Halloumi, or paneer), torn into 2\" pieces', '1 lb. sweet mini peppers, ribs and seeds removed, halved lengthwise, cut into thirds if large', '½ tsp. dried oregano', '¼ cup (packed) basil leaves, torn if large', 'Flaky sea salt']",
+    "Instructions": "Bring a medium pot of salted water to a boil. Add lentils and cook until just tender but not falling apart (they should hold their shape), about 20 minutes. Drain well.\nMeanwhile, whisk vinegar, honey, and 3 Tbsp. oil in a small bowl to combine; season with kosher salt and pepper. Set dressing aside.\nHeat 1 Tbsp. oil in a large skillet over medium-high. Add cheese and cook, turning occasionally, until heated through and brown and crispy on all sides, about 5 minutes total. (Some varieties of paneer are made without salt; if using one of these, season your pieces of cheese while cooking.) Transfer to a plate.\nAdd remaining 1 Tbsp. oil to same pan, then add sweet peppers and oregano. Season with kosher salt and black pepper and cook over medium-high, stirring and pressing down occasionally on sweet peppers with a wooden spoon so they make good contact with the pan, until softened and blistered in spots, 20–25 minutes. Remove from heat.\nAdd warm lentils and reserved dressing to pan and toss to combine, then toss in cheese.\nTransfer sweet pepper mixture to a platter or plates. Top with basil and season with sea salt and more black pepper.",
+    "Image_Name": "grilling-cheese-with-sweet-peppers-and-black-lentils-recipe",
+    "Email": "123",
+    "Image": "/9j/4AAQSkZ{...}AE1mo/WaKK//2Q=="
+  },
+  {
+    "Mid": 258,
+    "Date": "2023-04-24T07:00:00.000Z",
+    "Mealtype": "Other",
+    "Title": "Miso-Butter Roast Chicken With Acorn Squash Panzanella",
+    "Ingredients": "['1 (3½–4-lb.) whole chicken', '2¾ tsp. kosher salt, divided, plus more', '2 small acorn squash (about 3 lb. total)', '2 Tbsp. finely chopped sage', '1 Tbsp. finely chopped rosemary', '6 Tbsp. unsalted butter, melted, plus 3 Tbsp. room temperature', '¼ tsp. ground allspice', 'Pinch of crushed red pepper flakes', 'Freshly ground black pepper', '⅓ loaf good-quality sturdy white bread, torn into 1\" pieces (about 2½ cups)', '2 medium apples (such as Gala or Pink Lady; about 14 oz. total), cored, cut into 1\" pieces', '2 Tbsp. extra-virgin olive oil', '½ small red onion, thinly sliced', '3 Tbsp. apple cider vinegar', '1 Tbsp. white miso', '¼ cup all-purpose flour', '2 Tbsp. unsalted butter, room temperature', '¼ cup dry white wine', '2 cups unsalted chicken broth', '2 tsp. white miso', 'Kosher salt, freshly ground pepper']",
+    "Instructions": "Pat chicken dry with paper towels, season all over with 2 tsp. salt, and tie legs together with kitchen twine. Let sit at room temperature 1 hour.\nMeanwhile, halve squash and scoop out seeds. Run a vegetable peeler along ridges of squash halves to remove skin. Cut each half into ½\"-thick wedges; arrange on a rimmed baking sheet.\nCombine sage, rosemary, and 6 Tbsp. melted butter in a large bowl; pour half of mixture over squash on baking sheet. Sprinkle squash with allspice, red pepper flakes, and ½ tsp. salt and season with black pepper; toss to coat.\nAdd bread, apples, oil, and ¼ tsp. salt to remaining herb butter in bowl; season with black pepper and toss to combine. Set aside.\nPlace onion and vinegar in a small bowl; season with salt and toss to coat. Let sit, tossing occasionally, until ready to serve.\nPlace a rack in middle and lower third of oven; preheat to 425°F. Mix miso and 3 Tbsp. room-temperature butter in a small bowl until smooth. Pat chicken dry with paper towels, then rub or brush all over with miso butter. Place chicken in a large cast-iron skillet and roast on middle rack until an instant-read thermometer inserted into the thickest part of breast registers 155°F, 50–60 minutes. (Temperature will climb to 165°F while chicken rests.) Let chicken rest in skillet at least 5 minutes, then transfer to a plate; reserve skillet.\nMeanwhile, roast squash on lower rack until mostly tender, about 25 minutes. Remove from oven and scatter reserved bread mixture over, spreading into as even a layer as you can manage. Return to oven and roast until bread is golden brown and crisp and apples are tender, about 15 minutes. Remove from oven, drain pickled onions, and toss to combine. Transfer to a serving dish.\nUsing your fingers, mash flour and butter in a small bowl to combine.\nSet reserved skillet with chicken drippings over medium heat. You should have about ¼ cup, but a little over or under is all good. (If you have significantly more, drain off and set excess aside.) Add wine and cook, stirring often and scraping up any browned bits with a wooden spoon, until bits are loosened and wine is reduced by about half (you should be able to smell the wine), about 2 minutes. Add butter mixture; cook, stirring often, until a smooth paste forms, about 2 minutes. Add broth and any reserved drippings and cook, stirring constantly, until combined and thickened, 6–8 minutes. Remove from heat and stir in miso. Taste and season with salt and black pepper.\nServe chicken with gravy and squash panzanella alongside.",
+    "Image_Name": "miso-butter-roast-chicken-acorn-squash-panzanella",
+    "Email": "123",
+    "Image": "/9j/4AAQSkZJRg{...}zRRX//2Q=="
+  },
+  {
+    "Mid": 291,
+    "Date": "2023-04-24",
+    "Mealtype": "Other",
+    "Title": "Crispy Salt and Pepper Potatoes",
+    "Ingredients": "['2 large egg whites', '1 pound new potatoes (about 1 inch in diameter)', '2 teaspoons kosher salt', '¾ teaspoon finely ground black pepper', '1 teaspoon finely chopped rosemary', '1 teaspoon finely chopped thyme', '1 teaspoon finely chopped parsley']",
+    "Instructions": "Preheat oven to 400°F and line a rimmed baking sheet with parchment. In a large bowl, whisk the egg whites until foamy (there shouldn’t be any liquid whites in the bowl). Add the potatoes and toss until they’re well coated with the egg whites, then transfer to a strainer or colander and let the excess whites drain. Season the potatoes with the salt, pepper, and herbs. Scatter the potatoes on the baking sheet (make sure they’re not touching) and roast until the potatoes are very crispy and tender when poked with a knife, 15 to 20 minutes (depending on the size of the potatoes).\nTransfer to a bowl and serve.",
+    "Image_Name": "crispy-salt-and-pepper-potatoes-dan-kluger",
+    "Email": "123",
+    "Image": "/9j/4AAQSkZJRgABAQAA{...}tVowz/2Q=="
+  },
+  {
+    "Mid": 249,
+    "Date": "2023-04-22",
+    "Mealtype": "Other",
+    "Title": "Turmeric Hot Toddy",
+    "Ingredients": "['¼ cup granulated sugar', '¾ tsp. ground turmeric', '1 ½ oz. Amontillado sherry', '1 oz. bourbon, aged rum, Scotch, mezcal, or gin', '1 oz. Turmeric Syrup', '½ oz. fresh lemon juice', 'Garnish: Dehydrated lemon wheel (optional)']",
+    "Instructions": "For the turmeric syrup, combine ½ cup hot water and ¼ cup sugar in a liquid measuring cup or mason jar. Add ¾ tsp. ground turmeric and stir—or seal and shake—until sugar is completely dissolved. (This makes enough syrup for 4 drinks. Syrup can be used immediately or refrigerated, covered, up to 10 days. Shake or stir before using to reincorporate turmeric.)\nFor the toddy, combine 1 ½ oz. Amontillado sherry, 1 oz. bourbon (or other spirit of choice), 1 oz. Turmeric Syrup, and ½ oz. fresh lemon juice in a sturdy pint glass or 16-ounce thermos. Top with 8 oz. hot water and stir gently. Garnish with dehydrated lemon wheel if desired.",
+    "Image_Name": "turmeric-hot-toddy-claire-sprouse",
+    "Email": "123",
+    "Image": "/9j/4AAQSkZJRgABA{...}JF//2Q=="
+  },
+  {
+    "Mid": 251,
+    "Date": "2023-04-20",
+    "Mealtype": "Lunch",
+    "Title": "Enfrijoladas",
+    "Ingredients": "['5 Tbsp. vegetable oil, divided', '8 corn tortillas', '12 oz. fresh chorizo', '3 garlic cloves, crushed', '½ medium white onion, thinly sliced, plus more for serving', 'Kosher salt', '2 (15-oz.) cans black beans, rinsed, or 3 cups Frijoles de la Olla, drained', '1½ cups low-sodium chicken broth', '6 oz. queso fresco or Cotija cheese, crumbled', 'Cilantro leaves with tender stems and sliced avocado (for serving)']",
+    "Instructions": "Using 2 Tbsp. oil, brush both sides of each tortilla. Heat a large skillet over medium-high. Working in batches, cook until lightly browned and starting to crisp, about 1 minute per side. Set aside.\nHeat remaining 3 Tbsp. oil in same skillet over medium-high. Cook chorizo, breaking up with a wooden spoon, until browned and cooked through, 7–9 minutes. Using a slotted spoon, transfer to a medium bowl; set aside.\nAdd garlic and ½ onion to same skillet, season with salt, and cook, tossing occasionally, until tender and beginning to brown, 6–8 minutes. Using slotted spoon, transfer garlic mixture to a blender; reserve pan with oil. Add beans and broth to blender and purée until smooth (it should be the consistency of yogurt); season with salt.\nSet reserved pan over medium-high and heat oil. Transfer bean purée to skillet and bring to a boil. Reduce heat to low. Working one at a time and using tongs, dip tortillas in bean purée, turning to coat and leaving until softened, about 3 seconds per side (they will soften more as they sit). Transfer to a baking sheet as you go. Spoon 1 Tbsp. chorizo and 1 Tbsp. queso fresco across the center of each tortilla; fold over like a taco.\nDivide among plates and spoon remaining bean purée over. Top with cilantro, avocado, more onion, remaining chorizo, and remaining queso.",
+    "Image_Name": "enfrijoladas",
+    "Email": "123",
+    "Image": "/9j/4AAQSkZJRg{...}fx/0r//Z"
+  },
+  {
+    "Mid": 254,
+    "Date": "2023-04-21",
+    "Mealtype": "Dinner",
+    "Title": "Spiral Ham in the Slow Cooker",
+    "Ingredients": "['1 (6- to 7-pound) bone-in, hickory-smoked, uncured fully cooked ham', '5 medium parsnips, peeled and halved lengthwise', '5 medium carrots, peeled and halved lengthwise', '1 cup maple syrup', '2 cups unsweetened apple juice', '½ cup packed dark brown sugar', '½ cup smooth Dijon mustard', '½ cup grainy Dijon mustard', '2 tablespoons apple cider vinegar', 'Kosher salt (if needed)']",
+    "Instructions": "Pour 3 cups of water into a 7-quart slow cooker. Add the ham, cut-side up, as well as the parsnips and carrots. Pour the maple syrup and apple juice over the ham, and sprinkle the brown sugar over the top. Cook on high, uncovered, for 30 to 45 minutes, then cover the slow cooker and cook on low until the ham is tender, 3 to 4 hours. Hams vary in size and tenderness, so be patient. When it’s tender, the meat should come off the bone with very little resistance. Taste a small piece for tenderness.\nTransfer the ham and vegetables to a deep serving platter (reserve the liquid in the pot). Use a pair of kitchen shears or scissors to cut the slices of ham off the bone and let them fall onto the platter. Stir both kinds of mustard and the vinegar into the cooking liquid left in the slow cooker and taste for seasoning—the sauce may or may not need salt. Pour the liquid over the ham and vegetables, and serve.",
+    "Image_Name": "spiral-ham-in-the-slow-cooker-guarnaschelli",
+    "Email": "123",
+    "Image": "/9j/4AAQSkZ{...}1M16v/2Q=="
+  },
+  {
+    "Mid": 257,
+    "Date": "2023-04-26",
+    "Mealtype": "Dinner",
+    "Title": "Thanksgiving Mac and Cheese",
+    "Ingredients": "['1 cup evaporated milk', '1 cup whole milk', '1 tsp. garlic powder', '1 tsp. onion powder', '1 tsp. smoked paprika', '½ tsp. freshly ground black pepper', '1 tsp. kosher salt, plus more', '2 lb. extra-sharp cheddar, coarsely grated', '4 oz. full-fat cream cheese', '1 lb. elbow macaroni']",
+    "Instructions": "Place a rack in middle of oven; preheat to 400°. Bring evaporated milk and whole milk to a bare simmer in a large saucepan over medium heat. Whisk in garlic powder, onion powder, paprika, pepper, and 1 tsp. salt. Working in batches, whisk in three fourths of the cheddar, then all of the cream cheese.\nMeanwhile, bring a large pot of generously salted water to a boil (it should have a little less salt than seawater). Cook macaroni, stirring occasionally, until very al dente, about 4 minutes. Drain in a colander.\nAdd macaroni to cheese sauce in pan and mix until well coated. Evenly spread out half of macaroni mixture in a 13x9\" baking dish. Sprinkle half of remaining cheddar evenly over. Layer remaining macaroni mixture on top and sprinkle with remaining cheddar. Bake until all of the cheese is melted, about 10 minutes. Let cool slightly before serving.",
+    "Image_Name": "thanksgiving-mac-and-cheese-erick-williams",
+    "Email": "123",
+    "Image": "/9j/4AA{..}1GGf/9k="
+  }
+]
 ```
 
 
