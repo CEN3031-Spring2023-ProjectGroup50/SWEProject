@@ -33,6 +33,7 @@ This step is **IMPORTANT**. Some of the files in this repo are encrypted using g
 ### Installing dependencies
 2. In the `/SWEProject/recipeApp/server/` folder:<br>
    - Run `make install` or `mingw32-make install` to install all Go dependencies
+   - Run `go mod tidy`
 3. In the `/SWEProject/recipeApp/client/` folder:<br>
    - Run `make install` or `mingw32-make install` to install all Angular dependencies
    - If this is not successful, run `npm install --force`
