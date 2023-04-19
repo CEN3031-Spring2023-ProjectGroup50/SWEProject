@@ -27,10 +27,8 @@ REQUIREMENTS: You must have the following installed prior to following these ste
 This step is **IMPORTANT**. Some of the files in this repo are encrypted using git-crypt; you must unlock them before proceeding.
 1. Configure git-crypt on your machine
    - Download [this executable](https://github.com/AGWA/git-crypt/releases/tag/0.7.0)
-   - Put the executable's path in your system's PATH variable
+   - Put the executable's path in your system's User PATH variable
    - Rename the executable git-crypt.exe
-   - Navigate to `/SWEProject/.git/config` and update your config file as shown below, using your executable's path:
-![image](https://cdn.discordapp.com/attachments/1062897591240638629/1098089208154968224/image.png)
 2. In the `/SWEProject` root folder:<br>
    - Add the file `git-crypt-key`
    - Add `git-crypt-key` to the .gitignore file
