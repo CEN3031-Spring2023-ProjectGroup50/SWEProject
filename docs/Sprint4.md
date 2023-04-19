@@ -58,9 +58,13 @@ Frontend Angular unit tests are located in files ending in `.spec.ts`. Each comp
 
 ### Cypress end-to-end (E2E) tests
 Frontend Cypress end-to-end tests are located in files ending in `.cy.ts`. Each component will have its own Cypress test file.
+
 ![Cypress1](https://user-images.githubusercontent.com/93093369/232954470-f6ab35a2-8b30-4f7c-a9fb-9451de673e6a.png)
+
 ![Cypress2](https://user-images.githubusercontent.com/93093369/232954477-44505036-a5cd-4e36-ae4f-a630a0944e9d.png)
+
 ![Cypress3](https://user-images.githubusercontent.com/93093369/232954481-621ff967-08d2-4bbe-b226-1cd167c44d48.png)
+
 ![Cypress4](https://user-images.githubusercontent.com/93093369/232954489-c0bc7df5-cfda-46c9-95d7-97a2925b4e44.png)
 
 **Assertions for Cypress E2E Tests can be seen in the video presentation for Sprint 4.
