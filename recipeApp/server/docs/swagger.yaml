@@ -183,7 +183,7 @@ paths:
       - application/json
       parameters:
       - default: 0
-        description: recipe id of favorite to delete
+        description: recipe id of favorite to check
         in: query
         name: rid
         required: true

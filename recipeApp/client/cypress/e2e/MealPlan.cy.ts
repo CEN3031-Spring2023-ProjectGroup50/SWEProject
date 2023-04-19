@@ -65,7 +65,7 @@ describe('Meal Plan Page', () => {
     cy.wait(100);
     cy.get('.mat-mdc-dialog-surface > .ng-star-inserted')
       .should('be.visible');
-    cy.get('.mat-mdc-dialog-content').scrollTo('bottom');
+    cy.get('.mat-mdc-dialog-content').scrollTo('bottom', {duration: 1500});
   })
 
   it('clicking "Update meal" or "Remove from meal plan" open respective dialogs', () =>{

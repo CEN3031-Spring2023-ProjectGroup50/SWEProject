@@ -174,7 +174,7 @@ const docTemplate = `{
                     {
                         "type": "integer",
                         "default": 0,
-                        "description": "recipe id of favorite to delete",
+                        "description": "recipe id of favorite to check",
                         "name": "rid",
                         "in": "query",
                         "required": true

@@ -51,10 +51,9 @@ describe('Home Page(Recipes)', () => {
   })
 
   it('views a recipe', () => {
-    cy.get('#userFilter').click();
     cy.wait(500);
     cy.get('#list').get('#card').get('#more').click();
-    cy.wait(100)
+    cy.wait(100);
     cy.get('#view').click();
     cy.get('#view-dialog').should('exist');
 
@@ -64,7 +63,7 @@ describe('Home Page(Recipes)', () => {
   })
 
   it('edits a recipe', () => {
-    cy.get('#userFilter').click();
+    cy.get('#userFilter').wait(2000).click();
     cy.wait(500);
     cy.get('[style="left: calc((25% - 0.75px + 1px) * 2); width: calc((25% - 0.75px) * 1 + 0px); top: calc(401px); height: calc(400px);"] > .mat-grid-tile-content > #card > .mat-mdc-card-header > #more > .mat-mdc-button-touch-target').scrollIntoView({duration: 1500}).click();
     cy.wait(100)
@@ -87,13 +86,13 @@ describe('Home Page(Recipes)', () => {
     cy.get('#view-dialog').should('contain', 'Testing Meal Edited');
     cy.get('#dialog-ing').should('contain', 'change the ingredients');
     cy.get('#dialog-inst').should('contain', 'change the instructions');
-    cy.wait(500)
+    cy.wait(2000)
     cy.contains('Close').click();
 
   })
 
   it('deletes a recipe', () => {
-    cy.get('#userFilter').click();
+    cy.get('#userFilter').wait(2000).click();
     cy.wait(500);
     cy.get('[style="left: calc((25% - 0.75px + 1px) * 2); width: calc((25% - 0.75px) * 1 + 0px); top: calc(401px); height: calc(400px);"] > .mat-grid-tile-content > #card > .mat-mdc-card-header > #more > .mat-mdc-button-touch-target').click();
     cy.wait(100)
