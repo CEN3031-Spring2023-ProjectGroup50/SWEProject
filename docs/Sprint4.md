@@ -12,9 +12,17 @@
 
 ## Links to sprint 4 video recordings
 
-* [Sprint 4 Overview](https://drive.google.com/file/d/1rdelusH1KU6pYqGtCDgTQu3mNBuaJsEA/view?usp=sharing)
-* [Overall Application Overview](https://drive.google.com/file/d/1onGFcXW0HyZ0RC94HAaIB9h1i7f4rMBs/view?usp=sharing)
-* [Overall API Overview](https://drive.google.com/file/d/1K5uyUWG65D_ZwzaT2kiTKY5l1bbYLY2i/view?usp=share_link)
+* [Sprint 4 Overview](https://drive.google.com/file/d/1rdelusH1KU6pYqGtCDgTQu3mNBuaJsEA/view?usp=sharing) (~26 minutes)
+   *  0:00 - Intro
+   *  1:30 - Backend new functionality: Image Upload, Meals, Favorites
+   *  8:35 - Backend unit test overview
+   *  20:48 - Backend unit test results
+   *  22:05 - Frontend new functionality: Recipe image upload, Snackbars, Favorites, Meal Plan, Grocery List
+   *  27:05 - Frontend cypress E2E tests and Karma unit tests
+
+* [Overall Application Overview](https://drive.google.com/file/d/1onGFcXW0HyZ0RC94HAaIB9h1i7f4rMBs/view?usp=sharing) (~16 minutes)
+
+* [Overall API Overview](https://drive.google.com/file/d/1K5uyUWG65D_ZwzaT2kiTKY5l1bbYLY2i/view?usp=share_link) (~20 minutes)
 
 ## Work completed in sprint 4
 
