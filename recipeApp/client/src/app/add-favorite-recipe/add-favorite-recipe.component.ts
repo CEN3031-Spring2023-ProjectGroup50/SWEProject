@@ -23,7 +23,6 @@ interface IRecipeItem {
 @Component({
   selector: 'add-favorite-recipe',
   templateUrl: './add-favorite-recipe.component.html',
-  styleUrls: ['./add-favorite-recipe.component.css']
 })
 export class AddFavoriteRecipeComponent {
 
