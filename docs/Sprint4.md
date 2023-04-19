@@ -56,23 +56,15 @@ Frontend Angular unit tests are located in files ending in `.spec.ts`. Each comp
 ![Part2](https://user-images.githubusercontent.com/93093369/232954293-16957ce2-0005-4bb2-b8d6-617574bf50ea.png)
 ![Part3](https://user-images.githubusercontent.com/93093369/232954303-4d79bb7c-c3e7-4d11-9194-5e85f8e107f1.png)
 
+### Cypress end-to-end (E2E) tests
+Frontend Cypress end-to-end tests are located in files ending in `.cy.ts`. Each component will have its own Cypress test file.
+![Cypress1](https://user-images.githubusercontent.com/93093369/232954470-f6ab35a2-8b30-4f7c-a9fb-9451de673e6a.png)
+![Cypress2](https://user-images.githubusercontent.com/93093369/232954477-44505036-a5cd-4e36-ae4f-a630a0944e9d.png)
+![Cypress3](https://user-images.githubusercontent.com/93093369/232954481-621ff967-08d2-4bbe-b226-1cd167c44d48.png)
+![Cypress4](https://user-images.githubusercontent.com/93093369/232954489-c0bc7df5-cfda-46c9-95d7-97a2925b4e44.png)
 
-When tests run, the built-in Angular testing platform (run `ng test`, or `npm test` from recipeApp/client) will generate a screen which looks like this:
+**Assertions for Cypress E2E Tests can be seen in the video presentation for Sprint 4.
 
-![Karma Jasmine unit test results snapshot 1]()
-
-### Cypress tests
-Frontend Cypress tests are located in files ending in `.cy.ts`. Each component will have its own Cypress test file.
-
-| Component test file             | Test Name                                                 | Test Description
-| :---                            |  :---                                                     | :--
-| menu-navigation.component.cy.ts | Return status OK (Single recipe returned)                 |
-| stepper.component.cy.ts         | Return status OK (Single recipe returned)                 |
-| registerform.component.spec.ts  | Return status OK (Single recipe returned)                 |
-
-When a test is successful, the Cypress testing platform (run `npx cypress open`) will generate a screen which looks like this:
-
-![Cypress test results]()
 
 ## Backend Unit tests
 Backend unit tests are located in main_test.go
