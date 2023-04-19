@@ -22,7 +22,7 @@
 
 * [Overall Application Overview](https://drive.google.com/file/d/1onGFcXW0HyZ0RC94HAaIB9h1i7f4rMBs/view?usp=sharing) (~16 minutes)
 
-* [Overall API Overview](https://drive.google.com/file/d/1K5uyUWG65D_ZwzaT2kiTKY5l1bbYLY2i/view?usp=share_link) (~20 minutes) <-- Demonstrated on [Swagger](#swagger)
+* [Overall API Overview](https://drive.google.com/file/d/1K5uyUWG65D_ZwzaT2kiTKY5l1bbYLY2i/view?usp=share_link) (~20 minutes)
 
 ## Work completed in sprint 4
 
@@ -37,25 +37,25 @@ and focus on the other primary purposes of our application: meal planning and gr
 As a group, we reviewed the incomplete user stories from Sprint 3 as well as the backlog of user stories, and defined the goal for Sprint 4. 
 Because our time was limited with this being the last sprint of the semester, our primary goal was to establish a minimal viable product (MVP) for an end-to-end application. 
 With any remaining time, we hoped to enhance different elements of the app with nice-to-have features which may not be necessary for baseline functionality. 
-We came up with the following plan. The bold comments show the status of each of these user stories.
+We came up with the following plan.
 
 MVP
-1. [7] As a user, I can delete previously created recipes so that I can keep my list up to date. #45 _**(Done)**_
-2. [12] As a user, I can add a recipe from the list to my meal plan so I can set up my schedule for the week.#48 _**(Done)**_
-3. [13] As a user, I can view the current week's planned recipes in a list so I know what I will be cooking.#49 _**(Done)**_
-4. [14] As a user, I can navigate between each week’s meal plan views so I can look forward in time.#30 _**(Done)**_
-5. [15] As a user, I can click to generate a static list of groceries based on recipes in the schedule for specified days or weeks up to 1 month, so I know what I need from the grocery store.#31  _**(Done for up to 1 week)**_
-6. [8] As a user, I would like to be able to save recipes so I can easily find and access them later. #46 _**(Done)**_
+1. [7] As a user, I can delete previously created recipes so that I can keep my list up to date. #45
+2. [12] As a user, I can add a recipe from the list to my meal plan so I can set up my schedule for the week.#48
+3. [13] As a user, I can view the current week's planned recipes in a list so I know what I will be cooking.#49
+4. [14] As a user, I can navigate between each week’s meal plan views so I can look forward in time.#30
+5. [15] As a user, I can click to generate a static list of groceries based on recipes in the schedule for specified days or weeks up to 1 month, so I know what I need from the grocery store.#31
+6. [8] As a user, I would like to be able to save recipes so I can easily find and access them later. #46
 
 Nice-to-have
-1. [18] As a user, I receive errors that help guide me so I know what to do next#65 _**(Done partially, and added snackbar messages to users)**_
-2. [19] As a user, I want to upload a picture to accompany my recipe. _**(Done)**_
-3. [10] As a user, I would like to search the recipe list based on meal type so I can more easily find what I am looking for. #27 _**(In Backlog)**_
-4. [9] As a user, I would like to search the recipe list based on type of cuisine so I can more easily find what I am looking for. _**(In Backlog)**_
+1. [18] As a user, I receive errors that help guide me so I know what to do next#65
+2. [19] As a user, I want to upload a picture to accompany my recipe. 
+3. [10] As a user, I would like to search the recipe list based on meal type so I can more easily find what I am looking for. #27
+4. [9] As a user, I would like to search the recipe list based on type of cuisine so I can more easily find what I am looking for.
 
 ### Tasks completed for Sprint 4
 
-* For a complete list of tasks completed in sprint 4, see the "Done" column in the [Sprint 4 Taskboard](https://github.com/orgs/CEN3031-Spring2023-ProjectGroup50/projects/9).
+1. [Insert here]
 
 ## Frontend Unit tests
 Frontend Angular unit tests are located in files ending in `.spec.ts`. Each component and service has its own unit test file.
@@ -118,7 +118,39 @@ Backend unit tests are located in main_test.go
 | TestRecipeEdit                        | Response user ID is the same as supplied 
 | TestRecipeEdit                        | Return bad request for a recipe ID that does not exist
 | TestRecipeDelete                      | Able to delete recipes added in TestRecipePost            
-| TestRecipeDelete                      | Return bad request for a recipe ID that does not exist       
+| TestRecipeDelete                      | Return bad request for a recipe ID that does not exist
+| TestCreateMeal                        | Return status OK (Able to create meal)
+| TestCreateMeal                        | Response mealtype is the same as supplied
+| TestCreateMeal                        | Response user ID is the same as supplied
+| TestCreateMeal                        | Response recipe ID is the same as supplied
+| TestCreateMeal                        | Response date is the same as supplied
+| TestCreateMeal                        | Return bad request for meal with invalid user ID
+| TestCreateMeal                        | Return bad request for meal with invalid recipe ID
+| TestCreateMeal                        | Return bad request for meal with invalid mealtype
+| TestmealGetByDate                     | Return status OK (Retrieved meals in date range)
+| TestMealGetByDate                     | Check that all items are in date range
+| TestMealGetByDate                     | Check that the number of items expected is returned
+| TestEditMeal                          | Check that meal type was set to expected value   
+| TestEditMeal                          | Check that meal date was set to expected value
+| TestEditMeal                          | Return status OK (Able to edit meal)   
+| TestDeleteMeal                        | Return status OK (Deleted meal)      
+| TestDeleteMeal                        | Return bad request for a meal ID that does not exist
+| TestFavoritesGetByKeyword             | Return status OK (Retrieved favorites with keyword)
+| TestFavoritesGetByKeyword             | Check that all results have the keyword
+| TestFavoritesGetByKeyword             | Check that result is empty if it should be
+| TestFavoritesGetByIngredient          | Return status OK (Retrieved favorites with ingredient)
+| TestFavoritesGetByIngredient          | Check that all results contain the ingredient
+| TestFavoritesGetByIngredient          | Check that the result is empty if it should be
+| TestFavoriteGetByPage                 | Return status OK (Recipes returned)                       
+| TestFavoriteGetByPage                 | Amount of recipes returned is correct                     
+| TestCreateFavorite                    | Return status OK (Able to create favorite)
+| TestCreateFavorite                    | Check that user ID is the same as supplied
+| TestCreateFavorite                    | Check that the recipe ID is the same as supplied
+| TestCreateFavorite                    | Return bad request for meal with invalid recipe ID
+| TestCreateFavorite                    | Return bad request for meal with invalid user ID
+| TestCreateFavorite                    | Return bad request for meal with meal ID that already exists
+| TestDeleteFavorite                    | Return status OK (able to delete recipe)
+| TestDeleteFavorite                    | Return bad request for a favorite that does not exist
 | TestLogin                             | Test valid user login returns status OK                   
 | TestLogin                             | Test valid user login returns access token
 | TestLogin                             | Test valid user login returns refresh token    
