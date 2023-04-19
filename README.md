@@ -26,13 +26,16 @@ REQUIREMENTS: You must have the following installed prior to following these ste
 ### Unlocking secured files
 This step is **IMPORTANT**. Some of the files in this repo are encrypted using git-crypt; you must unlock them before proceeding.
 1. In the `/SWEProject` root folder:<br>
-    Run `git-crypt unlock git-crypt-key`
+   - Add the file `git-crypt-key`
+   - Add `git-crypt-key` to the .gitignore file
+   - Run `git-crypt unlock git-crypt-key`
     
 ### Installing dependencies
 2. In the `/SWEProject/recipeApp/server/` folder:<br>
    - Run `make install` or `mingw32-make install` to install all Go dependencies
 3. In the `/SWEProject/recipeApp/client/` folder:<br>
    - Run `make install` or `mingw32-make install` to install all Angular dependencies
+   - If this is not successful, run `npm install --force`
 
 ## Starting Mallow
 1. Open a new terminal
