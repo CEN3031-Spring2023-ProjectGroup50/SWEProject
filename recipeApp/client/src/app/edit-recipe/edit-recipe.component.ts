@@ -49,9 +49,7 @@ export class EditRecipeModule {
       console.log(`Dialog result: ${result}`);
     });
   }
-
 }
-
 
 @Component({
   selector: 'edit-recipe-content',
@@ -99,16 +97,10 @@ export class EditRecipeContentModule {
 
   async editRecipe() {
 
-    console.log(this.recipe);
-
     this.loading = true;
-
     let RidString = this.recipe.Rid.toString();
-
     let URL = `/server/recipes/edit/${RidString}`
 
-    console.log("imageName = " + this.imageName);
-    console.log("imageString = " + this.imageString);
     await this.httpClient.put(URL, {
       rid: this.recipe.Rid,
       title: this.editRecipeForm.value['title'],
@@ -136,7 +128,6 @@ export class EditRecipeContentModule {
       this.error = "";
       this.file_store = l;
       if (l.length) {
-        console.log(l.length)
   
         if (l.length > 1) this.error = "Only one file at time allowed";
         else{
@@ -146,12 +137,8 @@ export class EditRecipeContentModule {
         if (extension!="jpg") this.error = "Only .jpg files allowed";
         this.editRecipeForm.patchValue({image: `${f.name}`});
         var reader = new FileReader();
-    
           reader.onload =this._handleReaderLoaded.bind(this);
-  
           reader.readAsBinaryString(f);
-          //this.imageString = btoa(reader.result!.toString())
-          //console.log(this.imageString)
         }
       } else {
         this.editRecipeForm.patchValue({image: ""});
@@ -160,7 +147,6 @@ export class EditRecipeContentModule {
   
     _handleReaderLoaded(f: any) {
       this.imageString = btoa(f.target.result);
-      //console.log(this.imageString);
      }
 
 }

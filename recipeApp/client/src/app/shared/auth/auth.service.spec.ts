@@ -81,31 +81,4 @@ describe('AuthService', () => {
     expect(localStorage.getItem(service.REFRESH_TOKEN_KEY)).toBeFalsy();
   });
 
-  /*it('should return a token when refresh is called', () => {
-    spyRes = httpClientSpy.post.and.returnValue(jasmine.createSpyObj('HttpResponse', ['token', 'refreshToken']));
-    service.login(spyRes);
-    service.refresh().subscribe((res: any) => {
-        expect(res.token).toBeTruthy();
-    });
-    service.logout();
-  });
-
-  it('should return a refresh token when refresh is called', () => {
-    spyRes = httpClientSpy.post.and.returnValue(jasmine.createSpyObj('HttpResponse', ['token', 'refreshToken']));
-    service.login(spyRes);
-    service.refresh().subscribe((res: any) => {
-        expect(res.refreshToken).toBeTruthy();
-    });
-    service.logout();
-  });
-
-  it('should set a token when refresh is called', () => {
-    spyRes = httpClientSpy.post.and.returnValue(jasmine.createSpyObj('HttpResponse', ['token', 'refreshToken']));
-    service.login(spyRes);
-    service.refresh().subscribe((res: any) => {
-        expect(localStorage.getItem(service.TOKEN_KEY)).toBeTruthy();
-    });
-    service.logout();
-  });*/
-
 });

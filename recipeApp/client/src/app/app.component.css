@@ -1,74 +1,73 @@
-.example-container{
-    text-align: center
+.example-container {
+  text-align: center
 }
 
-.form-container{
-    width: 400 px; 
-    margin: 0 px auto; 
-    margin-top: 200 px
+.form-container {
+  width: 400 px;
+  margin: 0 px auto;
+  margin-top: 200 px
 }
 
-.form-field{
-    display: block
+.form-field {
+  display: block
 }
 
 .example-spacer {
-    flex: 1 1 auto;
-  }
+  flex: 1 1 auto;
+}
 
+section {
+  display: table;
+}
 
-  section {
-    display: table;
-  }
-  
-  .example-label {
-    display: table-cell;
-    font-size: 14px;
-    margin-left: 8px;
-    min-width: 120px;
-  }
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
 
-  .toolbar-button-row {
-    display: table-cell;
-    max-width: 600px;
-    }
-  
-  .toolbar-button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-  }
-  
-  .example-flex-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  
-  .example-button-container {
-    display: flex;
-    justify-content: center;
-    width: 120px;
-  }
-  
-  mat-form-field {
-    margin-right: 12px;
-  }
+.toolbar-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
 
-  .sidenav-container {
-    width: 500px;
-    height: 300px;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-  }
-  
-  .sidenav {
-    padding: 20px;
-  }
-  
-  .sidenav .mat-toolbar {
-    background: inherit;
-  }
-  
-  .mat-toolbar.mat-primary {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-  }
+.toolbar-button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
+
+mat-form-field {
+  margin-right: 12px;
+}
+
+.sidenav-container {
+  width: 500px;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.sidenav {
+  padding: 20px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}

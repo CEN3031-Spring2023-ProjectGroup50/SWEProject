@@ -25,7 +25,6 @@ interface IRecipeItem {
 @Component({
   selector: 'add-mealplan-dialog',
   templateUrl: './add-mealplan-dialog.component.html',
-  //styleUrls: ['./add-mealplan-dialog.component.css']
 })
 export class AddMealplanDialogComponent {
   @Input() recipe: IRecipeItem;

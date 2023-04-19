@@ -15,7 +15,6 @@ interface IRecipeItem {
   Uid: number,
   Email: string,
   Image: Uint8Array[],
-
 }
 
 @Component({
@@ -47,14 +46,12 @@ export class RecipeDeleteDialogComponent {
 
 export class RecipeDeleteDialogContent {
 
-
   constructor(@Inject(MAT_DIALOG_DATA) public recipe: IRecipeItem,
       private httpClient: HttpClient,
       private sharedService: SharedFunctionsService,
       private authService: AuthService,
       private _snackBar: MatSnackBar,
       ){}
-
 
   async deleteRecipe() {
     let Rid = this.recipe.Rid;
